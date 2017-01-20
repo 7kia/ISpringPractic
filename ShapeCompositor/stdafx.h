@@ -1,35 +1,54 @@
-// stdafx.h: включаемый файл для стандартных системных включаемых файлов
-// или включаемых файлов для конкретного проекта, которые часто используются, но
-// не часто изменяются
+// Этот исходный код MFC Samples демонстрирует функционирование пользовательского интерфейса Fluent на основе MFC в Microsoft Office
+// ("Fluent UI") и предоставляется исключительно как справочный материал в качестве дополнения к
+// справочнику по пакету Microsoft Foundation Classes и связанной электронной документации,
+// включенной в программное обеспечение библиотеки MFC C++.  
+// Условия лицензионного соглашения на копирование, использование или распространение Fluent UI доступны отдельно.  
+// Для получения дополнительных сведений о нашей лицензионной программе Fluent UI посетите веб-узел
+// http://go.microsoft.com/fwlink/?LinkId=238214.
 //
+// (C) Корпорация Майкрософт (Microsoft Corp.)
+// Все права защищены.
+
+// stdafx.h: включите файл для добавления стандартных системных файлов
+//или конкретных файлов проектов, часто используемых,
+// но редко изменяемых
 
 #pragma once
 
+#ifndef VC_EXTRALEAN
+#define VC_EXTRALEAN            // Исключите редко используемые компоненты из заголовков Windows
+#endif
+
 #include "targetver.h"
 
-#define WIN32_LEAN_AND_MEAN             // Исключите редко используемые компоненты из заголовков Windows
-// Файлы заголовков Windows:
-#include <windows.h>
+#define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS      // некоторые конструкторы CString будут явными
 
-// Файлы заголовков C RunTime
-#include <stdlib.h>
-#include <malloc.h>
-#include <memory.h>
-#include <tchar.h>
+// отключает функцию скрытия некоторых общих и часто пропускаемых предупреждений MFC
+#define _AFX_ALL_WARNINGS
+
+#include <afxwin.h>         // основные и стандартные компоненты MFC
+#include <afxext.h>         // расширения MFC
 
 
-#ifndef Assert
-#if defined( DEBUG ) || defined( _DEBUG )
-#define Assert(b) do {if (!(b)) {OutputDebugStringA("Assert: " #b "\n");}} while(0)
-#else
-#define Assert(b)
-#endif //DEBUG || _DEBUG
+
+
+
+#ifndef _AFX_NO_OLE_SUPPORT
+#include <afxdtctl.h>           // поддержка MFC для типовых элементов управления Internet Explorer 4
 #endif
+#ifndef _AFX_NO_AFXCMN_SUPPORT
+#include <afxcmn.h>             // поддержка MFC для типовых элементов управления Windows
+#endif // _AFX_NO_AFXCMN_SUPPORT
+
+#include <afxcontrolbars.h>     // поддержка MFC для лент и панелей управления
 
 
 
-#ifndef HINST_THISCOMPONENT
-EXTERN_C IMAGE_DOS_HEADER __ImageBase;
-#define HINST_THISCOMPONENT ((HINSTANCE)&__ImageBase)
-#endif
-// TODO: Установите здесь ссылки на дополнительные заголовки, требующиеся для программы
+
+
+
+
+
+
+
+

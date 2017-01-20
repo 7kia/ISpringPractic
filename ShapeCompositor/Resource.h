@@ -1,62 +1,56 @@
-#pragma once
 //{{NO_DEPENDENCIES}}
-// Microsoft Visual C++ generated include file.
-// Used by ShapeCompositor.rc
+// Включаемый файл, созданный в Microsoft Visual C++.
+// Используется ShapeCompositor.rc
 //
+#define IDD_ABOUTBOX                    100
+#define IDP_OLE_INIT_FAILED             100
+#define IDB_WRITESMALL                  110
+#define IDB_WRITELARGE                  111
+#define IDB_MAIN                        112
+#define IDB_BUTTONS                     113
+#define IDB_FILELARGE                   114
+#define IDB_FILESMALL                   115
+#define IDR_POPUP_EDIT                  119
+#define ID_STATUSBAR_PANE1              120
+#define ID_STATUSBAR_PANE2              121
+#define IDS_STATUS_PANE1                122
+#define IDS_STATUS_PANE2                123
+#define IDR_MAINFRAME                   128
+#define IDR_MAINFRAME_256               129
+#define IDR_ShapeCompositorTYPE         130
+#define IDR_PASTE_MENU                  151
+#define IDR_WINDOWS_MENU                152
+#define IDR_THEME_MENU                  200
+#define ID_SET_STYLE                    201
+#define ID_VIEW_APPLOOK_WIN_2000        205
+#define ID_VIEW_APPLOOK_OFF_XP          206
+#define ID_VIEW_APPLOOK_WIN_XP          207
+#define ID_VIEW_APPLOOK_OFF_2003        208
+#define ID_VIEW_APPLOOK_VS_2005         209
+#define ID_VIEW_APPLOOK_VS_2008         210
+#define ID_VIEW_APPLOOK_OFF_2007_BLUE   215
+#define ID_VIEW_APPLOOK_OFF_2007_BLACK  216
+#define ID_VIEW_APPLOOK_OFF_2007_SILVER 217
+#define ID_VIEW_APPLOOK_OFF_2007_AQUA   218
+#define ID_VIEW_APPLOOK_WINDOWS_7       219
+#define IDS_EDIT_MENU                   306
+#define IDR_RIBBON                      307
+#define IDB_SHAPEBAR                    311
+#define IDR_TOOLBAR1                    313
+#define ID_WRITE_PASTEASHYPERLINK       32770
+#define ID_ADD_TRIANGLE                 32776
+#define ID_BUTTON13                     32785
+#define ID_BUTTON2                      32787
+#define ID_ADD_RECTANGLE                32789
+#define ID_ADD_CIRCLE                   32790
 
-#define IDS_APP_TITLE			103
-
-#define IDR_MAINFRAME			128
-#define IDD_SHAPECOMPOSITOR_DIALOG	102
-#define IDD_ABOUTBOX			103
-#define IDM_ABOUT				104
-#define IDM_EXIT				105
-#define IDI_SHAPECOMPOSITOR			107
-#define IDI_SMALL				108
-#define IDC_SHAPECOMPOSITOR			109
-#define IDC_MYICON				2
-#ifndef IDC_STATIC
-#define IDC_STATIC				-1
-#endif
-// Следующие стандартные значения для новых объектов
-//
+// Next default values for new objects
+// 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-
-#define _APS_NO_MFC					130
-#define _APS_NEXT_RESOURCE_VALUE	129
-#define _APS_NEXT_COMMAND_VALUE		32771
-#define _APS_NEXT_CONTROL_VALUE		1000
-#define _APS_NEXT_SYMED_VALUE		110
+#define _APS_NEXT_RESOURCE_VALUE        317
+#define _APS_NEXT_COMMAND_VALUE         32793
+#define _APS_NEXT_CONTROL_VALUE         1000
+#define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif
-
-// Windows Header Files:
-#include <windows.h>
-
-// C RunTime Header Files:
-#include <stdlib.h>
-#include <malloc.h>
-#include <memory.h>
-#include <wchar.h>
-#include <math.h>
-
-#include <d2d1.h>
-#include <d2d1helper.h>
-#include <dwrite.h>
-#include <wincodec.h>
-
-
-template<class Interface>
-inline void SafeRelease(
-	Interface **ppInterfaceToRelease
-)
-{
-	if (*ppInterfaceToRelease != NULL)
-	{
-		(*ppInterfaceToRelease)->Release();
-
-		(*ppInterfaceToRelease) = NULL;
-	}
-}
-

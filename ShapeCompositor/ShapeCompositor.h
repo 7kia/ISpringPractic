@@ -9,10 +9,40 @@
 // (C) Корпорация Майкрософт (Microsoft Corp.)
 // Все права защищены.
 
-// stdafx.cpp: исходный файл, содержащий стандарт, включающий
-// ShapeCompositor.pch будет предварительно откомпилированным заголовком
-// stdafx.obj будет содержать предварительно откомпилированные сведения о типе
+// ShapeCompositor.h : главный файл заголовка для приложения ShapeCompositor
+//
+#pragma once
 
-#include "stdafx.h"
+#ifndef __AFXWIN_H__
+	#error "включить stdafx.h до включения этого файла в PCH"
+#endif
+
+#include "resource.h"       // основные символы
 
 
+// CShapeCompositorApp:
+// О реализации данного класса см. ShapeCompositor.cpp
+//
+
+class CShapeCompositorApp : public CWinAppEx
+{
+public:
+	CShapeCompositorApp();
+
+
+// Переопределение
+public:
+	virtual BOOL InitInstance();
+	virtual int ExitInstance();
+
+// Реализация
+	UINT  m_nAppLook;
+	virtual void PreLoadState();
+	virtual void LoadCustomState();
+	virtual void SaveCustomState();
+
+	afx_msg void OnAppAbout();
+	DECLARE_MESSAGE_MAP()
+};
+
+extern CShapeCompositorApp theApp;
