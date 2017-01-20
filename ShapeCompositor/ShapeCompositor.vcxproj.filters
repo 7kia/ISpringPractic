@@ -102,15 +102,6 @@
     <Image Include="res\Toolbar256.bmp">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="res\Circle.png">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
-    <Image Include="res\ShapeBar.bmp">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
-    <Image Include="res\toolbar1.bmp">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
     <Image Include="res\writelarge.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>

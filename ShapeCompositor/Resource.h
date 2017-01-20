@@ -5,7 +5,6 @@
 #define IDD_ABOUTBOX                    100
 #define IDP_OLE_INIT_FAILED             100
 #define IDB_WRITESMALL                  110
-#define IDB_WRITELARGE                  111
 #define IDB_MAIN                        112
 #define IDB_BUTTONS                     113
 #define IDB_FILELARGE                   114
@@ -35,21 +34,19 @@
 #define ID_VIEW_APPLOOK_WINDOWS_7       219
 #define IDS_EDIT_MENU                   306
 #define IDR_RIBBON                      307
-#define IDB_SHAPEBAR                    311
-#define IDR_TOOLBAR1                    313
+#define IDB_WRITELARGE                  310
 #define ID_WRITE_PASTEASHYPERLINK       32770
-#define ID_ADD_TRIANGLE                 32776
-#define ID_BUTTON13                     32785
-#define ID_BUTTON2                      32787
-#define ID_ADD_RECTANGLE                32789
-#define ID_ADD_CIRCLE                   32790
+#define ID_ADD_TRIANGLE                 32773
+#define ID_ADD_CIRCLE                   32774
+#define ID_ADD_RECTANGLE                32775
+#define ID_ADD_ELLIPSE                  32777
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        317
-#define _APS_NEXT_COMMAND_VALUE         32793
+#define _APS_NEXT_RESOURCE_VALUE        311
+#define _APS_NEXT_COMMAND_VALUE         32778
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           310
 #endif

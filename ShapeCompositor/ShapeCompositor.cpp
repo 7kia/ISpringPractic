@@ -40,6 +40,15 @@ END_MESSAGE_MAP()
 
 CShapeCompositorApp::CShapeCompositorApp()
 {
+	// поддержка диспетчера перезагрузки
+	m_dwRestartManagerSupportFlags = AFX_RESTART_MANAGER_SUPPORT_ALL_ASPECTS;
+#ifdef _MANAGED
+	// Если приложение построено с поддержкой среды Common Language Runtime (/clr):
+	//     1) Этот дополнительный параметр требуется для правильной поддержки работы диспетчера перезагрузки.
+	//   2) В своем проекте для сборки необходимо добавить ссылку на System.Windows.Forms.
+	System::Windows::Forms::Application::SetUnhandledExceptionMode(System::Windows::Forms::UnhandledExceptionMode::ThrowException);
+#endif
+
 	// TODO: замените ниже строку идентификатора приложения строкой уникального идентификатора; рекомендуемый
 	// формат для строки: ИмяКомпании.ИмяПродукта.СубПродукт.СведенияОВерсии
 	SetAppID(_T("ShapeCompositor.AppID.NoVersion"));
@@ -57,6 +66,16 @@ CShapeCompositorApp theApp;
 
 BOOL CShapeCompositorApp::InitInstance()
 {
+	// InitCommonControlsEx() требуются для Windows XP, если манифест
+	// приложения использует ComCtl32.dll версии 6 или более поздней версии для включения
+	// стилей отображения.  В противном случае будет возникать сбой при создании любого окна.
+	INITCOMMONCONTROLSEX InitCtrls;
+	InitCtrls.dwSize = sizeof(InitCtrls);
+	// Выберите этот параметр для включения всех общих классов управления, которые необходимо использовать
+	// в вашем приложении.
+	InitCtrls.dwICC = ICC_WIN95_CLASSES;
+	InitCommonControlsEx(&InitCtrls);
+
 	CWinAppEx::InitInstance();
 
 
@@ -80,7 +99,7 @@ BOOL CShapeCompositorApp::InitInstance()
 	// TODO: следует изменить эту строку на что-нибудь подходящее,
 	// например на название организации
 	SetRegistryKey(_T("Локальные приложения, созданные с помощью мастера приложений"));
-	LoadStdProfileSettings(4);  // Загрузите стандартные параметры INI-файла (включая MRU)
+	LoadStdProfileSettings(1);  // Загрузите стандартные параметры INI-файла (включая MRU)
 
 
 	InitContextMenuManager();

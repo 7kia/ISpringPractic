@@ -36,7 +36,7 @@ END_MESSAGE_MAP()
 CMainFrame::CMainFrame()
 {
 	// TODO: добавьте код инициализации члена
-	theApp.m_nAppLook = theApp.GetInt(_T("ApplicationLook"), ID_VIEW_APPLOOK_OFF_2007_BLACK);
+	theApp.m_nAppLook = theApp.GetInt(_T("ApplicationLook"), ID_VIEW_APPLOOK_OFF_2007_BLUE);
 }
 
 CMainFrame::~CMainFrame()
@@ -52,21 +52,6 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	m_wndRibbonBar.Create(this);
 	m_wndRibbonBar.LoadFromResource(IDR_RIBBON);
-
-	if (!m_wndStatusBar.Create(this))
-	{
-		TRACE0("Ќе удалось создать строку состо€ни€\n");
-		return -1;      // не удалось создать
-	}
-
-	CString strTitlePane1;
-	CString strTitlePane2;
-	bNameValid = strTitlePane1.LoadString(IDS_STATUS_PANE1);
-	ASSERT(bNameValid);
-	bNameValid = strTitlePane2.LoadString(IDS_STATUS_PANE2);
-	ASSERT(bNameValid);
-	m_wndStatusBar.AddElement(new CMFCRibbonStatusBarPane(ID_STATUSBAR_PANE1, strTitlePane1, TRUE), strTitlePane1);
-	m_wndStatusBar.AddExtendedElement(new CMFCRibbonStatusBarPane(ID_STATUSBAR_PANE2, strTitlePane2, TRUE), strTitlePane2);
 
 	// включить режим работы закрепл€емых окон стилей Visual Studio 2005
 	CDockingManager::SetDockingMode(DT_SMART);
@@ -84,9 +69,6 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 		return FALSE;
 	// TODO: изменить класс Window или стили посредством изменени€
 	//  CREATESTRUCT cs
-
-	cs.style = WS_OVERLAPPED | WS_CAPTION | FWS_ADDTOTITLE
-		 | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
 
 	return TRUE;
 }

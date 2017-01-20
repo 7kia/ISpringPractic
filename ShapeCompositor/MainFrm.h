@@ -43,7 +43,6 @@ protected:  // встроенные члены панели элементов управления
 	CMFCRibbonBar     m_wndRibbonBar;
 	CMFCRibbonApplicationButton m_MainButton;
 	CMFCToolBarImages m_PanelImages;
-	CMFCRibbonStatusBar  m_wndStatusBar;
 
 // Созданные функции схемы сообщений
 protected:

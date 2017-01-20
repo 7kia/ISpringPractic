@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{5C7A0E01-FECE-46DA-8ECF-79E6196B12F0}</ProjectGuid>
+    <ProjectGuid>{2DFB2FFF-C32B-44E3-9CD2-B61786E8FFD8}</ProjectGuid>
     <RootNamespace>ShapeCompositor</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
     <Keyword>MFCProj</Keyword>
@@ -216,15 +216,12 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\buttons.bmp" />
-    <Image Include="res\Circle.png" />
     <Image Include="res\filelarge.bmp" />
     <Image Include="res\filesmall.bmp" />
     <Image Include="res\main.bmp" />
-    <Image Include="res\ShapeBar.bmp" />
     <Image Include="res\ShapeCompositor.ico" />
     <Image Include="res\ShapeCompositorDoc.ico" />
     <Image Include="res\Toolbar.bmp" />
-    <Image Include="res\toolbar1.bmp" />
     <Image Include="res\Toolbar256.bmp" />
     <Image Include="res\writelarge.bmp" />
     <Image Include="res\writelarge.png" />
