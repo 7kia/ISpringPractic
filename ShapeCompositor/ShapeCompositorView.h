@@ -14,6 +14,7 @@
 
 #pragma once
 
+#include "Canvas\Canvas.h"
 
 class CShapeCompositorView : public CView
 {
@@ -33,7 +34,7 @@ public:
 	virtual void OnDraw(CDC* pDC);  // переопределено для отрисовки этого представления
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 protected:
-
+	CCanvas m_canvas;
 // Реализация
 public:
 	virtual ~CShapeCompositorView();

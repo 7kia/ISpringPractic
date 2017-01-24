@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Файлы исходного кода\Canvas">
+      <UniqueIdentifier>{a8b08fea-f029-4068-8827-6cfc6ebb58de}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -39,6 +42,9 @@
     <ClInclude Include="Resource.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
+    <ClInclude Include="Canvas\Canvas.h">
+      <Filter>Файлы исходного кода\Canvas</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ShapeCompositor.cpp">
@@ -55,6 +61,12 @@
     </ClCompile>
     <ClCompile Include="ShapeCompositorView.cpp">
       <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas\Canvas.cpp">
+      <Filter>Файлы исходного кода\Canvas</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas\CanvasController.cpp">
+      <Filter>Файлы исходного кода\Canvas</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

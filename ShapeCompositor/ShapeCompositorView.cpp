@@ -39,6 +39,7 @@ END_MESSAGE_MAP()
 // создание/уничтожение CShapeCompositorView
 
 CShapeCompositorView::CShapeCompositorView()
+	: m_canvas(&this->m_hWnd)
 {
 	// TODO: добавьте код создания
 
@@ -65,6 +66,7 @@ void CShapeCompositorView::OnDraw(CDC* /*pDC*/)
 	if (!pDoc)
 		return;
 
+	m_canvas.OnRender();
 	// TODO: добавьте здесь код отрисовки для собственных данных
 }
 
