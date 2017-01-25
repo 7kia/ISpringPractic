@@ -213,11 +213,10 @@ int CShapeCompositorView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		EnableD2DSupport();
 
 		CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
-		HRESULT hr = S_OK;
 
 		// Create a Direct2D factory.
-		hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &m_pDirect2dFactory);
-		CreateDeviceResources();
+		ATLENSURE_SUCCEEDED(D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &m_pDirect2dFactory));
+		ATLENSURE_SUCCEEDED(CreateDeviceResources());
 	}
 	catch (...)
 	{
@@ -229,8 +228,8 @@ int CShapeCompositorView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 BOOL CShapeCompositorView::PreCreateWindow(CREATESTRUCT& cs)
 {
-	cs.cx = 640; // width
-	cs.cy = 480; // height
+	cs.cx = VIEW_WIDTH; // width
+	cs.cy = VIEW_HEIGHT; // height
 	cs.y = 0; // top position
 	cs.x = 0; // left position
 	if (!CScrollView::PreCreateWindow(cs))
@@ -243,9 +242,9 @@ BOOL CShapeCompositorView::PreCreateWindow(CREATESTRUCT& cs)
 void CShapeCompositorView::OnSize(UINT nType, int cx, int cy)
 {
 	CScrollView::OnSize(nType, cx, cy);
-	ATLENSURE_SUCCEEDED(CreateDeviceResources());
-	SetScrollSizes(MM_TEXT, { 640,480 });
-	//ScrollToPosition(CPoint(0, 0));
+
+	SetScrollSizes(MM_TEXT, { VIEW_WIDTH, VIEW_HEIGHT });
+
 	if (m_pRenderTarget)
 	{
 		// Note: This method can fail, but it's okay to ignore the
@@ -262,7 +261,6 @@ void CShapeCompositorView::OnPaint()
 	CPaintDC dc(this); // device context for painting
 					   // TODO: добавьте свой код обработчика сообщений
 					   // Не вызывать CScrollView::OnPaint() для сообщений рисования
-
 
 	Render();
 }

@@ -20,6 +20,8 @@
 #pragma comment(lib, "d2d1")
 
 static const FLOAT DEFAULT_DPI = 96.f;
+static const LONG VIEW_WIDTH = 640;
+static const LONG VIEW_HEIGHT = 480;
 
 class CShapeCompositorView : public CScrollView
 {
