@@ -37,6 +37,7 @@ private:
 
 	void		Visit(const CRectangleShape & shape) override;
 	void		Visit(const CCircleShape & shape) override;
+	void		Visit(const CTriangleShape & shape) override;
 
 	//--------------------------------------------
 
