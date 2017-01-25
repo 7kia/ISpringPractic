@@ -43,7 +43,6 @@ END_MESSAGE_MAP()
 // создание/уничтожение CShapeCompositorView
 
 CShapeCompositorView::CShapeCompositorView()
-	//: m_canvas(&this->m_hWnd)
 {
 }
 
@@ -73,22 +72,6 @@ HRESULT CShapeCompositorView::CreateDeviceResources()
 		);
 
 
-		if (SUCCEEDED(hr))
-		{
-			// Create a gray brush.
-			hr = m_pRenderTarget->CreateSolidColorBrush(
-				D2D1::ColorF(D2D1::ColorF::LightSlateGray),
-				&m_pLightSlateGrayBrush
-			);
-		}
-		if (SUCCEEDED(hr))
-		{
-			// Create a blue brush.
-			hr = m_pRenderTarget->CreateSolidColorBrush(
-				D2D1::ColorF(D2D1::ColorF::CornflowerBlue),
-				&m_pCornflowerBlueBrush
-			);
-		}
 	}
 
 	return hr;
@@ -107,41 +90,7 @@ HRESULT CShapeCompositorView::Render()
 	m_pRenderTarget->SetTransform(matrix);
 	m_pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
 
-
-	D2D1_SIZE_F rtSize = m_pRenderTarget->GetSize();
-
-
-	// Draw two rectangles.
-	D2D1_RECT_F rectangle1 = D2D1::RectF(
-		rtSize.width / 2 - 50.0f,
-		rtSize.height / 2 - 50.0f,
-		rtSize.width / 2 + 50.0f,
-		rtSize.height / 2 + 50.0f
-	);
-
-	D2D1_RECT_F rectangle2 = D2D1::RectF(
-		 2 - 100.0f,
-		2 - 100.0f,
-		 2 + 100.0f,
-		2 + 100.0f
-	);
-	/*
-	// to center
-	rtSize.width / 2 - 100.0f,
-	rtSize.height / 2 - 100.0f,
-	rtSize.width / 2 + 100.0f,
-	rtSize.height / 2 + 100.0f
-
-	*/
-
-	// Draw a filled rectangle.
-	m_pRenderTarget->FillRectangle(&rectangle1, m_pLightSlateGrayBrush);
-
-	// Draw the outline of a rectangle.
-	m_pRenderTarget->DrawRectangle(&rectangle2, m_pCornflowerBlueBrush);
-
-	hr = m_pRenderTarget->EndDraw();
-	//}
+	hr = m_canvas.Render();
 
 	if (hr == D2DERR_RECREATE_TARGET)
 	{
@@ -217,6 +166,8 @@ int CShapeCompositorView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		// Create a Direct2D factory.
 		ATLENSURE_SUCCEEDED(D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &m_pDirect2dFactory));
 		ATLENSURE_SUCCEEDED(CreateDeviceResources());
+		ATLENSURE_SUCCEEDED(m_canvas.CreateRecources(m_pRenderTarget.p));
+
 	}
 	catch (...)
 	{

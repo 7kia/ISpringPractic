@@ -19,17 +19,21 @@ public:
 	// Methods
 public:
 
-	void		SetHwnd(CShapeCompositorView * pWindow);
+	HRESULT		Render();
 
+	HRESULT		CreateRecources(ID2D1HwndRenderTarget * renderTarget);
 	//////////////////////////////////////////////////////////////////////
 	// Data
 public:
 	class CController;
 	std::unique_ptr<CController>				m_controller;
 
+	// TODO : delete it
+	// TODO : transfer
 
-	//ID2D1HwndRenderTarget
-	//
+	CComPtr<ID2D1SolidColorBrush>						m_pLightSlateGrayBrush;
+	CComPtr<ID2D1SolidColorBrush>						m_pCornflowerBlueBrush;
+
 private:
 
 	// TODO : add
@@ -37,8 +41,7 @@ private:
 	// ShapeFactory
 	// D2DFactory
 
-	// TODO : see need it
-	CShapeCompositorView *	m_pWindow = nullptr;
+	ID2D1HwndRenderTarget * m_pRenderTarget = nullptr;
 
 };
 

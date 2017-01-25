@@ -46,15 +46,9 @@ public:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 protected:
 	CCanvas m_canvas;
+
 	CComPtr<ID2D1Factory>				m_pDirect2dFactory;
 	CComPtr<ID2D1HwndRenderTarget>		m_pRenderTarget;
-
-	// TODO : delete it
-	// TODO : transfer
-
-	CComPtr<ID2D1SolidColorBrush>						m_pLightSlateGrayBrush;
-	CComPtr<ID2D1SolidColorBrush>						m_pCornflowerBlueBrush;
-
 // Реализация
 public:
 	virtual ~CShapeCompositorView();
