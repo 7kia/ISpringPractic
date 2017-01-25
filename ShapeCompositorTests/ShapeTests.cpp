@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 #include "Canvas/Shapes/CShape.h"
-#include "Canvas/Shapes/RectangleShape.h"
+#include "Canvas/Shapes/AllShapes.h"
 
 BOOST_AUTO_TEST_SUITE(CShape_suite)
 
@@ -75,7 +75,51 @@ BOOST_FIXTURE_TEST_SUITE(Rectangle, Rectangle_)
 		BOOST_CHECK(verteces[3] == Vec2f(-width / 2.f, -height / 2.f));
 
 	}
-
 BOOST_AUTO_TEST_SUITE_END()// Rectangle_
 
-BOOST_AUTO_TEST_SUITE_END()// CRectangle_suite
+
+struct Circle_
+{
+	CCircleShape circle;
+};
+BOOST_FIXTURE_TEST_SUITE(Circle, Circle_)
+BOOST_AUTO_TEST_CASE(Have_radius)
+{
+	float radius = 6.8f;
+	circle.SetRadius(radius);
+
+	BOOST_CHECK(circle.GetRadius() == radius);
+}
+BOOST_AUTO_TEST_SUITE_END()// Circle_
+
+struct Triangle_
+{
+	Vec2f first;
+	Vec2f second;
+	Vec2f third;
+
+	Vec2f pos;
+
+	CTriangleShape triangle;
+
+	Triangle_()
+		: first(-11.f, 29.f)
+		, second(14.f, 29.f)
+		, third(1.5f, -25.f)
+		, triangle(Vec2f(1.5f, 2.f), 25.f, 54.f)
+	{
+
+	}
+};
+BOOST_FIXTURE_TEST_SUITE(Triangle, Triangle_)
+BOOST_AUTO_TEST_CASE(Have_points)
+{
+	auto verteces = triangle.GetVertices();
+
+	BOOST_CHECK(verteces[0] == first);
+	BOOST_CHECK(verteces[1] == second);
+	BOOST_CHECK(verteces[2] == third);
+}
+BOOST_AUTO_TEST_SUITE_END()// Triangle_
+
+BOOST_AUTO_TEST_SUITE_END()// CShape_suite
