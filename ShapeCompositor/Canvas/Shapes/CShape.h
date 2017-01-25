@@ -13,14 +13,14 @@ public:
 	// IShape
 
 	// Position
-	void SetPosition(D2D1_POINT_2F position) override;
-	D2D1_POINT_2F GetPosition() const override;
+	void SetPosition(Vec2f position) override;
+	Vec2f GetPosition() const override;
 	// Inner Color
-	void SetInnerColor(D2D1_COLOR_F color) override;
-	D2D1_COLOR_F GetInnerColor() const override;
+	void SetInnerColor(Color color) override;
+	Color GetInnerColor() const override;
 	// Outer Color
-	void SetOuterColor(D2D1_COLOR_F color) override;
-	D2D1_COLOR_F GetOuterColor() const override;
+	void SetOuterColor(Color color) override;
+	Color GetOuterColor() const override;
 
 	// TODO :
 	// Visual part
@@ -32,7 +32,7 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
-	D2D1_POINT_2F m_position;
-	D2D1_COLOR_F m_innerColor;
-	D2D1_COLOR_F m_outerColor;
+	Vec2f m_position;
+	Color m_innerColor;
+	Color m_outerColor;
 };

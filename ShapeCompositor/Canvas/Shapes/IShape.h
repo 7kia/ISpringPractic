@@ -1,6 +1,6 @@
 #pragma once
 
-#include "stdafx.h"
+#include "ShapeAttributes.h"
 
 class IShape
 {
@@ -10,17 +10,19 @@ public:
 	// Methods
 public:
 
-	virtual void Draw() = 0;
+	virtual void Draw() {
+	// TODO : rewrite
+	};
 
 	// Position
-	virtual void SetPosition(D2D1_POINT_2F position) = 0;
-	virtual D2D1_POINT_2F GetPosition() const = 0;
+	virtual void SetPosition(Vec2f position) = 0;
+	virtual Vec2f GetPosition() const = 0;
 	// Inner Color
-	virtual void SetInnerColor(D2D1_COLOR_F color) = 0;
-	virtual D2D1_COLOR_F GetInnerColor() const = 0;
+	virtual void SetInnerColor(Color color) = 0;
+	virtual Color GetInnerColor() const = 0;
 	// Outer Color
-	virtual void SetOuterColor(D2D1_COLOR_F color) = 0;
-	virtual D2D1_COLOR_F GetOuterColor() const = 0;
+	virtual void SetOuterColor(Color color) = 0;
+	virtual Color GetOuterColor() const = 0;
 
 	// TODO :
 	// Visual part
