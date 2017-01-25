@@ -3,6 +3,14 @@
 #include <d2d1.h>
 #include <functional>
 
+struct SSize
+{
+	SSize();
+	SSize(float width, float height);
+	float width = 0.f;
+	float height = 0.f;
+};
+
 struct Vec2f
 {
 	Vec2f() = default;

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "IShape.h"
 
 class CShape : public IShape
@@ -36,3 +38,5 @@ private:
 	Color m_innerColor;
 	Color m_outerColor;
 };
+
+using PCShape = std::unique_ptr<CShape>;

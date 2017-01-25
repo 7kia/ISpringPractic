@@ -44,3 +44,11 @@ HRESULT CCanvas::CreateRecources(ID2D1HwndRenderTarget * renderTarget)
 	return hr;
 }
 
+void CCanvas::RenderShapes()
+{
+	for (const auto & shape : m_shapes)
+	{
+
+	}
+}
+

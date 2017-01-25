@@ -1,6 +1,17 @@
 #include "stdafx.h"
 #include "ShapeAttributes.h"
 
+SSize::SSize()
+{
+}
+
+SSize::SSize(float width, float height)
+	: width(width)
+	, height(height)
+{
+}
+
+
 Vec2f::Vec2f(float x, float y)
 	: x(x)
 	, y(y)

@@ -10,10 +10,6 @@ public:
 	// Methods
 public:
 
-	virtual void Draw() {
-	// TODO : rewrite
-	};
-
 	// Position
 	virtual void SetPosition(Vec2f position) = 0;
 	virtual Vec2f GetPosition() const = 0;
