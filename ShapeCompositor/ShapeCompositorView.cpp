@@ -29,9 +29,9 @@
 
 // CShapeCompositorView
 
-IMPLEMENT_DYNCREATE(CShapeCompositorView, CView)
+IMPLEMENT_DYNCREATE(CShapeCompositorView, CScrollView)
 
-BEGIN_MESSAGE_MAP(CShapeCompositorView, CView)
+BEGIN_MESSAGE_MAP(CShapeCompositorView, CScrollView)
 	ON_WM_CONTEXTMENU()
 	ON_WM_RBUTTONUP()
 	ON_WM_CREATE()
@@ -43,16 +43,6 @@ END_MESSAGE_MAP()
 CShapeCompositorView::CShapeCompositorView()
 	//: m_canvas(&this->m_hWnd)
 {
-	// Enable D2D support for this window:  
-	EnableD2DSupport();
-
-	CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
-	HRESULT hr = S_OK;
-
-	// Create a Direct2D factory.
-	hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &m_pDirect2dFactory);
-	CreateDeviceResources();
-
 }
 
 CShapeCompositorView::~CShapeCompositorView()
@@ -191,14 +181,6 @@ void CShapeCompositorView::OnResize(UINT width, UINT height)
 	}
 }
 
-BOOL CShapeCompositorView::PreCreateWindow(CREATESTRUCT& cs)
-{
-	// TODO: изменить класс Window или стили посредством изменения
-	//  CREATESTRUCT cs
-
-	return CScrollView::PreCreateWindow(cs);
-}
-
 // рисование CShapeCompositorView
 
 void CShapeCompositorView::OnDraw(CDC* /*pDC*/)
@@ -249,17 +231,49 @@ CShapeCompositorDoc* CShapeCompositorView::GetDocument() const // встроена неотл
 
 
 // обработчики сообщений CShapeCompositorView
-/*
+
 int CShapeCompositorView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CScrollView::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
-	HRESULT hr = GetRenderTarget().Create(m_hWnd);
-	return SUCCEEDED(hr) ? 0 : ;
+	try
+	{
+		// Enable D2D support for this window:  
+		EnableD2DSupport();
+
+		CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
+		HRESULT hr = S_OK;
+
+		// Create a Direct2D factory.
+		hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &m_pDirect2dFactory);
+		CreateDeviceResources();
+	}
+	catch (...)
+	{
+		return -1;
+	}
+
+	return 0;
 }
 
+BOOL CShapeCompositorView::PreCreateWindow(CREATESTRUCT& cs)
+{
+	cs.cx = 640; // width
+	cs.cy = 480; // height
+	cs.y = 0; // top position
+	cs.x = 0; // left position
+	if (!CScrollView::PreCreateWindow(cs))
+		return FALSE;
 
+	cs.dwExStyle |= WS_EX_CLIENTEDGE;
+	cs.style &= ~WS_BORDER;
+	cs.lpszClass = AfxRegisterWndClass(CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS,
+		::LoadCursor(NULL, IDC_ARROW), reinterpret_cast<HBRUSH>(COLOR_WINDOW + 1), NULL);
+
+	return TRUE;
+}
+/*
 void CShapeCompositorView::OnSize(UINT nType, int cx, int cy)
 {
 	CScrollView::OnSize(nType, cx, cy);

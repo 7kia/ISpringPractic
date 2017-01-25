@@ -31,6 +31,7 @@ protected: // создать только из сериализации
 public:
 	CShapeCompositorDoc* GetDocument() const;
 
+
 // Операции
 public:
 	HRESULT CreateDeviceResources();
@@ -66,6 +67,7 @@ protected:
 
 // Созданные функции схемы сообщений
 protected:
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnFilePrintPreview();
 	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
