@@ -37,9 +37,7 @@ public:
 	HRESULT CreateDeviceResources();
 
 	// TODO : transfer
-	HRESULT	OnRender();
-	void	OnResize(UINT width, UINT height);
-
+	HRESULT	Render();
 // Переопределение
 public:
 	virtual void OnDraw(CDC* pDC);  // переопределено для отрисовки этого представления
@@ -71,10 +69,13 @@ protected:
 	afx_msg void OnFilePrintPreview();
 	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
-	//afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	//afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg void OnSize(UINT nType, int cx, int cy);
 
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnPaint();
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 };
 
 #ifndef _DEBUG  // отладочная версия в ShapeCompositorView.cpp

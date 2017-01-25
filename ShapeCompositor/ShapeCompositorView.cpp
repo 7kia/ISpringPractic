@@ -36,6 +36,8 @@ BEGIN_MESSAGE_MAP(CShapeCompositorView, CScrollView)
 	ON_WM_RBUTTONUP()
 	ON_WM_CREATE()
 	ON_WM_SIZE()
+	ON_WM_PAINT()
+	ON_WM_ERASEBKGND()
 END_MESSAGE_MAP()
 
 // создание/уничтожение CShapeCompositorView
@@ -95,45 +97,19 @@ HRESULT CShapeCompositorView::CreateDeviceResources()
 // This method discards device-specific
 // resources if the Direct3D device dissapears during execution and
 // recreates the resources the next time it's invoked.
-HRESULT CShapeCompositorView::OnRender()
+HRESULT CShapeCompositorView::Render()
 {
 	HRESULT hr = S_OK;
 
-	//hr = CreateDeviceResources();
-
-	//if (SUCCEEDED(hr))
-	//{
+	CPoint point = GetScrollPosition();
+	D2D1_MATRIX_3X2_F matrix = D2D1::Matrix3x2F::Translation((float)-point.x, (float)-point.y);
 	m_pRenderTarget->BeginDraw();
-
-	m_pRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
-
+	m_pRenderTarget->SetTransform(matrix);
 	m_pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
+
 
 	D2D1_SIZE_F rtSize = m_pRenderTarget->GetSize();
 
-	// Draw a grid background.
-	int width = static_cast<int>(rtSize.width);
-	int height = static_cast<int>(rtSize.height);
-
-	for (int x = 0; x < width; x += 10)
-	{
-		m_pRenderTarget->DrawLine(
-			D2D1::Point2F(static_cast<FLOAT>(x), 0.0f),
-			D2D1::Point2F(static_cast<FLOAT>(x), rtSize.height),
-			m_pLightSlateGrayBrush,
-			0.5f
-		);
-	}
-
-	for (int y = 0; y < height; y += 10)
-	{
-		m_pRenderTarget->DrawLine(
-			D2D1::Point2F(0.0f, static_cast<FLOAT>(y)),
-			D2D1::Point2F(rtSize.width, static_cast<FLOAT>(y)),
-			m_pLightSlateGrayBrush,
-			0.5f
-		);
-	}
 
 	// Draw two rectangles.
 	D2D1_RECT_F rectangle1 = D2D1::RectF(
@@ -144,12 +120,19 @@ HRESULT CShapeCompositorView::OnRender()
 	);
 
 	D2D1_RECT_F rectangle2 = D2D1::RectF(
-		rtSize.width / 2 - 100.0f,
-		rtSize.height / 2 - 100.0f,
-		rtSize.width / 2 + 100.0f,
-		rtSize.height / 2 + 100.0f
+		 2 - 100.0f,
+		2 - 100.0f,
+		 2 + 100.0f,
+		2 + 100.0f
 	);
+	/*
+	// to center
+	rtSize.width / 2 - 100.0f,
+	rtSize.height / 2 - 100.0f,
+	rtSize.width / 2 + 100.0f,
+	rtSize.height / 2 + 100.0f
 
+	*/
 
 	// Draw a filled rectangle.
 	m_pRenderTarget->FillRectangle(&rectangle1, m_pLightSlateGrayBrush);
@@ -168,19 +151,6 @@ HRESULT CShapeCompositorView::OnRender()
 	return hr;
 }
 
-//  If the application receives a WM_SIZE message, this method
-//  resizes the render target appropriately.
-void CShapeCompositorView::OnResize(UINT width, UINT height)
-{
-	if (m_pRenderTarget)
-	{
-		// Note: This method can fail, but it's okay to ignore the
-		// error here, because the error will be returned again
-		// the next time EndDraw is called.
-		m_pRenderTarget->Resize(D2D1::SizeU(width, height));
-	}
-}
-
 // рисование CShapeCompositorView
 
 void CShapeCompositorView::OnDraw(CDC* /*pDC*/)
@@ -190,8 +160,7 @@ void CShapeCompositorView::OnDraw(CDC* /*pDC*/)
 	if (!pDoc)
 		return;
 
-	OnRender();
-	//m_canvas.OnRender();
+	//m_canvas.Render();
 	// TODO: добавьте здесь код отрисовки для собственных данных
 }
 
@@ -199,6 +168,7 @@ void CShapeCompositorView::OnRButtonUp(UINT /* nFlags */, CPoint point)
 {
 	ClientToScreen(&point);
 	OnContextMenu(this, point);
+	RedrawWindow();
 }
 
 void CShapeCompositorView::OnContextMenu(CWnd* /* pWnd */, CPoint point)
@@ -266,21 +236,49 @@ BOOL CShapeCompositorView::PreCreateWindow(CREATESTRUCT& cs)
 	if (!CScrollView::PreCreateWindow(cs))
 		return FALSE;
 
-	cs.dwExStyle |= WS_EX_CLIENTEDGE;
-	cs.style &= ~WS_BORDER;
-	cs.lpszClass = AfxRegisterWndClass(CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS,
-		::LoadCursor(NULL, IDC_ARROW), reinterpret_cast<HBRUSH>(COLOR_WINDOW + 1), NULL);
 
 	return TRUE;
 }
-/*
+
 void CShapeCompositorView::OnSize(UINT nType, int cx, int cy)
 {
 	CScrollView::OnSize(nType, cx, cy);
-
-	if (GetRenderTarget().IsValid())
+	ATLENSURE_SUCCEEDED(CreateDeviceResources());
+	SetScrollSizes(MM_TEXT, { 640,480 });
+	//ScrollToPosition(CPoint(0, 0));
+	if (m_pRenderTarget)
 	{
-		GetRenderTarget().Resize(CD2DSizeU(cx, cy));
+		// Note: This method can fail, but it's okay to ignore the
+		// error here, because the error will be returned again
+		// the next time EndDraw is called.
+		m_pRenderTarget->Resize(D2D1::SizeU(cx, cy));
 	}
+	Render();
 }
-*/
+
+
+void CShapeCompositorView::OnPaint()
+{
+	CPaintDC dc(this); // device context for painting
+					   // TODO: добавьте свой код обработчика сообщений
+					   // Не вызывать CScrollView::OnPaint() для сообщений рисования
+
+
+	Render();
+}
+
+
+BOOL CShapeCompositorView::PreTranslateMessage(MSG* pMsg)
+{
+	// TODO: добавьте специализированный код или вызов базового класса
+
+	return CScrollView::PreTranslateMessage(pMsg);
+}
+
+
+BOOL CShapeCompositorView::OnEraseBkgnd(CDC* pDC)
+{
+	// TODO: добавьте свой код обработчика сообщений или вызов стандартного
+
+	return CScrollView::OnEraseBkgnd(pDC);
+}
