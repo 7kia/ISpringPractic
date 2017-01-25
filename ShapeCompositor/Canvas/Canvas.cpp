@@ -9,6 +9,8 @@ CCanvas::CCanvas()
 	rectangle->SetWidth(20.f);
 	rectangle->SetHeight(90.f);
 	rectangle->SetPosition(Vec2f(200.f, 200.f));
+	rectangle->SetOutlineColor(Color(0.25f, 0.25f, 0.25f));
+	rectangle->SetFillColor(Color(0.55f, 0.55f, 0.55f));
 
 	m_shapes.push_back(rectangle);
 }
@@ -112,5 +114,9 @@ void CCanvas::Visit(const CRectangleShape & shape)
 	m_pRenderTarget->FillGeometry(m_pathGeometry, m_fillBrush);
 	m_pRenderTarget->DrawGeometry(m_pathGeometry, m_outlineBrush);
 
+	m_fillBrush.Release();
+	m_outlineBrush.Release();
+	m_pathGeometry.Release();
+	m_geometrySink.Release();
 }
 

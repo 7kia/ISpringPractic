@@ -19,9 +19,10 @@ std::vector<Vec2f> CRectangleShape::GetVertices() const
 	float width = GetWidth();
 	float height = GetHeight();
 
-	return{ Vec2f(position.x - width / 2.f, position.y - height / 2.f)// Left top
-		, Vec2f(position.x + width / 2.f, position.y - height / 2.f)// Right top
+	return{ 
+		 Vec2f(position.x - width / 2.f, position.y + height / 2.f)// Left bootom
 		, Vec2f(position.x + width / 2.f, position.y + height / 2.f)// Right bootom
-		, Vec2f(position.x - width / 2.f, position.y + height / 2.f)// Left bootom
+		, Vec2f(position.x + width / 2.f, position.y - height / 2.f)// Right top
+		, Vec2f(position.x - width / 2.f, position.y - height / 2.f)// Left top
 	};
 }
