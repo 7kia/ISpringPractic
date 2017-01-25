@@ -50,32 +50,6 @@ CShapeCompositorView::~CShapeCompositorView()
 {
 }
 
-HRESULT CShapeCompositorView::CreateDeviceResources()
-{
-	HRESULT hr = S_OK;
-
-	if (!m_pRenderTarget)
-	{
-		RECT rc;
-		GetClientRect(&rc);// TODO : see can it rewrite
-
-		D2D1_SIZE_U size = D2D1::SizeU(
-			rc.right - rc.left,
-			rc.bottom - rc.top
-		);
-
-		// Create a Direct2D render target.
-		hr = m_pDirect2dFactory->CreateHwndRenderTarget(
-			D2D1::RenderTargetProperties(),
-			D2D1::HwndRenderTargetProperties(m_hWnd, size),
-			&m_pRenderTarget
-		);
-
-
-	}
-
-	return hr;
-}
 
 // This method discards device-specific
 // resources if the Direct3D device dissapears during execution and
@@ -98,6 +72,16 @@ HRESULT CShapeCompositorView::Render()
 	}
 
 	return hr;
+}
+
+void CShapeCompositorView::SetRenderTarget(ID2D1HwndRenderTarget * pRenderTarget)
+{
+	m_pRenderTarget = pRenderTarget;
+}
+
+ID2D1HwndRenderTarget * CShapeCompositorView::GetRenderTarget()
+{
+	return m_pRenderTarget;
 }
 
 // рисование CShapeCompositorView
@@ -164,9 +148,9 @@ int CShapeCompositorView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
 
 		// Create a Direct2D factory.
-		ATLENSURE_SUCCEEDED(D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &m_pDirect2dFactory));
-		ATLENSURE_SUCCEEDED(CreateDeviceResources());
-		ATLENSURE_SUCCEEDED(m_canvas.CreateRecources(m_pRenderTarget.p));
+		//ATLENSURE_SUCCEEDED(D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &m_pDirect2dFactory));
+		//ATLENSURE_SUCCEEDED(CreateDeviceResources());
+		ATLENSURE_SUCCEEDED(m_canvas.CreateRecources(this));
 
 	}
 	catch (...)

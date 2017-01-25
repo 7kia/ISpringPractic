@@ -24,7 +24,7 @@ public:
 
 	HRESULT		Render();
 
-	HRESULT		CreateRecources(ID2D1HwndRenderTarget * renderTarget);
+	HRESULT		CreateRecources(CShapeCompositorView * window);
 
 private:
 	void		RenderShapes();
@@ -34,6 +34,9 @@ private:
 public:
 	class CController;
 	std::unique_ptr<CController>				m_controller;
+
+	CComPtr<ID2D1Factory>						m_pDirect2dFactory;
+	CComPtr<ID2D1HwndRenderTarget>				m_pRenderTarget;
 
 	// TODO : delete it
 	// TODO : transfer
@@ -48,7 +51,7 @@ private:
 	// ShapeFactory
 	// D2DFactory
 
-	ID2D1HwndRenderTarget * m_pRenderTarget = nullptr;
+	CShapeCompositorView *	m_window = nullptr;
 	std::vector<PCShape>	m_shapes;
 };
 

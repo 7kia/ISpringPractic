@@ -23,11 +23,34 @@ HRESULT CCanvas::Render()
 	return m_pRenderTarget->EndDraw();
 }
 
-HRESULT CCanvas::CreateRecources(ID2D1HwndRenderTarget * renderTarget)
+HRESULT CCanvas::CreateRecources(CShapeCompositorView * window)
 {
-	m_pRenderTarget = renderTarget;
+	ATLENSURE_SUCCEEDED(D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &m_pDirect2dFactory));
+
+	m_window = window;
+	m_pRenderTarget = m_window->GetRenderTarget();
 
 	HRESULT hr = S_OK;
+
+	if (!m_pRenderTarget)
+	{
+		RECT rc;
+		m_window->GetClientRect(&rc);// TODO : see can it rewrite
+
+		D2D1_SIZE_U size = D2D1::SizeU(
+			rc.right - rc.left,
+			rc.bottom - rc.top
+		);
+
+		// Create a Direct2D render target.
+		hr = m_pDirect2dFactory->CreateHwndRenderTarget(
+			D2D1::RenderTargetProperties(),
+			D2D1::HwndRenderTargetProperties(window->m_hWnd, size),
+			&m_pRenderTarget
+		);
+
+		window->SetRenderTarget(m_pRenderTarget);
+	}
 
 	// Create a gray brush.
 	hr = m_pRenderTarget->CreateSolidColorBrush(

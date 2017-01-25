@@ -36,10 +36,12 @@ public:
 
 // Операции
 public:
-	HRESULT CreateDeviceResources();
-
 	// TODO : transfer
 	HRESULT	Render();
+
+	void					SetRenderTarget(ID2D1HwndRenderTarget * pRenderTarget);
+	ID2D1HwndRenderTarget * GetRenderTarget();
+
 // Переопределение
 public:
 	virtual void OnDraw(CDC* pDC);  // переопределено для отрисовки этого представления
@@ -47,8 +49,7 @@ public:
 protected:
 	CCanvas m_canvas;
 
-	CComPtr<ID2D1Factory>				m_pDirect2dFactory;
-	CComPtr<ID2D1HwndRenderTarget>		m_pRenderTarget;
+	ID2D1HwndRenderTarget * m_pRenderTarget = nullptr;
 // Реализация
 public:
 	virtual ~CShapeCompositorView();
