@@ -63,6 +63,12 @@
     <ClInclude Include="Canvas\Shapes\RectangleShape.h">
       <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
     </ClInclude>
+    <ClInclude Include="RenderShapeVisitor.h">
+      <Filter>Файлы исходного кода\Canvas</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderShapeAccept.h">
+      <Filter>Файлы исходного кода\Canvas</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ShapeCompositor.cpp">
@@ -96,6 +102,9 @@
       <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
     </ClCompile>
     <ClCompile Include="Canvas\Shapes\RectangleShape.cpp">
+      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas\Shapes\IShape.cpp">
       <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
     </ClCompile>
   </ItemGroup>

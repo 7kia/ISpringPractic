@@ -18,11 +18,11 @@ public:
 	void SetPosition(Vec2f position) override;
 	Vec2f GetPosition() const override;
 	// Inner Color
-	void SetInnerColor(Color color) override;
-	Color GetInnerColor() const override;
+	void SetFillColor(Color color) override;
+	Color GetFillColor() const override;
 	// Outer Color
-	void SetOuterColor(Color color) override;
-	Color GetOuterColor() const override;
+	void SetOutlineColor(Color color) override;
+	Color GetOutlineColor() const override;
 
 	// TODO :
 	// Visual part
@@ -35,8 +35,8 @@ public:
 	// Data
 private:
 	Vec2f m_position;
-	Color m_innerColor;
-	Color m_outerColor;
+	Color m_fillColor;
+	Color m_outlineColor;
 };
 
-using PCShape = std::unique_ptr<CShape>;
+using PCShape = std::shared_ptr<CShape>;

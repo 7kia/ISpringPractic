@@ -2,6 +2,7 @@
 
 #include <d2d1.h>
 #include <functional>
+#include <vector>
 
 struct SSize
 {
@@ -18,8 +19,8 @@ struct Vec2f
 
 	bool operator==(Vec2f const& vec) const;
 
-	float x;
-	float y;
+	float x = 0.f;
+	float y = 0.f;
 };
 
 struct Color
@@ -32,8 +33,17 @@ struct Color
 
 	bool operator==(Color const& other) const;
 
-	float r;
-	float g;
-	float b;
-	float a;
+	float r = 0.f;
+	float g = 0.f;
+	float b = 0.f;
+	float a = 0.f;
+};
+
+// Mixin
+class IHaveVertex
+{
+public:
+	virtual ~IHaveVertex() = default;
+
+	virtual std::vector<Vec2f> GetVertices() const = 0;
 };

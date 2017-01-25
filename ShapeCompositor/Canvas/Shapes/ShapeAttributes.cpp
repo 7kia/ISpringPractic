@@ -42,4 +42,3 @@ bool Color::operator==(Color const & other) const
 		&& (b == other.b)
 		&& (a == other.a);
 }
-

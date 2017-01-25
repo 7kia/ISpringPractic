@@ -11,10 +11,12 @@
 #include <vector>
 
 #include "Shapes\RectangleShape.h"
+#include "RenderShapeVisitor.h"
 
 class CShapeCompositorView;
 
 class CCanvas
+	: public IRenderShapeVisitor
 {
 public:
 	CCanvas();
@@ -29,6 +31,13 @@ public:
 private:
 	void		RenderShapes();
 
+	//--------------------------------------------
+	// IRenderShapeVisitor
+
+	void		Visit(const CRectangleShape & shape) override;
+
+	//--------------------------------------------
+
 	//////////////////////////////////////////////////////////////////////
 	// Data
 public:
@@ -38,11 +47,18 @@ public:
 	CComPtr<ID2D1Factory>						m_pDirect2dFactory;
 	CComPtr<ID2D1HwndRenderTarget>				m_pRenderTarget;
 
+
+	CComPtr<ID2D1SolidColorBrush>				m_fillBrush;;
+	CComPtr<ID2D1SolidColorBrush>				m_outlineBrush;
+	CComPtr<ID2D1PathGeometry>					m_pathGeometry;
+	CComPtr<ID2D1GeometrySink>					m_geometrySink;
+
 	// TODO : delete it
 	// TODO : transfer
 
 	CComPtr<ID2D1SolidColorBrush>						m_pLightSlateGrayBrush;
 	CComPtr<ID2D1SolidColorBrush>						m_pCornflowerBlueBrush;
+
 
 private:
 

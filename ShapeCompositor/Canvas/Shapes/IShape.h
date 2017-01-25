@@ -1,10 +1,13 @@
 #pragma once
 
 #include "ShapeAttributes.h"
+#include "RenderShapeAccept.h"
 
 class IShape
+	: public IRenderShapeAccept
 {
 public:
+	IShape();
 	virtual ~IShape() = default;
 	//////////////////////////////////////////////////////////////////////
 	// Methods
@@ -14,11 +17,11 @@ public:
 	virtual void SetPosition(Vec2f position) = 0;
 	virtual Vec2f GetPosition() const = 0;
 	// Inner Color
-	virtual void SetInnerColor(Color color) = 0;
-	virtual Color GetInnerColor() const = 0;
+	virtual void SetFillColor(Color color) = 0;
+	virtual Color GetFillColor() const = 0;
 	// Outer Color
-	virtual void SetOuterColor(Color color) = 0;
-	virtual Color GetOuterColor() const = 0;
+	virtual void SetOutlineColor(Color color) = 0;
+	virtual Color GetOutlineColor() const = 0;
 
 	// TODO :
 	// Visual part

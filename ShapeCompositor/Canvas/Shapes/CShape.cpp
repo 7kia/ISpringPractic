@@ -16,22 +16,22 @@ Vec2f CShape::GetPosition() const
 	return m_position;
 }
 
-void CShape::SetInnerColor(Color color)
+void CShape::SetFillColor(Color color)
 {
-	m_innerColor = color;
+	m_fillColor = color;
 }
 
-Color CShape::GetInnerColor() const
+Color CShape::GetFillColor() const
 {
-	return m_innerColor;
+	return m_fillColor;
 }
 
-void CShape::SetOuterColor(Color color)
+void CShape::SetOutlineColor(Color color)
 {
-	m_outerColor = color;
+	m_outlineColor = color;
 }
 
-Color CShape::GetOuterColor() const
+Color CShape::GetOutlineColor() const
 {
-	return m_outerColor;
+	return m_outlineColor;
 }
