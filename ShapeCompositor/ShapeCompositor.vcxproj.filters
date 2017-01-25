@@ -16,6 +16,9 @@
     <Filter Include="Файлы исходного кода\Canvas">
       <UniqueIdentifier>{a8b08fea-f029-4068-8827-6cfc6ebb58de}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы исходного кода\Canvas\Shapes">
+      <UniqueIdentifier>{da90bdd4-72e6-4339-81a0-e476c8299cce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -45,6 +48,12 @@
     <ClInclude Include="Canvas\Canvas.h">
       <Filter>Файлы исходного кода\Canvas</Filter>
     </ClInclude>
+    <ClInclude Include="Canvas\Shapes\CShape.h">
+      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Canvas\Shapes\IShape.h">
+      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ShapeCompositor.cpp">
@@ -67,6 +76,9 @@
     </ClCompile>
     <ClCompile Include="Canvas\CanvasController.cpp">
       <Filter>Файлы исходного кода\Canvas</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas\Shapes\CShape.cpp">
+      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
