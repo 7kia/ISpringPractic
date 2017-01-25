@@ -8,6 +8,21 @@ CRectangleShape::CRectangleShape()
 {
 }
 
+CRectangleShape::CRectangleShape(SSize size)
+	: CShape()
+	, CRectangle(size)
+	, IHaveVertex()
+{
+}
+
+CRectangleShape::CRectangleShape(float width, float height)
+	: CShape()
+	, CRectangle(width, height)
+	, IHaveVertex()
+
+{
+}
+
 void CRectangleShape::Accept(IRenderShapeVisitor & visitor)
 {
 	visitor.Visit(*this);

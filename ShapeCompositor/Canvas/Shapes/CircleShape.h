@@ -1,18 +1,14 @@
 #pragma once
 
 #include "CShape.h"
-#include "Rectangle.h"
+#include "Circle.h"
 
-class CRectangleShape 
+class CCircleShape
 	: public CShape
-	, public CRectangle
-	, public IHaveVertex
+	, public CCircle
 {
 public:
-	CRectangleShape();
-	CRectangleShape(SSize size);
-	CRectangleShape(float width, float height);
-
+	CCircleShape();
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
@@ -25,7 +21,6 @@ public:
 	void Accept(IRenderShapeVisitor & visitor) override;
 
 	//--------------------------------------------
-	std::vector<Vec2f> GetVertices() const override;
 
 	//////////////////////////////////////////////////////////////////////
 	// Data

@@ -188,6 +188,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Canvas\Canvas.h" />
+    <ClInclude Include="Canvas\Shapes\AllShapes.h" />
+    <ClInclude Include="Canvas\Shapes\Circle.h" />
+    <ClInclude Include="Canvas\Shapes\CircleShape.h" />
     <ClInclude Include="Canvas\Shapes\CShape.h" />
     <ClInclude Include="Canvas\Shapes\IShape.h" />
     <ClInclude Include="Canvas\Shapes\Rectangle.h" />
@@ -206,6 +209,8 @@
   <ItemGroup>
     <ClCompile Include="Canvas\Canvas.cpp" />
     <ClCompile Include="Canvas\CanvasController.cpp" />
+    <ClCompile Include="Canvas\Shapes\Circle.cpp" />
+    <ClCompile Include="Canvas\Shapes\CircleShape.cpp" />
     <ClCompile Include="Canvas\Shapes\CShape.cpp" />
     <ClCompile Include="Canvas\Shapes\IShape.cpp" />
     <ClCompile Include="Canvas\Shapes\Rectangle.cpp" />

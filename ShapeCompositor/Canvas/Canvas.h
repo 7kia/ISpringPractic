@@ -10,7 +10,8 @@
 
 #include <vector>
 
-#include "Shapes\RectangleShape.h"
+#include "Shapes\AllShapes.h"
+
 #include "RenderShapeVisitor.h"
 
 class CShapeCompositorView;
@@ -35,6 +36,7 @@ private:
 	// IRenderShapeVisitor
 
 	void		Visit(const CRectangleShape & shape) override;
+	void		Visit(const CCircleShape & shape) override;
 
 	//--------------------------------------------
 

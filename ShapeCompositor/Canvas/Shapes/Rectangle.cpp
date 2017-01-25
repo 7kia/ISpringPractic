@@ -22,9 +22,9 @@ CRectangle::CRectangle(float width, float height)
 
 void CRectangle::SetWidth(float width)
 {
-	if (width < 0)
+	if (width < 0.f)
 	{
-		m_width = 0;
+		throw std::runtime_error("Rectangle width must be more zero");
 	}
 	else
 	{
@@ -41,7 +41,7 @@ void CRectangle::SetHeight(float height)
 {
 	if (height < 0)
 	{
-		m_height = 0;
+		throw std::runtime_error("Rectangle height must be more zero");
 	}
 	else
 	{
