@@ -6,26 +6,31 @@
 #include <d2d1helper.h>
 #include <dwrite.h>
 #include <wincodec.h>
+#include <afxwin.h>
+
+
+class CShapeCompositorView;
 
 class CCanvas
 {
 public:
-	CCanvas(HWND *pHwnd);
+	CCanvas();
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
 
-	HRESULT	OnRender();
-	HRESULT CreateDeviceResources();
-	void	OnResize(UINT width, UINT height);
+	void		SetHwnd(CShapeCompositorView * pWindow);
+
 	//////////////////////////////////////////////////////////////////////
 	// Data
-private:
+public:
 	class CController;
 	std::unique_ptr<CController>				m_controller;
 
-	CComPtr<ID2D1Factory>				m_pDirect2dFactory;
-	CComPtr<ID2D1HwndRenderTarget>		m_pRenderTarget;
+
+	//ID2D1HwndRenderTarget
+	//
+private:
 
 	// TODO : add
 	// Shapes
@@ -33,9 +38,7 @@ private:
 	// D2DFactory
 
 	// TODO : see need it
-	HWND *	m_pHwnd = nullptr;
-	CComPtr<ID2D1SolidColorBrush>						m_pLightSlateGrayBrush;
-	CComPtr<ID2D1SolidColorBrush>						m_pCornflowerBlueBrush;
+	CShapeCompositorView *	m_pWindow = nullptr;
 
 };
 
