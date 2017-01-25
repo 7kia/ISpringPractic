@@ -152,12 +152,16 @@
   <ItemGroup>
     <ClInclude Include="..\ShapeCompositor\Canvas\Shapes\CShape.h" />
     <ClInclude Include="..\ShapeCompositor\Canvas\Shapes\IShape.h" />
+    <ClInclude Include="..\ShapeCompositor\Canvas\Shapes\Rectangle.h" />
+    <ClInclude Include="..\ShapeCompositor\Canvas\Shapes\RectangleShape.h" />
     <ClInclude Include="..\ShapeCompositor\Canvas\Shapes\ShapeAttributes.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\CShape.cpp" />
+    <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\Rectangle.cpp" />
+    <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\RectangleShape.cpp" />
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\ShapeAttributes.cpp" />
     <ClCompile Include="ShapeTests.cpp" />
     <ClCompile Include="stdafx.cpp">
