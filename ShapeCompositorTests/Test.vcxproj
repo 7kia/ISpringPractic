@@ -160,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\CShape.cpp" />
+    <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\IShape.cpp" />
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\Rectangle.cpp" />
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\RectangleShape.cpp" />
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\ShapeAttributes.cpp" />
