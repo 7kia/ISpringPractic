@@ -97,19 +97,6 @@ BOOST_FIXTURE_TEST_SUITE(Rectangle, Rectangle_)
 	}
 BOOST_AUTO_TEST_SUITE_END()// Rectangle_
 
-
-struct Circle_
-{
-	CCircleShape circle;
-
-	Circle_()
-		: circle(Vec2f(), DEFAULT_SIZE, DEFAULT_COLOR, DEFAULT_COLOR)
-	{
-
-	}
-
-};
-
 struct Triangle_
 {
 	Vec2f first;

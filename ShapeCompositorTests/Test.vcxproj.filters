@@ -51,13 +51,13 @@
     <ClInclude Include="..\ShapeCompositor\Canvas\Shapes\Circle.h">
       <Filter>Файлы исходного кода\TestClasses\Canvas\Shapes</Filter>
     </ClInclude>
-    <ClInclude Include="..\ShapeCompositor\Canvas\Shapes\CircleShape.h">
-      <Filter>Файлы исходного кода\TestClasses\Canvas\Shapes</Filter>
-    </ClInclude>
     <ClInclude Include="..\ShapeCompositor\Canvas\Shapes\AllShapes.h">
       <Filter>Файлы исходного кода\TestClasses\Canvas\Shapes</Filter>
     </ClInclude>
     <ClInclude Include="..\ShapeCompositor\Canvas\Shapes\TriangleShape.h">
+      <Filter>Файлы исходного кода\TestClasses\Canvas\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ShapeCompositor\Canvas\Shapes\EllipseShape.h">
       <Filter>Файлы исходного кода\TestClasses\Canvas\Shapes</Filter>
     </ClInclude>
   </ItemGroup>
@@ -86,13 +86,13 @@
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\TriangleShape.cpp">
       <Filter>Файлы исходного кода\TestClasses\Canvas\Shapes</Filter>
     </ClCompile>
-    <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\CircleShape.cpp">
-      <Filter>Файлы исходного кода\TestClasses\Canvas\Shapes</Filter>
-    </ClCompile>
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\Circle.cpp">
       <Filter>Файлы исходного кода\TestClasses\Canvas\Shapes</Filter>
     </ClCompile>
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\IShape.cpp">
+      <Filter>Файлы исходного кода\TestClasses\Canvas\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\EllipseShape.cpp">
       <Filter>Файлы исходного кода\TestClasses\Canvas\Shapes</Filter>
     </ClCompile>
   </ItemGroup>

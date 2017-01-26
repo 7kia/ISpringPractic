@@ -151,8 +151,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\ShapeCompositor\Canvas\Shapes\AllShapes.h" />
-    <ClInclude Include="..\ShapeCompositor\Canvas\Shapes\CircleShape.h" />
     <ClInclude Include="..\ShapeCompositor\Canvas\Shapes\CShape.h" />
+    <ClInclude Include="..\ShapeCompositor\Canvas\Shapes\EllipseShape.h" />
     <ClInclude Include="..\ShapeCompositor\Canvas\Shapes\IShape.h" />
     <ClInclude Include="..\ShapeCompositor\Canvas\Shapes\Rectangle.h" />
     <ClInclude Include="..\ShapeCompositor\Canvas\Shapes\RectangleShape.h" />
@@ -164,8 +164,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\Circle.cpp" />
-    <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\CircleShape.cpp" />
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\CShape.cpp" />
+    <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\EllipseShape.cpp" />
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\IShape.cpp" />
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\Rectangle.cpp" />
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\RectangleShape.cpp" />
