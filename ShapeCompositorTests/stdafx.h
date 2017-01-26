@@ -19,6 +19,12 @@
 #include <afxwin.h>
 
 */
+// TODO : transfer to other place
+template <typename T>
+bool IsBetween(const T& value, const T& lowerBound, const T& upperBound)
+{
+	return (value >= lowerBound) && (value <= upperBound);
+}
 
 #define BOOST_TEST_MODULE ProcessVectorTestModule
 #define BOOST_TEST_INCLUDED

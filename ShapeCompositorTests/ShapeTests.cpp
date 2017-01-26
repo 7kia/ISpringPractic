@@ -12,7 +12,7 @@ struct Shape_
 	CRectangleShape shape;
 
 	Shape_()
-		: shape(Vec2f(), DEFAULT_SIZE, DEFAULT_COLOR, DEFAULT_COLOR)
+		: shape(Vec2f(), DEFAULT_SIZE, DEFAULT_FILL_COLOR, DEFAULT_OUTLINE_COLOR)
 	{
 
 	}
@@ -59,33 +59,18 @@ struct Rectangle_
 	CRectangleShape rectangle;
 
 	Rectangle_()
-		: rectangle(Vec2f(), DEFAULT_SIZE, DEFAULT_COLOR, DEFAULT_COLOR)
+		: rectangle(Vec2f(), DEFAULT_SIZE, DEFAULT_FILL_COLOR, DEFAULT_OUTLINE_COLOR)
 	{
 
 	}
 
 };
 BOOST_FIXTURE_TEST_SUITE(Rectangle, Rectangle_)
-	BOOST_AUTO_TEST_CASE(Have_width)
-	{
-		float width = 3.2f;
-		rectangle.SetWidth(width);
-
-		BOOST_CHECK(rectangle.GetWidth() == width);
-	}
-	BOOST_AUTO_TEST_CASE(Have_height)
-	{
-		float height = 4.1f;
-		rectangle.SetHeight(height);
-
-		BOOST_CHECK(rectangle.GetHeight() == height);
-	}
 	BOOST_AUTO_TEST_CASE(Have_verteces)
 	{
 		float width = 1.2f;
 		float height = 4.1f;
-		rectangle.SetWidth(width);
-		rectangle.SetHeight(height);
+		rectangle.SetSize(SSize(width, height));
 
 		auto verteces = rectangle.GetVertices();
 
@@ -93,8 +78,24 @@ BOOST_FIXTURE_TEST_SUITE(Rectangle, Rectangle_)
 		BOOST_CHECK(verteces[1] == Vec2f(width / 2.f, height / 2.f));
 		BOOST_CHECK(verteces[2] == Vec2f(width / 2.f, -height / 2.f));
 		BOOST_CHECK(verteces[3] == Vec2f(-width / 2.f, -height / 2.f));
-
 	}
+BOOST_AUTO_TEST_CASE(Check_point_intersection)
+{
+	float width = 2.1f;
+	float height = 4.9f;
+	rectangle.SetSize(SSize(width, height));
+
+	BOOST_CHECK(rectangle.IsPointIntersection(Vec2f()));
+	BOOST_CHECK(!rectangle.IsPointIntersection(Vec2f(-width / 2.f -1.f, 0.f)));
+	BOOST_CHECK(!rectangle.IsPointIntersection(Vec2f(width / 2.f + 1.f, 0.f)));
+	BOOST_CHECK(!rectangle.IsPointIntersection(Vec2f(0.f, -height / 2.f - 1.f)));
+	BOOST_CHECK(!rectangle.IsPointIntersection(Vec2f(0.f, height / 2.f + 1.f)));
+
+	BOOST_CHECK(rectangle.IsPointIntersection(Vec2f(-width / 2.f, height / 2.f)));
+	BOOST_CHECK(rectangle.IsPointIntersection(Vec2f(width / 2.f, height / 2.f)));
+	BOOST_CHECK(rectangle.IsPointIntersection(Vec2f(width / 2.f, -height / 2.f)));
+	BOOST_CHECK(rectangle.IsPointIntersection(Vec2f(-width / 2.f, -height / 2.f)));
+}
 BOOST_AUTO_TEST_SUITE_END()// Rectangle_
 
 struct Triangle_
@@ -106,25 +107,84 @@ struct Triangle_
 	Vec2f pos;
 
 	CTriangleShape triangle;
+	CTriangleShape secondTriangle;
 
 	Triangle_()
 		: first(-11.f, 29.f)
 		, second(14.f, 29.f)
 		, third(1.5f, -25.f)
-		, triangle(Vec2f(1.5f, 2.f), SSize(25.f, 54.f), DEFAULT_COLOR, DEFAULT_COLOR)
+		, triangle(Vec2f(1.5f, 2.f), SSize(25.f, 54.f), DEFAULT_FILL_COLOR, DEFAULT_OUTLINE_COLOR)
+		, secondTriangle(Vec2f(), SSize(1.f, 1.f), DEFAULT_FILL_COLOR, DEFAULT_OUTLINE_COLOR)
 	{
 
 	}
 };
 BOOST_FIXTURE_TEST_SUITE(Triangle, Triangle_)
-BOOST_AUTO_TEST_CASE(Have_points)
-{
-	auto verteces = triangle.GetVertices();
+	BOOST_AUTO_TEST_CASE(Have_points)
+	{
+		auto verteces = triangle.GetVertices();
 
-	BOOST_CHECK(verteces[0] == first);
-	BOOST_CHECK(verteces[1] == second);
-	BOOST_CHECK(verteces[2] == third);
-}
+		BOOST_CHECK(verteces[0] == first);
+		BOOST_CHECK(verteces[1] == second);
+		BOOST_CHECK(verteces[2] == third);
+	}
+	BOOST_AUTO_TEST_CASE(Check_point_intersection)
+	{
+		BOOST_CHECK(secondTriangle.IsPointIntersection(Vec2f(0.f, 0.f)));
+		BOOST_CHECK(secondTriangle.IsPointIntersection(Vec2f(-0.5f, 0.5f)));
+		BOOST_CHECK(secondTriangle.IsPointIntersection(Vec2f(0.5f, 0.5f)));
+
+		BOOST_CHECK(!secondTriangle.IsPointIntersection(Vec2f(-0.5f, -0.5f)));
+		BOOST_CHECK(!secondTriangle.IsPointIntersection(Vec2f(0.5f, -0.5f)));
+
+		BOOST_CHECK(!secondTriangle.IsPointIntersection(Vec2f(-0.25f, -0.25f)));
+		BOOST_CHECK(!secondTriangle.IsPointIntersection(Vec2f(0.25f, -0.25f)));
+
+	}
 BOOST_AUTO_TEST_SUITE_END()// Triangle_
+
+
+struct Ellipse_
+{
+	CEllipseShape circle;
+	CEllipseShape ellipse;
+
+	Ellipse_()
+		: circle(Vec2f(), SSize(1.f, 1.f), DEFAULT_FILL_COLOR, DEFAULT_OUTLINE_COLOR)
+		, ellipse(Vec2f(), SSize(1.f, 2.f), DEFAULT_FILL_COLOR, DEFAULT_OUTLINE_COLOR)
+	{
+
+	}
+};
+BOOST_FIXTURE_TEST_SUITE(Ellipse, Ellipse_)
+	BOOST_AUTO_TEST_CASE(Check_point_intersection_for_circle)
+	{
+
+
+		BOOST_CHECK(circle.IsPointIntersection(Vec2f(0.f, 0.f)));
+		BOOST_CHECK(circle.IsPointIntersection(Vec2f(0.5f, 0.f)));
+		BOOST_CHECK(circle.IsPointIntersection(Vec2f(0.f, 0.5f)));
+
+		BOOST_CHECK(!circle.IsPointIntersection(Vec2f(0.5f, 0.5f)));
+		BOOST_CHECK(!circle.IsPointIntersection(Vec2f(-0.5f, 0.5f)));
+		BOOST_CHECK(!circle.IsPointIntersection(Vec2f(-0.5f, -0.5f)));
+		BOOST_CHECK(!circle.IsPointIntersection(Vec2f(0.5f, -0.5f)));
+
+	}
+BOOST_AUTO_TEST_CASE(Check_point_intersection_for_ellipse)
+{
+
+
+	BOOST_CHECK(ellipse.IsPointIntersection(Vec2f(0.f, 0.f)));
+	BOOST_CHECK(ellipse.IsPointIntersection(Vec2f(0.5f, 0.f)));
+	BOOST_CHECK(ellipse.IsPointIntersection(Vec2f(0.f, 1.0f)));
+
+	BOOST_CHECK(!ellipse.IsPointIntersection(Vec2f(0.5f, 1.0f)));
+	BOOST_CHECK(!ellipse.IsPointIntersection(Vec2f(-0.5f, 1.0f)));
+	BOOST_CHECK(!ellipse.IsPointIntersection(Vec2f(-0.5f, -1.0f)));
+	BOOST_CHECK(!ellipse.IsPointIntersection(Vec2f(0.5f, -1.0f)));
+
+}
+BOOST_AUTO_TEST_SUITE_END()// Ellipse_
 
 BOOST_AUTO_TEST_SUITE_END()// CShape_suite
