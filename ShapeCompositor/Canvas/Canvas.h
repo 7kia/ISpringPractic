@@ -27,7 +27,7 @@ public:
 	HRESULT		Render();
 
 	HRESULT		CreateRecources(CShapeCompositorView * window);
-
+	void		AddShape(TypeShape type);
 private:
 	void		RenderShapes();
 
@@ -35,7 +35,7 @@ private:
 	// IRenderShapeVisitor
 
 	void		Visit(const CRectangleShape & shape) override;
-	void		Visit(const CCircleShape & shape) override;
+	void		Visit(const CEllipseShape & shape) override;
 	void		Visit(const CTriangleShape & shape) override;
 
 	//--------------------------------------------

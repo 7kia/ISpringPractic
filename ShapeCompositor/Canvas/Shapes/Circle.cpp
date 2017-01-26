@@ -14,7 +14,7 @@ void CCircle::SetRadius(float value)
 {
 	if (m_radius < 0)
 	{
-		throw std::runtime_error("Circle radius must be more zero");
+		throw std::runtime_error("Ellipse radius must be more zero");
 	}
 	else
 	{

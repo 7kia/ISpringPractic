@@ -43,6 +43,8 @@ public:
 	ID2D1HwndRenderTarget * GetRenderTarget();
 
 	void					CreateTriangle();
+	void					CreateRectangle();
+	void					CreateEllipse();
 // Переопределение
 public:
 	virtual void OnDraw(CDC* pDC);  // переопределено для отрисовки этого представления

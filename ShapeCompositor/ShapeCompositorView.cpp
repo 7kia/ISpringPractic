@@ -36,6 +36,8 @@ BEGIN_MESSAGE_MAP(CShapeCompositorView, CScrollView)
 	ON_WM_RBUTTONUP()
 	ON_WM_CREATE()
 	ON_COMMAND(ID_ADD_TRIANGLE, CShapeCompositorView::CreateTriangle)
+	ON_COMMAND(ID_ADD_RECTANGLE, CShapeCompositorView::CreateRectangle)
+	ON_COMMAND(ID_ADD_ELLIPSE, CShapeCompositorView::CreateEllipse)
 	ON_WM_SIZE()
 	ON_WM_PAINT()
 	ON_WM_ERASEBKGND()
@@ -87,7 +89,19 @@ ID2D1HwndRenderTarget * CShapeCompositorView::GetRenderTarget()
 
 void CShapeCompositorView::CreateTriangle()
 {
+	m_canvas.AddShape(TypeShape::Triangle);
 }
+
+void CShapeCompositorView::CreateRectangle()
+{
+	m_canvas.AddShape(TypeShape::Rectangle);
+}
+
+void CShapeCompositorView::CreateEllipse()
+{
+	m_canvas.AddShape(TypeShape::Ellipse);
+}
+
 
 // рисование CShapeCompositorView
 

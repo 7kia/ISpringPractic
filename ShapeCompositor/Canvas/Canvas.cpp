@@ -19,7 +19,7 @@ CCanvas::CCanvas()
 
 	{
 		/*
-		auto circle = std::make_shared<CCircleShape>();
+		auto circle = std::make_shared<CEllipseShape>();
 
 		circle->SetPosition(Vec2f(250.f, 200.f));
 		circle->SetRadius(20.f);
@@ -27,7 +27,7 @@ CCanvas::CCanvas()
 		circle->SetFillColor(Color(0.55f, 0.55f, 0.55f));
 		*/
 
-		m_shapes.push_back(m_shapeFactory.CreateShape(TypeShape::Circle, Vec2f(250.f, 200.f)));
+		m_shapes.push_back(m_shapeFactory.CreateShape(TypeShape::Ellipse, Vec2f(250.f, 200.f)));
 	}
 
 	{
@@ -106,6 +106,14 @@ HRESULT CCanvas::CreateRecources(CShapeCompositorView * window)
 	return hr;
 }
 
+void CCanvas::AddShape(TypeShape type)
+{
+	m_shapes.push_back(m_shapeFactory.CreateShape(
+		type, 
+		Vec2f(float(VIEW_WIDTH) / 2.f, float(VIEW_HEIGHT) / 2.f)
+	));
+}
+
 void CCanvas::RenderShapes()
 {
 	for (const auto & shape : m_shapes)
@@ -148,7 +156,7 @@ void CCanvas::Visit(const CRectangleShape & shape)
 	m_geometrySink.Release();
 }
 
-void CCanvas::Visit(const CCircleShape & shape)
+void CCanvas::Visit(const CEllipseShape & shape)
 {
 	auto position = shape.GetPosition();
 	SSize size = shape.GetSize();

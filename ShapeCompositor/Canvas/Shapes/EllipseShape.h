@@ -3,11 +3,11 @@
 #include "CShape.h"
 #include "Circle.h"
 
-class CCircleShape
+class CEllipseShape
 	: public CShape
 {
 public:
-	CCircleShape(
+	CEllipseShape(
 		const Vec2f position
 		, const SSize size
 		, const Color fillColor

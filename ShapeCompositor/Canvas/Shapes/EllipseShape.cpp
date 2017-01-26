@@ -1,7 +1,7 @@
 #include "stdafx.h"
-#include "CircleShape.h"
+#include "EllipseShape.h"
 
-CCircleShape::CCircleShape(
+CEllipseShape::CEllipseShape(
 	const Vec2f position
 	, const SSize size
 	, const Color fillColor
@@ -11,7 +11,7 @@ CCircleShape::CCircleShape(
 {
 }
 
-void CCircleShape::Accept(IRenderShapeVisitor & visitor)
+void CEllipseShape::Accept(IRenderShapeVisitor & visitor)
 {
 	visitor.Visit(*this);
 }

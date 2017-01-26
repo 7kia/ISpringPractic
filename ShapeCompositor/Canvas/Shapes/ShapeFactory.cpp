@@ -13,13 +13,13 @@ PCShape CShapeFactory::CreateShape(TypeShape type, const Vec2f position)
 	switch (type)
 	{
 	case TypeShape::Triangle:
-		return std::make_shared<CTriangleShape>(position, DEFAULT_SIZE, DEFAULT_COLOR, DEFAULT_COLOR);
+		return std::make_shared<CTriangleShape>(position, DEFAULT_SIZE, DEFAULT_FILL_COLOR, DEFAULT_OUTLINE_COLOR);
 		break;
 	case TypeShape::Rectangle:
-		return std::make_shared<CRectangleShape>(position, DEFAULT_SIZE, DEFAULT_COLOR, DEFAULT_COLOR);
+		return std::make_shared<CRectangleShape>(position, DEFAULT_SIZE, DEFAULT_FILL_COLOR, DEFAULT_OUTLINE_COLOR);
 		break;
-	case TypeShape::Circle:
-		return std::make_shared<CCircleShape>(position, DEFAULT_SIZE, DEFAULT_COLOR, DEFAULT_COLOR);
+	case TypeShape::Ellipse:
+		return std::make_shared<CEllipseShape>(position, DEFAULT_SIZE, DEFAULT_FILL_COLOR, DEFAULT_OUTLINE_COLOR);
 		break;
 	default:
 		throw std::runtime_error("The shape type not exist");
