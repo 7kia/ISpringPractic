@@ -72,9 +72,6 @@
     <ClInclude Include="Canvas\Shapes\AllShapes.h">
       <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
     </ClInclude>
-    <ClInclude Include="Canvas\Shapes\Circle.h">
-      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
-    </ClInclude>
     <ClInclude Include="Canvas\Shapes\TriangleShape.h">
       <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
     </ClInclude>
@@ -120,9 +117,6 @@
       <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
     </ClCompile>
     <ClCompile Include="Canvas\Shapes\IShape.cpp">
-      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
-    </ClCompile>
-    <ClCompile Include="Canvas\Shapes\Circle.cpp">
       <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
     </ClCompile>
     <ClCompile Include="Canvas\Shapes\TriangleShape.cpp">

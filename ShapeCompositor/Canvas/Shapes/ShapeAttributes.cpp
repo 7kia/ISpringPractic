@@ -44,3 +44,13 @@ bool Color::operator==(Color const & other) const
 		&& (b == other.b)
 		&& (a == other.a);
 }
+
+Vec2f const operator+(Vec2f const & first, Vec2f const & second)
+{
+	return Vec2f(first.x + second.x, first.y + second.y);
+}
+
+Vec2f const operator-(Vec2f const & first, Vec2f const & second)
+{
+	return Vec2f(first.x - second.x, first.y - second.y);
+}

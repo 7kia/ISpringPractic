@@ -5,6 +5,7 @@
 
 class IShape
 	: public IRenderShapeAccept
+	, public IIsPointIntersection
 {
 public:
 	IShape();

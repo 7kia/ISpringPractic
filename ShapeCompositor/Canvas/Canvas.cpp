@@ -5,49 +5,15 @@
 CCanvas::CCanvas()
 	: IRenderShapeVisitor()
 {
-	{
-		/*
-				auto rectangle = std::make_shared<CRectangleShape>(90.f, 25.f);
-		rectangle->SetPosition(Vec2f(200.f, 200.f));
-		rectangle->SetOutlineColor(Color(0.25f, 0.25f, 0.25f));
-		rectangle->SetFillColor(Color(0.55f, 0.55f, 0.55f));
-
-		*/
-
-		m_shapes.push_back(m_shapeFactory.CreateShape(TypeShape::Rectangle, Vec2f(200.f, 200.f)));
-	}
-
-	{
-		/*
-		auto circle = std::make_shared<CEllipseShape>();
-
-		circle->SetPosition(Vec2f(250.f, 200.f));
-		circle->SetRadius(20.f);
-		circle->SetOutlineColor(Color(0.25f, 0.25f, 0.25f));
-		circle->SetFillColor(Color(0.55f, 0.55f, 0.55f));
-		*/
-
-		m_shapes.push_back(m_shapeFactory.CreateShape(TypeShape::Ellipse, Vec2f(250.f, 200.f)));
-	}
-
-	{
-		/*
-		auto triangle = std::make_shared<CTriangleShape>(Vec2f(250.f, 250.f), 25.f, 54.f);
-
-		triangle->SetOutlineColor(Color(0.25f, 0.25f, 0.25f));
-		triangle->SetFillColor(Color(0.85f, 0.55f, 0.25f));
-		*/
-
-		m_shapes.push_back(m_shapeFactory.CreateShape(TypeShape::Triangle, Vec2f(250.f, 250.f)));
-	}
-
+	
 }
 
 
 
 HRESULT CCanvas::Render()
 {
-	D2D1_RECT_F rectangle2 = D2D1::RectF(
+	/*
+		D2D1_RECT_F rectangle2 = D2D1::RectF(
 		2 - 100.0f,
 		2 - 100.0f,
 		2 + 100.0f,
@@ -55,7 +21,9 @@ HRESULT CCanvas::Render()
 	);
 
 	// Draw the outline of a rectangle.
-	m_pRenderTarget->DrawRectangle(&rectangle2, m_pCornflowerBlueBrush);
+	m_pRenderTarget->DrawRectangle(&rectangle2, m_pCornflowerBlueBrush, 2.9f);
+
+	*/
 
 	RenderShapes();
 

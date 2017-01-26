@@ -1,7 +1,6 @@
 #pragma once
 
 #include "CShape.h"
-#include "Circle.h"
 
 class CEllipseShape
 	: public CShape
@@ -23,6 +22,11 @@ public:
 	// IRenderShapeVisitor
 
 	void Accept(IRenderShapeVisitor & visitor) override;
+
+	//--------------------------------------------
+	// IIsPointIntersection
+
+	bool IsPointIntersection(const Vec2f point) const override;
 
 	//--------------------------------------------
 

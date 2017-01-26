@@ -42,7 +42,12 @@
 
 #include <afxcontrolbars.h>     // поддержка MFC для лент и панелей управления
 
-
+// TODO : transfer to other place
+template <typename T>
+bool IsBetween(const T& value, const T& lowerBound, const T& upperBound)
+{
+	return (value >= lowerBound) && (value <= upperBound);
+}
 
 
 

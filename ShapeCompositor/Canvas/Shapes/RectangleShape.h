@@ -5,7 +5,6 @@
 
 class CRectangleShape 
 	: public CShape
-	, public CRectangle
 	, public IHaveVertex
 {
 public:
@@ -26,6 +25,11 @@ public:
 	// IRenderShapeVisitor
 
 	void Accept(IRenderShapeVisitor & visitor) override;
+
+	//--------------------------------------------
+	// IIsPointIntersection
+
+	bool IsPointIntersection(const Vec2f point) const override;
 
 	//--------------------------------------------
 	std::vector<Vec2f> GetVertices() const override;

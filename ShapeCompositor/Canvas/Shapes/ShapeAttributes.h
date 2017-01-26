@@ -21,10 +21,13 @@ struct Vec2f
 	Vec2f(float x, float y);
 
 	bool operator==(Vec2f const& vec) const;
-
 	float x = 0.f;
 	float y = 0.f;
 };
+Vec2f const operator +(Vec2f const &first, Vec2f const &second);
+Vec2f const operator -(Vec2f const &first, Vec2f const &second);
+
+
 
 struct Color
 {
@@ -49,4 +52,12 @@ public:
 	virtual ~IHaveVertex() = default;
 
 	virtual std::vector<Vec2f> GetVertices() const = 0;
+};
+
+class IIsPointIntersection
+{
+public:
+	virtual ~IIsPointIntersection() = default;
+
+	virtual bool IsPointIntersection(const Vec2f point) const = 0;
 };
