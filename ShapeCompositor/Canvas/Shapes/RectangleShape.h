@@ -9,9 +9,12 @@ class CRectangleShape
 	, public IHaveVertex
 {
 public:
-	CRectangleShape();
-	CRectangleShape(SSize size);
-	CRectangleShape(float width, float height);
+	CRectangleShape(
+		const Vec2f position
+		, const SSize size
+		, const Color fillColor
+		, const Color outlineColor
+	);
 
 	//////////////////////////////////////////////////////////////////////
 	// Methods

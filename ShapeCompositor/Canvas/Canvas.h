@@ -10,8 +10,7 @@
 
 #include <vector>
 
-#include "Shapes\AllShapes.h"
-
+#include "Shapes\ShapeFactory.h"
 #include "RenderShapeVisitor.h"
 
 class CShapeCompositorView;
@@ -50,6 +49,8 @@ public:
 	CComPtr<ID2D1Factory>						m_pDirect2dFactory;
 	CComPtr<ID2D1HwndRenderTarget>				m_pRenderTarget;
 
+
+	CShapeFactory								m_shapeFactory;
 
 	CComPtr<ID2D1SolidColorBrush>				m_fillBrush;;
 	CComPtr<ID2D1SolidColorBrush>				m_outlineBrush;

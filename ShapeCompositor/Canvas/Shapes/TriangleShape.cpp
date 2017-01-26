@@ -1,16 +1,15 @@
 #include "stdafx.h"
 #include "TriangleShape.h"
 
-CTriangleShape::CTriangleShape(Vec2f const & position
-								, float width
-								, float height
+CTriangleShape::CTriangleShape(
+	const Vec2f position
+	, const SSize size
+	, const Color fillColor
+	, const Color outlineColor
 )
-	: CShape()
+	: CShape(position, size, fillColor, outlineColor)
 	, IHaveVertex()
 {
-	m_verteces.push_back(Vec2f(position.x - width / 2.f, position.y + height / 2.f));
-	m_verteces.push_back(Vec2f(position.x + width / 2.f, position.y + height / 2.f));
-	m_verteces.push_back(Vec2f(position.x, position.y - height / 2.f));
 }
 
 void CTriangleShape::Accept(IRenderShapeVisitor & visitor)
@@ -20,5 +19,9 @@ void CTriangleShape::Accept(IRenderShapeVisitor & visitor)
 
 std::vector<Vec2f> CTriangleShape::GetVertices() const
 {
-	return m_verteces;
+	return {
+		Vec2f(m_position.x - m_size.width / 2.f, m_position.y + m_size.height / 2.f)
+		, Vec2f(m_position.x + m_size.width / 2.f, m_position.y + m_size.height / 2.f)
+		, Vec2f(m_position.x, m_position.y - m_size.height / 2.f)
+	};
 }

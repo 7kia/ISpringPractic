@@ -1,27 +1,19 @@
 #include "stdafx.h"
 #include "RectangleShape.h"
 
-CRectangleShape::CRectangleShape()
-	: CShape()
-	, CRectangle()
-	, IHaveVertex()
-{
-}
+CRectangleShape::CRectangleShape(
+	const Vec2f position
+	, const SSize size
+	, const Color fillColor
+	, const Color outlineColor
 
-CRectangleShape::CRectangleShape(SSize size)
-	: CShape()
+)
+	: CShape(position, size, fillColor, outlineColor)
 	, CRectangle(size)
 	, IHaveVertex()
 {
 }
 
-CRectangleShape::CRectangleShape(float width, float height)
-	: CShape()
-	, CRectangle(width, height)
-	, IHaveVertex()
-
-{
-}
 
 void CRectangleShape::Accept(IRenderShapeVisitor & visitor)
 {

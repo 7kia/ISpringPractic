@@ -1,14 +1,16 @@
 #include "stdafx.h"
 #include "ShapeAttributes.h"
 
-SSize::SSize()
-{
-}
 
 SSize::SSize(float width, float height)
 	: width(width)
 	, height(height)
 {
+}
+
+bool SSize::operator==(SSize const & size) const
+{
+	return (size.width == width) && (size.height == height);
 }
 
 

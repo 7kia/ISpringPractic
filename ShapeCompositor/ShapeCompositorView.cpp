@@ -35,6 +35,7 @@ BEGIN_MESSAGE_MAP(CShapeCompositorView, CScrollView)
 	ON_WM_CONTEXTMENU()
 	ON_WM_RBUTTONUP()
 	ON_WM_CREATE()
+	ON_COMMAND(ID_ADD_TRIANGLE, CShapeCompositorView::CreateTriangle)
 	ON_WM_SIZE()
 	ON_WM_PAINT()
 	ON_WM_ERASEBKGND()
@@ -82,6 +83,10 @@ void CShapeCompositorView::SetRenderTarget(ID2D1HwndRenderTarget * pRenderTarget
 ID2D1HwndRenderTarget * CShapeCompositorView::GetRenderTarget()
 {
 	return m_pRenderTarget;
+}
+
+void CShapeCompositorView::CreateTriangle()
+{
 }
 
 // рисование CShapeCompositorView

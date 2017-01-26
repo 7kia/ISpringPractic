@@ -81,6 +81,9 @@
     <ClInclude Include="Canvas\Shapes\TriangleShape.h">
       <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
     </ClInclude>
+    <ClInclude Include="Canvas\Shapes\ShapeFactory.h">
+      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ShapeCompositor.cpp">
@@ -128,6 +131,9 @@
     <ClCompile Include="Canvas\Shapes\TriangleShape.cpp">
       <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
     </ClCompile>
+    <ClCompile Include="Canvas\Shapes\ShapeFactory.cpp">
+      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ShapeCompositor.reg" />
@@ -137,6 +143,7 @@
     <None Include="res\ShapeCompositor.rc2">
       <Filter>Файлы ресурсов</Filter>
     </None>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ShapeCompositor.rc">

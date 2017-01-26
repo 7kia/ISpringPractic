@@ -6,31 +6,39 @@ CCanvas::CCanvas()
 	: IRenderShapeVisitor()
 {
 	{
-		auto rectangle = std::make_shared<CRectangleShape>(90.f, 25.f);
+		/*
+				auto rectangle = std::make_shared<CRectangleShape>(90.f, 25.f);
 		rectangle->SetPosition(Vec2f(200.f, 200.f));
 		rectangle->SetOutlineColor(Color(0.25f, 0.25f, 0.25f));
 		rectangle->SetFillColor(Color(0.55f, 0.55f, 0.55f));
 
-		m_shapes.push_back(rectangle);
+		*/
+
+		m_shapes.push_back(m_shapeFactory.CreateShape(TypeShape::Rectangle, Vec2f(200.f, 200.f)));
 	}
 
 	{
+		/*
 		auto circle = std::make_shared<CCircleShape>();
+
 		circle->SetPosition(Vec2f(250.f, 200.f));
 		circle->SetRadius(20.f);
 		circle->SetOutlineColor(Color(0.25f, 0.25f, 0.25f));
 		circle->SetFillColor(Color(0.55f, 0.55f, 0.55f));
+		*/
 
-		m_shapes.push_back(circle);
+		m_shapes.push_back(m_shapeFactory.CreateShape(TypeShape::Circle, Vec2f(250.f, 200.f)));
 	}
 
 	{
+		/*
 		auto triangle = std::make_shared<CTriangleShape>(Vec2f(250.f, 250.f), 25.f, 54.f);
 
 		triangle->SetOutlineColor(Color(0.25f, 0.25f, 0.25f));
 		triangle->SetFillColor(Color(0.85f, 0.55f, 0.25f));
+		*/
 
-		m_shapes.push_back(triangle);
+		m_shapes.push_back(m_shapeFactory.CreateShape(TypeShape::Triangle, Vec2f(250.f, 250.f)));
 	}
 
 }
@@ -143,7 +151,7 @@ void CCanvas::Visit(const CRectangleShape & shape)
 void CCanvas::Visit(const CCircleShape & shape)
 {
 	auto position = shape.GetPosition();
-	float radius = shape.GetRadius();
+	SSize size = shape.GetSize();
 
 	Color fillColor = shape.GetFillColor();
 	m_pRenderTarget->CreateSolidColorBrush(
@@ -159,8 +167,8 @@ void CCanvas::Visit(const CCircleShape & shape)
 
 	D2D1_ELLIPSE ellipse = D2D1::Ellipse(
 		{ position.x, position.y }
-		, radius
-		, radius
+		, size.width
+		, size.height
 	);
 	m_pRenderTarget->FillEllipse(ellipse, m_fillBrush);
 	m_pRenderTarget->DrawEllipse(ellipse, m_outlineBrush);

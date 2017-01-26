@@ -7,7 +7,12 @@
 class CShape : public IShape
 {
 public:
-	CShape();
+	CShape(
+		const Vec2f position
+		, const SSize size
+		, const Color fillColor
+		, const Color outlineColor
+	);
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
@@ -23,6 +28,9 @@ public:
 	// Outer Color
 	void SetOutlineColor(Color color) override;
 	Color GetOutlineColor() const override;
+	// Size
+	void SetSize(SSize size) override;
+	SSize GetSize() const override;
 
 	// TODO :
 	// Visual part
@@ -33,8 +41,10 @@ public:
 	//void			Get();
 	//////////////////////////////////////////////////////////////////////
 	// Data
-private:
+protected:
 	Vec2f m_position;
+
+	SSize m_size;
 	Color m_fillColor;
 	Color m_outlineColor;
 };

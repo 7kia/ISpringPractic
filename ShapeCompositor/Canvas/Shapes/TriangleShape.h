@@ -7,10 +7,12 @@ class CTriangleShape
 	, public IHaveVertex
 {
 public:
-	CTriangleShape(Vec2f const & position
-					, float width
-					, float height
-					);
+	CTriangleShape(
+		const Vec2f position
+		, const SSize size
+		, const Color fillColor
+		, const Color outlineColor
+	);
 
 	//////////////////////////////////////////////////////////////////////
 	// Methods

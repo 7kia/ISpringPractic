@@ -196,6 +196,7 @@
     <ClInclude Include="Canvas\Shapes\Rectangle.h" />
     <ClInclude Include="Canvas\Shapes\RectangleShape.h" />
     <ClInclude Include="Canvas\Shapes\ShapeAttributes.h" />
+    <ClInclude Include="Canvas\Shapes\ShapeFactory.h" />
     <ClInclude Include="Canvas\Shapes\TriangleShape.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="RenderShapeAccept.h" />
@@ -217,6 +218,7 @@
     <ClCompile Include="Canvas\Shapes\Rectangle.cpp" />
     <ClCompile Include="Canvas\Shapes\RectangleShape.cpp" />
     <ClCompile Include="Canvas\Shapes\ShapeAttributes.cpp" />
+    <ClCompile Include="Canvas\Shapes\ShapeFactory.cpp" />
     <ClCompile Include="Canvas\Shapes\TriangleShape.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="ShapeCompositor.cpp" />
@@ -230,6 +232,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="res\ribbon.mfcribbon-ms" />
     <None Include="res\ShapeCompositor.rc2" />
     <None Include="ShapeCompositor.reg" />

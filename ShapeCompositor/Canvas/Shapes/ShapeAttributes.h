@@ -6,8 +6,11 @@
 
 struct SSize
 {
-	SSize();
+	SSize() = default;
 	SSize(float width, float height);
+
+	bool operator==(SSize const& size) const;
+
 	float width = 0.f;
 	float height = 0.f;
 };

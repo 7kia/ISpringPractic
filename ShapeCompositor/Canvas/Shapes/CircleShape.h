@@ -5,10 +5,14 @@
 
 class CCircleShape
 	: public CShape
-	, public CCircle
 {
 public:
-	CCircleShape();
+	CCircleShape(
+		const Vec2f position
+		, const SSize size
+		, const Color fillColor
+		, const Color outlineColor
+	);
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:

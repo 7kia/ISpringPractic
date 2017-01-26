@@ -22,6 +22,9 @@ public:
 	// Outer Color
 	virtual void SetOutlineColor(Color color) = 0;
 	virtual Color GetOutlineColor() const = 0;
+	// Size
+	virtual void SetSize(SSize size) = 0;
+	virtual SSize GetSize() const = 0;
 
 	// TODO :
 	// Visual part

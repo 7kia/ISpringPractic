@@ -42,10 +42,13 @@ public:
 	void					SetRenderTarget(ID2D1HwndRenderTarget * pRenderTarget);
 	ID2D1HwndRenderTarget * GetRenderTarget();
 
+	void					CreateTriangle();
 // Переопределение
 public:
 	virtual void OnDraw(CDC* pDC);  // переопределено для отрисовки этого представления
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+
+
 protected:
 	CCanvas m_canvas;
 
