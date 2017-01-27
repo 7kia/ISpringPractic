@@ -45,6 +45,9 @@ public:
 	void					CreateTriangle();
 	void					CreateRectangle();
 	void					CreateEllipse();
+	void					Undo();
+	void					Redo();
+
 // Переопределение
 public:
 	virtual void OnDraw(CDC* pDC);  // переопределено для отрисовки этого представления

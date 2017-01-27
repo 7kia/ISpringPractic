@@ -12,6 +12,9 @@
 
 #include "Shapes\ShapeFactory.h"
 #include "RenderShapeVisitor.h"
+#include "CanvasCommands\AllCanvasCommand.h"
+
+static const size_t MAX_COMMANDS = 5;
 
 class CShapeCompositorView;
 
@@ -27,11 +30,13 @@ public:
 	HRESULT		Render();
 
 	HRESULT		CreateRecources(CShapeCompositorView * window);
+
 	void		AddShape(TypeShape type);
 	void		DeleteShape(PCShape pShape);
 	void		DeleteLastShape();
 
 private:
+
 	void		RenderShapes();
 
 	//--------------------------------------------
@@ -81,9 +86,32 @@ private:
 class CCanvas::CController
 {
 public:
-	CController();
+	CController(CCanvas * pCanvas);
+
+	enum class Command
+	{
+		AddTriangle
+		, AddRectangle
+		, AddEllipse
+		, Undo
+		, Redo
+	};
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
+	void ExecuteCommand(Command command);
+private:
+	void AddCommand(const PCanvasCommand command);
+	void ExecuteCurrent();
+	void CancelCommand();
+	void RedoCommand();
 
+	//////////////////////////////////////////////////////////////////////
+	// Data
+private:
+	// TODO : transfer to other place(might class)
+	std::vector<PCanvasCommand>						m_history;
+	std::vector<PCanvasCommand>::reverse_iterator	m_currentCommand = m_history.rbegin();
+
+	CCanvas * m_pCanvas = nullptr;
 };

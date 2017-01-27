@@ -4,6 +4,7 @@
 
 CCanvas::CCanvas()
 	: IRenderShapeVisitor()
+	, m_controller(std::make_unique<CCanvas::CController>(this))
 {
 	
 }

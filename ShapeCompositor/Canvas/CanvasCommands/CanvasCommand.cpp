@@ -2,7 +2,8 @@
 #include "CanvasCommand.h"
 #include "../Canvas.h"
 
-CCanvasCommand::CCanvasCommand()
+CCanvasCommand::CCanvasCommand(CCanvas * pCanvas)
 	: IMyCommand()
+	, m_pCanvas(pCanvas)
 {
 }

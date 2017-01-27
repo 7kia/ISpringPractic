@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "AddShapeCommand.h"
 
-CAddShapeCanvasCommand::CAddShapeCanvasCommand(TypeShape type)
-	: CCanvasCommand()
+CAddShapeCanvasCommand::CAddShapeCanvasCommand(CCanvas * pCanvas, TypeShape type)
+	: CCanvasCommand(pCanvas)
 	, m_type(type)
 {
 }

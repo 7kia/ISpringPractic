@@ -38,6 +38,8 @@ BEGIN_MESSAGE_MAP(CShapeCompositorView, CScrollView)
 	ON_COMMAND(ID_ADD_TRIANGLE, CShapeCompositorView::CreateTriangle)
 	ON_COMMAND(ID_ADD_RECTANGLE, CShapeCompositorView::CreateRectangle)
 	ON_COMMAND(ID_ADD_ELLIPSE, CShapeCompositorView::CreateEllipse)
+	ON_COMMAND(ID_UNDO, CShapeCompositorView::Undo)
+	ON_COMMAND(ID_REDO, CShapeCompositorView::Redo)
 	ON_WM_SIZE()
 	ON_WM_PAINT()
 	ON_WM_ERASEBKGND()
@@ -89,17 +91,27 @@ ID2D1HwndRenderTarget * CShapeCompositorView::GetRenderTarget()
 
 void CShapeCompositorView::CreateTriangle()
 {
-	m_canvas.AddShape(TypeShape::Triangle);
+	m_canvas.m_controller->ExecuteCommand(CCanvas::CController::Command::AddTriangle);
 }
 
 void CShapeCompositorView::CreateRectangle()
 {
-	m_canvas.AddShape(TypeShape::Rectangle);
+	m_canvas.m_controller->ExecuteCommand(CCanvas::CController::Command::AddRectangle);
 }
 
 void CShapeCompositorView::CreateEllipse()
 {
-	m_canvas.AddShape(TypeShape::Ellipse);
+	m_canvas.m_controller->ExecuteCommand(CCanvas::CController::Command::AddEllipse);
+}
+
+void CShapeCompositorView::Undo()
+{
+	m_canvas.m_controller->ExecuteCommand(CCanvas::CController::Command::Undo);
+}
+
+void CShapeCompositorView::Redo()
+{
+	m_canvas.m_controller->ExecuteCommand(CCanvas::CController::Command::Redo);
 }
 
 

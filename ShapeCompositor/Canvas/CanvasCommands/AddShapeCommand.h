@@ -1,11 +1,12 @@
 #pragma once
 
 #include "CanvasCommand.h"
+#include "../Canvas.h"
 
 class CAddShapeCanvasCommand : public CCanvasCommand
 {
 public:
-	CAddShapeCanvasCommand(TypeShape type);
+	CAddShapeCanvasCommand(CCanvas * pCanvas, TypeShape type);//TypeShape
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
