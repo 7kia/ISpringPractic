@@ -19,6 +19,9 @@
     <Filter Include="Файлы исходного кода\Canvas\Shapes">
       <UniqueIdentifier>{da90bdd4-72e6-4339-81a0-e476c8299cce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы исходного кода\Canvas\CanvasCommand">
+      <UniqueIdentifier>{9b10ba3d-3a3d-4c44-bd81-9a5303ad472e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -81,6 +84,12 @@
     <ClInclude Include="Canvas\Shapes\EllipseShape.h">
       <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
     </ClInclude>
+    <ClInclude Include="Canvas\CanvasCommands\CanvasCommand.h">
+      <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
+    </ClInclude>
+    <ClInclude Include="Canvas\CanvasCommands\AddShapeCommand.h">
+      <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ShapeCompositor.cpp">
@@ -127,6 +136,12 @@
     </ClCompile>
     <ClCompile Include="Canvas\Shapes\EllipseShape.cpp">
       <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas\CanvasCommands\CanvasCommand.cpp">
+      <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas\CanvasCommands\AddShapeCommand.cpp">
+      <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

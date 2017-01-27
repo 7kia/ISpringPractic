@@ -28,6 +28,9 @@ public:
 
 	HRESULT		CreateRecources(CShapeCompositorView * window);
 	void		AddShape(TypeShape type);
+	void		DeleteShape(PCShape pShape);
+	void		DeleteLastShape();
+
 private:
 	void		RenderShapes();
 

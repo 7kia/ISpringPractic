@@ -82,6 +82,19 @@ void CCanvas::AddShape(TypeShape type)
 	));
 }
 
+void CCanvas::DeleteShape(PCShape pShape)
+{
+	// TODO : the code might will be need to other place
+	size_t deleteIndex = std::find(m_shapes.begin(), m_shapes.end(), pShape) - m_shapes.begin();
+
+	m_shapes.erase(m_shapes.begin() + deleteIndex);
+}
+
+void CCanvas::DeleteLastShape()
+{
+	m_shapes.pop_back();
+}
+
 void CCanvas::RenderShapes()
 {
 	for (const auto & shape : m_shapes)
