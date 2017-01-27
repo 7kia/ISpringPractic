@@ -31,7 +31,7 @@ void CCanvas::CController::ExecuteCommand(Command command)
 		ExecuteCurrent();
 		break;
 	case Command::Undo:
-		CancelCommand();
+		UndoCommand();
 		break;
 	case Command::Redo:
 		RedoCommand();
@@ -57,7 +57,7 @@ void CCanvas::CController::ExecuteCurrent()
 	m_currentCommand->get()->Execute();
 }
 
-void CCanvas::CController::CancelCommand()
+void CCanvas::CController::UndoCommand()
 {
 	if (m_currentCommand != m_history.rend())
 	{

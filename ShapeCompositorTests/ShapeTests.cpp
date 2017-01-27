@@ -159,8 +159,6 @@ struct Ellipse_
 BOOST_FIXTURE_TEST_SUITE(Ellipse, Ellipse_)
 	BOOST_AUTO_TEST_CASE(Check_point_intersection_for_circle)
 	{
-
-
 		BOOST_CHECK(circle.IsPointIntersection(Vec2f(0.f, 0.f)));
 		BOOST_CHECK(circle.IsPointIntersection(Vec2f(0.5f, 0.f)));
 		BOOST_CHECK(circle.IsPointIntersection(Vec2f(0.f, 0.5f)));
@@ -169,12 +167,9 @@ BOOST_FIXTURE_TEST_SUITE(Ellipse, Ellipse_)
 		BOOST_CHECK(!circle.IsPointIntersection(Vec2f(-0.5f, 0.5f)));
 		BOOST_CHECK(!circle.IsPointIntersection(Vec2f(-0.5f, -0.5f)));
 		BOOST_CHECK(!circle.IsPointIntersection(Vec2f(0.5f, -0.5f)));
-
 	}
 BOOST_AUTO_TEST_CASE(Check_point_intersection_for_ellipse)
 {
-
-
 	BOOST_CHECK(ellipse.IsPointIntersection(Vec2f(0.f, 0.f)));
 	BOOST_CHECK(ellipse.IsPointIntersection(Vec2f(0.5f, 0.f)));
 	BOOST_CHECK(ellipse.IsPointIntersection(Vec2f(0.f, 1.0f)));
@@ -183,7 +178,6 @@ BOOST_AUTO_TEST_CASE(Check_point_intersection_for_ellipse)
 	BOOST_CHECK(!ellipse.IsPointIntersection(Vec2f(-0.5f, 1.0f)));
 	BOOST_CHECK(!ellipse.IsPointIntersection(Vec2f(-0.5f, -1.0f)));
 	BOOST_CHECK(!ellipse.IsPointIntersection(Vec2f(0.5f, -1.0f)));
-
 }
 BOOST_AUTO_TEST_SUITE_END()// Ellipse_
 

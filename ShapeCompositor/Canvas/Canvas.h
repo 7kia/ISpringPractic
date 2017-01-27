@@ -103,7 +103,7 @@ public:
 private:
 	void AddCommand(const PCanvasCommand command);
 	void ExecuteCurrent();
-	void CancelCommand();
+	void UndoCommand();
 	void RedoCommand();
 
 	//////////////////////////////////////////////////////////////////////
