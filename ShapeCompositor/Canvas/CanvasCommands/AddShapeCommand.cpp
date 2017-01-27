@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "AddShapeCommand.h"
 
-
 CAddShapeCanvasCommand::CAddShapeCanvasCommand(TypeShape type)
 	: CCanvasCommand()
 	, m_type(type)

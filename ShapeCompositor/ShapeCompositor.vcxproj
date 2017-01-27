@@ -244,6 +244,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\buttons.bmp" />
+    <Image Include="res\buttons.png" />
     <Image Include="res\filelarge.bmp" />
     <Image Include="res\filesmall.bmp" />
     <Image Include="res\main.bmp" />
@@ -254,6 +255,7 @@
     <Image Include="res\writelarge.bmp" />
     <Image Include="res\writelarge.png" />
     <Image Include="res\writesmall.bmp" />
+    <Image Include="res\writesmall.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

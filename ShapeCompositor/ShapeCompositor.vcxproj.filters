@@ -193,5 +193,11 @@
     <Image Include="res\writelarge.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
+    <Image Include="res\buttons.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="res\writesmall.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
   </ItemGroup>
 </Project>

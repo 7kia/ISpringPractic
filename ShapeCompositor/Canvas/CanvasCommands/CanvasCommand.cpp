@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "CanvasCommand.h"
+#include "../Canvas.h"
 
 CCanvasCommand::CCanvasCommand()
-	: ICommand()
+	: IMyCommand()
 {
 }
-

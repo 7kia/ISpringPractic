@@ -19,5 +19,4 @@ public:
 	// Data
 private:
 	TypeShape m_type;
-
 };

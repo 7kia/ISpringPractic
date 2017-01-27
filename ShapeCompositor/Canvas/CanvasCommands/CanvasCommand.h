@@ -2,10 +2,10 @@
 
 #include "../Canvas.h"
 
-class ICommand
+class IMyCommand
 {
 public:
-	virtual ~ICommand() = default;
+	virtual ~IMyCommand() = default;
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
@@ -13,7 +13,7 @@ public:
 	virtual void Cancel() = 0;
 };
 
-class CCanvasCommand : public ICommand
+class CCanvasCommand : public IMyCommand
 {
 public:
 	CCanvasCommand();
@@ -30,23 +30,3 @@ public:
 protected:
 	CCanvas * m_pCanvas;
 };
-
-class CAddShapeCanvasCommand : public CCanvasCommand
-{
-public:
-	CAddShapeCanvasCommand(TypeShape type);
-	//////////////////////////////////////////////////////////////////////
-	// Methods
-public:
-	//--------------------------------------------
-	// ICommand
-	void Execute() override;
-	void Cancel() override;
-
-	//--------------------------------------------
-	//////////////////////////////////////////////////////////////////////
-	// Data
-private:
-	TypeShape m_type;
-};
-

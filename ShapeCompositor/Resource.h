@@ -4,9 +4,7 @@
 //
 #define IDD_ABOUTBOX                    100
 #define IDP_OLE_INIT_FAILED             100
-#define IDB_WRITESMALL                  110
 #define IDB_MAIN                        112
-#define IDB_BUTTONS                     113
 #define IDB_FILELARGE                   114
 #define IDB_FILESMALL                   115
 #define IDR_POPUP_EDIT                  119
@@ -35,18 +33,23 @@
 #define IDS_EDIT_MENU                   306
 #define IDR_RIBBON                      307
 #define IDB_WRITELARGE                  310
+#define IDB_WRITESMALL                  314
+#define IDB_PNG1                        315
+#define IDB_BUTTONS                     315
 #define ID_WRITE_PASTEASHYPERLINK       32770
 #define ID_ADD_TRIANGLE                 32773
 #define ID_ADD_CIRCLE                   32774
 #define ID_ADD_RECTANGLE                32775
 #define ID_ADD_ELLIPSE                  32777
+#define ID_REDO                         32779
+#define ID_UNDO                         32780
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        311
-#define _APS_NEXT_COMMAND_VALUE         32778
+#define _APS_NEXT_RESOURCE_VALUE        316
+#define _APS_NEXT_COMMAND_VALUE         32783
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
