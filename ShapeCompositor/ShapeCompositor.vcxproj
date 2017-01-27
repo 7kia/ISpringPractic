@@ -214,7 +214,6 @@
     <ClCompile Include="Canvas\Canvas.cpp" />
     <ClCompile Include="Canvas\CanvasCommands\AddShapeCommand.cpp" />
     <ClCompile Include="Canvas\CanvasCommands\CanvasCommand.cpp" />
-    <ClCompile Include="Canvas\CanvasCommands\Receiver.cpp" />
     <ClCompile Include="Canvas\CanvasController.cpp" />
     <ClCompile Include="Canvas\Shapes\EllipseShape.cpp" />
     <ClCompile Include="Canvas\Shapes\CShape.cpp" />

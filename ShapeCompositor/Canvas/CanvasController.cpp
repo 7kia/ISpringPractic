@@ -43,6 +43,11 @@ void CCanvas::CController::ExecuteCommand(Command command)
 
 void CCanvas::CController::AddCommand(const PCanvasCommand command)
 {
+	// TODO : insert to middle queue
+	if (!m_history.empty() && (m_currentCommand != m_history.rbegin()))
+	{
+		m_history.erase(m_currentCommand.base(), m_history.end());
+	}
 	m_history.push_back(command);
 	m_currentCommand = m_history.rbegin();
 }

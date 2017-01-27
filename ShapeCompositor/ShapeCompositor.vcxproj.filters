@@ -146,9 +146,6 @@
     <ClCompile Include="Canvas\CanvasCommands\AddShapeCommand.cpp">
       <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
     </ClCompile>
-    <ClCompile Include="Canvas\CanvasCommands\Receiver.cpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ShapeCompositor.reg" />
