@@ -1,7 +1,6 @@
 #pragma once
 
 #include <memory>
-//#include "../Canvas.h"
 
 class IMyCommand
 {
@@ -14,22 +13,3 @@ public:
 	virtual void Cancel() = 0;
 };
 
-class CCanvas;
-
-class CCanvasCommand : public IMyCommand
-{
-public:
-	CCanvasCommand(CCanvas * pCanvas);
-	//////////////////////////////////////////////////////////////////////
-	// Methods
-public:
-	//--------------------------------------------
-	// ICommand
-
-	//--------------------------------------------
-
-	//////////////////////////////////////////////////////////////////////
-	// Data
-protected:
-	CCanvas * m_pCanvas;
-};

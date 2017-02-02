@@ -191,6 +191,8 @@
     <ClInclude Include="Canvas\CanvasCommands\AddShapeCommand.h" />
     <ClInclude Include="Canvas\CanvasCommands\CanvasCommand.h" />
     <ClInclude Include="Canvas\CanvasCommands\AllCanvasCommand.h" />
+    <ClInclude Include="Canvas\CanvasController.h" />
+    <ClInclude Include="Canvas\ShapeRenderer.h" />
     <ClInclude Include="Canvas\Shapes\AllShapes.h" />
     <ClInclude Include="Canvas\Shapes\EllipseShape.h" />
     <ClInclude Include="Canvas\Shapes\CShape.h" />
@@ -213,8 +215,8 @@
   <ItemGroup>
     <ClCompile Include="Canvas\Canvas.cpp" />
     <ClCompile Include="Canvas\CanvasCommands\AddShapeCommand.cpp" />
-    <ClCompile Include="Canvas\CanvasCommands\CanvasCommand.cpp" />
     <ClCompile Include="Canvas\CanvasController.cpp" />
+    <ClCompile Include="Canvas\ShapeRenderer.cpp" />
     <ClCompile Include="Canvas\Shapes\EllipseShape.cpp" />
     <ClCompile Include="Canvas\Shapes\CShape.cpp" />
     <ClCompile Include="Canvas\Shapes\IShape.cpp" />

@@ -48,6 +48,7 @@ END_MESSAGE_MAP()
 // создание/уничтожение CShapeCompositorView
 
 CShapeCompositorView::CShapeCompositorView()
+	: m_canvasController(&m_canvas)
 {
 }
 
@@ -69,7 +70,7 @@ HRESULT CShapeCompositorView::Render()
 	m_pRenderTarget->SetTransform(matrix);
 	m_pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
 
-	hr = m_canvas.Render();
+	hr = m_canvasController.Render();
 
 	if (hr == D2DERR_RECREATE_TARGET)
 	{
@@ -91,27 +92,27 @@ ID2D1HwndRenderTarget * CShapeCompositorView::GetRenderTarget()
 
 void CShapeCompositorView::CreateTriangle()
 {
-	m_canvas.m_controller->ExecuteCommand(CCanvas::CController::Command::AddTriangle);
+	m_canvasController.AddTriangle();
 }
 
 void CShapeCompositorView::CreateRectangle()
 {
-	m_canvas.m_controller->ExecuteCommand(CCanvas::CController::Command::AddRectangle);
+	m_canvasController.AddRectangle();
 }
 
 void CShapeCompositorView::CreateEllipse()
 {
-	m_canvas.m_controller->ExecuteCommand(CCanvas::CController::Command::AddEllipse);
+	m_canvasController.AddEllipse();
 }
 
 void CShapeCompositorView::Undo()
 {
-	m_canvas.m_controller->ExecuteCommand(CCanvas::CController::Command::Undo);
+	m_canvasController.Undo();
 }
 
 void CShapeCompositorView::Redo()
 {
-	m_canvas.m_controller->ExecuteCommand(CCanvas::CController::Command::Redo);
+	m_canvasController.Redo();
 }
 
 

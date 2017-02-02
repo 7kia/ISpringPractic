@@ -2,7 +2,7 @@
 #include "AddShapeCommand.h"
 
 CAddShapeCanvasCommand::CAddShapeCanvasCommand(CCanvas * pCanvas, TypeShape type)
-	: CCanvasCommand(pCanvas)
+	: m_pCanvas(pCanvas)
 	, m_type(type)
 {
 }

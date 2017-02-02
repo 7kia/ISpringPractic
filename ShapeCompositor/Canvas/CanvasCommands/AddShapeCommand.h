@@ -3,7 +3,7 @@
 #include "CanvasCommand.h"
 #include "../Canvas.h"
 
-class CAddShapeCanvasCommand : public CCanvasCommand
+class CAddShapeCanvasCommand : public IMyCommand
 {
 public:
 	CAddShapeCanvasCommand(CCanvas * pCanvas, TypeShape type);//TypeShape
@@ -11,7 +11,7 @@ public:
 	// Methods
 public:
 	//--------------------------------------------
-	// ICommand
+	// IMyCommand
 	void Execute() override;
 	void Cancel() override;
 
@@ -20,4 +20,5 @@ public:
 	// Data
 private:
 	TypeShape m_type;
+	CCanvas * m_pCanvas;
 };

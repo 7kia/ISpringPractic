@@ -1,47 +1,51 @@
 #include "stdafx.h"
+#include "CanvasController.h"
 #include "Canvas.h"
 
-
-
-CCanvas::CController::CController(CCanvas * pCanvas)
+CCanvasController::CCanvasController(CCanvas * pCanvas)
 	: m_pCanvas(pCanvas)
 {
 
 }
 
-
-void CCanvas::CController::ExecuteCommand(Command command)
+HRESULT CCanvasController::Render()
 {
-	PCanvasCommand createCommand;
-	switch (command)
-	{
-	case Command::AddTriangle:
-		createCommand = std::make_shared<CAddShapeCanvasCommand>(m_pCanvas, TypeShape::Triangle);
-		AddCommand(createCommand);
-		ExecuteCurrent();
-		break;
-	case Command::AddRectangle:
-		createCommand = std::make_shared<CAddShapeCanvasCommand>(m_pCanvas, TypeShape::Rectangle);
-		AddCommand(createCommand);
-		ExecuteCurrent();
-		break;
-	case Command::AddEllipse:
-		createCommand = std::make_shared<CAddShapeCanvasCommand>(m_pCanvas, TypeShape::Ellipse);
-		AddCommand(createCommand);
-		ExecuteCurrent();
-		break;
-	case Command::Undo:
-		UndoCommand();
-		break;
-	case Command::Redo:
-		RedoCommand();
-		break;
-	default:
-		break;
-	}
+	return m_pCanvas->Render();
 }
 
-void CCanvas::CController::AddCommand(const PCanvasCommand command)
+void CCanvasController::AddTriangle()
+{
+	CanvasCommandPtr createCommand = std::make_shared<CAddShapeCanvasCommand>(m_pCanvas, TypeShape::Triangle);
+	AddCommand(createCommand);
+	ExecuteCurrent();
+}
+
+void CCanvasController::AddRectangle()
+{
+	CanvasCommandPtr createCommand = std::make_shared<CAddShapeCanvasCommand>(m_pCanvas, TypeShape::Rectangle);
+	AddCommand(createCommand);
+	ExecuteCurrent();
+}
+
+void CCanvasController::AddEllipse()
+{
+	CanvasCommandPtr createCommand = std::make_shared<CAddShapeCanvasCommand>(m_pCanvas, TypeShape::Ellipse);
+	AddCommand(createCommand);
+	ExecuteCurrent();
+}
+
+void CCanvasController::Undo()
+{
+	UndoCommand();
+}
+
+void CCanvasController::Redo()
+{
+	RedoCommand();
+}
+
+
+void CCanvasController::AddCommand(const CanvasCommandPtr command)
 {
 	// TODO : insert to middle queue
 	if (!m_history.empty() && (m_currentCommand != m_history.rbegin()))
@@ -52,12 +56,12 @@ void CCanvas::CController::AddCommand(const PCanvasCommand command)
 	m_currentCommand = m_history.rbegin();
 }
 
-void CCanvas::CController::ExecuteCurrent()
+void CCanvasController::ExecuteCurrent()
 {
 	m_currentCommand->get()->Execute();
 }
 
-void CCanvas::CController::UndoCommand()
+void CCanvasController::UndoCommand()
 {
 	if (m_currentCommand != m_history.rend())
 	{
@@ -66,7 +70,7 @@ void CCanvas::CController::UndoCommand()
 	}
 }
 
-void CCanvas::CController::RedoCommand()
+void CCanvasController::RedoCommand()
 {
 	if (m_currentCommand != m_history.rbegin())
 	{

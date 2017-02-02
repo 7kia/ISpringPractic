@@ -3,4 +3,4 @@
 #include "AddShapeCommand.h"
 
 // IMyCommandPtr or IMyCommandSharedPtr
-using PCanvasCommand = std::shared_ptr<IMyCommand>;
+using CanvasCommandPtr = std::shared_ptr<IMyCommand>;
