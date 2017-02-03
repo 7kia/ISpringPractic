@@ -26,10 +26,11 @@ public:
 	// Methods
 public:
 
-	HRESULT		Render();
-
+	// The function must call before use canvas
 	HRESULT		CreateRecources(CShapeCompositorView * window);
+	//
 
+	HRESULT		Render();
 	void		AddShape(TypeShape type);
 	void		DeleteShape(PCShape pShape);
 	void		DeleteLastShape();

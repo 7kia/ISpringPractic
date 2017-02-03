@@ -60,9 +60,6 @@
     <ClInclude Include="Canvas\Shapes\ShapeAttributes.h">
       <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
     </ClInclude>
-    <ClInclude Include="Canvas\Shapes\Rectangle.h">
-      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
-    </ClInclude>
     <ClInclude Include="Canvas\Shapes\RectangleShape.h">
       <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
     </ClInclude>
@@ -128,9 +125,6 @@
     <ClCompile Include="Canvas\Shapes\ShapeAttributes.cpp">
       <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
     </ClCompile>
-    <ClCompile Include="Canvas\Shapes\Rectangle.cpp">
-      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
-    </ClCompile>
     <ClCompile Include="Canvas\Shapes\RectangleShape.cpp">
       <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
     </ClCompile>
@@ -162,6 +156,7 @@
       <Filter>Файлы ресурсов</Filter>
     </None>
     <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ShapeCompositor.rc">

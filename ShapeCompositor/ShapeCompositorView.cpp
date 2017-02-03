@@ -125,7 +125,6 @@ void CShapeCompositorView::OnDraw(CDC* /*pDC*/)
 	if (!pDoc)
 		return;
 
-	//m_canvas.Render();
 	// TODO: добавьте здесь код отрисовки для собственных данных
 }
 

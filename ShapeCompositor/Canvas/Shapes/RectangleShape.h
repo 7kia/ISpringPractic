@@ -1,7 +1,6 @@
 #pragma once
 
 #include "CShape.h"
-#include "Rectangle.h"
 
 class CRectangleShape 
 	: public CShape
