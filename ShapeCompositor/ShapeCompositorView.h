@@ -60,6 +60,9 @@ protected:
 	CCanvasController m_canvasController;
 
 	ID2D1HwndRenderTarget * m_pRenderTarget = nullptr;
+
+	// For test OnMouseMove
+	CPoint m_start;// TODO : delete
 // Реализация
 public:
 	virtual ~CShapeCompositorView();
@@ -80,9 +83,16 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	afx_msg void OnPaint();
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	// buttons
+	afx_msg void OnLButtonlClk(UINT, CPoint);	// виртуальная процедура ответа на левую кнопку
+	afx_msg void OnKeyDown(UINT, UINT, UINT);	// виртуальная процедура ответа на клавишу
+	//
+	afx_msg void OnPaint();
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
+	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 };
 
 #ifndef _DEBUG  // отладочная версия в ShapeCompositorView.cpp

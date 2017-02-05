@@ -1,7 +1,7 @@
 #pragma once
 
-#include <memory>
 
+#include <memory>
 #include "IShape.h"
 
 class CShape : public IShape
@@ -41,12 +41,15 @@ public:
 	//void			Get();
 	//////////////////////////////////////////////////////////////////////
 	// Data
+public:
+
 protected:
 	Vec2f m_position;
 
 	SSize m_size;
 	Color m_fillColor;
 	Color m_outlineColor;
+
 };
 
 using PCShape = std::shared_ptr<CShape>;

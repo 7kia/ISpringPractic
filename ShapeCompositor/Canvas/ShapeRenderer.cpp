@@ -149,6 +149,9 @@ void CShapeRender::Visit(const CTriangleShape & shape)
 	m_pRenderTarget->FillGeometry(m_pathGeometry, m_fillBrush);
 	m_pRenderTarget->DrawGeometry(m_pathGeometry, m_outlineBrush);
 
+	// TODO : delete comments, and in mouse events
+	//InvalidateRect(m_pRenderTarget->GetHwnd(), nullptr, true);
+
 	m_fillBrush.Release();
 	m_outlineBrush.Release();
 	m_pathGeometry.Release();

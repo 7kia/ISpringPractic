@@ -3,8 +3,8 @@
 #include "../ShapeCompositorView.h"
 
 CCanvas::CCanvas()
+	: m_shapeFactory(this)
 {
-	
 }
 
 

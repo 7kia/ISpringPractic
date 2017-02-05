@@ -18,6 +18,7 @@ static const size_t MAX_COMMANDS = 5;
 class CShapeCompositorView;
 class CCanvasController;
 
+
 class CCanvas
 {
 public:
@@ -44,6 +45,8 @@ private:
 public:
 	CShapeFactory								m_shapeFactory;
 	CShapeRender								m_shapeRenderer;
-private:
+
+	// TODO : see might require do private
 	std::vector<PCShape>						m_shapes;
+private:
 };

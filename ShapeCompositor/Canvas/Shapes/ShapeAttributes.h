@@ -15,20 +15,6 @@ struct SSize
 	float height = 0.f;
 };
 
-struct Vec2f
-{
-	Vec2f() = default;
-	Vec2f(float x, float y);
-
-	bool operator==(Vec2f const& vec) const;
-	float x = 0.f;
-	float y = 0.f;
-};
-Vec2f const operator +(Vec2f const &first, Vec2f const &second);
-Vec2f const operator -(Vec2f const &first, Vec2f const &second);
-
-
-
 struct Color
 {
 	Color() = default;
@@ -44,6 +30,18 @@ struct Color
 	float b = 0.f;
 	float a = 1.f;
 };
+
+struct Vec2f
+{
+	Vec2f() = default;
+	Vec2f(float x, float y);
+
+	bool operator==(Vec2f const& vec) const;
+	float x = 0.f;
+	float y = 0.f;
+};
+Vec2f const operator +(Vec2f const &first, Vec2f const &second);
+Vec2f const operator -(Vec2f const &first, Vec2f const &second);
 
 // Mixin
 class IHaveVertex

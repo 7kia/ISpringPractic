@@ -43,6 +43,10 @@ BEGIN_MESSAGE_MAP(CShapeCompositorView, CScrollView)
 	ON_WM_SIZE()
 	ON_WM_PAINT()
 	ON_WM_ERASEBKGND()
+	ON_WM_MOUSEMOVE()
+	ON_WM_LBUTTONDOWN()
+	ON_WM_KEYDOWN()			// реакция на нажатие клавиши
+	ON_WM_LBUTTONDOWN()
 END_MESSAGE_MAP()
 
 // создание/уничтожение CShapeCompositorView
@@ -70,7 +74,7 @@ HRESULT CShapeCompositorView::Render()
 	m_pRenderTarget->SetTransform(matrix);
 	m_pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
 
-	hr = m_canvasController.Render();
+	hr = m_canvas.Render();
 
 	if (hr == D2DERR_RECREATE_TARGET)
 	{
@@ -93,26 +97,31 @@ ID2D1HwndRenderTarget * CShapeCompositorView::GetRenderTarget()
 void CShapeCompositorView::CreateTriangle()
 {
 	m_canvasController.AddTriangle();
+	RedrawWindow();
 }
 
 void CShapeCompositorView::CreateRectangle()
 {
 	m_canvasController.AddRectangle();
+	RedrawWindow();
 }
 
 void CShapeCompositorView::CreateEllipse()
 {
 	m_canvasController.AddEllipse();
+	RedrawWindow();
 }
 
 void CShapeCompositorView::Undo()
 {
 	m_canvasController.Undo();
+	RedrawWindow();
 }
 
 void CShapeCompositorView::Redo()
 {
 	m_canvasController.Redo();
+	RedrawWindow();
 }
 
 
@@ -132,7 +141,6 @@ void CShapeCompositorView::OnRButtonUp(UINT /* nFlags */, CPoint point)
 {
 	ClientToScreen(&point);
 	OnContextMenu(this, point);
-	RedrawWindow();
 }
 
 void CShapeCompositorView::OnContextMenu(CWnd* /* pWnd */, CPoint point)
@@ -201,7 +209,6 @@ BOOL CShapeCompositorView::PreCreateWindow(CREATESTRUCT& cs)
 	if (!CScrollView::PreCreateWindow(cs))
 		return FALSE;
 
-
 	return TRUE;
 }
 
@@ -229,6 +236,14 @@ void CShapeCompositorView::OnPaint()
 					   // Не вызывать CScrollView::OnPaint() для сообщений рисования
 
 	Render();
+
+}
+
+void CShapeCompositorView::OnKeyDown(UINT, UINT, UINT)
+{
+	MessageBox(_T("Key Button Down."), _T("Debug"),
+		MB_ICONINFORMATION | MB_OK);
+
 }
 
 
@@ -245,4 +260,60 @@ BOOL CShapeCompositorView::OnEraseBkgnd(CDC* pDC)
 	// TODO: добавьте свой код обработчика сообщений или вызов стандартного
 
 	return CScrollView::OnEraseBkgnd(pDC);
+}
+
+
+//
+// Mouse events
+//
+void CShapeCompositorView::OnLButtonDown(UINT nFlags, CPoint point)
+{
+	// TODO: добавьте свой код обработчика сообщений или вызов стандартного
+
+	CScrollView::OnLButtonDown(nFlags, point);
+
+	//SetCapture();//захват мышки для окна, перехвачивает
+	//			 //все сообщения мышки и за пределами ока
+}
+
+
+void CShapeCompositorView::OnMouseMove(UINT nFlags, CPoint point)
+{
+	// TODO: добавьте свой код обработчика сообщений или вызов стандартного
+	CView::OnMouseMove(nFlags, point);
+
+	///*
+	// For test OnMouseMove
+	//если курсор пренадлежит нашему окну, то тогда рисуем
+	//if (this == GetCapture())
+	//{
+	//	CClientDC aDC(this);//создаем контекст устройства
+	//	if (m_start.x == -1)//если -1 то начало
+	//	{
+
+	//		m_start = point;
+	//		return;
+	//	}
+	//	aDC.MoveTo(m_start);//устанавливаем начальную точку
+	//	aDC.LineTo(point);//рисуем линию
+	//	m_start = point;//запоминаем конечную точку
+	//}
+	//*/
+
+}
+
+
+void CShapeCompositorView::OnLButtonUp(UINT nFlags, CPoint point)
+{
+	// TODO: добавьте свой код обработчика сообщений или вызов стандартного
+
+	CView::OnLButtonUp(nFlags, point);
+
+	/*
+	if (this == GetCapture());//Если захвачен курсор мышки, освободить
+	{
+		ReleaseCapture();
+	}
+	*/
+	
 }

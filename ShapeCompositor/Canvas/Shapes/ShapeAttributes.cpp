@@ -13,19 +13,6 @@ bool SSize::operator==(SSize const & size) const
 	return (size.width == width) && (size.height == height);
 }
 
-
-Vec2f::Vec2f(float x, float y)
-	: x(x)
-	, y(y)
-{
-}
-
-bool Vec2f::operator==(Vec2f const & vec) const
-{
-	return (fabs(x - vec.x) < std::numeric_limits<float>::epsilon())
-		&& (fabs(y - vec.y) < std::numeric_limits<float>::epsilon());
-}
-
 Color::Color(float r
 			, float g
 			, float b
@@ -43,6 +30,18 @@ bool Color::operator==(Color const & other) const
 		&& (g == other.g)
 		&& (b == other.b)
 		&& (a == other.a);
+}
+
+Vec2f::Vec2f(float x, float y)
+	: x(x)
+	, y(y)
+{
+}
+
+bool Vec2f::operator==(Vec2f const & vec) const
+{
+	return (fabs(x - vec.x) < std::numeric_limits<float>::epsilon())
+		&& (fabs(y - vec.y) < std::numeric_limits<float>::epsilon());
 }
 
 Vec2f const operator+(Vec2f const & first, Vec2f const & second)

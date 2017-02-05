@@ -8,10 +8,6 @@ CCanvasController::CCanvasController(CCanvas * pCanvas)
 
 }
 
-HRESULT CCanvasController::Render()
-{
-	return m_pCanvas->Render();
-}
 
 void CCanvasController::AddTriangle()
 {
@@ -76,5 +72,15 @@ void CCanvasController::RedoCommand()
 	{
 		--m_currentCommand;
 		m_currentCommand->get()->Execute();
+	}
+}
+
+void CCanvasController::UpdateShapes(Vec2f point)
+{
+	for (auto & shape : m_pCanvas->m_shapes)
+	{
+		if(shape->IsPointIntersection(Vec2f(float(point.x), float(point.y))))
+		{
+		}
 	}
 }

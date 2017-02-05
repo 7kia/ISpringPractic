@@ -21,10 +21,11 @@ public:
 	virtual PCShape CreateShape(TypeShape type, const Vec2f position) = 0;
 };
 
+class CCanvas;// For bind signals
 class CShapeFactory : public IShapeFactory
 {
 public:
-	CShapeFactory();
+	CShapeFactory(CCanvas * pCanvas);
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
@@ -38,4 +39,5 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
+	CCanvas * m_pCanvas = nullptr;
 };
