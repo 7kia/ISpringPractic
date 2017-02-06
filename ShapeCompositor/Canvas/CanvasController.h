@@ -3,8 +3,9 @@
 
 #include "Canvas.h"
 #include "CanvasCommands\AllCanvasCommand.h"
+#include "MouseEventHandler.h"
 
-class CCanvasController
+class CCanvasController : public IMouseEventHandler
 {
 public:
 	CCanvasController(CCanvas * pCanvas);
@@ -18,6 +19,15 @@ public:
 	void AddEllipse();
 	void Undo();
 	void Redo();
+	//--------------------------------------------
+	// IMouseEventHandler
+
+	 void HandleLButtHandleDown(CPoint point) override;
+	 void HandleLButtHandleUp(CPoint point) override;
+	 void HandleRButtHandleUp(CPoint point) override;
+	 void HandleMouseMove(CPoint point) override;
+
+	//--------------------------------------------
 
 private:
 	void AddCommand(const CanvasCommandPtr command);
@@ -26,6 +36,7 @@ private:
 	void RedoCommand();
 	void UpdateShapes(Vec2f point);
 
+	CShapePresenterPtr GetShape(const CPoint position);
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:

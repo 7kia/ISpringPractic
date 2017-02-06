@@ -272,6 +272,7 @@ void CShapeCompositorView::OnLButtonDown(UINT nFlags, CPoint point)
 
 	CScrollView::OnLButtonDown(nFlags, point);
 
+	m_canvasController.HandleLButtHandleDown(point);
 	//SetCapture();//захват мышки для окна, перехвачивает
 	//			 //все сообщения мышки и за пределами ока
 }

@@ -54,6 +54,21 @@ void CCanvas::DeleteLastShape()
 	m_shapesData.pop_back();
 }
 
+CShapePresenterPtr CCanvas::GetShapePresenter(const Vec2f mousePosition)
+{
+	CShapePresenterPtr result;
+
+	for (const auto & presenter : m_shapePresenters)
+	{
+		if (presenter->IsPointIntersection(mousePosition))
+		{
+			result = presenter;
+		}
+	}
+
+	return result;
+}
+
 HRESULT CCanvas::RenderShapes()
 {
 	for (const auto & shape : m_shapesData)

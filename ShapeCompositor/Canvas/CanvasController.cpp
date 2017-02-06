@@ -40,6 +40,32 @@ void CCanvasController::Redo()
 	RedoCommand();
 }
 
+void CCanvasController::HandleLButtHandleDown(CPoint point)
+{
+	auto selectShape = m_pCanvas->GetShapePresenter(Vec2f(float(point.x), float(point.y)));
+
+	if (!selectShape._Expired())
+	{
+		1;
+
+	}
+}
+
+void CCanvasController::HandleLButtHandleUp(CPoint point)
+{
+	// TODO
+}
+
+void CCanvasController::HandleRButtHandleUp(CPoint point)
+{
+	// TODO
+}
+
+void CCanvasController::HandleMouseMove(CPoint point)
+{
+	// TODO
+}
+
 
 void CCanvasController::AddCommand(const CanvasCommandPtr command)
 {
@@ -84,4 +110,9 @@ void CCanvasController::UpdateShapes(Vec2f point)
 			// TODO
 		}
 	}
+}
+
+CShapePresenterPtr CCanvasController::GetShape(const CPoint position)
+{
+	return m_pCanvas->GetShapePresenter(Vec2f(float(position.x), float(position.y)));
 }
