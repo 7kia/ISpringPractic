@@ -33,7 +33,7 @@ public:
 
 	HRESULT		Render();
 	void		AddShape(TypeShape type);
-	void		DeleteShape(CShapeDataPtr pShape);
+	void		DeleteShape(CShapePresenterPtr pShape);
 	void		DeleteLastShape();
 
 	CShapePresenterPtr GetShapePresenter(const Vec2f mousePosition);

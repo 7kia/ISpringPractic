@@ -193,6 +193,7 @@
     <ClInclude Include="Canvas\CanvasCommands\AllCanvasCommand.h" />
     <ClInclude Include="Canvas\CanvasController.h" />
     <ClInclude Include="Canvas\MouseEventHandler.h" />
+    <ClInclude Include="Canvas\SelectShape.h" />
     <ClInclude Include="Canvas\ShapeRenderer.h" />
     <ClInclude Include="Canvas\Shapes\AllShapes.h" />
     <ClInclude Include="Canvas\Shapes\EllipsePresenter.h" />
@@ -221,6 +222,7 @@
     <ClCompile Include="Canvas\Canvas.cpp" />
     <ClCompile Include="Canvas\CanvasCommands\AddShapeCommand.cpp" />
     <ClCompile Include="Canvas\CanvasController.cpp" />
+    <ClCompile Include="Canvas\SelectShape.cpp" />
     <ClCompile Include="Canvas\ShapeRenderer.cpp" />
     <ClCompile Include="Canvas\Shapes\EllipseShapeData.cpp" />
     <ClCompile Include="Canvas\Shapes\CShape.cpp" />

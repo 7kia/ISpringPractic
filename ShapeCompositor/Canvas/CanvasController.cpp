@@ -46,8 +46,7 @@ void CCanvasController::HandleLButtHandleDown(CPoint point)
 
 	if (!selectShape._Expired())
 	{
-		1;
-
+		m_selectShape.SetShape(selectShape);
 	}
 }
 

@@ -114,6 +114,9 @@
     <ClInclude Include="Canvas\MouseEventHandler.h">
       <Filter>Файлы исходного кода\Canvas</Filter>
     </ClInclude>
+    <ClInclude Include="Canvas\SelectShape.h">
+      <Filter>Файлы исходного кода\Canvas</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ShapeCompositor.cpp">
@@ -175,6 +178,9 @@
     </ClCompile>
     <ClCompile Include="Canvas\Shapes\EllipseShapeData.cpp">
       <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas\SelectShape.cpp">
+      <Filter>Файлы исходного кода\Canvas</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

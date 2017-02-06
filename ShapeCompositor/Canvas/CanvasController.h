@@ -4,6 +4,7 @@
 #include "Canvas.h"
 #include "CanvasCommands\AllCanvasCommand.h"
 #include "MouseEventHandler.h"
+#include "SelectShape.h"
 
 class CCanvasController : public IMouseEventHandler
 {
@@ -44,6 +45,7 @@ private:
 	std::vector<CanvasCommandPtr>						m_history;
 	std::vector<CanvasCommandPtr>::reverse_iterator		m_currentCommand = m_history.rbegin();
 
+	CSelectShape m_selectShape;
 
 	CCanvas * m_pCanvas = nullptr;
 };

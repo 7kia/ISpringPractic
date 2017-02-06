@@ -4,11 +4,14 @@
 #include "CShape.h"
 
 class CShapePresenter 
-	: public CObservable<SPresenterData>
+	: public CObservable<SPresenterData>// For update view and model
+	, public IObserver<SPresenterData>// For update from CSelectShape
 	, public IIsPointIntersection
 {
 public:
 	CShapePresenter(const Vec2f position, const SSize size);
+
+	~CShapePresenter();
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
@@ -17,6 +20,9 @@ public:
 	//--------------------------------------------
 	// CObservable<SPresenterData>
 	SPresenterData GetChangedData() const override;
+	//--------------------------------------------
+	//  IObserver<SPresenterData>
+	void Update(const SPresenterData & data) override;
 	//--------------------------------------------
 	//////////////////////////////////////////////////////////////////////
 	// Data

@@ -41,16 +41,18 @@ void CCanvas::AddShape(TypeShape type)
 	);
 }
 
-void CCanvas::DeleteShape(CShapeDataPtr pShape)
+void CCanvas::DeleteShape(CShapePresenterPtr pShape)
 {
 	// TODO : the code might will be need to other place
-	size_t deleteIndex = std::find(m_shapesData.begin(), m_shapesData.end(), pShape) - m_shapesData.begin();
+	size_t deleteIndex = std::find(m_shapePresenters.begin(), m_shapePresenters.end(), pShape) - m_shapePresenters.begin();
 
+	m_shapePresenters.erase(m_shapePresenters.begin() + deleteIndex);
 	m_shapesData.erase(m_shapesData.begin() + deleteIndex);
 }
 
 void CCanvas::DeleteLastShape()
 {
+	m_shapePresenters.pop_back();
 	m_shapesData.pop_back();
 }
 
@@ -58,11 +60,12 @@ CShapePresenterPtr CCanvas::GetShapePresenter(const Vec2f mousePosition)
 {
 	CShapePresenterPtr result;
 
-	for (const auto & presenter : m_shapePresenters)
+	for (auto iter = m_shapePresenters.rbegin(); iter != m_shapePresenters.rend(); ++iter)
 	{
-		if (presenter->IsPointIntersection(mousePosition))
+		if ((*iter)->IsPointIntersection(mousePosition))
 		{
-			result = presenter;
+			result = *iter;
+			break;
 		}
 	}
 
