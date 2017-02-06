@@ -63,12 +63,6 @@
     <ClInclude Include="Canvas\Shapes\RectangleShape.h">
       <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
     </ClInclude>
-    <ClInclude Include="RenderShapeVisitor.h">
-      <Filter>Файлы исходного кода\Canvas</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderShapeAccept.h">
-      <Filter>Файлы исходного кода\Canvas</Filter>
-    </ClInclude>
     <ClInclude Include="Canvas\Shapes\AllShapes.h">
       <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
     </ClInclude>
@@ -76,9 +70,6 @@
       <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
     </ClInclude>
     <ClInclude Include="Canvas\Shapes\ShapeFactory.h">
-      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
-    </ClInclude>
-    <ClInclude Include="Canvas\Shapes\EllipseShape.h">
       <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
     </ClInclude>
     <ClInclude Include="Canvas\CanvasCommands\CanvasCommand.h">
@@ -95,6 +86,24 @@
     </ClInclude>
     <ClInclude Include="Canvas\CanvasController.h">
       <Filter>Файлы исходного кода\Canvas</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderShapeVisitor.h">
+      <Filter>Файлы исходного кода</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderShapeAccept.h">
+      <Filter>Файлы исходного кода</Filter>
+    </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>Файлы исходного кода</Filter>
+    </ClInclude>
+    <ClInclude Include="Canvas\Shapes\EllipsePresenter.h">
+      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Canvas\Shapes\EllipseDataShape.h">
+      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Canvas\Shapes\ShapePresenter.h">
+      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -137,14 +146,20 @@
     <ClCompile Include="Canvas\Shapes\ShapeFactory.cpp">
       <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
     </ClCompile>
-    <ClCompile Include="Canvas\Shapes\EllipseShape.cpp">
-      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
-    </ClCompile>
     <ClCompile Include="Canvas\CanvasCommands\AddShapeCommand.cpp">
       <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
     </ClCompile>
     <ClCompile Include="Canvas\ShapeRenderer.cpp">
       <Filter>Файлы исходного кода\Canvas</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas\Shapes\EllipseDataShape.cpp">
+      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas\Shapes\EllipsePresenter.cpp">
+      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas\Shapes\ShapePresenter.cpp">
+      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

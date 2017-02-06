@@ -4,10 +4,10 @@
 #include <memory>
 #include "IShape.h"
 
-class CShape : public IShape
+class CShapeData : public IShape
 {
 public:
-	CShape(
+	CShapeData(
 		const Vec2f position
 		, const SSize size
 		, const Color fillColor
@@ -31,6 +31,8 @@ public:
 	// Size
 	void SetSize(SSize size) override;
 	SSize GetSize() const override;
+	// Own rect
+	RECT GetOwnRect() const override;
 
 	// TODO :
 	// Visual part
@@ -52,4 +54,18 @@ protected:
 
 };
 
-using PCShape = std::shared_ptr<CShape>;
+struct SPresenterData
+{
+	Vec2f position;
+	SSize size;
+};
+
+struct SShapeData
+{
+	Vec2f position;
+	SSize size;
+	Color fillColor;
+	Color outlineColor;
+};
+
+using PCShape = std::shared_ptr<CShapeData>;

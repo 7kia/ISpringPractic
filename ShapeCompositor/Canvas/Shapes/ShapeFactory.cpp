@@ -23,7 +23,7 @@ PCShape CShapeFactory::CreateShape(TypeShape type, const Vec2f position)
 		return std::make_shared<CRectangleShape>(position, DEFAULT_SIZE, DEFAULT_FILL_COLOR, DEFAULT_OUTLINE_COLOR);
 		break;
 	case TypeShape::Ellipse:
-		return std::make_shared<CEllipseShape>(position, DEFAULT_SIZE, DEFAULT_FILL_COLOR, DEFAULT_OUTLINE_COLOR);
+		return std::make_shared<CEllipseDataShape>(position, DEFAULT_SIZE, DEFAULT_FILL_COLOR, DEFAULT_OUTLINE_COLOR);
 		break;
 	default:
 		throw std::runtime_error("The shape type not exist");

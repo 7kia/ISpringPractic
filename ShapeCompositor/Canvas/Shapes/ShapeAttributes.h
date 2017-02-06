@@ -57,5 +57,5 @@ class IIsPointIntersection
 public:
 	virtual ~IIsPointIntersection() = default;
 
-	virtual bool IsPointIntersection(const Vec2f point) const = 0;
+	virtual bool IsPointIntersection(const Vec2f point) const {};
 };

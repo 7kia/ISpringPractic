@@ -1,12 +1,15 @@
 #pragma once
 
 #include "CShape.h"
+#include "Observer.h"
 
-class CEllipseShape
-	: public CShape
+class CEllipseDataShape
+	: public CShapeData
+	, public IObserver<SPresenterData>
+	, public CObservable<SShapeData>
 {
 public:
-	CEllipseShape(
+	CEllipseDataShape(
 		const Vec2f position
 		, const SSize size
 		, const Color fillColor
@@ -16,21 +19,17 @@ public:
 	// Methods
 public:
 	//--------------------------------------------
-	// IShape
-
-	//--------------------------------------------
 	// IRenderShapeVisitor
 
 	void Accept(IRenderShapeVisitor & visitor) override;
 
 	//--------------------------------------------
-	// IIsPointIntersection
-
-	bool IsPointIntersection(const Vec2f point) const override;
-
+	// IObserver<SPresenterData>
+	void Update(SPresenterData const& data) override;
 	//--------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
+	bool m_isUpdate = false;
 };

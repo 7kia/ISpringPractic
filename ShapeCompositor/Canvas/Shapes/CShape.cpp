@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "CShape.h"
 
-CShape::CShape(
+CShapeData::CShapeData(
 	const Vec2f position
 	, const SSize size
 	, const Color fillColor
@@ -15,42 +15,55 @@ CShape::CShape(
 {
 }
 
-void CShape::SetPosition(Vec2f position)
+void CShapeData::SetPosition(Vec2f position)
 {
 	m_position = position;
 }
 
-Vec2f CShape::GetPosition() const
+Vec2f CShapeData::GetPosition() const
 {
 	return m_position;
 }
 
-void CShape::SetFillColor(Color color)
+void CShapeData::SetFillColor(Color color)
 {
 	m_fillColor = color;
 }
 
-Color CShape::GetFillColor() const
+Color CShapeData::GetFillColor() const
 {
 	return m_fillColor;
 }
 
-void CShape::SetOutlineColor(Color color)
+void CShapeData::SetOutlineColor(Color color)
 {
 	m_outlineColor = color;
 }
 
-Color CShape::GetOutlineColor() const
+Color CShapeData::GetOutlineColor() const
 {
 	return m_outlineColor;
 }
 
-void CShape::SetSize(SSize size)
+void CShapeData::SetSize(SSize size)
 {
 	m_size = size;
 }
 
-SSize CShape::GetSize() const
+SSize CShapeData::GetSize() const
 {
 	return m_size;
+}
+
+RECT CShapeData::GetOwnRect() const
+{
+	SSize shapeSize = GetSize();
+	Vec2f shapePosition = GetPosition();
+	RECT rect;
+	rect.left = shapePosition.x - shapeSize.width / 2;
+	rect.right = shapePosition.x + shapeSize.width / 2;
+	rect.bottom = shapePosition.y - shapeSize.height / 2;
+	rect.top = shapePosition.y + shapeSize.height / 2;
+
+	return rect;
 }

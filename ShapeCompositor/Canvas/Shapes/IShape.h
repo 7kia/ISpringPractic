@@ -5,7 +5,6 @@
 
 class IShape
 	: public IRenderShapeAccept
-	, public IIsPointIntersection
 {
 public:
 	IShape();
@@ -26,6 +25,8 @@ public:
 	// Size
 	virtual void SetSize(SSize size) = 0;
 	virtual SSize GetSize() const = 0;
+	// Own rect
+	virtual RECT GetOwnRect() const = 0;
 
 	// TODO :
 	// Visual part

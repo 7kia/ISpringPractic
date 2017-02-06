@@ -1,5 +1,5 @@
 #pragma once
 
 #include "RectangleShape.h"
-#include "EllipseShape.h"
+#include "EllipseDataShape.h"
 #include "TriangleShape.h"

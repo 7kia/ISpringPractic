@@ -89,9 +89,11 @@ void CShapeRender::Visit(const CRectangleShape & shape)
 	m_outlineBrush.Release();
 	m_pathGeometry.Release();
 	m_geometrySink.Release();
+
+	InvalidateRect(m_pRenderTarget->GetHwnd(), &shape.GetOwnRect(), true);
 }
 
-void CShapeRender::Visit(const CEllipseShape & shape)
+void CShapeRender::Visit(const CEllipseDataShape & shape)
 {
 	auto position = shape.GetPosition();
 	SSize size = shape.GetSize();
@@ -119,6 +121,7 @@ void CShapeRender::Visit(const CEllipseShape & shape)
 	m_fillBrush.Release();
 	m_outlineBrush.Release();
 
+	InvalidateRect(m_pRenderTarget->GetHwnd(), &shape.GetOwnRect(), true);
 }
 
 void CShapeRender::Visit(const CTriangleShape & shape)
@@ -149,11 +152,11 @@ void CShapeRender::Visit(const CTriangleShape & shape)
 	m_pRenderTarget->FillGeometry(m_pathGeometry, m_fillBrush);
 	m_pRenderTarget->DrawGeometry(m_pathGeometry, m_outlineBrush);
 
-	// TODO : delete comments, and in mouse events
-	//InvalidateRect(m_pRenderTarget->GetHwnd(), nullptr, true);
-
 	m_fillBrush.Release();
 	m_outlineBrush.Release();
 	m_pathGeometry.Release();
 	m_geometrySink.Release();
+
+	// TODO : Check correctness place
+	InvalidateRect(m_pRenderTarget->GetHwnd(), &shape.GetOwnRect(), true);
 }

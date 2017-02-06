@@ -3,7 +3,7 @@
 #include "CShape.h"
 
 class CRectangleShape 
-	: public CShape
+	: public CShapeData
 	, public IHaveVertex
 {
 public:

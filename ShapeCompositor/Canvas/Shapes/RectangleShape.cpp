@@ -8,7 +8,7 @@ CRectangleShape::CRectangleShape(
 	, const Color outlineColor
 
 )
-	: CShape(position, size, fillColor, outlineColor)
+	: CShapeData(position, size, fillColor, outlineColor)
 	, IHaveVertex()
 {
 }
