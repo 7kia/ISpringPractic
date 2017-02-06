@@ -14,3 +14,11 @@ void CShapePresenter::CheckPointIntersection(const Vec2f point)
 		NotifyObservers();
 	}
 }
+
+SPresenterData CShapePresenter::GetChangedData() const
+{
+	SPresenterData info;
+	info.position = m_position;
+	info.size = m_size;
+	return info;
+}

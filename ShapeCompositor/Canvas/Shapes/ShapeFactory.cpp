@@ -8,27 +8,66 @@ CShapeFactory::CShapeFactory(CCanvas * pCanvas)
 {
 }
 
-PCShape CShapeFactory::CreateShape(TypeShape type, const Vec2f position)
+void CShapeFactory::CreateShape(TypeShape type, const Vec2f position)
 {
-	PCShape createShape;
-
+	CShapeDataPtr lastData;
+	CShapePresenterPtr lastPresenter;
 	switch (type)
 	{
 	case TypeShape::Triangle:
-		createShape = std::make_shared<CTriangleShape>(position, DEFAULT_SIZE, DEFAULT_FILL_COLOR, DEFAULT_OUTLINE_COLOR);
-		//createShape->OnUpdate.connect(boost::bind(createShape->IsPointIntersection),)
-		return createShape;
+		m_pCanvas->m_shapesData.push_back(std::make_shared<CTriangleShapeData>(
+			position
+			, DEFAULT_SIZE
+			, DEFAULT_FILL_COLOR
+			, DEFAULT_OUTLINE_COLOR
+			));
+		m_pCanvas->m_shapePresenters.push_back(std::make_shared<CTrianglePresenter>(
+			position
+			, DEFAULT_SIZE
+			));
+
+		BindPresenterWithModel();
 		break;
 	case TypeShape::Rectangle:
-		return std::make_shared<CRectangleShape>(position, DEFAULT_SIZE, DEFAULT_FILL_COLOR, DEFAULT_OUTLINE_COLOR);
+		m_pCanvas->m_shapesData.push_back(std::make_shared<CRectangleShapeData>(
+			position
+			, DEFAULT_SIZE
+			, DEFAULT_FILL_COLOR
+			, DEFAULT_OUTLINE_COLOR
+			));
+		m_pCanvas->m_shapePresenters.push_back(std::make_shared<CRectanglePresenter>(
+			position
+			, DEFAULT_SIZE
+			));
+
+		BindPresenterWithModel();
 		break;
 	case TypeShape::Ellipse:
-		return std::make_shared<CEllipseDataShape>(position, DEFAULT_SIZE, DEFAULT_FILL_COLOR, DEFAULT_OUTLINE_COLOR);
+		m_pCanvas->m_shapesData.push_back(std::make_shared<CEllipseDataShape>(
+			position
+			, DEFAULT_SIZE
+			, DEFAULT_FILL_COLOR
+			, DEFAULT_OUTLINE_COLOR
+			));
+		m_pCanvas->m_shapePresenters.push_back(std::make_shared<CEllipsePresenter>(
+			position
+			, DEFAULT_SIZE
+			));
+
+		BindPresenterWithModel();
 		break;
 	default:
 		throw std::runtime_error("The shape type not exist");
 		break;
 	}
 
-	//return PCShape();
+	//return CShapeDataPtr();
+}
+
+void CShapeFactory::BindPresenterWithModel()
+{
+	CShapeDataPtr lastData =m_pCanvas->m_shapesData.back();
+	CShapePresenterPtr lastPresenter =  m_pCanvas->m_shapePresenters.back();
+
+	lastPresenter->RegisterObserver(*lastData.get());
 }

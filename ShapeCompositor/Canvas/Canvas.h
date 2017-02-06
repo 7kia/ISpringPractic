@@ -33,7 +33,7 @@ public:
 
 	HRESULT		Render();
 	void		AddShape(TypeShape type);
-	void		DeleteShape(PCShape pShape);
+	void		DeleteShape(CShapeDataPtr pShape);
 	void		DeleteLastShape();
 
 private:
@@ -47,6 +47,8 @@ public:
 	CShapeRender								m_shapeRenderer;
 
 	// TODO : see might require do private
-	std::vector<PCShape>						m_shapes;
+	std::vector<CShapeDataPtr>					m_shapesData;
+	std::vector<CShapePresenterPtr>				m_shapePresenters;
+
 private:
 };

@@ -1,39 +1,30 @@
 #pragma once
 
-#include "CShape.h"
+#include "ShapePresenter.h"
 
-class CRectangleShape 
-	: public CShapeData
+
+class CTrianglePresenter
+	: public CShapePresenter
 	, public IHaveVertex
 {
 public:
-	CRectangleShape(
-		const Vec2f position
-		, const SSize size
-		, const Color fillColor
-		, const Color outlineColor
-	);
-
+	CTrianglePresenter(const Vec2f position, const SSize size);
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
-	//--------------------------------------------
-	// IShape
-
-	//--------------------------------------------
-	// IRenderShapeVisitor
-
-	void Accept(IRenderShapeVisitor & visitor) override;
-
+private:
 	//--------------------------------------------
 	// IIsPointIntersection
 
 	bool IsPointIntersection(const Vec2f point) const override;
 
 	//--------------------------------------------
+	// IHaveVertex
 	std::vector<Vec2f> GetVertices() const override;
+	//--------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
+
 };

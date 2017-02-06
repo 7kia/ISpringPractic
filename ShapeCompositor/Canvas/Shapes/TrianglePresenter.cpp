@@ -1,29 +1,10 @@
 #include "stdafx.h"
-#include "TriangleShape.h"
+#include "TrianglePresenter.h"
 
-CTriangleShape::CTriangleShape(
-	const Vec2f position
-	, const SSize size
-	, const Color fillColor
-	, const Color outlineColor
-)
-	: CShapeData(position, size, fillColor, outlineColor)
+CTrianglePresenter::CTrianglePresenter(const Vec2f position, const SSize size)
+	: CShapePresenter(position, size)
 	, IHaveVertex()
 {
-}
-
-void CTriangleShape::Accept(IRenderShapeVisitor & visitor)
-{
-	visitor.Visit(*this);
-}
-
-std::vector<Vec2f> CTriangleShape::GetVertices() const
-{
-	return {
-		Vec2f(m_position.x - m_size.width / 2.f, m_position.y + m_size.height / 2.f)
-		, Vec2f(m_position.x + m_size.width / 2.f, m_position.y + m_size.height / 2.f)
-		, Vec2f(m_position.x, m_position.y - m_size.height / 2.f)
-	};
 }
 
 float dot(Vec2f first, Vec2f second)
@@ -52,7 +33,17 @@ bool PointIsInsideTriangle(Vec2f p0, Vec2f p1, Vec2f p2, Vec2f p)
 		PointIsOnTheLeft(p2, p0, p);
 }
 
-bool CTriangleShape::IsPointIntersection(const Vec2f point) const
+
+std::vector<Vec2f> CTrianglePresenter::GetVertices() const
+{
+	return{
+		Vec2f(m_position.x - m_size.width / 2.f, m_position.y + m_size.height / 2.f)
+		, Vec2f(m_position.x + m_size.width / 2.f, m_position.y + m_size.height / 2.f)
+		, Vec2f(m_position.x, m_position.y - m_size.height / 2.f)
+	};
+}
+
+bool CTrianglePresenter::IsPointIntersection(const Vec2f point) const
 {
 	auto verteces = GetVertices();
 

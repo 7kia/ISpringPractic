@@ -17,9 +17,9 @@ public:
 	//--------------------------------------------
 	// IRenderShapeVisitor
 
-	void Visit(const CRectangleShape & shape) override;
+	void Visit(const CRectangleShapeData & shape) override;
 	void Visit(const CEllipseDataShape & shape) override;
-	void Visit(const CTriangleShape & shape) override;
+	void Visit(const CTriangleShapeData & shape) override;
 
 	//--------------------------------------------
 

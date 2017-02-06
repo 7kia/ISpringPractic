@@ -77,10 +77,11 @@ void CCanvasController::RedoCommand()
 
 void CCanvasController::UpdateShapes(Vec2f point)
 {
-	for (auto & shape : m_pCanvas->m_shapes)
+	for (auto & shape : m_pCanvas->m_shapePresenters)
 	{
 		if(shape->IsPointIntersection(Vec2f(float(point.x), float(point.y))))
 		{
+			// TODO
 		}
 	}
 }

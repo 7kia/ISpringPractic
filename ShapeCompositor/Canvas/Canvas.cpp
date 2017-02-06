@@ -35,28 +35,28 @@ HRESULT CCanvas::CreateRecources(CShapeCompositorView * window)
 
 void CCanvas::AddShape(TypeShape type)
 {
-	m_shapes.push_back(m_shapeFactory.CreateShape(
+	m_shapeFactory.CreateShape(
 		type, 
 		Vec2f(float(VIEW_WIDTH) / 2.f, float(VIEW_HEIGHT) / 2.f)
-	));
+	);
 }
 
-void CCanvas::DeleteShape(PCShape pShape)
+void CCanvas::DeleteShape(CShapeDataPtr pShape)
 {
 	// TODO : the code might will be need to other place
-	size_t deleteIndex = std::find(m_shapes.begin(), m_shapes.end(), pShape) - m_shapes.begin();
+	size_t deleteIndex = std::find(m_shapesData.begin(), m_shapesData.end(), pShape) - m_shapesData.begin();
 
-	m_shapes.erase(m_shapes.begin() + deleteIndex);
+	m_shapesData.erase(m_shapesData.begin() + deleteIndex);
 }
 
 void CCanvas::DeleteLastShape()
 {
-	m_shapes.pop_back();
+	m_shapesData.pop_back();
 }
 
 HRESULT CCanvas::RenderShapes()
 {
-	for (const auto & shape : m_shapes)
+	for (const auto & shape : m_shapesData)
 	{
 		shape->Accept(m_shapeRenderer);
 	}

@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "EllipseDataShape.h"
+#include "EllipseShapeData.h"
 
 CEllipseDataShape::CEllipseDataShape(
 	const Vec2f position
@@ -14,13 +14,5 @@ CEllipseDataShape::CEllipseDataShape(
 void CEllipseDataShape::Accept(IRenderShapeVisitor & visitor)
 {
 	visitor.Visit(*this);
-}
-
-void CEllipseDataShape::Update(SPresenterData const & data)
-{
-	m_position = data.position;
-	m_size = data.size;
-
-	m_isUpdate = true;
 }
 

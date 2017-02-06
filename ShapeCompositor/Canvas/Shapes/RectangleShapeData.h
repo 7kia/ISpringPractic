@@ -1,35 +1,36 @@
 #pragma once
 
 #include "CShape.h"
-#include "Observer.h"
 
-class CEllipseDataShape
+class CRectangleShapeData 
 	: public CShapeData
-	, public IObserver<SPresenterData>
-	, public CObservable<SShapeData>
+	, public IHaveVertex
 {
 public:
-	CEllipseDataShape(
+	CRectangleShapeData(
 		const Vec2f position
 		, const SSize size
 		, const Color fillColor
 		, const Color outlineColor
 	);
+
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
+	//--------------------------------------------
+	// IShape
+
 	//--------------------------------------------
 	// IRenderShapeVisitor
 
 	void Accept(IRenderShapeVisitor & visitor) override;
 
 	//--------------------------------------------
-	// IObserver<SPresenterData>
-	void Update(SPresenterData const& data) override;
+
 	//--------------------------------------------
+	std::vector<Vec2f> GetVertices() const override;
 
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
-	bool m_isUpdate = false;
 };

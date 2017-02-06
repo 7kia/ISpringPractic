@@ -3,6 +3,5 @@
 
 IShape::IShape()
 	: IRenderShapeAccept()
-	, IIsPointIntersection()
 {
 }

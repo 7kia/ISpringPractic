@@ -1,7 +1,7 @@
 #include "stdafx.h"
-#include "RectangleShape.h"
+#include "RectangleShapeData.h"
 
-CRectangleShape::CRectangleShape(
+CRectangleShapeData::CRectangleShapeData(
 	const Vec2f position
 	, const SSize size
 	, const Color fillColor
@@ -14,18 +14,12 @@ CRectangleShape::CRectangleShape(
 }
 
 
-void CRectangleShape::Accept(IRenderShapeVisitor & visitor)
+void CRectangleShapeData::Accept(IRenderShapeVisitor & visitor)
 {
 	visitor.Visit(*this);
 }
 
-bool CRectangleShape::IsPointIntersection(const Vec2f point) const
-{
-	return IsBetween(point.x, m_position.x - m_size.width / 2.f, m_position.x + m_size.width / 2.f)
-		&& IsBetween(point.y, m_position.y - m_size.height / 2.f, m_position.y + m_size.height / 2.f);
-}
-
-std::vector<Vec2f> CRectangleShape::GetVertices() const
+std::vector<Vec2f> CRectangleShapeData::GetVertices() const
 {
 	Vec2f m_position = GetPosition();
 

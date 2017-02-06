@@ -4,7 +4,26 @@
 #include <memory>
 #include "IShape.h"
 
-class CShapeData : public IShape
+#include "Observer.h"
+
+
+struct SPresenterData
+{
+	Vec2f position;
+	SSize size;
+};
+
+struct SShapeData
+{
+	Vec2f position;
+	SSize size;
+	Color fillColor;
+	Color outlineColor;
+};
+
+class CShapeData 
+	: public IShape
+	, public IObserver<SPresenterData>
 {
 public:
 	CShapeData(
@@ -34,6 +53,11 @@ public:
 	// Own rect
 	RECT GetOwnRect() const override;
 
+	//--------------------------------------------
+	// IObserver<SPresenterData>
+	void Update(SPresenterData const& data) override;
+	//--------------------------------------------
+
 	// TODO :
 	// Visual part
 
@@ -52,20 +76,15 @@ protected:
 	Color m_fillColor;
 	Color m_outlineColor;
 
+	// TODO : see need it(might need for render
+	bool m_isUpdate = false;
+
 };
 
-struct SPresenterData
+
+using CShapeDataPtr = std::shared_ptr<CShapeData>;
+
+struct SRenderShapeInfo
 {
-	Vec2f position;
-	SSize size;
+	CShapeDataPtr ptr;
 };
-
-struct SShapeData
-{
-	Vec2f position;
-	SSize size;
-	Color fillColor;
-	Color outlineColor;
-};
-
-using PCShape = std::shared_ptr<CShapeData>;

@@ -57,7 +57,7 @@ HRESULT CShapeRender::EndDraw()
 }
 
 
-void CShapeRender::Visit(const CRectangleShape & shape)
+void CShapeRender::Visit(const CRectangleShapeData & shape)
 {
 	auto vertices = shape.GetVertices();
 
@@ -90,7 +90,7 @@ void CShapeRender::Visit(const CRectangleShape & shape)
 	m_pathGeometry.Release();
 	m_geometrySink.Release();
 
-	InvalidateRect(m_pRenderTarget->GetHwnd(), &shape.GetOwnRect(), true);
+	//InvalidateRect(m_pRenderTarget->GetHwnd(), &shape.GetOwnRect(), true);
 }
 
 void CShapeRender::Visit(const CEllipseDataShape & shape)
@@ -121,10 +121,10 @@ void CShapeRender::Visit(const CEllipseDataShape & shape)
 	m_fillBrush.Release();
 	m_outlineBrush.Release();
 
-	InvalidateRect(m_pRenderTarget->GetHwnd(), &shape.GetOwnRect(), true);
+	//InvalidateRect(m_pRenderTarget->GetHwnd(), &shape.GetOwnRect(), true);
 }
 
-void CShapeRender::Visit(const CTriangleShape & shape)
+void CShapeRender::Visit(const CTriangleShapeData & shape)
 {
 	auto vertices = shape.GetVertices();
 
@@ -158,5 +158,5 @@ void CShapeRender::Visit(const CTriangleShape & shape)
 	m_geometrySink.Release();
 
 	// TODO : Check correctness place
-	InvalidateRect(m_pRenderTarget->GetHwnd(), &shape.GetOwnRect(), true);
+	//InvalidateRect(m_pRenderTarget->GetHwnd(), &shape.GetOwnRect(), true);
 }

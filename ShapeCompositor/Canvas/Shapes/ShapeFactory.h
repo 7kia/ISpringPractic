@@ -18,7 +18,7 @@ class IShapeFactory
 public:
 	virtual ~IShapeFactory() = default;
 
-	virtual PCShape CreateShape(TypeShape type, const Vec2f position) = 0;
+	virtual void CreateShape(TypeShape type, const Vec2f position) = 0;
 };
 
 class CCanvas;// For bind signals
@@ -26,16 +26,18 @@ class CShapeFactory : public IShapeFactory
 {
 public:
 	CShapeFactory(CCanvas * pCanvas);
+	friend CCanvas;// TODO : check correctness
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
 	//--------------------------------------------
 	// IShapeFactory
 
-	PCShape CreateShape(TypeShape type, const Vec2f position) override;
+	void CreateShape(TypeShape type, const Vec2f position) override;
 
 	//--------------------------------------------
-
+private:
+	void BindPresenterWithModel();
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:

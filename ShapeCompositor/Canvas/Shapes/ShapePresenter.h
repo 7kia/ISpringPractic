@@ -13,6 +13,11 @@ public:
 	// Methods
 public:
 	void CheckPointIntersection(const Vec2f point);
+
+	//--------------------------------------------
+	// CObservable<SPresenterData>
+	SPresenterData GetChangedData() const override;
+	//--------------------------------------------
 	//////////////////////////////////////////////////////////////////////
 	// Data
 protected:
@@ -20,3 +25,5 @@ protected:
 
 	SSize m_size;
 };
+
+using CShapePresenterPtr = std::shared_ptr<CShapePresenter>;

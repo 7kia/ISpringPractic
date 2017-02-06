@@ -8,6 +8,7 @@ CShapeData::CShapeData(
 	, const Color outlineColor
 )
 	: IShape()
+	, IObserver<SPresenterData>()
 	, m_position(position)
 	, m_size(size)
 	, m_fillColor(fillColor)
@@ -66,4 +67,12 @@ RECT CShapeData::GetOwnRect() const
 	rect.top = shapePosition.y + shapeSize.height / 2;
 
 	return rect;
+}
+
+void CShapeData::Update(SPresenterData const & data)
+{
+	m_position = data.position;
+	m_size = data.size;
+
+	m_isUpdate = true;
 }
