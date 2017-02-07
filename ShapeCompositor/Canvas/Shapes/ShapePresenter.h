@@ -15,7 +15,7 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
-	void CheckPointIntersection(const Vec2f point);
+	bool CheckPointIntersection(const Vec2f point);
 
 	//--------------------------------------------
 	// CObservable<SPresenterData>

@@ -62,7 +62,12 @@ void CCanvasController::HandleRButtHandleUp(CPoint point)
 
 void CCanvasController::HandleMouseMove(CPoint point)
 {
-	// TODO
+	auto selectShape = m_pCanvas->GetShapePresenter(Vec2f(float(point.x), float(point.y)));
+
+	if (!selectShape._Expired())
+	{
+		m_selectShape.SetShape(selectShape);
+	}
 }
 
 

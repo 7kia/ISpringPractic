@@ -283,6 +283,8 @@ void CShapeCompositorView::OnMouseMove(UINT nFlags, CPoint point)
 	// TODO: добавьте свой код обработчика сообщений или вызов стандартного
 	CView::OnMouseMove(nFlags, point);
 
+	m_canvasController.HandleMouseMove(point);
+
 	///*
 	// For test OnMouseMove
 	//если курсор пренадлежит нашему окну, то тогда рисуем

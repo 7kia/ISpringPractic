@@ -11,12 +11,14 @@ CShapePresenter::~CShapePresenter()
 {
 }
 
-void CShapePresenter::CheckPointIntersection(const Vec2f point)
+bool CShapePresenter::CheckPointIntersection(const Vec2f point)
 {
-	if (IsPointIntersection(point))
+	bool result = IsPointIntersection(point);
+	if (result)
 	{
 		NotifyObservers();// TODO : check need it there
 	}
+	return result;
 }
 
 SPresenterData CShapePresenter::GetChangedData() const

@@ -7,5 +7,5 @@ class IRenderShapeAccept
 public:
 	virtual ~IRenderShapeAccept() = default;
 
-	virtual void Accept(IRenderShapeVisitor & visitor) = 0;
+	virtual void Accept(IRenderShapeVisitor & visitor) {};// TODO : must be = 0
 };

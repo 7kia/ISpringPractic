@@ -1,11 +1,13 @@
 #pragma once
 
 #include "RenderShapeVisitor.h"
+#include "Canvas\Shapes\AllShapes.h"
 
 class CShapeCompositorView;
 
-class CShapeRender 
+class CShapeRender
 	: public IRenderShapeVisitor
+	, public IObserver<CShapeDataPtr>
 {
 public:
 	CShapeRender();
@@ -22,7 +24,9 @@ public:
 	void Visit(const CTriangleShapeData & shape) override;
 
 	//--------------------------------------------
-
+	//  IObserver<CShapeDataPtr>
+	void Update(CShapeDataPtr const& data) override;
+	//--------------------------------------------
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:

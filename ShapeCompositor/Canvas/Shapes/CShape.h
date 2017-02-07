@@ -21,9 +21,11 @@ struct SShapeData
 	Color outlineColor;
 };
 
+// TODO std::shared_ptr<CShapeData> replace to CShapeDataPtr
 class CShapeData 
 	: public IShape
 	, public IObserver<SPresenterData>
+	, public CObservable<const CShapeData *>// For connect with ShapeRenderer
 {
 public:
 	CShapeData(
@@ -57,6 +59,9 @@ public:
 	// IObserver<SPresenterData>
 	void Update(SPresenterData const& data) override;
 	//--------------------------------------------
+	// IRenderShapeVisitor
+	const CShapeData * GetChangedData() const override;
+	//--------------------------------------------
 
 	// TODO :
 	// Visual part
@@ -68,6 +73,8 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	// Data
 public:
+	// TODO : see need it(might need for render
+	bool m_isUpdate = false;
 
 protected:
 	Vec2f m_position;
@@ -76,8 +83,6 @@ protected:
 	Color m_fillColor;
 	Color m_outlineColor;
 
-	// TODO : see need it(might need for render
-	bool m_isUpdate = false;
 
 };
 

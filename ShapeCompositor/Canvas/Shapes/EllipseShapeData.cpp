@@ -15,4 +15,3 @@ void CEllipseDataShape::Accept(IRenderShapeVisitor & visitor)
 {
 	visitor.Visit(*this);
 }
-

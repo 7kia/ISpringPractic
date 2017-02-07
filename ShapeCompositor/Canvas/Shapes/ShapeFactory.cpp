@@ -70,4 +70,5 @@ void CShapeFactory::BindPresenterWithModel()
 	CShapePresenterPtr lastPresenter =  m_pCanvas->m_shapePresenters.back();
 
 	lastPresenter->RegisterObserver(*lastData.get());
+	lastData->RegisterObserver(m_pCanvas->m_shapeRenderer);
 }

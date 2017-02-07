@@ -22,7 +22,6 @@ public:
 	void Accept(IRenderShapeVisitor & visitor) override;
 
 	//--------------------------------------------
-
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:

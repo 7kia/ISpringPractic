@@ -9,6 +9,7 @@ CShapeData::CShapeData(
 )
 	: IShape()
 	, IObserver<SPresenterData>()
+	, CObservable<const CShapeData *>()
 	, m_position(position)
 	, m_size(size)
 	, m_fillColor(fillColor)
@@ -63,8 +64,8 @@ RECT CShapeData::GetOwnRect() const
 	RECT rect;
 	rect.left = shapePosition.x - shapeSize.width / 2;
 	rect.right = shapePosition.x + shapeSize.width / 2;
-	rect.bottom = shapePosition.y - shapeSize.height / 2;
-	rect.top = shapePosition.y + shapeSize.height / 2;
+	rect.bottom = shapePosition.y + shapeSize.height / 2;
+	rect.top = shapePosition.y - shapeSize.height / 2;
 
 	return rect;
 }
@@ -75,4 +76,10 @@ void CShapeData::Update(SPresenterData const & data)
 	m_size = data.size;
 
 	m_isUpdate = true;
+	NotifyObservers();
+}
+
+const CShapeData * CShapeData::GetChangedData() const
+{
+	return this;
 }

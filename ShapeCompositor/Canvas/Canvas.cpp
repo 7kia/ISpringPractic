@@ -62,7 +62,8 @@ CShapePresenterPtr CCanvas::GetShapePresenter(const Vec2f mousePosition)
 
 	for (auto iter = m_shapePresenters.rbegin(); iter != m_shapePresenters.rend(); ++iter)
 	{
-		if ((*iter)->IsPointIntersection(mousePosition))
+
+		if ((*iter)->CheckPointIntersection(mousePosition))
 		{
 			result = *iter;
 			break;
@@ -76,7 +77,7 @@ HRESULT CCanvas::RenderShapes()
 {
 	for (const auto & shape : m_shapesData)
 	{
-		shape->Accept(m_shapeRenderer);
+		//shape->Accept(m_shapeRenderer);
 	}
 
 	return m_shapeRenderer.EndDraw();
