@@ -7,7 +7,7 @@ class CShapeCompositorView;
 
 class CShapeRender
 	: public IRenderShapeVisitor
-	, public IObserver<CShapeDataPtr>
+	, public IObserver<const CShapeData *>
 {
 public:
 	CShapeRender();
@@ -25,7 +25,7 @@ public:
 
 	//--------------------------------------------
 	//  IObserver<CShapeDataPtr>
-	void Update(CShapeDataPtr const& data) override;
+	void Update(const CShapeData * const& data) override;
 	//--------------------------------------------
 	//////////////////////////////////////////////////////////////////////
 	// Data

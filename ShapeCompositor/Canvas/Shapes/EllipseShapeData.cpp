@@ -11,7 +11,7 @@ CEllipseDataShape::CEllipseDataShape(
 {
 }
 
-void CEllipseDataShape::Accept(IRenderShapeVisitor & visitor)
+void CEllipseDataShape::Accept(IRenderShapeVisitor & visitor) const
 {
 	visitor.Visit(*this);
 }

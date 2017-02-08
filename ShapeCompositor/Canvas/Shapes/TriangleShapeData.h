@@ -23,7 +23,7 @@ public:
 	//--------------------------------------------
 	// IRenderShapeVisitor
 
-	void Accept(IRenderShapeVisitor & visitor) override;
+	void Accept(IRenderShapeVisitor & visitor) const override;
 
 	//--------------------------------------------
 	// IHaveVertex

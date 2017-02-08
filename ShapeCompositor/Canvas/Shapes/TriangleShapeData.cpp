@@ -12,7 +12,7 @@ CTriangleShapeData::CTriangleShapeData(
 {
 }
 
-void CTriangleShapeData::Accept(IRenderShapeVisitor & visitor)
+void CTriangleShapeData::Accept(IRenderShapeVisitor & visitor) const
 {
 	visitor.Visit(*this);
 }

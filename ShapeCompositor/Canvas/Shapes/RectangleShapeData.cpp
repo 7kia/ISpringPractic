@@ -14,7 +14,7 @@ CRectangleShapeData::CRectangleShapeData(
 }
 
 
-void CRectangleShapeData::Accept(IRenderShapeVisitor & visitor)
+void CRectangleShapeData::Accept(IRenderShapeVisitor & visitor) const
 {
 	visitor.Visit(*this);
 }

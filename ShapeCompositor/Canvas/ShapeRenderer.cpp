@@ -167,7 +167,7 @@ void CShapeRender::Visit(const CTriangleShapeData & shape)
 	InvalidateRect(m_pRenderTarget->GetHwnd(), &shape.GetOwnRect(), true);
 }
 
-void CShapeRender::Update(CShapeDataPtr const & data)
+void CShapeRender::Update(const CShapeData * const & data)
 {
 	data->Accept(*this);
 }
