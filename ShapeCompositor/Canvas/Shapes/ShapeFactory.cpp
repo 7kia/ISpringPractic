@@ -11,9 +11,10 @@ CShapeFactory::CShapeFactory(CCanvas * pCanvas)
 void CShapeFactory::CreateShape(
 	TypeShape type
 	, const Vec2f position
+	, const SShapeData & data
 	, CShapeLayer & layer
 	, CShapeRender & shapeRenderer
-)
+) const
 {
 	CShapeDataPtr lastData;
 	CShapePresenterPtr lastPresenter;
@@ -22,14 +23,14 @@ void CShapeFactory::CreateShape(
 	case TypeShape::Triangle:
 		layer.PushBackShapeData(std::make_shared<CTriangleShapeData>(
 			position
-			, DEFAULT_SIZE
-			, DEFAULT_FILL_COLOR
-			, DEFAULT_OUTLINE_COLOR
+			, data.size
+			, data.fillColor
+			, data.outlineColor
 			));
 
 		layer.PushBackShapePreseneter(std::make_shared<CTrianglePresenter>(
 			position
-			, DEFAULT_SIZE
+			, data.size
 			));
 
 		BindPresenterWithModel(layer, shapeRenderer);
@@ -37,13 +38,13 @@ void CShapeFactory::CreateShape(
 	case TypeShape::Rectangle:
 		layer.PushBackShapeData(std::make_shared<CRectangleShapeData>(
 			position
-			, DEFAULT_SIZE
-			, DEFAULT_FILL_COLOR
-			, DEFAULT_OUTLINE_COLOR
+			, data.size
+			, data.fillColor
+			, data.outlineColor
 			));
 		layer.PushBackShapePreseneter(std::make_shared<CRectanglePresenter>(
 			position
-			, DEFAULT_SIZE
+			, data.size
 			));
 
 		BindPresenterWithModel(layer, shapeRenderer);
@@ -51,13 +52,13 @@ void CShapeFactory::CreateShape(
 	case TypeShape::Ellipse:
 		layer.PushBackShapeData(std::make_shared<CEllipseDataShape>(
 			position
-			, DEFAULT_SIZE
-			, DEFAULT_FILL_COLOR
-			, DEFAULT_OUTLINE_COLOR
+			, data.size
+			, data.fillColor
+			, data.outlineColor
 			));
 		layer.PushBackShapePreseneter(std::make_shared<CEllipsePresenter>(
 			position
-			, DEFAULT_SIZE
+			, data.size
 			));
 
 		BindPresenterWithModel(layer, shapeRenderer);
@@ -70,7 +71,7 @@ void CShapeFactory::CreateShape(
 	//return CShapeDataPtr();
 }
 
-void CShapeFactory::BindPresenterWithModel(CShapeLayer & layer, CShapeRender & shapeRenderer)
+void CShapeFactory::BindPresenterWithModel(CShapeLayer & layer, CShapeRender & shapeRenderer) const
 {
 	CShapeDataPtr lastData = layer.GetBackShapeData();
 	CShapePresenterPtr lastPresenter = layer.GetBackShapePreseneter();

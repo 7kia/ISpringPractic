@@ -83,3 +83,21 @@ const CShapeData * CShapeData::GetChangedData() const
 {
 	return this;
 }
+
+SShapeData::SShapeData()
+	: position(Vec2f())
+	, size(DEFAULT_SIZE)
+	, fillColor(DEFAULT_FILL_COLOR)
+	, outlineColor(DEFAULT_OUTLINE_COLOR)
+{
+}
+
+SPresenterData::SPresenterData()
+{
+}
+
+SPresenterData::SPresenterData(Vec2f position, SSize size)
+	: position(position)
+	, size(size)
+{
+}

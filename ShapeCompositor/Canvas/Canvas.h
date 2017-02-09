@@ -13,6 +13,7 @@
 #include "Shapes\ShapeFactory.h"
 #include "ShapeRenderer.h"
 #include "ShapeLayer.h"
+#include "SelectShape.h"
 
 static const size_t MAX_COMMANDS = 5;
 
@@ -49,6 +50,7 @@ public:
 	CShapeFactory								m_shapeFactory;
 	CShapeRender								m_shapeRenderer;
 
+	CSelectShape								m_selectShape;
 	// TODO : see might require do private
 	CShapeLayer									m_shapeLayer;
 private:

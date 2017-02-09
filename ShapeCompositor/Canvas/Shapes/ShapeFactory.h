@@ -10,10 +10,6 @@ enum class TypeShape
 	,	Ellipse
 };
 
-static const SSize DEFAULT_SIZE = SSize(50.f, 50.f);
-static const Color DEFAULT_OUTLINE_COLOR = Color(0.f, 0.f, 0.f);
-static const Color DEFAULT_FILL_COLOR = Color(0.45f, 0.75f, 0.55f);
-
 class CShapeLayer;
 class CShapeRender;
 class IShapeFactory
@@ -24,9 +20,11 @@ public:
 	virtual void CreateShape(
 		TypeShape type
 		, const Vec2f position
+		, const SShapeData & data
 		, CShapeLayer & layer
 		, CShapeRender & shapeRenderer
-	) = 0;
+	) const = 0;
+
 };
 
 class CCanvas;// For bind signals
@@ -44,13 +42,15 @@ public:
 	void CreateShape(
 		TypeShape type
 		, const Vec2f position
+		, const SShapeData & data
 		, CShapeLayer & layer
 		, CShapeRender & shapeRenderer
-	) override;
+	) const override;
+
 
 	//--------------------------------------------
 private:
-	void BindPresenterWithModel(CShapeLayer & layer, CShapeRender & shapeRenderer);
+	void BindPresenterWithModel(CShapeLayer & layer, CShapeRender & shapeRenderer) const;
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:

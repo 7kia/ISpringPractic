@@ -31,6 +31,8 @@ struct Color
 	float a = 1.f;
 };
 
+static const Color NOT_COLOR = Color(0.f, 0.f, 0.f, 0.f);
+static const Color BLACK_COLOR = Color(0.f, 0.f, 0.f, 1.f);
 struct Vec2f
 {
 	Vec2f() = default;

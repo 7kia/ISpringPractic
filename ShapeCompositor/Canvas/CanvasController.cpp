@@ -4,6 +4,7 @@
 
 CCanvasController::CCanvasController(CCanvas * pCanvas)
 	: m_pCanvas(pCanvas)
+	, m_selectShape(pCanvas->m_shapeRenderer, pCanvas->m_shapeFactory)// TODO : fix pCanvas->
 {
 
 }

@@ -4,6 +4,7 @@
 
 CCanvas::CCanvas()
 	: m_shapeFactory(this)
+	, m_selectShape(m_shapeRenderer, m_shapeFactory)
 {
 }
 
@@ -42,6 +43,7 @@ void CCanvas::AddShape(TypeShape type)
 	m_shapeFactory.CreateShape(
 		type
 		, Vec2f(float(VIEW_WIDTH) / 2.f, float(VIEW_HEIGHT) / 2.f)
+		, SShapeData()
 		, m_shapeLayer
 		, m_shapeRenderer
 	);
@@ -70,6 +72,8 @@ HRESULT CCanvas::RenderShapes()
 		shape->Accept(m_shapeRenderer);
 	}
 	m_shapeRenderer.m_renderShapes.clear();
+
+	
 
 	return m_shapeRenderer.EndDraw();
 }
