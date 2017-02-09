@@ -76,10 +76,16 @@ HRESULT CShapeCompositorView::Render()
 
 	hr = m_canvas.Render();
 
+	RECT rect;
+	GetClientRect(&rect);
+	//InvalidateRect(&rect, true);
+
 	if (hr == D2DERR_RECREATE_TARGET)
 	{
 		hr = S_OK;
 	}
+	//m_canvas.ClearRecources();
+	//ATLENSURE_SUCCEEDED(m_canvas.CreateRecources(this));
 
 	return hr;
 }
@@ -224,8 +230,10 @@ void CShapeCompositorView::OnSize(UINT nType, int cx, int cy)
 		// error here, because the error will be returned again
 		// the next time EndDraw is called.
 		m_pRenderTarget->Resize(D2D1::SizeU(cx, cy));
+		Render();
 	}
-	Render();
+	
+
 }
 
 
@@ -236,7 +244,6 @@ void CShapeCompositorView::OnPaint()
 					   // Не вызывать CScrollView::OnPaint() для сообщений рисования
 
 	Render();
-
 }
 
 void CShapeCompositorView::OnKeyDown(UINT, UINT, UINT)

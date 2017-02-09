@@ -51,6 +51,12 @@ HRESULT CShapeRender::CreateRecources(CShapeCompositorView * window)
 	return hr;
 }
 
+void CShapeRender::ClearRecources()
+{
+	SafeRelease(&m_pRenderTarget);
+	SafeRelease(&m_pDirect2dFactory);
+}
+
 HRESULT CShapeRender::EndDraw()
 {
 	return m_pRenderTarget->EndDraw();
@@ -90,13 +96,14 @@ void CShapeRender::Visit(const CRectangleShapeData & shape)
 	m_pathGeometry.Release();
 	m_geometrySink.Release();
 
-	//RECT rect;// = shape.GetOwnRect();
+	//RECT rect = shape.GetOwnRect();
 	//GetClientRect(m_pRenderTarget->GetHwnd(), &rect);
-	////ValidateRect(m_pRenderTarget->GetHwnd(), &rect);
-
+	//InvalidateRect(m_pRenderTarget->GetHwnd(), &rect, true);
 	//HRGN rg = HRGN
 	//RedrawWindow(m_pRenderTarget->GetHwnd(), &rect, );
 	//ValidateRect(;
+	//InvalidateRect(m_pRenderTarget->GetHwnd(), &shape.GetOwnRect(), false);
+
 }
 
 void CShapeRender::Visit(const CEllipseDataShape & shape)
@@ -127,7 +134,7 @@ void CShapeRender::Visit(const CEllipseDataShape & shape)
 	m_fillBrush.Release();
 	m_outlineBrush.Release();
 
-	InvalidateRect(m_pRenderTarget->GetHwnd(), &shape.GetOwnRect(), true);
+	//InvalidateRect(m_pRenderTarget->GetHwnd(), &shape.GetOwnRect(), false);
 }
 
 void CShapeRender::Visit(const CTriangleShapeData & shape)
@@ -164,10 +171,16 @@ void CShapeRender::Visit(const CTriangleShapeData & shape)
 	m_geometrySink.Release();
 
 	// TODO : Check correctness place
-	InvalidateRect(m_pRenderTarget->GetHwnd(), &shape.GetOwnRect(), true);
+	//InvalidateRect(m_pRenderTarget->GetHwnd(), &shape.GetOwnRect(), true);
+	//ValidateRect(m_pRenderTarget->GetHwnd(), &shape.GetOwnRect());
+
 }
 
 void CShapeRender::Update(const CShapeData * const & data)
 {
-	data->Accept(*this);
+	//data->Accept(*this);
+	if (std::find(m_renderShapes.begin(), m_renderShapes.end(), data) == m_renderShapes.end())
+	{
+		m_renderShapes.push_back(data);
+	}
 }

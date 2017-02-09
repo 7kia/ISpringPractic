@@ -12,6 +12,7 @@
 
 #include "Shapes\ShapeFactory.h"
 #include "ShapeRenderer.h"
+#include "ShapeLayer.h"
 
 static const size_t MAX_COMMANDS = 5;
 
@@ -29,6 +30,7 @@ public:
 
 	// The function must call before use canvas
 	HRESULT		CreateRecources(CShapeCompositorView * window);
+	void		ClearRecources();
 	//
 
 	HRESULT		Render();
@@ -48,8 +50,6 @@ public:
 	CShapeRender								m_shapeRenderer;
 
 	// TODO : see might require do private
-	std::vector<CShapeDataPtr>					m_shapesData;
-	std::vector<CShapePresenterPtr>				m_shapePresenters;
-
+	CShapeLayer									m_shapeLayer;
 private:
 };

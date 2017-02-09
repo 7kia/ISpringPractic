@@ -32,53 +32,44 @@ HRESULT CCanvas::CreateRecources(CShapeCompositorView * window)
 	return m_shapeRenderer.CreateRecources(window);
 }
 
+void CCanvas::ClearRecources()
+{
+	m_shapeRenderer.ClearRecources();
+}
 
 void CCanvas::AddShape(TypeShape type)
 {
 	m_shapeFactory.CreateShape(
-		type, 
-		Vec2f(float(VIEW_WIDTH) / 2.f, float(VIEW_HEIGHT) / 2.f)
+		type
+		, Vec2f(float(VIEW_WIDTH) / 2.f, float(VIEW_HEIGHT) / 2.f)
+		, m_shapeLayer
+		, m_shapeRenderer
 	);
 }
 
 void CCanvas::DeleteShape(CShapePresenterPtr pShape)
 {
-	// TODO : the code might will be need to other place
-	size_t deleteIndex = std::find(m_shapePresenters.begin(), m_shapePresenters.end(), pShape) - m_shapePresenters.begin();
-
-	m_shapePresenters.erase(m_shapePresenters.begin() + deleteIndex);
-	m_shapesData.erase(m_shapesData.begin() + deleteIndex);
+	m_shapeLayer.DeleteShape(pShape);
 }
 
 void CCanvas::DeleteLastShape()
 {
-	m_shapePresenters.pop_back();
-	m_shapesData.pop_back();
+	m_shapeLayer.DeleteLastShape();
 }
 
 CShapePresenterPtr CCanvas::GetShapePresenter(const Vec2f mousePosition)
 {
-	CShapePresenterPtr result;
-
-	for (auto iter = m_shapePresenters.rbegin(); iter != m_shapePresenters.rend(); ++iter)
-	{
-
-		if ((*iter)->CheckPointIntersection(mousePosition))
-		{
-			result = *iter;
-			break;
-		}
-	}
-
-	return result;
+	return m_shapeLayer.GetShapePreseneter(mousePosition);
 }
+
 
 HRESULT CCanvas::RenderShapes()
 {
-	for (const auto & shape : m_shapesData)
+	for (const auto & shape : m_shapeLayer.GetShapesData())////m_shapeRenderer.m_renderShapes
 	{
-		//shape->Accept(m_shapeRenderer);
+		shape->Accept(m_shapeRenderer);
 	}
+	m_shapeRenderer.m_renderShapes.clear();
 
 	return m_shapeRenderer.EndDraw();
 }

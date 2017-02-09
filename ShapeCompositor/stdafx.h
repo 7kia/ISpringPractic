@@ -49,7 +49,18 @@ bool IsBetween(const T& value, const T& lowerBound, const T& upperBound)
 	return (value >= lowerBound) && (value <= upperBound);
 }
 
+template<class Interface>
+inline void SafeRelease(
+	Interface **ppInterfaceToRelease
+)
+{
+	if (*ppInterfaceToRelease != NULL)
+	{
+		(*ppInterfaceToRelease)->Release();
 
+		(*ppInterfaceToRelease) = NULL;
+	}
+}
 
 
 

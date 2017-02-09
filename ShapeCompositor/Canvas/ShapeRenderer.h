@@ -15,6 +15,8 @@ public:
 	// Methods
 public:
 	HRESULT CreateRecources(CShapeCompositorView * window);
+	void	ClearRecources();
+
 	HRESULT	EndDraw();
 	//--------------------------------------------
 	// IRenderShapeVisitor
@@ -29,6 +31,8 @@ public:
 	//--------------------------------------------
 	//////////////////////////////////////////////////////////////////////
 	// Data
+public:
+	std::vector<const CShapeData *>				m_renderShapes;
 private:
 	CShapeCompositorView *						m_window = nullptr;
 

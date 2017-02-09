@@ -8,53 +8,59 @@ CShapeFactory::CShapeFactory(CCanvas * pCanvas)
 {
 }
 
-void CShapeFactory::CreateShape(TypeShape type, const Vec2f position)
+void CShapeFactory::CreateShape(
+	TypeShape type
+	, const Vec2f position
+	, CShapeLayer & layer
+	, CShapeRender & shapeRenderer
+)
 {
 	CShapeDataPtr lastData;
 	CShapePresenterPtr lastPresenter;
 	switch (type)
 	{
 	case TypeShape::Triangle:
-		m_pCanvas->m_shapesData.push_back(std::make_shared<CTriangleShapeData>(
+		layer.PushBackShapeData(std::make_shared<CTriangleShapeData>(
 			position
 			, DEFAULT_SIZE
 			, DEFAULT_FILL_COLOR
 			, DEFAULT_OUTLINE_COLOR
 			));
-		m_pCanvas->m_shapePresenters.push_back(std::make_shared<CTrianglePresenter>(
+
+		layer.PushBackShapePreseneter(std::make_shared<CTrianglePresenter>(
 			position
 			, DEFAULT_SIZE
 			));
 
-		BindPresenterWithModel();
+		BindPresenterWithModel(layer, shapeRenderer);
 		break;
 	case TypeShape::Rectangle:
-		m_pCanvas->m_shapesData.push_back(std::make_shared<CRectangleShapeData>(
+		layer.PushBackShapeData(std::make_shared<CRectangleShapeData>(
 			position
 			, DEFAULT_SIZE
 			, DEFAULT_FILL_COLOR
 			, DEFAULT_OUTLINE_COLOR
 			));
-		m_pCanvas->m_shapePresenters.push_back(std::make_shared<CRectanglePresenter>(
+		layer.PushBackShapePreseneter(std::make_shared<CRectanglePresenter>(
 			position
 			, DEFAULT_SIZE
 			));
 
-		BindPresenterWithModel();
+		BindPresenterWithModel(layer, shapeRenderer);
 		break;
 	case TypeShape::Ellipse:
-		m_pCanvas->m_shapesData.push_back(std::make_shared<CEllipseDataShape>(
+		layer.PushBackShapeData(std::make_shared<CEllipseDataShape>(
 			position
 			, DEFAULT_SIZE
 			, DEFAULT_FILL_COLOR
 			, DEFAULT_OUTLINE_COLOR
 			));
-		m_pCanvas->m_shapePresenters.push_back(std::make_shared<CEllipsePresenter>(
+		layer.PushBackShapePreseneter(std::make_shared<CEllipsePresenter>(
 			position
 			, DEFAULT_SIZE
 			));
 
-		BindPresenterWithModel();
+		BindPresenterWithModel(layer, shapeRenderer);
 		break;
 	default:
 		throw std::runtime_error("The shape type not exist");
@@ -64,11 +70,11 @@ void CShapeFactory::CreateShape(TypeShape type, const Vec2f position)
 	//return CShapeDataPtr();
 }
 
-void CShapeFactory::BindPresenterWithModel()
+void CShapeFactory::BindPresenterWithModel(CShapeLayer & layer, CShapeRender & shapeRenderer)
 {
-	CShapeDataPtr lastData =m_pCanvas->m_shapesData.back();
-	CShapePresenterPtr lastPresenter =  m_pCanvas->m_shapePresenters.back();
+	CShapeDataPtr lastData = layer.GetBackShapeData();
+	CShapePresenterPtr lastPresenter = layer.GetBackShapePreseneter();
 
 	lastPresenter->RegisterObserver(*lastData.get());
-	lastData->RegisterObserver(m_pCanvas->m_shapeRenderer);
+	lastData->RegisterObserver(shapeRenderer);
 }
