@@ -9,13 +9,20 @@ CShapeRender::CShapeRender()
 
 HRESULT CShapeRender::CreateRecources(CShapeCompositorView * window)
 {
-	ATLENSURE_SUCCEEDED(D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &m_pDirect2dFactory));
+	if (!m_pDirect2dFactory)
+	{
+		ATLENSURE_SUCCEEDED(D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &m_pDirect2dFactory));
+	}
 
 	m_window = window;
 	m_pRenderTarget = m_window->GetRenderTarget();
 
 	HRESULT hr = S_OK;
 
+	if (m_pRenderTarget)
+	{
+		m_pRenderTarget.Release();
+	}
 	if (!m_pRenderTarget)
 	{
 		RECT rc;
@@ -36,18 +43,20 @@ HRESULT CShapeRender::CreateRecources(CShapeCompositorView * window)
 		window->SetRenderTarget(m_pRenderTarget);
 	}
 
-	// Create a gray brush.
-	hr = m_pRenderTarget->CreateSolidColorBrush(
-		D2D1::ColorF(D2D1::ColorF::LightSlateGray),
-		&m_pLightSlateGrayBrush
-	);
+	if (!m_pDirect2dFactory)
+	{
+		// Create a gray brush.
+		hr = m_pRenderTarget->CreateSolidColorBrush(
+			D2D1::ColorF(D2D1::ColorF::LightSlateGray),
+			&m_pLightSlateGrayBrush
+		);
 
-	// Create a blue brush.
-	hr = m_pRenderTarget->CreateSolidColorBrush(
-		D2D1::ColorF(D2D1::ColorF::CornflowerBlue),
-		&m_pCornflowerBlueBrush
-	);
-
+		// Create a blue brush.
+		hr = m_pRenderTarget->CreateSolidColorBrush(
+			D2D1::ColorF(D2D1::ColorF::CornflowerBlue),
+			&m_pCornflowerBlueBrush
+		);
+	}
 	return hr;
 }
 

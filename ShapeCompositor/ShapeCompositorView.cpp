@@ -45,8 +45,7 @@ BEGIN_MESSAGE_MAP(CShapeCompositorView, CScrollView)
 	ON_WM_ERASEBKGND()
 	ON_WM_MOUSEMOVE()
 	ON_WM_LBUTTONDOWN()
-	ON_WM_KEYDOWN()			// реакция на нажатие клавиши
-	ON_WM_LBUTTONDOWN()
+	ON_WM_LBUTTONUP()
 END_MESSAGE_MAP()
 
 // создание/уничтожение CShapeCompositorView
@@ -188,13 +187,10 @@ int CShapeCompositorView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	try
 	{
 		// Enable D2D support for this window:  
-		EnableD2DSupport();
 
 		CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
 
 		// Create a Direct2D factory.
-		//ATLENSURE_SUCCEEDED(D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &m_pDirect2dFactory));
-		//ATLENSURE_SUCCEEDED(CreateDeviceResources());
 		ATLENSURE_SUCCEEDED(m_canvas.CreateRecources(this));
 
 	}
@@ -215,6 +211,12 @@ BOOL CShapeCompositorView::PreCreateWindow(CREATESTRUCT& cs)
 	if (!CScrollView::PreCreateWindow(cs))
 		return FALSE;
 
+	cs.dwExStyle |= WS_EX_CLIENTEDGE;
+	cs.style &= ~WS_BORDER;
+	cs.lpszClass = AfxRegisterWndClass(CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS,
+		::LoadCursor(NULL, IDC_ARROW), reinterpret_cast<HBRUSH>(COLOR_WINDOW + 1), NULL);
+
+
 	return TRUE;
 }
 
@@ -232,7 +234,10 @@ void CShapeCompositorView::OnSize(UINT nType, int cx, int cy)
 		m_pRenderTarget->Resize(D2D1::SizeU(cx, cy));
 		Render();
 	}
-	
+	CRect rect;
+
+	GetClientRect(&rect);
+	InvalidateRect(rect);
 
 }
 
@@ -244,6 +249,11 @@ void CShapeCompositorView::OnPaint()
 					   // Не вызывать CScrollView::OnPaint() для сообщений рисования
 
 	Render();
+}
+
+void CShapeCompositorView::OnLButtonlClk(UINT, CPoint)
+{
+	// TODO
 }
 
 void CShapeCompositorView::OnKeyDown(UINT, UINT, UINT)
@@ -260,15 +270,6 @@ BOOL CShapeCompositorView::PreTranslateMessage(MSG* pMsg)
 
 	return CScrollView::PreTranslateMessage(pMsg);
 }
-
-
-BOOL CShapeCompositorView::OnEraseBkgnd(CDC* pDC)
-{
-	// TODO: добавьте свой код обработчика сообщений или вызов стандартного
-
-	return CScrollView::OnEraseBkgnd(pDC);
-}
-
 
 //
 // Mouse events
@@ -326,4 +327,11 @@ void CShapeCompositorView::OnLButtonUp(UINT nFlags, CPoint point)
 	}
 	*/
 	
+}
+
+BOOL CShapeCompositorView::OnEraseBkgnd(CDC* pDC)
+{
+	// TODO: добавьте свой код обработчика сообщений или вызов стандартного
+
+	return CScrollView::OnEraseBkgnd(pDC);
 }
