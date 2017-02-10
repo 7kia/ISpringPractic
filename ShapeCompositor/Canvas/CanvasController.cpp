@@ -4,7 +4,6 @@
 
 CCanvasController::CCanvasController(CCanvas * pCanvas)
 	: m_pCanvas(pCanvas)
-	, m_selectShape(pCanvas->m_shapeRenderer, pCanvas->m_shapeFactory)// TODO : fix pCanvas->
 {
 
 }
@@ -43,16 +42,7 @@ void CCanvasController::Redo()
 
 void CCanvasController::HandleLButtHandleDown(CPoint point)
 {
-	auto selectShape = m_pCanvas->GetShapePresenter(Vec2f(float(point.x), float(point.y)));
-
-	if (!selectShape._Expired())
-	{
-		m_selectShape.SetShape(selectShape);
-	}
-	else
-	{
-		m_selectShape.ResetSelectShapePtr();
-	}
+	m_pCanvas->ChangeSelectShape(Vec2f(float(point.x), float(point.y)));
 }
 
 void CCanvasController::HandleLButtHandleUp(CPoint point)
@@ -67,16 +57,7 @@ void CCanvasController::HandleRButtHandleUp(CPoint point)
 
 void CCanvasController::HandleMouseMove(CPoint point)
 {
-	auto selectShape = m_pCanvas->GetShapePresenter(Vec2f(float(point.x), float(point.y)));
-
-	if (!selectShape._Expired())
-	{
-		m_selectShape.SetShape(selectShape);
-	}
-	else
-	{
-		m_selectShape.ResetSelectShapePtr();
-	}
+	m_pCanvas->ChangeSelectShape(Vec2f(float(point.x), float(point.y)));
 }
 
 

@@ -36,4 +36,6 @@ void CShapePresenter::Update(const SPresenterData & data)
 {
 	m_position = data.position;
 	m_size = data.size;
+
+	NotifyObservers();
 }

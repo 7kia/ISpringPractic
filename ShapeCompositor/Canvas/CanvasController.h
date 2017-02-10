@@ -45,7 +45,5 @@ private:
 	std::vector<CanvasCommandPtr>						m_history;
 	std::vector<CanvasCommandPtr>::reverse_iterator		m_currentCommand = m_history.rbegin();
 
-	CSelectShape m_selectShape;
-
 	CCanvas * m_pCanvas = nullptr;
 };

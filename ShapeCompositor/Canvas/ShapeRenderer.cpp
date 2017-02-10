@@ -179,9 +179,5 @@ void CShapeRender::Visit(const CTriangleShapeData & shape)
 
 void CShapeRender::Update(const CShapeData * const & data)
 {
-	//data->Accept(*this);
-	if (std::find(m_renderShapes.begin(), m_renderShapes.end(), data) == m_renderShapes.end())
-	{
-		m_renderShapes.push_back(data);
-	}
+	data->Accept(*this);
 }

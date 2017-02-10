@@ -20,7 +20,7 @@ CSelectShape::CSelectShape(CShapeRender & shapeRenderer, const CShapeFactory & s
 	}
 }
 
-void CSelectShape::SetShape(CShapePresenterPtr shape)
+void CSelectShape::SetShape(CShapePresenter * shape)
 {
 	m_selectPresenter = shape;
 	m_frameData = shape->GetChangedData();
@@ -36,12 +36,12 @@ CShapePresenterPtr CSelectShape::GetShape() const
 
 void CSelectShape::ResetSelectShapePtr()
 {
-	m_selectPresenter.reset();
+	m_selectPresenter = nullptr;
 }
 
 void CSelectShape::Render()
 {
-	if (!m_selectPresenter.expired())
+	if (m_selectPresenter != nullptr)
 	{	
 		for (auto & shape : m_moveShape.GetShapesData())
 		{
@@ -73,6 +73,6 @@ void CSelectShape::SetViewPosition()
 	size_t indexEllipse = 0;
 	for (const auto & vertex : vertices)
 	{
-		m_resizeShape.GetShapePreseneter(indexEllipse)->Update(SPresenterData(vertex, SELECTED_ELLIPSE_SIZE));
+		m_resizeShape.GetShapePreseneter(indexEllipse++)->Update(SPresenterData(vertex, SELECTED_ELLIPSE_SIZE));
 	}
 }

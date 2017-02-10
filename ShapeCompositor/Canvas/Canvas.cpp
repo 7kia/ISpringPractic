@@ -59,6 +59,20 @@ void CCanvas::DeleteLastShape()
 	m_shapeLayer.DeleteLastShape();
 }
 
+void CCanvas::ChangeSelectShape(const Vec2f mousePosition)
+{
+	auto selectShape = GetShapePresenter(Vec2f(float(mousePosition.x), float(mousePosition.y)));
+
+	if (!selectShape._Expired())
+	{
+		m_selectShape.SetShape(selectShape.get());
+	}
+	else
+	{
+		m_selectShape.ResetSelectShapePtr();
+	}
+}
+
 CShapePresenterPtr CCanvas::GetShapePresenter(const Vec2f mousePosition)
 {
 	return m_shapeLayer.GetShapePreseneter(mousePosition);

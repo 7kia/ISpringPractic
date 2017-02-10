@@ -39,7 +39,9 @@ public:
 	void		DeleteShape(CShapePresenterPtr pShape);
 	void		DeleteLastShape();
 
-	CShapePresenterPtr GetShapePresenter(const Vec2f mousePosition);
+	void		ChangeSelectShape(const Vec2f mousePosition);
+	CShapePresenterPtr GetShapePresenter(const Vec2f mousePosition);// TODO : see need private
+
 private:
 
 	HRESULT		RenderShapes();

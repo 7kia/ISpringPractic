@@ -16,7 +16,7 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
-	void					SetShape(CShapePresenterPtr shape);
+	void					SetShape(CShapePresenter * shape);
 	CShapePresenterPtr		GetShape() const;
 	void					ResetSelectShapePtr();
 	void					Render();
@@ -30,7 +30,7 @@ private:
 	// Data
 private:
 	SPresenterData					m_frameData;
-	std::weak_ptr<CShapePresenter>	m_selectPresenter;
+	CShapePresenter *				m_selectPresenter = nullptr;
 
 	CShapeLayer						m_moveShape;
 	CShapeLayer						m_resizeShape;

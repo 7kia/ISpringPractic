@@ -31,8 +31,6 @@ public:
 	//--------------------------------------------
 	//////////////////////////////////////////////////////////////////////
 	// Data
-public:
-	std::vector<const CShapeData *>				m_renderShapes;
 private:
 	CShapeCompositorView *						m_window = nullptr;
 
