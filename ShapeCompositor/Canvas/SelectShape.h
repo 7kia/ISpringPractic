@@ -10,7 +10,6 @@
 static const SSize SELECTED_ELLIPSE_SIZE = SSize(10.f, 10.f);
 
 class CSelectShape
-	: public CObservable<SPresenterData>
 {
 public:
 	CSelectShape(CShapeRender & shapeRenderer, const CShapeFactory & shapeFactory);
@@ -19,12 +18,11 @@ public:
 public:
 	void					SetShape(CShapePresenterPtr shape);
 	CShapePresenterPtr		GetShape() const;
+	void					ResetSelectShapePtr();
+	void					Render();
 
 	//--------------------------------------------
-	// NameInterface
-	SPresenterData			GetChangedData() const override;
-	//--------------------------------------------
-	void					Render();
+
 private:
 	void					SetViewPosition();
 
@@ -34,5 +32,6 @@ private:
 	SPresenterData					m_frameData;
 	std::weak_ptr<CShapePresenter>	m_selectPresenter;
 
-	CShapeLayer						m_frameLayer;
+	CShapeLayer						m_moveShape;
+	CShapeLayer						m_resizeShape;
 };

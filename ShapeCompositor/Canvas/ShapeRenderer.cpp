@@ -103,7 +103,7 @@ void CShapeRender::Visit(const CRectangleShapeData & shape)
 	//HRGN rg = HRGN
 	//RedrawWindow(m_pRenderTarget->GetHwnd(), &rect, );
 	//ValidateRect(;
-	//InvalidateRect(m_pRenderTarget->GetHwnd(), &shape.GetOwnRect(), false);
+	InvalidateRect(m_pRenderTarget->GetHwnd(), &shape.GetOwnRect(), false);
 
 }
 

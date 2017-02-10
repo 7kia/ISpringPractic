@@ -2,7 +2,10 @@
 #include "ShapePresenter.h"
 
 CShapePresenter::CShapePresenter(const Vec2f position, const SSize size)
-	: m_position(position)
+	: CObservable<SPresenterData>()// For update view and model
+	, IObserver<SPresenterData>()
+	, IIsPointIntersection()
+	, m_position(position)
 	, m_size(size)
 {
 }
@@ -33,6 +36,4 @@ void CShapePresenter::Update(const SPresenterData & data)
 {
 	m_position = data.position;
 	m_size = data.size;
-
-	NotifyObservers();
 }

@@ -120,6 +120,9 @@
     <ClInclude Include="Canvas\ShapeLayer.h">
       <Filter>Файлы исходного кода\Canvas</Filter>
     </ClInclude>
+    <ClInclude Include="Canvas\NotifyBeforeDelete.h">
+      <Filter>Файлы исходного кода\Canvas</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ShapeCompositor.cpp">

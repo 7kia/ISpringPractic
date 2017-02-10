@@ -5,7 +5,7 @@
 
 class CShapePresenter 
 	: public CObservable<SPresenterData>// For update view and model
-	, public IObserver<SPresenterData>// For update from CSelectShape
+	, public IObserver<SPresenterData>
 	, public IIsPointIntersection
 {
 public:
@@ -21,14 +21,12 @@ public:
 	// CObservable<SPresenterData>
 	SPresenterData GetChangedData() const override;
 	//--------------------------------------------
-	//  IObserver<SPresenterData>
+
 	void Update(const SPresenterData & data) override;
-	//--------------------------------------------
 	//////////////////////////////////////////////////////////////////////
 	// Data
 protected:
 	Vec2f m_position;
-
 	SSize m_size;
 };
 

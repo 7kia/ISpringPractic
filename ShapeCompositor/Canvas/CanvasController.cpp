@@ -49,6 +49,10 @@ void CCanvasController::HandleLButtHandleDown(CPoint point)
 	{
 		m_selectShape.SetShape(selectShape);
 	}
+	else
+	{
+		m_selectShape.ResetSelectShapePtr();
+	}
 }
 
 void CCanvasController::HandleLButtHandleUp(CPoint point)
@@ -68,6 +72,10 @@ void CCanvasController::HandleMouseMove(CPoint point)
 	if (!selectShape._Expired())
 	{
 		m_selectShape.SetShape(selectShape);
+	}
+	else
+	{
+		m_selectShape.ResetSelectShapePtr();
 	}
 }
 

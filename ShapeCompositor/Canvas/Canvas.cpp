@@ -71,8 +71,9 @@ HRESULT CCanvas::RenderShapes()
 	{
 		shape->Accept(m_shapeRenderer);
 	}
-	m_shapeRenderer.m_renderShapes.clear();
+	//m_shapeRenderer.m_renderShapes.clear();
 
+	m_selectShape.Render();
 	
 
 	return m_shapeRenderer.EndDraw();
