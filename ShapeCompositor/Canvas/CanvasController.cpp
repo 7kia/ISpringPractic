@@ -40,6 +40,19 @@ void CCanvasController::Redo()
 	RedoCommand();
 }
 
+void CCanvasController::DeleteSelectShape()
+{
+	//m_pCanvas->DeleteShape(m_pCanvas->GetSelectShape());
+	CanvasCommandPtr createCommand = std::make_shared<CDeleteShapeCanvasCommand>(
+		m_pCanvas
+		, m_pCanvas->GetSelectShape()
+		, m_pCanvas->GetIndexSelectShape()
+		);
+	//AddCommand(createCommand);
+	//ExecuteCurrent();
+
+}
+
 void CCanvasController::HandleLButtHandleDown(CPoint point)
 {
 	m_pCanvas->ChangeSelectShape(Vec2f(float(point.x), float(point.y)));

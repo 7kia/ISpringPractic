@@ -16,8 +16,8 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
-	void					SetShape(CShapePresenter * shape);
-	CShapePresenter *		GetShape() const;
+	void					SetShape(CShapePresenterPtr shape);
+	CShapePresenterPtr		GetShape() const;
 	void					ResetSelectShapePtr();
 	void					Render();
 
@@ -31,7 +31,7 @@ private:
 	// Data
 private:
 	SShapeData						m_frameData;
-	CShapePresenter *				m_selectPresenter = nullptr;
+	CShapePresenterPtr				m_selectPresenter;
 
 	CShapeLayer						m_moveShape;
 	CShapeLayer						m_resizeShape;

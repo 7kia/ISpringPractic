@@ -73,6 +73,11 @@ std::vector<CShapePresenterPtr>& CShapeLayer::GetShapePresenters()
 	return m_shapePresenters;
 }
 
+size_t CShapeLayer::GetIndexSelectShape(CShapePresenterPtr presenter) const
+{
+	return std::find(m_shapePresenters.begin(), m_shapePresenters.end(), presenter) - m_shapePresenters.begin();
+}
+
 void CShapeLayer::DeleteShape(CShapePresenterPtr pShape)
 {
 	// TODO : the code might will be need to other place
@@ -80,6 +85,12 @@ void CShapeLayer::DeleteShape(CShapePresenterPtr pShape)
 
 	m_shapePresenters.erase(m_shapePresenters.begin() + deleteIndex);
 	m_shapesData.erase(m_shapesData.begin() + deleteIndex);
+}
+
+void CShapeLayer::DeleteShape(size_t index)
+{
+	m_shapePresenters.erase(m_shapePresenters.begin() + index);
+	m_shapesData.erase(m_shapesData.begin() + index);
 }
 
 void CShapeLayer::DeleteLastShape()

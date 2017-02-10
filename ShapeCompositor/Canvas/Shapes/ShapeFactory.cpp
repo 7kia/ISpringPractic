@@ -10,7 +10,6 @@ CShapeFactory::CShapeFactory(CCanvas * pCanvas)
 
 void CShapeFactory::CreateShape(
 	TypeShape type
-	, const Vec2f position
 	, const SShapeData & data
 	, CShapeLayer & layer
 	, CShapeRender & shapeRenderer
@@ -18,18 +17,19 @@ void CShapeFactory::CreateShape(
 {
 	CShapeDataPtr lastData;
 	CShapePresenterPtr lastPresenter;
+	// TODO : fix transfer by use pack
 	switch (type)
 	{
 	case TypeShape::Triangle:
 		layer.PushBackShapeData(std::make_shared<CTriangleShapeData>(
-			position
+			data.position
 			, data.size
 			, data.fillColor
 			, data.outlineColor
 			));
 
 		layer.PushBackShapePreseneter(std::make_shared<CTrianglePresenter>(
-			position
+			data.position
 			, data.size
 			));
 
@@ -37,13 +37,13 @@ void CShapeFactory::CreateShape(
 		break;
 	case TypeShape::Rectangle:
 		layer.PushBackShapeData(std::make_shared<CRectangleShapeData>(
-			position
+			data.position
 			, data.size
 			, data.fillColor
 			, data.outlineColor
 			));
 		layer.PushBackShapePreseneter(std::make_shared<CRectanglePresenter>(
-			position
+			data.position
 			, data.size
 			));
 
@@ -51,13 +51,13 @@ void CShapeFactory::CreateShape(
 		break;
 	case TypeShape::Ellipse:
 		layer.PushBackShapeData(std::make_shared<CEllipseDataShape>(
-			position
+			data.position
 			, data.size
 			, data.fillColor
 			, data.outlineColor
 			));
 		layer.PushBackShapePreseneter(std::make_shared<CEllipsePresenter>(
-			position
+			data.position
 			, data.size
 			));
 

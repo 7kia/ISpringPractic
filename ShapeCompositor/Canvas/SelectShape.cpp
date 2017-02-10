@@ -7,7 +7,7 @@ CSelectShape::CSelectShape(CShapeRender & shapeRenderer, const CShapeFactory & s
 	rectangleData.outlineColor = BLACK_COLOR;
 	rectangleData.fillColor = NOT_COLOR;
 
-	shapeFactory.CreateShape(TypeShape::Rectangle, Vec2f(), rectangleData, m_moveShape, shapeRenderer);
+	shapeFactory.CreateShape(TypeShape::Rectangle, rectangleData, m_moveShape, shapeRenderer);
 
 	
 	SShapeData ellipseData;
@@ -16,11 +16,11 @@ CSelectShape::CSelectShape(CShapeRender & shapeRenderer, const CShapeFactory & s
 
 	for (size_t index = 0; index < 4; ++index)
 	{
-		shapeFactory.CreateShape(TypeShape::Ellipse, Vec2f(), ellipseData, m_resizeShape, shapeRenderer);
+		shapeFactory.CreateShape(TypeShape::Ellipse, ellipseData, m_resizeShape, shapeRenderer);
 	}
 }
 
-void CSelectShape::SetShape(CShapePresenter * shape)
+void CSelectShape::SetShape(CShapePresenterPtr shape)
 {
 	m_selectPresenter = shape;
 	m_frameData = shape->GetChangedData();
@@ -29,7 +29,7 @@ void CSelectShape::SetShape(CShapePresenter * shape)
 	SetViewPosition();
 }
 
-CShapePresenter * CSelectShape::GetShape() const
+CShapePresenterPtr CSelectShape::GetShape() const
 {
 	return m_selectPresenter;
 }

@@ -20,6 +20,8 @@ public:
 	void AddEllipse();
 	void Undo();
 	void Redo();
+
+	void DeleteSelectShape();
 	//--------------------------------------------
 	// IMouseEventHandler
 

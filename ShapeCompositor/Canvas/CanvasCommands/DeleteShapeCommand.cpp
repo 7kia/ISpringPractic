@@ -2,18 +2,26 @@
 #include "DeleteShapeCommand.h"
 
 CDeleteShapeCanvasCommand::CDeleteShapeCanvasCommand(CCanvas * pCanvas
-	, CShapePresenterPtr shape
+	, const CShapePresenterPtr shape
 	, size_t index
 )
-	: m_pCanvas(pCanvas)
+	: m_typeDefinder()
+	, m_pCanvas(pCanvas)
 	, m_data(shape->GetChangedData())
+	, m_index(index)
 {
+	//auto p = *shape.get();
+	//m_type = m_typeDefinder.GetType(*shape.get());
+	// TODO : include observer
+
 }
 
 void CDeleteShapeCanvasCommand::Execute()
 {
+	m_pCanvas->DeleteShape(m_index);
 }
 
 void CDeleteShapeCanvasCommand::Cancel()
 {
+	m_pCanvas->AddShape(m_type);
 }

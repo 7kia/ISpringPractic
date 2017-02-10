@@ -210,6 +210,7 @@
     <ClInclude Include="Canvas\Shapes\ShapePresenter.h" />
     <ClInclude Include="Canvas\Shapes\TrianglePresenter.h" />
     <ClInclude Include="Canvas\Shapes\TriangleShapeData.h" />
+    <ClInclude Include="Canvas\ShapeTypeDefiner.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="RenderShapeAccept.h" />
@@ -240,6 +241,7 @@
     <ClCompile Include="Canvas\Shapes\ShapePresenter.cpp" />
     <ClCompile Include="Canvas\Shapes\TrianglePresenter.cpp" />
     <ClCompile Include="Canvas\Shapes\TriangleShapeData.cpp" />
+    <ClCompile Include="Canvas\ShapeTypeDefiner.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="ShapeCompositor.cpp" />
     <ClCompile Include="ShapeCompositorDoc.cpp" />

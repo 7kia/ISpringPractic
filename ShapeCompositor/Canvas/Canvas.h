@@ -17,6 +17,9 @@
 
 static const size_t MAX_COMMANDS = 5;
 
+static const LONG VIEW_WIDTH = 640;
+static const LONG VIEW_HEIGHT = 480;
+
 class CShapeCompositorView;
 class CCanvasController;
 
@@ -35,13 +38,16 @@ public:
 	//
 
 	HRESULT		Render();
-	void		AddShape(TypeShape type);
-	void		DeleteShape(CShapePresenterPtr pShape);
+	void		AddShape(TypeShape type, SShapeData data = SShapeData(Vec2f(float(VIEW_WIDTH) / 2.f, float(VIEW_HEIGHT) / 2.f)));
+	void		DeleteShape(size_t index);
+	void		DeleteShape(CShapePresenterPtr pShape);// TODO : see need it variant
 	void		DeleteLastShape();
 
-	void		ChangeSelectShape(const Vec2f mousePosition);
-	CShapePresenterPtr GetShapePresenter(const Vec2f mousePosition);// TODO : see need private
-
+	void				ChangeSelectShape(const Vec2f mousePosition);
+	CShapePresenterPtr	GetShapePresenter(const Vec2f mousePosition);// TODO : see need private
+	CShapePresenterPtr	GetSelectShape();
+	const CShapePresenterPtr GetSelectShape() const;
+	size_t				GetIndexSelectShape() const;
 private:
 
 	HRESULT		RenderShapes();

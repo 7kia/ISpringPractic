@@ -19,7 +19,6 @@ public:
 
 	virtual void CreateShape(
 		TypeShape type
-		, const Vec2f position
 		, const SShapeData & data
 		, CShapeLayer & layer
 		, CShapeRender & shapeRenderer
@@ -41,7 +40,6 @@ public:
 
 	void CreateShape(
 		TypeShape type
-		, const Vec2f position
 		, const SShapeData & data
 		, CShapeLayer & layer
 		, CShapeRender & shapeRenderer

@@ -24,8 +24,10 @@ public:
 
 	std::vector<CShapeDataPtr> &		GetShapesData();
 	std::vector<CShapePresenterPtr> &	GetShapePresenters();
+	size_t								GetIndexSelectShape(CShapePresenterPtr presenter) const;
 
 	void		DeleteShape(CShapePresenterPtr pShape);
+	void		DeleteShape(size_t index);
 	void		DeleteLastShape();
 
 	//////////////////////////////////////////////////////////////////////

@@ -257,6 +257,26 @@ BOOL CShapeCompositorView::PreTranslateMessage(MSG* pMsg)
 {
 	// TODO: добавьте специализированный код или вызов базового класса
 
+	switch (pMsg->message)
+	{
+	case WM_KEYDOWN:
+		{
+			switch (pMsg->wParam)
+			{
+				case VK_DELETE:
+				{
+					m_canvasController.DeleteSelectShape();
+				}
+				break;
+			default:
+				break;
+			}
+		}
+		break;
+	default:
+		break;
+	}
+
 	return CScrollView::PreTranslateMessage(pMsg);
 }
 
