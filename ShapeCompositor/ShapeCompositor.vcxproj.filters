@@ -51,9 +51,6 @@
     <ClInclude Include="Canvas\Canvas.h">
       <Filter>Файлы исходного кода\Canvas</Filter>
     </ClInclude>
-    <ClInclude Include="Canvas\Shapes\CShape.h">
-      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
-    </ClInclude>
     <ClInclude Include="Canvas\Shapes\IShape.h">
       <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
     </ClInclude>
@@ -123,6 +120,12 @@
     <ClInclude Include="Canvas\NotifyBeforeDelete.h">
       <Filter>Файлы исходного кода\Canvas</Filter>
     </ClInclude>
+    <ClInclude Include="Canvas\CanvasCommands\DeleteShapeCommand.h">
+      <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
+    </ClInclude>
+    <ClInclude Include="Canvas\Shapes\CShapeModel.h">
+      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ShapeCompositor.cpp">
@@ -145,9 +148,6 @@
     </ClCompile>
     <ClCompile Include="Canvas\CanvasController.cpp">
       <Filter>Файлы исходного кода\Canvas</Filter>
-    </ClCompile>
-    <ClCompile Include="Canvas\Shapes\CShape.cpp">
-      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
     </ClCompile>
     <ClCompile Include="Canvas\Shapes\ShapeAttributes.cpp">
       <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
@@ -190,6 +190,12 @@
     </ClCompile>
     <ClCompile Include="Canvas\ShapeLayer.cpp">
       <Filter>Файлы исходного кода\Canvas</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas\CanvasCommands\DeleteShapeCommand.cpp">
+      <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas\Shapes\CShapeModel.cpp">
+      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

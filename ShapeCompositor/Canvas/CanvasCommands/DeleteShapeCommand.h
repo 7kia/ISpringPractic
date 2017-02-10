@@ -3,12 +3,16 @@
 #include "CanvasCommand.h"
 #include "../Canvas.h"
 
-class CAddShapeCanvasCommand : public IMyCommand
+class CDeleteShapeCanvasCommand : public IMyCommand
 {
 public:
-	CAddShapeCanvasCommand(CCanvas * pCanvas, TypeShape type);//TypeShape
-	//////////////////////////////////////////////////////////////////////
-	// Methods
+	CDeleteShapeCanvasCommand(
+		CCanvas * pCanvas
+		, CShapePresenterPtr shape
+		, size_t index
+	);
+//////////////////////////////////////////////////////////////////////
+// Methods
 public:
 	//--------------------------------------------
 	// IMyCommand
@@ -20,5 +24,7 @@ public:
 	// Data
 private:
 	TypeShape m_type = TypeShape::Rectangle;
+	SShapeData m_data;
+	size_t m_index = 0;
 	CCanvas * m_pCanvas = nullptr;
 };

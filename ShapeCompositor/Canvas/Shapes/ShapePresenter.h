@@ -1,12 +1,13 @@
 #pragma once
 
 #include "Observer.h"
-#include "CShape.h"
+#include "CShapeModel.h"
 
 class CShapePresenter 
-	: public CObservable<SPresenterData>// For update view and model
-	, public IObserver<SPresenterData>
+	: public CObservable<SShapeData>// For update view and model
+	, public IObserver<SShapeData>
 	, public IIsPointIntersection
+	, public CShapeData
 {
 public:
 	CShapePresenter(const Vec2f position, const SSize size);
@@ -19,15 +20,13 @@ public:
 
 	//--------------------------------------------
 	// CObservable<SPresenterData>
-	SPresenterData GetChangedData() const override;
+	SShapeData GetChangedData() const override;
 	//--------------------------------------------
 
-	void Update(const SPresenterData & data) override;
+	void Update(const SShapeData & data) override;
 	//////////////////////////////////////////////////////////////////////
 	// Data
-protected:
-	Vec2f m_position;
-	SSize m_size;
+private:
 };
 
 using CShapePresenterPtr = std::shared_ptr<CShapePresenter>;

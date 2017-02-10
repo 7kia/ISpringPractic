@@ -191,6 +191,7 @@
     <ClInclude Include="Canvas\CanvasCommands\AddShapeCommand.h" />
     <ClInclude Include="Canvas\CanvasCommands\CanvasCommand.h" />
     <ClInclude Include="Canvas\CanvasCommands\AllCanvasCommand.h" />
+    <ClInclude Include="Canvas\CanvasCommands\DeleteShapeCommand.h" />
     <ClInclude Include="Canvas\CanvasController.h" />
     <ClInclude Include="Canvas\MouseEventHandler.h" />
     <ClInclude Include="Canvas\NotifyBeforeDelete.h" />
@@ -200,7 +201,7 @@
     <ClInclude Include="Canvas\Shapes\AllShapes.h" />
     <ClInclude Include="Canvas\Shapes\EllipsePresenter.h" />
     <ClInclude Include="Canvas\Shapes\EllipseShapeData.h" />
-    <ClInclude Include="Canvas\Shapes\CShape.h" />
+    <ClInclude Include="Canvas\Shapes\CShapeModel.h" />
     <ClInclude Include="Canvas\Shapes\IShape.h" />
     <ClInclude Include="Canvas\Shapes\RectanglePresenter.h" />
     <ClInclude Include="Canvas\Shapes\RectangleShapeData.h" />
@@ -223,12 +224,13 @@
   <ItemGroup>
     <ClCompile Include="Canvas\Canvas.cpp" />
     <ClCompile Include="Canvas\CanvasCommands\AddShapeCommand.cpp" />
+    <ClCompile Include="Canvas\CanvasCommands\DeleteShapeCommand.cpp" />
     <ClCompile Include="Canvas\CanvasController.cpp" />
     <ClCompile Include="Canvas\SelectShape.cpp" />
     <ClCompile Include="Canvas\ShapeLayer.cpp" />
     <ClCompile Include="Canvas\ShapeRenderer.cpp" />
     <ClCompile Include="Canvas\Shapes\EllipseShapeData.cpp" />
-    <ClCompile Include="Canvas\Shapes\CShape.cpp" />
+    <ClCompile Include="Canvas\Shapes\CShapeModel.cpp" />
     <ClCompile Include="Canvas\Shapes\EllipsePresenter.cpp" />
     <ClCompile Include="Canvas\Shapes\IShape.cpp" />
     <ClCompile Include="Canvas\Shapes\RectanglePresenter.cpp" />

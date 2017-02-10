@@ -49,7 +49,7 @@ CShapePresenterPtr CShapeLayer::GetShapePreseneter(Vec2f position)
 {
 	CShapePresenterPtr result;
 
-	for (auto iter = m_shapePresenters.begin(); iter != m_shapePresenters.end(); ++iter)
+	for (auto iter = m_shapePresenters.rbegin(); iter != m_shapePresenters.rend(); ++iter)
 	{
 
 		if ((*iter)->CheckPointIntersection(position))

@@ -57,22 +57,32 @@ void CSelectShape::Render()
 
 void CSelectShape::SetViewPosition()
 {
-	m_moveShape.GetShapePreseneter(0)->Update(m_frameData);
+	SetMoveView();
+	SetResizeView();
+}
 
-	Vec2f position = m_frameData.position;
-	SSize size = m_frameData.size;
+void CSelectShape::SetMoveView()
+{
+	SShapeData rectangleData = m_frameData;
+	rectangleData.outlineColor = BLACK_COLOR;
+	rectangleData.fillColor = NOT_COLOR;
 
+	m_moveShape.GetShapePreseneter(0)->Update(rectangleData);
 
-	auto vertices = {
-		Vec2f(position.x - size.width / 2.f, position.y + size.height / 2.f)// Left bootom
-		, Vec2f(position.x + size.width / 2.f, position.y + size.height / 2.f)// Right bootom
-		, Vec2f(position.x + size.width / 2.f, position.y - size.height / 2.f)// Right top
-		, Vec2f(position.x - size.width / 2.f, position.y - size.height / 2.f)// Left top
-	};
+}
 
+void CSelectShape::SetResizeView()
+{
+	auto vertices = m_selectPresenter->GetFrameVertices();
 	size_t indexEllipse = 0;
 	for (const auto & vertex : vertices)
 	{
-		m_resizeShape.GetShapePreseneter(indexEllipse++)->Update(SPresenterData(vertex, SELECTED_ELLIPSE_SIZE));
+		SShapeData ellipseData;
+		ellipseData.position = vertex;
+		ellipseData.size = SELECTED_ELLIPSE_SIZE;
+		ellipseData.outlineColor = BLACK_COLOR;
+		ellipseData.fillColor = BLACK_COLOR;
+
+		m_resizeShape.GetShapePreseneter(indexEllipse++)->Update(ellipseData);
 	}
 }

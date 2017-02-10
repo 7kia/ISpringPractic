@@ -8,7 +8,7 @@ CRectangleShapeData::CRectangleShapeData(
 	, const Color outlineColor
 
 )
-	: CShapeData(position, size, fillColor, outlineColor)
+	: CShapeModel(position, size, fillColor, outlineColor)
 {
 }
 

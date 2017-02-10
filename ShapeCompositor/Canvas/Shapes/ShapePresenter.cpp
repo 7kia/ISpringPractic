@@ -2,11 +2,10 @@
 #include "ShapePresenter.h"
 
 CShapePresenter::CShapePresenter(const Vec2f position, const SSize size)
-	: CObservable<SPresenterData>()// For update view and model
-	, IObserver<SPresenterData>()
+	: CObservable<SShapeData>()// For update view and model
+	, IObserver<SShapeData>()
 	, IIsPointIntersection()
-	, m_position(position)
-	, m_size(size)
+	, CShapeData(position, size)
 {
 }
 
@@ -24,18 +23,23 @@ bool CShapePresenter::CheckPointIntersection(const Vec2f point)
 	return result;
 }
 
-SPresenterData CShapePresenter::GetChangedData() const
+SShapeData CShapePresenter::GetChangedData() const
 {
-	SPresenterData info;
+	SShapeData info;
 	info.position = m_position;
 	info.size = m_size;
+	info.fillColor = m_fillColor;
+	info.outlineColor = m_outlineColor;
+
 	return info;
 }
 
-void CShapePresenter::Update(const SPresenterData & data)
+void CShapePresenter::Update(const SShapeData & data)
 {
 	m_position = data.position;
 	m_size = data.size;
+	m_fillColor = data.fillColor;
+	m_outlineColor = data.outlineColor;
 
 	NotifyObservers();
 }

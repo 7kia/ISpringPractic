@@ -1,10 +1,10 @@
 #pragma once
 
-#include "CShape.h"
+#include "CShapeModel.h"
 #include "Observer.h"
 
 class CEllipseDataShape
-	: public CShapeData
+	: public CShapeModel
 {
 public:
 	CEllipseDataShape(

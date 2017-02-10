@@ -23,7 +23,12 @@ static const Color DEFAULT_FILL_COLOR = Color(0.45f, 0.75f, 0.55f);
 
 struct SShapeData
 {
-	SShapeData();
+	SShapeData(
+		const Vec2f position = Vec2f()
+		, const SSize size = DEFAULT_SIZE
+		, const Color fillColor = DEFAULT_FILL_COLOR
+		, const Color outlineColor = DEFAULT_OUTLINE_COLOR
+	);
 
 	Vec2f position;
 	SSize size;
@@ -31,15 +36,40 @@ struct SShapeData
 	Color outlineColor;
 };
 
-// TODO std::shared_ptr<CShapeData> replace to CShapeDataPtr
-class CShapeData 
-	: public IShape
-	, public IObserver<SPresenterData>
-	, public CObservable<const CShapeData *>// For connect with ShapeRenderer
-	, public IHaveVertex
+// Mixin for avoid dublicate
+class CShapeData
 {
 public:
 	CShapeData(
+		const Vec2f position = Vec2f()
+		, const SSize size = DEFAULT_SIZE
+		, const Color fillColor = DEFAULT_FILL_COLOR
+		, const Color outlineColor = DEFAULT_OUTLINE_COLOR
+	);
+	//////////////////////////////////////////////////////////////////////
+	// Methods
+public:
+	std::vector<Vec2f> GetFrameVertices() const;
+
+//////////////////////////////////////////////////////////////////////
+// Data
+protected:
+	Vec2f m_position;
+	SSize m_size;
+	Color m_fillColor;
+	Color m_outlineColor;
+};
+
+// TODO std::shared_ptr<CShapeModel> replace to CShapeDataPtr
+class CShapeModel 
+	: public IShape
+	, public CShapeData
+	, public IObserver<SShapeData>
+	, public CObservable<const CShapeModel *>// For connect with ShapeRenderer
+	, public IHaveVertex
+{
+public:
+	CShapeModel(
 		const Vec2f position
 		, const SSize size
 		, const Color fillColor
@@ -68,10 +98,10 @@ public:
 
 	//--------------------------------------------
 	// IObserver<SPresenterData>
-	void Update(SPresenterData const& data) override;
+	void Update(SShapeData const& data) override;
 	//--------------------------------------------
 	// IRenderShapeVisitor
-	const CShapeData * GetChangedData() const override;
+	const CShapeModel * GetChangedData() const override;
 	//--------------------------------------------
 	// IHaveVertex
 	std::vector<Vec2f> GetVertices() const override;
@@ -82,19 +112,10 @@ public:
 public:
 	// TODO : see need it(might need for render
 	//bool m_isUpdate = false;
-
-protected:
-	Vec2f m_position;
-
-	SSize m_size;
-	Color m_fillColor;
-	Color m_outlineColor;
-
-
 };
 
 
-using CShapeDataPtr = std::shared_ptr<CShapeData>;
+using CShapeDataPtr = std::shared_ptr<CShapeModel>;
 
 struct SRenderShapeInfo
 {

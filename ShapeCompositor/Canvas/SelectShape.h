@@ -25,11 +25,12 @@ public:
 
 private:
 	void					SetViewPosition();
-
+	void					SetMoveView();
+	void					SetResizeView();
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
-	SPresenterData					m_frameData;
+	SShapeData						m_frameData;
 	CShapePresenter *				m_selectPresenter = nullptr;
 
 	CShapeLayer						m_moveShape;

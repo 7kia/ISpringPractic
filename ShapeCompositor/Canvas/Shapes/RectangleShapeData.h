@@ -1,9 +1,9 @@
 #pragma once
 
-#include "CShape.h"
+#include "CShapeModel.h"
 
 class CRectangleShapeData 
-	: public CShapeData
+	: public CShapeModel
 {
 public:
 	CRectangleShapeData(
