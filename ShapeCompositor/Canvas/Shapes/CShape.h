@@ -36,6 +36,7 @@ class CShapeData
 	: public IShape
 	, public IObserver<SPresenterData>
 	, public CObservable<const CShapeData *>// For connect with ShapeRenderer
+	, public IHaveVertex
 {
 public:
 	CShapeData(
@@ -72,19 +73,15 @@ public:
 	// IRenderShapeVisitor
 	const CShapeData * GetChangedData() const override;
 	//--------------------------------------------
-
-	// TODO :
-	// Visual part
-
+	// IHaveVertex
+	std::vector<Vec2f> GetVertices() const override;
 	//--------------------------------------------
 
-	//void			Set();
-	//void			Get();
 	//////////////////////////////////////////////////////////////////////
 	// Data
 public:
 	// TODO : see need it(might need for render
-	bool m_isUpdate = false;
+	//bool m_isUpdate = false;
 
 protected:
 	Vec2f m_position;

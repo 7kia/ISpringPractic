@@ -4,7 +4,6 @@
 
 class CTriangleShapeData
 	: public CShapeData
-	, public IHaveVertex
 {
 public:
 	CTriangleShapeData(

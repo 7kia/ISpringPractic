@@ -10,6 +10,7 @@ CShapeData::CShapeData(
 	: IShape()
 	, IObserver<SPresenterData>()
 	, CObservable<const CShapeData *>()
+	, IHaveVertex()
 	, m_position(position)
 	, m_size(size)
 	, m_fillColor(fillColor)
@@ -62,10 +63,10 @@ RECT CShapeData::GetOwnRect() const
 	SSize shapeSize = GetSize();
 	Vec2f shapePosition = GetPosition();
 	RECT rect;
-	rect.left = shapePosition.x - shapeSize.width / 2;
-	rect.right = shapePosition.x + shapeSize.width / 2;
-	rect.bottom = shapePosition.y + shapeSize.height / 2;
-	rect.top = shapePosition.y - shapeSize.height / 2;
+	rect.left = LONG(shapePosition.x - shapeSize.width / 2.f);
+	rect.right = LONG(shapePosition.x + shapeSize.width / 2.f);
+	rect.bottom = LONG(shapePosition.y + shapeSize.height / 2.f);
+	rect.top = LONG(shapePosition.y - shapeSize.height / 2.f);
 
 	return rect;
 }
@@ -75,13 +76,25 @@ void CShapeData::Update(SPresenterData const & data)
 	m_position = data.position;
 	m_size = data.size;
 
-	m_isUpdate = true;
 	NotifyObservers();
 }
 
 const CShapeData * CShapeData::GetChangedData() const
 {
 	return this;
+}
+
+
+std::vector<Vec2f> CShapeData::GetVertices() const
+{
+	Vec2f m_position = GetPosition();
+
+	return{
+		Vec2f(m_position.x - m_size.width / 2.f, m_position.y + m_size.height / 2.f)// Left bootom
+		, Vec2f(m_position.x + m_size.width / 2.f, m_position.y + m_size.height / 2.f)// Right bootom
+		, Vec2f(m_position.x + m_size.width / 2.f, m_position.y - m_size.height / 2.f)// Right top
+		, Vec2f(m_position.x - m_size.width / 2.f, m_position.y - m_size.height / 2.f)// Left top
+	};
 }
 
 SShapeData::SShapeData()

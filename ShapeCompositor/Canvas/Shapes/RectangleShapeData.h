@@ -4,7 +4,6 @@
 
 class CRectangleShapeData 
 	: public CShapeData
-	, public IHaveVertex
 {
 public:
 	CRectangleShapeData(
@@ -25,9 +24,6 @@ public:
 
 	void Accept(IRenderShapeVisitor & visitor) const override;
 
-	//--------------------------------------------
-	// IHaveVertex
-	std::vector<Vec2f> GetVertices() const override;
 	//--------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////

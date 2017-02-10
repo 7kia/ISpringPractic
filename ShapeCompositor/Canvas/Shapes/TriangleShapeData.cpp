@@ -8,7 +8,6 @@ CTriangleShapeData::CTriangleShapeData(
 	, const Color outlineColor
 )
 	: CShapeData(position, size, fillColor, outlineColor)
-	, IHaveVertex()
 {
 }
 

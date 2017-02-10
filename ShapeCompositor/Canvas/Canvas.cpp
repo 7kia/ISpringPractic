@@ -56,6 +56,11 @@ void CCanvas::DeleteShape(CShapePresenterPtr pShape)
 
 void CCanvas::DeleteLastShape()
 {
+	if (IsSelectLast())
+	{
+		m_selectShape.ResetSelectShapePtr();
+	}
+
 	m_shapeLayer.DeleteLastShape();
 }
 
@@ -91,4 +96,9 @@ HRESULT CCanvas::RenderShapes()
 	
 
 	return m_shapeRenderer.EndDraw();
+}
+
+bool CCanvas::IsSelectLast() const
+{
+	return m_selectShape.GetShape() == m_shapeLayer.GetBackShapePreseneter().get();
 }

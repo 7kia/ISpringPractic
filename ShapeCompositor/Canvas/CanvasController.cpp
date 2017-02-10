@@ -57,7 +57,7 @@ void CCanvasController::HandleRButtHandleUp(CPoint point)
 
 void CCanvasController::HandleMouseMove(CPoint point)
 {
-	m_pCanvas->ChangeSelectShape(Vec2f(float(point.x), float(point.y)));
+	//m_pCanvas->ChangeSelectShape(Vec2f(float(point.x), float(point.y)));
 }
 
 

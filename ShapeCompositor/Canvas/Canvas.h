@@ -45,7 +45,7 @@ public:
 private:
 
 	HRESULT		RenderShapes();
-
+	bool		IsSelectLast() const;
 	//////////////////////////////////////////////////////////////////////
 	// Data
 public:

@@ -7,7 +7,7 @@ CEllipseDataShape::CEllipseDataShape(
 	, const Color fillColor
 	, const Color outlineColor
 )
-	: CShapeData(position, SSize(size.width / 2.f, size.height / 2.f), fillColor, outlineColor)
+	: CShapeData(position, SSize(size.width, size.height), fillColor, outlineColor)
 {
 }
 

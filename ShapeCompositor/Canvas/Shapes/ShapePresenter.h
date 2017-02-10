@@ -31,3 +31,4 @@ protected:
 };
 
 using CShapePresenterPtr = std::shared_ptr<CShapePresenter>;
+using CShapePresenterWeakPtr = std::weak_ptr<CShapePresenter>;

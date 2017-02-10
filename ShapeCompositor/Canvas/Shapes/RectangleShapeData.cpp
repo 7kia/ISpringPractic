@@ -9,7 +9,6 @@ CRectangleShapeData::CRectangleShapeData(
 
 )
 	: CShapeData(position, size, fillColor, outlineColor)
-	, IHaveVertex()
 {
 }
 
@@ -17,16 +16,4 @@ CRectangleShapeData::CRectangleShapeData(
 void CRectangleShapeData::Accept(IRenderShapeVisitor & visitor) const
 {
 	visitor.Visit(*this);
-}
-
-std::vector<Vec2f> CRectangleShapeData::GetVertices() const
-{
-	Vec2f m_position = GetPosition();
-
-	return{ 
-		 Vec2f(m_position.x - m_size.width / 2.f, m_position.y + m_size.height / 2.f)// Left bootom
-		, Vec2f(m_position.x + m_size.width / 2.f, m_position.y + m_size.height / 2.f)// Right bootom
-		, Vec2f(m_position.x + m_size.width / 2.f, m_position.y - m_size.height / 2.f)// Right top
-		, Vec2f(m_position.x - m_size.width / 2.f, m_position.y - m_size.height / 2.f)// Left top
-	};
 }

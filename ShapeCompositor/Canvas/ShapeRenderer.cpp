@@ -126,8 +126,8 @@ void CShapeRender::Visit(const CEllipseDataShape & shape)
 
 	D2D1_ELLIPSE ellipse = D2D1::Ellipse(
 		{ position.x, position.y }
-		, size.width
-		, size.height
+		, size.width / 2.f
+		, size.height / 2.f
 	);
 	m_pRenderTarget->FillEllipse(ellipse, m_fillBrush);
 	m_pRenderTarget->DrawEllipse(ellipse, m_outlineBrush);
@@ -174,7 +174,6 @@ void CShapeRender::Visit(const CTriangleShapeData & shape)
 	// TODO : Check correctness place
 	//InvalidateRect(m_pRenderTarget->GetHwnd(), &shape.GetOwnRect(), true);
 	//ValidateRect(m_pRenderTarget->GetHwnd(), &shape.GetOwnRect());
-
 }
 
 void CShapeRender::Update(const CShapeData * const & data)

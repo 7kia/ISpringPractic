@@ -17,7 +17,7 @@ public:
 	// Methods
 public:
 	void					SetShape(CShapePresenter * shape);
-	CShapePresenterPtr		GetShape() const;
+	CShapePresenter *		GetShape() const;
 	void					ResetSelectShapePtr();
 	void					Render();
 

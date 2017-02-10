@@ -29,9 +29,9 @@ void CSelectShape::SetShape(CShapePresenter * shape)
 	SetViewPosition();
 }
 
-CShapePresenterPtr CSelectShape::GetShape() const
+CShapePresenter * CSelectShape::GetShape() const
 {
-	return CShapePresenterPtr(m_selectPresenter);
+	return m_selectPresenter;
 }
 
 void CSelectShape::ResetSelectShapePtr()
