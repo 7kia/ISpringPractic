@@ -24,9 +24,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="ShapeCompositor.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
@@ -115,9 +112,6 @@
       <Filter>Файлы исходного кода\Canvas</Filter>
     </ClInclude>
     <ClInclude Include="Canvas\ShapeLayer.h">
-      <Filter>Файлы исходного кода\Canvas</Filter>
-    </ClInclude>
-    <ClInclude Include="Canvas\NotifyBeforeDelete.h">
       <Filter>Файлы исходного кода\Canvas</Filter>
     </ClInclude>
     <ClInclude Include="Canvas\CanvasCommands\DeleteShapeCommand.h">

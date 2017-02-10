@@ -184,9 +184,6 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="Canvas\Canvas.h" />
     <ClInclude Include="Canvas\CanvasCommands\AddShapeCommand.h" />
     <ClInclude Include="Canvas\CanvasCommands\CanvasCommand.h" />
@@ -194,7 +191,6 @@
     <ClInclude Include="Canvas\CanvasCommands\DeleteShapeCommand.h" />
     <ClInclude Include="Canvas\CanvasController.h" />
     <ClInclude Include="Canvas\MouseEventHandler.h" />
-    <ClInclude Include="Canvas\NotifyBeforeDelete.h" />
     <ClInclude Include="Canvas\SelectShape.h" />
     <ClInclude Include="Canvas\ShapeLayer.h" />
     <ClInclude Include="Canvas\ShapeRenderer.h" />
