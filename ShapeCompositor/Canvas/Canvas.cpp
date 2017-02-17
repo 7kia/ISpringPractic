@@ -3,7 +3,8 @@
 #include "../ShapeCompositorView.h"
 
 CCanvas::CCanvas()
-	: m_shapeFactory(this)
+	: IMouseEventHandler()
+	, m_shapeFactory(this)
 	, m_selectShape(m_shapeRenderer, m_shapeFactory)
 {
 }
@@ -83,11 +84,13 @@ void CCanvas::ChangeSelectShape(const Vec2f mousePosition)
 CShapePtr CCanvas::GetShape(const Vec2f mousePosition)
 {
 	CShapePtr foundShape;
-	for (auto & shape : m_shapes)
+	for (auto iter = m_shapes.rbegin(); iter != m_shapes.rend(); ++iter)
 	{
-		shape->IsPointIntersection(mousePosition);
-		foundShape = shape;
-		break;
+		if ((*iter)->IsPointIntersection(mousePosition))
+		{
+			foundShape = *iter;
+			break;
+		}
 	}
 	return foundShape;
 }
@@ -115,4 +118,104 @@ bool CCanvas::IsSelectLast() const
 size_t CCanvas::GetIndexShape(CShapePtr pShape) const 
 {
 	return  std::find(m_shapes.begin(), m_shapes.end(), pShape) - m_shapes.begin();
+}
+
+
+void CCanvas::AddTriangle()
+{
+	CanvasCommandPtr createCommand = std::make_shared<CAddShapeCanvasCommand>(this, TypeShape::Triangle);
+	AddCommand(createCommand);
+	ExecuteCurrent();
+}
+
+void CCanvas::AddRectangle()
+{
+	CanvasCommandPtr createCommand = std::make_shared<CAddShapeCanvasCommand>(this, TypeShape::Rectangle);
+	AddCommand(createCommand);
+	ExecuteCurrent();
+}
+
+void CCanvas::AddEllipse()
+{
+	CanvasCommandPtr createCommand = std::make_shared<CAddShapeCanvasCommand>(this, TypeShape::Ellipse);
+	AddCommand(createCommand);
+	ExecuteCurrent();
+}
+
+void CCanvas::Undo()
+{
+	UndoCommand();
+}
+
+void CCanvas::Redo()
+{
+	RedoCommand();
+}
+
+void CCanvas::DeleteSelectShape()
+{
+	//m_pCanvas->DeleteShape(m_pCanvas->GetSelectShape());
+	CanvasCommandPtr createCommand = std::make_shared<CDeleteShapeCanvasCommand>(
+		this
+		, GetSelectShape()
+		, GetIndexSelectShape()
+		);
+	//AddCommand(createCommand);
+	//ExecuteCurrent();
+
+}
+
+void CCanvas::HandleLButtHandleDown(CPoint point)
+{
+	ChangeSelectShape(Vec2f(float(point.x), float(point.y)));
+}
+
+void CCanvas::HandleLButtHandleUp(CPoint point)
+{
+	// TODO
+}
+
+void CCanvas::HandleRButtHandleUp(CPoint point)
+{
+	// TODO
+}
+
+void CCanvas::HandleMouseMove(CPoint point)
+{
+	//m_pCanvas->ChangeSelectShape(Vec2f(float(point.x), float(point.y)));
+}
+
+
+void CCanvas::AddCommand(const CanvasCommandPtr command)
+{
+	// TODO : insert to middle queue
+	if (!m_history.empty() && (m_currentCommand != m_history.rbegin()))
+	{
+		m_history.erase(m_currentCommand.base(), m_history.end());
+	}
+	m_history.push_back(command);
+	m_currentCommand = m_history.rbegin();
+}
+
+void CCanvas::ExecuteCurrent()
+{
+	m_currentCommand->get()->Execute();
+}
+
+void CCanvas::UndoCommand()
+{
+	if (m_currentCommand != m_history.rend())
+	{
+		m_currentCommand->get()->Cancel();
+		++m_currentCommand;
+	}
+}
+
+void CCanvas::RedoCommand()
+{
+	if (m_currentCommand != m_history.rbegin())
+	{
+		--m_currentCommand;
+		m_currentCommand->get()->Execute();
+	}
 }

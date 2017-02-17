@@ -21,14 +21,11 @@ public:
 	void Draw(IRenderShape & renderer) const override;
 
 	//--------------------------------------------
+	// IIsPointIntersection
+	bool IsPointIntersection(const Vec2f point) const override;
+	//--------------------------------------------
 
 private:
-	//--------------------------------------------
-	// IIsPointIntersection
-
-	bool IsPointIntersection(const Vec2f point) const override;
-
-	//--------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////
 	// Data

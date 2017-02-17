@@ -25,12 +25,11 @@ public:
 	// IHaveVertex
 	std::vector<Vec2f> GetVertices() const;
 	//--------------------------------------------
-
-private:
-	//--------------------------------------------
 	// IIsPointIntersection
 	bool IsPointIntersection(const Vec2f point) const override;
 	//--------------------------------------------
+
+private:
 
 	//////////////////////////////////////////////////////////////////////
 	// Data

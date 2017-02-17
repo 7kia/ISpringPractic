@@ -13,8 +13,8 @@ CRectangle::CRectangle(
 bool CRectangle::IsPointIntersection(const Vec2f point) const
 {
 	const RECT ownRect = GetOwnRect();
-	return IsBetween(point.x, float(ownRect.left), float(ownRect.top))
-		&& IsBetween(point.y, float(ownRect.right), float(ownRect.bottom));
+	return IsBetween(point.x, float(ownRect.left), float(ownRect.right))
+		&& IsBetween(point.y, float(ownRect.top), float(ownRect.bottom));
 }
 
 std::vector<Vec2f> CRectangle::GetVertices() const

@@ -16,7 +16,6 @@
 
 #include "ShapeCompositorDoc.h"
 #include "Canvas\Canvas.h"
-#include "Canvas\CanvasController.h"
 
 #pragma comment(lib, "d2d1")
 
@@ -56,7 +55,7 @@ public:
 
 protected:
 	CCanvas m_canvas;
-	CCanvasController m_canvasController;
+	//CCanvasController m_canvasController;
 
 	ID2D1HwndRenderTarget * m_pRenderTarget = nullptr;
 

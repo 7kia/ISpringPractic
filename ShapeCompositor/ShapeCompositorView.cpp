@@ -51,7 +51,6 @@ END_MESSAGE_MAP()
 // создание/уничтожение CShapeCompositorView
 
 CShapeCompositorView::CShapeCompositorView()
-	: m_canvasController(&m_canvas)
 {
 }
 
@@ -95,31 +94,31 @@ ID2D1HwndRenderTarget * CShapeCompositorView::GetRenderTarget()
 
 void CShapeCompositorView::CreateTriangle()
 {
-	m_canvasController.AddTriangle();
+	m_canvas.AddTriangle();
 	RedrawWindow();
 }
 
 void CShapeCompositorView::CreateRectangle()
 {
-	m_canvasController.AddRectangle();
+	m_canvas.AddRectangle();
 	RedrawWindow();
 }
 
 void CShapeCompositorView::CreateEllipse()
 {
-	m_canvasController.AddEllipse();
+	m_canvas.AddEllipse();
 	RedrawWindow();
 }
 
 void CShapeCompositorView::Undo()
 {
-	m_canvasController.Undo();
+	m_canvas.Undo();
 	RedrawWindow();
 }
 
 void CShapeCompositorView::Redo()
 {
-	m_canvasController.Redo();
+	m_canvas.Redo();
 	RedrawWindow();
 }
 
@@ -265,7 +264,7 @@ BOOL CShapeCompositorView::PreTranslateMessage(MSG* pMsg)
 			{
 				case VK_DELETE:
 				{
-					m_canvasController.DeleteSelectShape();
+					m_canvas.DeleteSelectShape();
 				}
 				break;
 			default:
@@ -289,7 +288,7 @@ void CShapeCompositorView::OnLButtonDown(UINT nFlags, CPoint point)
 
 	CScrollView::OnLButtonDown(nFlags, point);
 
-	m_canvasController.HandleLButtHandleDown(point);
+	m_canvas.HandleLButtHandleDown(point);
 	//SetCapture();//захват мышки для окна, перехвачивает
 	//			 //все сообщения мышки и за пределами ока
 }
@@ -300,7 +299,7 @@ void CShapeCompositorView::OnMouseMove(UINT nFlags, CPoint point)
 	// TODO: добавьте свой код обработчика сообщений или вызов стандартного
 	CView::OnMouseMove(nFlags, point);
 
-	m_canvasController.HandleMouseMove(point);
+	m_canvas.HandleMouseMove(point);
 
 	///*
 	// For test OnMouseMove

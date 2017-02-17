@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "DeleteShapeCommand.h"
 
-CDeleteShapeCanvasCommand::CDeleteShapeCanvasCommand(CCanvas * pCanvas
+CDeleteShapeCanvasCommand::CDeleteShapeCanvasCommand(CCanvas *const pCanvas
 	, const CShapePtr shape
 	, size_t index
 )

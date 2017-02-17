@@ -13,6 +13,9 @@
 #include "Shapes\ShapeFactory.h"
 #include "ShapeRenderer.h"
 #include "SelectShape.h"
+#include "CanvasCommands\AllCanvasCommand.h"
+#include "MouseEventHandler.h"
+
 
 static const size_t MAX_COMMANDS = 5;
 
@@ -24,6 +27,7 @@ class CCanvasController;
 
 
 class CCanvas
+	: public IMouseEventHandler
 {
 public:
 	CCanvas();
@@ -36,8 +40,27 @@ public:
 	void		ClearRecources();
 	//
 
+	// Commands
+	void AddTriangle();
+	void AddRectangle();
+	void AddEllipse();
+	void Undo();
+	void Redo();
+
+	void DeleteSelectShape();
+	//
+
+	//--------------------------------------------
+	// IMouseEventHandler
+
+	void HandleLButtHandleDown(CPoint point) override;
+	void HandleLButtHandleUp(CPoint point) override;
+	void HandleRButtHandleUp(CPoint point) override;
+	void HandleMouseMove(CPoint point) override;
+
+	//--------------------------------------------
+
 	HRESULT		Render();
-	void		AddShape(TypeShape type, SShapeData data = SShapeData(Vec2f(float(VIEW_WIDTH) / 2.f, float(VIEW_HEIGHT) / 2.f)));
 	void		DeleteShape(size_t index);
 	void		DeleteShape(CShapePtr pShape);// TODO : see need it variant
 	void		DeleteLastShape();
@@ -47,7 +70,17 @@ public:
 	CShapePtr			GetSelectShape();
 	const CShapePtr		GetSelectShape() const;
 	size_t				GetIndexSelectShape() const;
+
+	void		AddShape(TypeShape type, SShapeData data = SShapeData(Vec2f(float(VIEW_WIDTH) / 2.f, float(VIEW_HEIGHT) / 2.f)));
+
 private:
+
+	//
+	void AddCommand(const CanvasCommandPtr command);
+	void ExecuteCurrent();
+	void UndoCommand();
+	void RedoCommand();
+	//
 
 	bool		IsSelectLast() const;
 
@@ -59,6 +92,10 @@ public:
 	CShapeRender								m_shapeRenderer;
 
 	CSelectShape								m_selectShape;
+
+	std::vector<CanvasCommandPtr>						m_history;
+	std::vector<CanvasCommandPtr>::reverse_iterator		m_currentCommand = m_history.rbegin();
+
 	// TODO : see might require do private
 	std::vector<CShapePtr>						m_shapes;
 private:

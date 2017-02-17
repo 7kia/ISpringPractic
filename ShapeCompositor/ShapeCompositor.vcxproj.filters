@@ -72,9 +72,6 @@
     <ClInclude Include="Canvas\ShapeRenderer.h">
       <Filter>Файлы исходного кода\Canvas</Filter>
     </ClInclude>
-    <ClInclude Include="Canvas\CanvasController.h">
-      <Filter>Файлы исходного кода\Canvas</Filter>
-    </ClInclude>
     <ClInclude Include="RenderShapeVisitor.h">
       <Filter>Файлы исходного кода</Filter>
     </ClInclude>
@@ -126,9 +123,6 @@
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
     <ClCompile Include="Canvas\Canvas.cpp">
-      <Filter>Файлы исходного кода\Canvas</Filter>
-    </ClCompile>
-    <ClCompile Include="Canvas\CanvasController.cpp">
       <Filter>Файлы исходного кода\Canvas</Filter>
     </ClCompile>
     <ClCompile Include="Canvas\Shapes\ShapeAttributes.cpp">
