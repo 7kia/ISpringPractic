@@ -19,13 +19,5 @@ void CDeleteShapeCanvasCommand::Execute()
 
 void CDeleteShapeCanvasCommand::Cancel()
 {
-
-	if (m_index == 0)
-	{
-		m_pCanvas->InsertShape(m_type, 0, m_data);
-	}
-	else
-	{
-		m_pCanvas->InsertShape(m_type, m_index - 1, m_data);
-	}
+	m_pCanvas->InsertShape(m_index, m_data);
 }

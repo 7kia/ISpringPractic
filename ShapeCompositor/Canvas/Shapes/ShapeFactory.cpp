@@ -6,13 +6,9 @@ CShapeFactory::CShapeFactory()
 {
 }
 
-CShapePtr CShapeFactory::CreateShape(
-	TypeShape type
-	, const SShapeData & data
-	, CShapeRender & shapeRenderer
-) const
+CShapePtr CShapeFactory::CreateShape(const SShapeData & data, CShapeRender & shapeRenderer) const
 {
-	switch (type)
+	switch (data.type)
 	{
 	case TypeShape::Triangle:
 		return std::make_shared<CTriangle>(

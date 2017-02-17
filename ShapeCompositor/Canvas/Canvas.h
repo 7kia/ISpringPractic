@@ -64,15 +64,8 @@ public:
 	const CShapePtr		GetSelectShape() const;// TODO : see need it
 	size_t				GetIndexSelectShape() const;
 
-	void PushBackShape(
-		TypeShape type
-		, SShapeData data = SShapeData(Vec2f(float(VIEW_WIDTH) / 2.f, float(VIEW_HEIGHT) / 2.f))	
-	);
-	void InsertShape(
-		TypeShape type
-		, size_t insertIndex
-		, SShapeData data = SShapeData(Vec2f(float(VIEW_WIDTH) / 2.f, float(VIEW_HEIGHT) / 2.f))
-	);
+	void PushBackShape(SShapeData data);
+	void InsertShape(size_t insertIndex, SShapeData data);
 
 private:
 

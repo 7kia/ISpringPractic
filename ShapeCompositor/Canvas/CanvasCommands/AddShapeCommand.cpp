@@ -10,7 +10,7 @@ CAddShapeCanvasCommand::CAddShapeCanvasCommand(CCanvas * pCanvas, TypeShape type
 
 void CAddShapeCanvasCommand::Execute()
 {
-	m_pCanvas->PushBackShape(m_type);
+	m_pCanvas->PushBackShape(SShapeData(m_type, Vec2f(float(VIEW_WIDTH) / 2.f, float(VIEW_HEIGHT) / 2.f)));
 }
 
 void CAddShapeCanvasCommand::Cancel()

@@ -5,18 +5,20 @@ CSelectShape::CSelectShape(CShapeRender & shapeRenderer, const CShapeFactory & s
 	: IDrawable()
 {
 	SShapeData rectangleData;
+	rectangleData.type = TypeShape::Rectangle;
 	rectangleData.outlineColor = BLACK_COLOR;
 	rectangleData.fillColor = NOT_COLOR;
 
-	m_moveShape.push_back(shapeFactory.CreateShape(TypeShape::Rectangle, rectangleData, shapeRenderer));
+	m_moveShape.push_back(shapeFactory.CreateShape(rectangleData, shapeRenderer));
 	
 	SShapeData ellipseData;
+	ellipseData.type = TypeShape::Ellipse;
 	ellipseData.outlineColor = BLACK_COLOR;
 	ellipseData.fillColor = BLACK_COLOR;
 
 	for (size_t index = 0; index < 4; ++index)
 	{
-		m_resizeShapes.push_back(shapeFactory.CreateShape(TypeShape::Ellipse, ellipseData, shapeRenderer));
+		m_resizeShapes.push_back(shapeFactory.CreateShape(ellipseData, shapeRenderer));
 	}
 }
 

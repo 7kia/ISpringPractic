@@ -23,7 +23,8 @@ class CShape
 {
 public:
 	CShape(
-		const Vec2f position = Vec2f()
+		const TypeShape type
+		, const Vec2f position = Vec2f()
 		, const SSize size = DEFAULT_SIZE
 		, const Color fillColor = DEFAULT_FILL_COLOR
 		, const Color outlineColor = DEFAULT_OUTLINE_COLOR
@@ -48,6 +49,8 @@ public:
 	SSize GetSize() const override;
 	// Own rect
 	RECT GetOwnRect() const override;
+	// Type
+	TypeShape GetShape() const override;
 
 	std::vector<Vec2f> GetFrameVertices() const;
 
@@ -60,6 +63,7 @@ protected:
 	SSize m_size;
 	Color m_fillColor;
 	Color m_outlineColor;
+	TypeShape m_type;
 };
 
 using CShapePtr = std::shared_ptr<CShape>;

@@ -2,12 +2,14 @@
 #include "CShape.h"
 
 SShapeData::SShapeData(
-	const Vec2f position
+	const TypeShape type
+	, const Vec2f position
 	, const SSize size
 	, const Color fillColor
 	, const Color outlineColor
 )
-	: position(position)
+	: type(type)
+	, position(position)
 	, size(size)
 	, fillColor(fillColor)
 	, outlineColor(outlineColor)
@@ -25,13 +27,15 @@ SPresenterData::SPresenterData(Vec2f position, SSize size)
 }
 
 CShape::CShape(
-	const Vec2f position
+	const TypeShape type
+	, const Vec2f position
 	, const SSize size
 	, const Color fillColor
 	, const Color outlineColor
 )
 	: IShape()
 	, IIsPointIntersection()
+	, m_type(type)
 	, m_position(position)
 	, m_size(size)
 	, m_fillColor(fillColor)
@@ -93,6 +97,11 @@ RECT CShape::GetOwnRect() const
 	return rect;
 }
 
+TypeShape CShape::GetShape() const
+{
+	return m_type;
+}
+
 std::vector<Vec2f> CShape::GetFrameVertices() const
 {
 	RECT frame = GetOwnRect();
@@ -107,6 +116,7 @@ std::vector<Vec2f> CShape::GetFrameVertices() const
 SShapeData CShape::GetShapeData() const
 {
 	SShapeData info;
+	info.type = m_type;
 	info.position = m_position;
 	info.size = m_size;
 	info.fillColor = m_fillColor;
@@ -116,6 +126,7 @@ SShapeData CShape::GetShapeData() const
 
 void CShape::SetShapeData(SShapeData const & data)
 {
+	m_type = data.type;
 	m_position = data.position;
 	m_size = data.size;
 	m_fillColor = data.fillColor;

@@ -7,7 +7,13 @@ CTriangle::CTriangle(
 	, const Color fillColor
 	, const Color outlineColor
 )
-	: CShape(position, size, fillColor, outlineColor)
+	: CShape(
+		TypeShape::Triangle
+		, position
+		, size
+		, fillColor
+		, outlineColor
+	)
 	, IHaveVertex()
 {
 }

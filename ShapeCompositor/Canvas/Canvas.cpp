@@ -32,22 +32,14 @@ void CCanvas::ClearRecources()
 	m_shapeRenderer.ClearRecources();
 }
 
-void CCanvas::PushBackShape(TypeShape type, SShapeData data)
+void CCanvas::PushBackShape(SShapeData data)
 {
 	m_shapes.push_back(
-		m_shapeFactory.CreateShape(
-			type
-			, data
-			, m_shapeRenderer
-		)
+		m_shapeFactory.CreateShape(data, m_shapeRenderer)
 	);
 }
 
-void CCanvas::InsertShape(
-	TypeShape type
-	, size_t insertIndex
-	, SShapeData data
-)
+void CCanvas::InsertShape(size_t insertIndex, SShapeData data)
 {
 	if (!IsBetween(insertIndex, size_t(0), m_shapes.size()))
 	{
@@ -56,11 +48,7 @@ void CCanvas::InsertShape(
 
 	m_shapes.insert(
 		m_shapes.begin() + insertIndex
-		, m_shapeFactory.CreateShape(
-			type
-			, data
-			, m_shapeRenderer
-		)
+		, m_shapeFactory.CreateShape(data, m_shapeRenderer)	
 	);
 }
 

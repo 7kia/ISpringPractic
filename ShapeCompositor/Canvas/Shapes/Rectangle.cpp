@@ -7,7 +7,14 @@ CRectangle::CRectangle(
 	, const Color fillColor
 	, const Color outlineColor
 )
-	: CShape(position, size, fillColor, outlineColor) {
+	: CShape(
+		TypeShape::Rectangle
+		, position
+		, size
+		, fillColor
+		, outlineColor
+	) 
+{
 }
 
 bool CRectangle::IsPointIntersection(const Vec2f point) const

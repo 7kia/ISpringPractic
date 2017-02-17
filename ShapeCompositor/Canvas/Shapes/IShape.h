@@ -7,16 +7,25 @@ static const SSize DEFAULT_SIZE = SSize(50.f, 50.f);
 static const Color DEFAULT_OUTLINE_COLOR = Color(0.f, 0.f, 0.f);
 static const Color DEFAULT_FILL_COLOR = Color(0.45f, 0.75f, 0.55f);
 
+enum class TypeShape
+{
+	Triangle
+	, Rectangle
+	, Ellipse
+};
+
 // TODO  : see need it
 struct SShapeData
 {
 	SShapeData(
-		const Vec2f position = Vec2f()
+		const TypeShape type = TypeShape::Rectangle
+		, const Vec2f position = Vec2f()
 		, const SSize size = DEFAULT_SIZE
 		, const Color fillColor = DEFAULT_FILL_COLOR
 		, const Color outlineColor = DEFAULT_OUTLINE_COLOR
 	);
 
+	TypeShape type;
 	Vec2f position;
 	SSize size;
 	Color fillColor;
@@ -51,4 +60,6 @@ public:
 	virtual SShapeData GetShapeData() const = 0;
 	virtual void SetShapeData(SShapeData const & data) = 0;
 
+	// Type
+	virtual TypeShape GetShape() const = 0;
 };
