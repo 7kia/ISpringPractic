@@ -265,7 +265,8 @@ BOOL CShapeCompositorView::PreTranslateMessage(MSG* pMsg)
 			{
 				case VK_DELETE:
 				{
-					m_canvas.DeleteSelectShape();
+					m_history.DeleteSelectShape();
+					RedrawWindow();
 				}
 				break;
 			default:
@@ -290,10 +291,8 @@ void CShapeCompositorView::OnLButtonDown(UINT nFlags, CPoint point)
 	CScrollView::OnLButtonDown(nFlags, point);
 
 	m_canvas.HandleLButtHandleDown(point);
-	//SetCapture();//захват мышки для окна, перехвачивает
-	//			 //все сообщения мышки и за пределами ока
+	RedrawWindow();
 }
-
 
 void CShapeCompositorView::OnMouseMove(UINT nFlags, CPoint point)
 {
@@ -301,41 +300,15 @@ void CShapeCompositorView::OnMouseMove(UINT nFlags, CPoint point)
 	CView::OnMouseMove(nFlags, point);
 
 	m_canvas.HandleMouseMove(point);
-
-	///*
-	// For test OnMouseMove
-	//если курсор пренадлежит нашему окну, то тогда рисуем
-	//if (this == GetCapture())
-	//{
-	//	CClientDC aDC(this);//создаем контекст устройства
-	//	if (m_start.x == -1)//если -1 то начало
-	//	{
-
-	//		m_start = point;
-	//		return;
-	//	}
-	//	aDC.MoveTo(m_start);//устанавливаем начальную точку
-	//	aDC.LineTo(point);//рисуем линию
-	//	m_start = point;//запоминаем конечную точку
-	//}
-	//*/
-
+	//RedrawWindow();
 }
-
 
 void CShapeCompositorView::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	// TODO: добавьте свой код обработчика сообщений или вызов стандартного
 
 	CView::OnLButtonUp(nFlags, point);
-
-	/*
-	if (this == GetCapture());//Если захвачен курсор мышки, освободить
-	{
-		ReleaseCapture();
-	}
-	*/
-	
+	RedrawWindow();
 }
 
 BOOL CShapeCompositorView::OnEraseBkgnd(CDC* pDC)

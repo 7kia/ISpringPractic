@@ -64,11 +64,19 @@ public:
 	const CShapePtr		GetSelectShape() const;// TODO : see need it
 	size_t				GetIndexSelectShape() const;
 
-	void		AddShape(TypeShape type, SShapeData data = SShapeData(Vec2f(float(VIEW_WIDTH) / 2.f, float(VIEW_HEIGHT) / 2.f)));
+	void PushBackShape(
+		TypeShape type
+		, SShapeData data = SShapeData(Vec2f(float(VIEW_WIDTH) / 2.f, float(VIEW_HEIGHT) / 2.f))	
+	);
+	void InsertShape(
+		TypeShape type
+		, size_t insertIndex
+		, SShapeData data = SShapeData(Vec2f(float(VIEW_WIDTH) / 2.f, float(VIEW_HEIGHT) / 2.f))
+	);
 
 private:
 
-	bool		IsSelectLast() const;
+	bool		IsSelectShape(size_t index) const;
 
 	size_t		GetIndexShape(CShapePtr pShape) const;
 	//////////////////////////////////////////////////////////////////////

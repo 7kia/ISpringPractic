@@ -90,9 +90,6 @@
     <ClInclude Include="Canvas\CanvasCommands\DeleteShapeCommand.h">
       <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
     </ClInclude>
-    <ClInclude Include="Canvas\ShapeTypeDefiner.h">
-      <Filter>Файлы исходного кода\Canvas</Filter>
-    </ClInclude>
     <ClInclude Include="Canvas\Shapes\Triangle.h">
       <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
     </ClInclude>
@@ -148,9 +145,6 @@
     </ClCompile>
     <ClCompile Include="Canvas\CanvasCommands\DeleteShapeCommand.cpp">
       <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
-    </ClCompile>
-    <ClCompile Include="Canvas\ShapeTypeDefiner.cpp">
-      <Filter>Файлы исходного кода\Canvas</Filter>
     </ClCompile>
     <ClCompile Include="Canvas\Shapes\Triangle.cpp">
       <Filter>Файлы исходного кода\Canvas\Shapes</Filter>

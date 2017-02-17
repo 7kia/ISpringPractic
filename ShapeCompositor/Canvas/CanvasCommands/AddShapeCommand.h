@@ -1,8 +1,9 @@
 #pragma once
 
 #include "CanvasCommand.h"
-#include "../Canvas.h"
+#include "Canvas\Shapes\AllShapes.h"
 
+class CCanvas;
 class CAddShapeCanvasCommand : public IMyCommand
 {
 public:

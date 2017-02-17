@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "History.h"
+#include "Canvas.h"
 
 CHistory::CHistory(CCanvas * pCanvas)
 	: m_pCanvas(pCanvas)
@@ -23,6 +24,16 @@ void CHistory::AddRectangle()
 void CHistory::AddEllipse()
 {
 	CanvasCommandPtr createCommand = std::make_shared<CAddShapeCanvasCommand>(m_pCanvas, TypeShape::Ellipse);
+	AddCommand(createCommand);
+	ExecuteCurrent();
+}
+
+void CHistory::DeleteSelectShape()
+{
+	CShapePtr selectShape = m_pCanvas->GetSelectShape();
+	size_t index = m_pCanvas->GetIndexSelectShape();
+
+	CanvasCommandPtr createCommand = std::make_shared<CDeleteShapeCanvasCommand>(m_pCanvas, selectShape, index);
 	AddCommand(createCommand);
 	ExecuteCurrent();
 }

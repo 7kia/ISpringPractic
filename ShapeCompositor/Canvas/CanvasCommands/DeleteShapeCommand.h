@@ -1,9 +1,9 @@
 #pragma once
 
 #include "CanvasCommand.h"
-#include "../Canvas.h"
-#include "../ShapeTypeDefiner.h"
+#include "Canvas\Shapes\AllShapes.h"
 
+class CCanvas;
 class CDeleteShapeCanvasCommand : public IMyCommand
 {
 public:
@@ -24,7 +24,6 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
-	CShapeTypeDefiner m_typeDefinder;
 	TypeShape m_type = TypeShape::Rectangle;
 	SShapeData m_data;
 	size_t m_index = 0;

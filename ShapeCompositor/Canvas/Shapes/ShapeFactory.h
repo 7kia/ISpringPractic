@@ -5,51 +5,19 @@
 
 #include <vector>
 
-enum class TypeShape
-{
-		Triangle
-	,	Rectangle
-	,	Ellipse
-};
-
-class IShapeFactory
+class CShapeFactory
 {
 public:
-	virtual ~IShapeFactory() = default;
-
-	virtual void CreateShape(
-		TypeShape type
-		, const SShapeData & data
-		, std::vector<CShapePtr> & sh
-		, CShapeRender & shapeRenderer
-	) const = 0;
-
-};
-
-class CCanvas;// For bind signals
-class CShapeFactory : public IShapeFactory
-{
-public:
-	CShapeFactory(CCanvas * pCanvas);
-	friend CCanvas;// TODO : check correctness
+	CShapeFactory();
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
-	//--------------------------------------------
-	// IShapeFactory
-
-	void CreateShape(
+	CShapePtr CreateShape(
 		TypeShape type
 		, const SShapeData & data
-		, std::vector<CShapePtr> & shapes
 		, CShapeRender & shapeRenderer
-	) const override;
-
-
-	//--------------------------------------------
-private:
+	) const;
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
-	CCanvas * m_pCanvas = nullptr;
 };

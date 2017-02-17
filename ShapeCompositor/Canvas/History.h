@@ -2,6 +2,8 @@
 
 #include "CanvasCommands\AllCanvasCommand.h"
 
+#include <vector>
+
 class CCanvas;
 
 class CHistory
@@ -16,6 +18,7 @@ public:
 	void AddTriangle();
 	void AddRectangle();
 	void AddEllipse();
+	void DeleteSelectShape();
 	void Undo();
 	void Redo();
 

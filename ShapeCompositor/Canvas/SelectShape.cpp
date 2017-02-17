@@ -8,8 +8,7 @@ CSelectShape::CSelectShape(CShapeRender & shapeRenderer, const CShapeFactory & s
 	rectangleData.outlineColor = BLACK_COLOR;
 	rectangleData.fillColor = NOT_COLOR;
 
-	shapeFactory.CreateShape(TypeShape::Rectangle, rectangleData, m_moveShape, shapeRenderer);
-
+	m_moveShape.push_back(shapeFactory.CreateShape(TypeShape::Rectangle, rectangleData, shapeRenderer));
 	
 	SShapeData ellipseData;
 	ellipseData.outlineColor = BLACK_COLOR;
@@ -17,7 +16,7 @@ CSelectShape::CSelectShape(CShapeRender & shapeRenderer, const CShapeFactory & s
 
 	for (size_t index = 0; index < 4; ++index)
 	{
-		shapeFactory.CreateShape(TypeShape::Ellipse, ellipseData, m_resizeShapes, shapeRenderer);
+		m_resizeShapes.push_back(shapeFactory.CreateShape(TypeShape::Ellipse, ellipseData, shapeRenderer));
 	}
 }
 

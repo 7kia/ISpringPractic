@@ -96,15 +96,6 @@ void CShapeRender::Render(const CRectangle & shape)
 	m_outlineBrush.Release();
 	m_pathGeometry.Release();
 	m_geometrySink.Release();
-
-	//RECT rect = shape.GetOwnRect();
-	//GetClientRect(m_pRenderTarget->GetHwnd(), &rect);
-	//InvalidateRect(m_pRenderTarget->GetHwnd(), &rect, true);
-	//HRGN rg = HRGN
-	//RedrawWindow(m_pRenderTarget->GetHwnd(), &rect, );
-	//ValidateRect(;
-	InvalidateRect(m_pRenderTarget->GetHwnd(), &shape.GetOwnRect(), false);
-
 }
 
 void CShapeRender::Render(const CEllipse & shape)
@@ -134,8 +125,6 @@ void CShapeRender::Render(const CEllipse & shape)
 
 	m_fillBrush.Release();
 	m_outlineBrush.Release();
-
-	//InvalidateRect(m_pRenderTarget->GetHwnd(), &shape.GetOwnRect(), false);
 }
 
 void CShapeRender::Render(const CTriangle & shape)
@@ -170,8 +159,4 @@ void CShapeRender::Render(const CTriangle & shape)
 	m_outlineBrush.Release();
 	m_pathGeometry.Release();
 	m_geometrySink.Release();
-
-	// TODO : Check correctness place
-	//InvalidateRect(m_pRenderTarget->GetHwnd(), &shape.GetOwnRect(), true);
-	//ValidateRect(m_pRenderTarget->GetHwnd(), &shape.GetOwnRect());
 }

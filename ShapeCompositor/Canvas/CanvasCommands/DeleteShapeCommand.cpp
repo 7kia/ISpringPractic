@@ -1,19 +1,15 @@
 #include "stdafx.h"
 #include "DeleteShapeCommand.h"
+#include "../Canvas.h"
 
 CDeleteShapeCanvasCommand::CDeleteShapeCanvasCommand(CCanvas *const pCanvas
 	, const CShapePtr shape
 	, size_t index
 )
-	: m_typeDefinder()
-	, m_pCanvas(pCanvas)
+	: m_pCanvas(pCanvas)
 	, m_data(shape->GetShapeData())
 	, m_index(index)
 {
-	//auto p = *shape.get();
-	//m_type = m_typeDefinder.GetType(*shape.get());
-	// TODO : include observer
-
 }
 
 void CDeleteShapeCanvasCommand::Execute()
@@ -23,5 +19,13 @@ void CDeleteShapeCanvasCommand::Execute()
 
 void CDeleteShapeCanvasCommand::Cancel()
 {
-	m_pCanvas->AddShape(m_type);
+
+	if (m_index == 0)
+	{
+		m_pCanvas->InsertShape(m_type, 0, m_data);
+	}
+	else
+	{
+		m_pCanvas->InsertShape(m_type, m_index - 1, m_data);
+	}
 }

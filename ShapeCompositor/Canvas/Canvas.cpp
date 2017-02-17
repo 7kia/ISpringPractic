@@ -4,7 +4,6 @@
 
 CCanvas::CCanvas()
 	: IMouseEventHandler()
-	, m_shapeFactory(this)
 	, m_selectShape(m_shapeRenderer, m_shapeFactory)
 {
 }
@@ -33,18 +32,45 @@ void CCanvas::ClearRecources()
 	m_shapeRenderer.ClearRecources();
 }
 
-void CCanvas::AddShape(TypeShape type, SShapeData data)
+void CCanvas::PushBackShape(TypeShape type, SShapeData data)
 {
-	m_shapeFactory.CreateShape(
-		type
-		, data
-		, m_shapes
-		, m_shapeRenderer
+	m_shapes.push_back(
+		m_shapeFactory.CreateShape(
+			type
+			, data
+			, m_shapeRenderer
+		)
+	);
+}
+
+void CCanvas::InsertShape(
+	TypeShape type
+	, size_t insertIndex
+	, SShapeData data
+)
+{
+	if (!IsBetween(insertIndex, size_t(0), m_shapes.size()))
+	{
+		throw std::runtime_error("Index out range");
+	}
+
+	m_shapes.insert(
+		m_shapes.begin() + insertIndex
+		, m_shapeFactory.CreateShape(
+			type
+			, data
+			, m_shapeRenderer
+		)
 	);
 }
 
 void CCanvas::DeleteShape(size_t index)
 {
+	if (IsSelectShape(index))
+	{
+		m_selectShape.ResetSelectShapePtr();
+	}
+
 	m_shapes.erase(m_shapes.begin() + index);
 }
 
@@ -59,11 +85,6 @@ void CCanvas::DeleteShape(CShapePtr pShape)
 
 void CCanvas::DeleteLastShape()
 {
-	if (IsSelectLast())
-	{
-		m_selectShape.ResetSelectShapePtr();
-	}
-
 	DeleteShape(m_shapes.size() - 1);
 }
 
@@ -110,9 +131,9 @@ size_t CCanvas::GetIndexSelectShape() const
 	return GetIndexShape(GetSelectShape());
 }
 
-bool CCanvas::IsSelectLast() const
+bool CCanvas::IsSelectShape(size_t index) const
 {
-	return m_selectShape.GetShape() == m_shapes.back();
+	return m_selectShape.GetShape() == m_shapes[index];
 }
 
 size_t CCanvas::GetIndexShape(CShapePtr pShape) const 

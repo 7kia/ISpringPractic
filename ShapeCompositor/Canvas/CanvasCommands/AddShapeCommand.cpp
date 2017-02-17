@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "AddShapeCommand.h"
+#include "../Canvas.h"
 
 CAddShapeCanvasCommand::CAddShapeCanvasCommand(CCanvas * pCanvas, TypeShape type)
 	: m_pCanvas(pCanvas)
@@ -9,7 +10,7 @@ CAddShapeCanvasCommand::CAddShapeCanvasCommand(CCanvas * pCanvas, TypeShape type
 
 void CAddShapeCanvasCommand::Execute()
 {
-	m_pCanvas->AddShape(m_type);
+	m_pCanvas->PushBackShape(m_type);
 }
 
 void CAddShapeCanvasCommand::Cancel()
