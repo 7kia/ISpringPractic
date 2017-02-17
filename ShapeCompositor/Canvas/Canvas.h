@@ -40,13 +40,6 @@ public:
 	void		ClearRecources();
 	//
 
-	// Commands
-	void AddTriangle();
-	void AddRectangle();
-	void AddEllipse();
-	void Undo();
-	void Redo();
-
 	void DeleteSelectShape();
 	//
 
@@ -68,19 +61,12 @@ public:
 	void				ChangeSelectShape(const Vec2f mousePosition);
 	CShapePtr			GetShape(const Vec2f mousePosition);// TODO : see need private
 	CShapePtr			GetSelectShape();
-	const CShapePtr		GetSelectShape() const;
+	const CShapePtr		GetSelectShape() const;// TODO : see need it
 	size_t				GetIndexSelectShape() const;
 
 	void		AddShape(TypeShape type, SShapeData data = SShapeData(Vec2f(float(VIEW_WIDTH) / 2.f, float(VIEW_HEIGHT) / 2.f)));
 
 private:
-
-	//
-	void AddCommand(const CanvasCommandPtr command);
-	void ExecuteCurrent();
-	void UndoCommand();
-	void RedoCommand();
-	//
 
 	bool		IsSelectLast() const;
 
@@ -89,12 +75,9 @@ private:
 	// Data
 public:
 	CShapeFactory								m_shapeFactory;
-	CShapeRender								m_shapeRenderer;
+	CShapeRender								m_shapeRenderer;// TODO : transfer to CShapeCompositiorView, fix Render
 
 	CSelectShape								m_selectShape;
-
-	std::vector<CanvasCommandPtr>						m_history;
-	std::vector<CanvasCommandPtr>::reverse_iterator		m_currentCommand = m_history.rbegin();
 
 	// TODO : see might require do private
 	std::vector<CShapePtr>						m_shapes;

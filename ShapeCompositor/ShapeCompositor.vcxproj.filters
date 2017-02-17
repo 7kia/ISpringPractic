@@ -105,6 +105,9 @@
     <ClInclude Include="Canvas\Shapes\CShape.h">
       <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
     </ClInclude>
+    <ClInclude Include="Canvas\History.h">
+      <Filter>Файлы исходного кода\Canvas</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ShapeCompositor.cpp">
@@ -160,6 +163,9 @@
     </ClCompile>
     <ClCompile Include="Canvas\Shapes\CShape.cpp">
       <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas\History.cpp">
+      <Filter>Файлы исходного кода\Canvas</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

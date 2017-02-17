@@ -16,7 +16,7 @@
 
 #include "ShapeCompositorDoc.h"
 #include "Canvas\Canvas.h"
-
+#include "Canvas\History.h"
 #pragma comment(lib, "d2d1")
 
 static const FLOAT DEFAULT_DPI = 96.f;
@@ -55,7 +55,7 @@ public:
 
 protected:
 	CCanvas m_canvas;
-	//CCanvasController m_canvasController;
+	CHistory m_history;
 
 	ID2D1HwndRenderTarget * m_pRenderTarget = nullptr;
 

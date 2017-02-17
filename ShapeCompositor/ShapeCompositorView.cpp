@@ -51,6 +51,7 @@ END_MESSAGE_MAP()
 // создание/уничтожение CShapeCompositorView
 
 CShapeCompositorView::CShapeCompositorView()
+	: m_history(&m_canvas)
 {
 }
 
@@ -94,31 +95,31 @@ ID2D1HwndRenderTarget * CShapeCompositorView::GetRenderTarget()
 
 void CShapeCompositorView::CreateTriangle()
 {
-	m_canvas.AddTriangle();
+	m_history.AddTriangle();
 	RedrawWindow();
 }
 
 void CShapeCompositorView::CreateRectangle()
 {
-	m_canvas.AddRectangle();
+	m_history.AddRectangle();
 	RedrawWindow();
 }
 
 void CShapeCompositorView::CreateEllipse()
 {
-	m_canvas.AddEllipse();
+	m_history.AddEllipse();
 	RedrawWindow();
 }
 
 void CShapeCompositorView::Undo()
 {
-	m_canvas.Undo();
+	m_history.Undo();
 	RedrawWindow();
 }
 
 void CShapeCompositorView::Redo()
 {
-	m_canvas.Redo();
+	m_history.Redo();
 	RedrawWindow();
 }
 
