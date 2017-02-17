@@ -12,7 +12,6 @@
 
 #include "Shapes\ShapeFactory.h"
 #include "ShapeRenderer.h"
-#include "ShapeLayer.h"
 #include "SelectShape.h"
 
 static const size_t MAX_COMMANDS = 5;
@@ -40,18 +39,19 @@ public:
 	HRESULT		Render();
 	void		AddShape(TypeShape type, SShapeData data = SShapeData(Vec2f(float(VIEW_WIDTH) / 2.f, float(VIEW_HEIGHT) / 2.f)));
 	void		DeleteShape(size_t index);
-	void		DeleteShape(CShapePresenterPtr pShape);// TODO : see need it variant
+	void		DeleteShape(CShapePtr pShape);// TODO : see need it variant
 	void		DeleteLastShape();
 
 	void				ChangeSelectShape(const Vec2f mousePosition);
-	CShapePresenterPtr	GetShapePresenter(const Vec2f mousePosition);// TODO : see need private
-	CShapePresenterPtr	GetSelectShape();
-	const CShapePresenterPtr GetSelectShape() const;
+	CShapePtr			GetShape(const Vec2f mousePosition);// TODO : see need private
+	CShapePtr			GetSelectShape();
+	const CShapePtr		GetSelectShape() const;
 	size_t				GetIndexSelectShape() const;
 private:
 
-	HRESULT		RenderShapes();
 	bool		IsSelectLast() const;
+
+	size_t		GetIndexShape(CShapePtr pShape) const;
 	//////////////////////////////////////////////////////////////////////
 	// Data
 public:
@@ -60,6 +60,6 @@ public:
 
 	CSelectShape								m_selectShape;
 	// TODO : see might require do private
-	CShapeLayer									m_shapeLayer;
+	std::vector<CShapePtr>						m_shapes;
 private:
 };

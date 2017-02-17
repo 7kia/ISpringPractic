@@ -12,20 +12,14 @@ CCanvas::CCanvas()
 
 HRESULT CCanvas::Render()
 {
-	/*
-		D2D1_RECT_F rectangle2 = D2D1::RectF(
-		2 - 100.0f,
-		2 - 100.0f,
-		2 + 100.0f,
-		2 + 100.0f
-	);
+	for (const auto & shape : m_shapes)
+	{
+		shape->Draw(m_shapeRenderer);
+	}
 
-	// Draw the outline of a rectangle.
-	m_pRenderTarget->DrawRectangle(&rectangle2, m_pCornflowerBlueBrush, 2.9f);
+	m_selectShape.Draw(m_shapeRenderer);
 
-	*/
-
-	return RenderShapes();
+	return m_shapeRenderer.EndDraw();
 }
 
 HRESULT CCanvas::CreateRecources(CShapeCompositorView * window)
@@ -43,19 +37,23 @@ void CCanvas::AddShape(TypeShape type, SShapeData data)
 	m_shapeFactory.CreateShape(
 		type
 		, data
-		, m_shapeLayer
+		, m_shapes
 		, m_shapeRenderer
 	);
 }
 
 void CCanvas::DeleteShape(size_t index)
 {
-	m_shapeLayer.DeleteShape(index);
+	m_shapes.erase(m_shapes.begin() + index);
 }
 
-void CCanvas::DeleteShape(CShapePresenterPtr pShape)
+void CCanvas::DeleteShape(CShapePtr pShape)
 {
-	m_shapeLayer.DeleteShape(pShape);
+	size_t index = GetIndexShape(pShape);
+	if (index != size_t(-1))
+	{
+		DeleteShape(index);
+	}
 }
 
 void CCanvas::DeleteLastShape()
@@ -65,12 +63,12 @@ void CCanvas::DeleteLastShape()
 		m_selectShape.ResetSelectShapePtr();
 	}
 
-	m_shapeLayer.DeleteLastShape();
+	DeleteShape(m_shapes.size() - 1);
 }
 
 void CCanvas::ChangeSelectShape(const Vec2f mousePosition)
 {
-	auto selectShape = GetShapePresenter(Vec2f(float(mousePosition.x), float(mousePosition.y)));
+	auto selectShape = GetShape(Vec2f(float(mousePosition.x), float(mousePosition.y)));
 
 	if (!selectShape._Expired())
 	{
@@ -82,42 +80,39 @@ void CCanvas::ChangeSelectShape(const Vec2f mousePosition)
 	}
 }
 
-CShapePresenterPtr CCanvas::GetShapePresenter(const Vec2f mousePosition)
+CShapePtr CCanvas::GetShape(const Vec2f mousePosition)
 {
-	return m_shapeLayer.GetShapePreseneter(mousePosition);
+	CShapePtr foundShape;
+	for (auto & shape : m_shapes)
+	{
+		shape->IsPointIntersection(mousePosition);
+		foundShape = shape;
+		break;
+	}
+	return foundShape;
 }
 
-CShapePresenterPtr CCanvas::GetSelectShape()
+CShapePtr CCanvas::GetSelectShape()
 {
 	return m_selectShape.GetShape();
 }
 
-const CShapePresenterPtr CCanvas::GetSelectShape() const
+const CShapePtr CCanvas::GetSelectShape() const
 {
 	return m_selectShape.GetShape();
 }
 
 size_t CCanvas::GetIndexSelectShape() const
 {
-	return m_shapeLayer.GetIndexSelectShape(GetSelectShape());
-}
-
-
-HRESULT CCanvas::RenderShapes()
-{
-	for (const auto & shape : m_shapeLayer.GetShapesData())////m_shapeRenderer.m_renderShapes
-	{
-		shape->Accept(m_shapeRenderer);
-	}
-	//m_shapeRenderer.m_renderShapes.clear();
-
-	m_selectShape.Render();
-	
-
-	return m_shapeRenderer.EndDraw();
+	return GetIndexShape(GetSelectShape());
 }
 
 bool CCanvas::IsSelectLast() const
 {
-	return m_selectShape.GetShape() == m_shapeLayer.GetBackShapePreseneter();
+	return m_selectShape.GetShape() == m_shapes.back();
+}
+
+size_t CCanvas::GetIndexShape(CShapePtr pShape) const 
+{
+	return  std::find(m_shapes.begin(), m_shapes.end(), pShape) - m_shapes.begin();
 }

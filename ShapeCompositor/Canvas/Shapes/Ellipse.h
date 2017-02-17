@@ -1,15 +1,27 @@
 #pragma once
 
-#include "ShapePresenter.h"
+#include "CShape.h"
 
-class CEllipsePresenter 
-	: public CShapePresenter
+class CEllipse 
+	: public CShape
 {
 public:
-	CEllipsePresenter(const Vec2f position, const SSize size);
+	CEllipse(
+		const Vec2f position = Vec2f()
+		, const SSize size = DEFAULT_SIZE
+		, const Color fillColor = DEFAULT_FILL_COLOR
+		, const Color outlineColor = DEFAULT_OUTLINE_COLOR
+	);
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
+	//--------------------------------------------
+	// IDrawable
+
+	void Draw(IRenderShape & renderer) const override;
+
+	//--------------------------------------------
+
 private:
 	//--------------------------------------------
 	// IIsPointIntersection

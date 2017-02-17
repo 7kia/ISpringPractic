@@ -6,8 +6,7 @@
 class CShapeCompositorView;
 
 class CShapeRender
-	: public IRenderShapeVisitor
-	, public IObserver<const CShapeModel *>
+	: public IRenderShape
 {
 public:
 	CShapeRender();
@@ -19,15 +18,12 @@ public:
 
 	HRESULT	EndDraw();
 	//--------------------------------------------
-	// IRenderShapeVisitor
+	// IRenderShape
 
-	void Visit(const CRectangleShapeData & shape) override;
-	void Visit(const CEllipseDataShape & shape) override;
-	void Visit(const CTriangleShapeData & shape) override;
+	void Render(const CRectangle & shape) override;
+	void Render(const CEllipse & shape) override;
+	void Render(const CTriangle & shape) override;
 
-	//--------------------------------------------
-	//  IObserver<CShapeDataPtr>
-	void Update(const CShapeModel * const& data) override;
 	//--------------------------------------------
 	//////////////////////////////////////////////////////////////////////
 	// Data

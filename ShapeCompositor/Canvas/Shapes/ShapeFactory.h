@@ -3,6 +3,8 @@
 #include "AllShapes.h"
 #include "../ShapeRenderer.h"
 
+#include <vector>
+
 enum class TypeShape
 {
 		Triangle
@@ -10,8 +12,6 @@ enum class TypeShape
 	,	Ellipse
 };
 
-class CShapeLayer;
-class CShapeRender;
 class IShapeFactory
 {
 public:
@@ -20,7 +20,7 @@ public:
 	virtual void CreateShape(
 		TypeShape type
 		, const SShapeData & data
-		, CShapeLayer & layer
+		, std::vector<CShapePtr> & sh
 		, CShapeRender & shapeRenderer
 	) const = 0;
 
@@ -41,14 +41,13 @@ public:
 	void CreateShape(
 		TypeShape type
 		, const SShapeData & data
-		, CShapeLayer & layer
+		, std::vector<CShapePtr> & shapes
 		, CShapeRender & shapeRenderer
 	) const override;
 
 
 	//--------------------------------------------
 private:
-	void BindPresenterWithModel(CShapeLayer & layer, CShapeRender & shapeRenderer) const;
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:

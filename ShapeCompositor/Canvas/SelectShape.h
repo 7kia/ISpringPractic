@@ -5,24 +5,24 @@
 #include "Shapes\AllShapes.h"
 #include "ShapeRenderer.h"
 #include "Shapes\ShapeFactory.h"
-#include "ShapeLayer.h"
 
 static const SSize SELECTED_ELLIPSE_SIZE = SSize(10.f, 10.f);
 
 class CSelectShape
+	: public IDrawable
 {
 public:
 	CSelectShape(CShapeRender & shapeRenderer, const CShapeFactory & shapeFactory);
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
-	void					SetShape(CShapePresenterPtr shape);
-	CShapePresenterPtr		GetShape() const;
+	void					SetShape(CShapePtr shape);
+	CShapePtr				GetShape() const;
 	void					ResetSelectShapePtr();
-	void					Render();
-
 	//--------------------------------------------
-
+	// IDrawable
+	void					Draw(IRenderShape & renderer) const override;// TODO : must be = 0
+	//--------------------------------------------
 private:
 	void					SetViewPosition();
 	void					SetMoveView();
@@ -31,8 +31,8 @@ private:
 	// Data
 private:
 	SShapeData						m_frameData;
-	CShapePresenterPtr				m_selectPresenter;
+	CShapePtr						m_selectShape;
 
-	CShapeLayer						m_moveShape;
-	CShapeLayer						m_resizeShape;
+	std::vector<CShapePtr>				m_moveShape;
+	std::vector<CShapePtr>				m_resizeShapes;
 };

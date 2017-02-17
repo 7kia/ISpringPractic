@@ -1,8 +1,13 @@
 #include "stdafx.h"
-#include "TrianglePresenter.h"
+#include "Triangle.h"
 
-CTrianglePresenter::CTrianglePresenter(const Vec2f position, const SSize size)
-	: CShapePresenter(position, size)
+CTriangle::CTriangle(
+	const Vec2f position
+	, const SSize size
+	, const Color fillColor
+	, const Color outlineColor
+)
+	: CShape(position, size, fillColor, outlineColor)
 	, IHaveVertex()
 {
 }
@@ -34,7 +39,7 @@ bool PointIsInsideTriangle(Vec2f p0, Vec2f p1, Vec2f p2, Vec2f p)
 }
 
 
-std::vector<Vec2f> CTrianglePresenter::GetVertices() const
+std::vector<Vec2f> CTriangle::GetVertices() const
 {
 	return{
 		Vec2f(m_position.x - m_size.width / 2.f, m_position.y + m_size.height / 2.f)
@@ -43,9 +48,14 @@ std::vector<Vec2f> CTrianglePresenter::GetVertices() const
 	};
 }
 
-bool CTrianglePresenter::IsPointIntersection(const Vec2f point) const
+bool CTriangle::IsPointIntersection(const Vec2f point) const
 {
 	auto verteces = GetVertices();
 
 	return PointIsInsideTriangle(verteces[2], verteces[1], verteces[0], point);
+}
+
+void CTriangle::Draw(IRenderShape & renderer) const
+{
+	renderer.Render(*this);
 }

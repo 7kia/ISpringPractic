@@ -11,71 +11,41 @@ CShapeFactory::CShapeFactory(CCanvas * pCanvas)
 void CShapeFactory::CreateShape(
 	TypeShape type
 	, const SShapeData & data
-	, CShapeLayer & layer
+	, std::vector<CShapePtr> & shapes
 	, CShapeRender & shapeRenderer
 ) const
 {
-	CShapeDataPtr lastData;
-	CShapePresenterPtr lastPresenter;
-	// TODO : fix transfer by use pack
 	switch (type)
 	{
 	case TypeShape::Triangle:
-		layer.PushBackShapeData(std::make_shared<CTriangleShapeData>(
+		shapes.push_back(std::make_shared<CTriangle>(
 			data.position
 			, data.size
 			, data.fillColor
 			, data.outlineColor
 			));
 
-		layer.PushBackShapePreseneter(std::make_shared<CTrianglePresenter>(
-			data.position
-			, data.size
-			));
-
-		BindPresenterWithModel(layer, shapeRenderer);
 		break;
 	case TypeShape::Rectangle:
-		layer.PushBackShapeData(std::make_shared<CRectangleShapeData>(
+		shapes.push_back(std::make_shared<CRectangle>(
 			data.position
 			, data.size
 			, data.fillColor
 			, data.outlineColor
 			));
-		layer.PushBackShapePreseneter(std::make_shared<CRectanglePresenter>(
-			data.position
-			, data.size
-			));
 
-		BindPresenterWithModel(layer, shapeRenderer);
 		break;
 	case TypeShape::Ellipse:
-		layer.PushBackShapeData(std::make_shared<CEllipseDataShape>(
+		shapes.push_back(std::make_shared<CEllipse>(
 			data.position
 			, data.size
 			, data.fillColor
 			, data.outlineColor
 			));
-		layer.PushBackShapePreseneter(std::make_shared<CEllipsePresenter>(
-			data.position
-			, data.size
-			));
 
-		BindPresenterWithModel(layer, shapeRenderer);
 		break;
 	default:
 		throw std::runtime_error("The shape type not exist");
 		break;
 	}
-
-	//return CShapeDataPtr();
-}
-
-void CShapeFactory::BindPresenterWithModel(CShapeLayer & layer, CShapeRender & shapeRenderer) const
-{
-	CShapeDataPtr lastData = layer.GetBackShapeData();
-	CShapePresenterPtr lastPresenter = layer.GetBackShapePreseneter();
-
-	lastPresenter->RegisterObserver(*lastData.get());
-	lastData->RegisterObserver(shapeRenderer);
 }

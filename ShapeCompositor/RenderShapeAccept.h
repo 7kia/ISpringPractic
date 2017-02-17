@@ -2,10 +2,10 @@
 
 #include "RenderShapeVisitor.h"
 
-class IRenderShapeAccept
+class IDrawable
 {
 public:
-	virtual ~IRenderShapeAccept() = default;
+	virtual ~IDrawable() = default;
 
-	virtual void Accept(IRenderShapeVisitor & visitor) const {} ;// TODO : must be = 0
+	virtual void Draw(IRenderShape & renderer) const {};// TODO : must be = 0
 };

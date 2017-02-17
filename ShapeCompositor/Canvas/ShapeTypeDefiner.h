@@ -9,7 +9,7 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
-	TypeShape GetType(const CRectanglePresenter & shape);
-	TypeShape GetType(const CEllipsePresenter & shape);
-	TypeShape GetType(const CTrianglePresenter & shape);
+	TypeShape GetType(const CRectangle & shape);
+	TypeShape GetType(const CEllipse & shape);
+	TypeShape GetType(const CTriangle & shape);
 };

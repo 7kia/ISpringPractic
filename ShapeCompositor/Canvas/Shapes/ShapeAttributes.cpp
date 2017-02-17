@@ -13,6 +13,15 @@ bool SSize::operator==(SSize const & size) const
 	return (size.width == width) && (size.height == height);
 }
 
+SSize & SSize::operator=(const SSize & right)
+{
+	width = right.width;
+	height = right.height;
+
+	return *this;
+	// TODO: вставьте здесь оператор return
+}
+
 Color::Color(float r
 			, float g
 			, float b
@@ -32,6 +41,16 @@ bool Color::operator==(Color const & other) const
 		&& (a == other.a);
 }
 
+Color & Color::operator=(const Color & right)
+{
+	r = right.r;
+	g = right.g;
+	b = right.b;
+	a = right.a;
+
+	return *this;
+}
+
 Vec2f::Vec2f(float x, float y)
 	: x(x)
 	, y(y)
@@ -42,6 +61,14 @@ bool Vec2f::operator==(Vec2f const & vec) const
 {
 	return (fabs(x - vec.x) < std::numeric_limits<float>::epsilon())
 		&& (fabs(y - vec.y) < std::numeric_limits<float>::epsilon());
+}
+
+Vec2f & Vec2f::operator=(const Vec2f & right)
+{
+	x = right.x;
+	y = right.y;
+
+	return *this;
 }
 
 Vec2f const operator+(Vec2f const & first, Vec2f const & second)

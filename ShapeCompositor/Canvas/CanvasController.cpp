@@ -111,7 +111,7 @@ void CCanvasController::RedoCommand()
 void CCanvasController::UpdateShapes(Vec2f point)
 {
 	/*
-	for (auto & shape : m_pCanvas->m_shapePresenters)
+	for (auto & shape : m_pCanvas->m_shapes)
 	{
 		if(shape->IsPointIntersection(Vec2f(float(point.x), float(point.y))))
 		{
@@ -122,7 +122,7 @@ void CCanvasController::UpdateShapes(Vec2f point)
 	// TODO : delete
 }
 
-CShapePresenterPtr CCanvasController::GetShape(const CPoint position)
+CShapePtr CCanvasController::GetShape(const CPoint position)
 {
-	return m_pCanvas->GetShapePresenter(Vec2f(float(position.x), float(position.y)));
+	return m_pCanvas->GetShape(Vec2f(float(position.x), float(position.y)));
 }

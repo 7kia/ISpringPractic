@@ -10,6 +10,7 @@ struct SSize
 	SSize(float width, float height);
 
 	bool operator==(SSize const& size) const;
+	SSize& operator=(const SSize& right);
 
 	float width = 0.f;
 	float height = 0.f;
@@ -24,6 +25,7 @@ struct Color
 		, float a = 1.f);
 
 	bool operator==(Color const& other) const;
+	Color& operator=(const Color& right);
 
 	float r = 0.f;
 	float g = 0.f;
@@ -39,6 +41,8 @@ struct Vec2f
 	Vec2f(float x, float y);
 
 	bool operator==(Vec2f const& vec) const;
+	Vec2f& operator=(const Vec2f& right);
+
 	float x = 0.f;
 	float y = 0.f;
 };

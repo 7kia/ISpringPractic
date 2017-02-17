@@ -2,6 +2,7 @@
 #include "SelectShape.h"
 
 CSelectShape::CSelectShape(CShapeRender & shapeRenderer, const CShapeFactory & shapeFactory)
+	: IDrawable()
 {
 	SShapeData rectangleData;
 	rectangleData.outlineColor = BLACK_COLOR;
@@ -16,44 +17,42 @@ CSelectShape::CSelectShape(CShapeRender & shapeRenderer, const CShapeFactory & s
 
 	for (size_t index = 0; index < 4; ++index)
 	{
-		shapeFactory.CreateShape(TypeShape::Ellipse, ellipseData, m_resizeShape, shapeRenderer);
+		shapeFactory.CreateShape(TypeShape::Ellipse, ellipseData, m_resizeShapes, shapeRenderer);
 	}
 }
 
-void CSelectShape::SetShape(CShapePresenterPtr shape)
+void CSelectShape::SetShape(CShapePtr shape)
 {
-	m_selectPresenter = shape;
-	m_frameData = shape->GetChangedData();
-	shape->Update(m_frameData);// TODO : delete
+	m_selectShape = shape;
+	m_frameData = shape->GetShapeData();
 
 	SetViewPosition();
 }
 
-CShapePresenterPtr CSelectShape::GetShape() const
+CShapePtr CSelectShape::GetShape() const
 {
-	return m_selectPresenter;
+	return m_selectShape;
 }
 
 void CSelectShape::ResetSelectShapePtr()
 {
-	m_selectPresenter = nullptr;
+	m_selectShape = nullptr;
 }
 
-void CSelectShape::Render()
+void CSelectShape::Draw(IRenderShape & renderer) const
 {
-	if (m_selectPresenter != nullptr)
-	{	
-		for (auto & shape : m_moveShape.GetShapesData())
+	if (m_selectShape != nullptr)
+	{
+		for (auto & shape : m_moveShape)
 		{
-			shape->NotifyObservers();
+			shape->Draw(renderer);
 		}
-		for (auto & shape : m_resizeShape.GetShapesData())
+		for (auto & shape : m_resizeShapes)
 		{
-			shape->NotifyObservers();
+			shape->Draw(renderer);
 		}
 	}
 }
-
 
 void CSelectShape::SetViewPosition()
 {
@@ -67,13 +66,13 @@ void CSelectShape::SetMoveView()
 	rectangleData.outlineColor = BLACK_COLOR;
 	rectangleData.fillColor = NOT_COLOR;
 
-	m_moveShape.GetShapePreseneter(0)->Update(rectangleData);
+	m_moveShape[0]->SetShapeData(rectangleData);
 
 }
 
 void CSelectShape::SetResizeView()
 {
-	auto vertices = m_selectPresenter->GetFrameVertices();
+	auto vertices = m_selectShape->GetFrameVertices();
 	size_t indexEllipse = 0;
 	for (const auto & vertex : vertices)
 	{
@@ -83,6 +82,6 @@ void CSelectShape::SetResizeView()
 		ellipseData.outlineColor = BLACK_COLOR;
 		ellipseData.fillColor = BLACK_COLOR;
 
-		m_resizeShape.GetShapePreseneter(indexEllipse++)->Update(ellipseData);
+		m_resizeShapes[indexEllipse++]->SetShapeData(ellipseData);
 	}
 }

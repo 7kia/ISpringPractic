@@ -1,16 +1,16 @@
 #pragma once
 
-class CRectangleShapeData;
-class CEllipseDataShape;
-class CTriangleShapeData;
+class CRectangle;
+class CEllipse;
+class CTriangle;
 
-class IRenderShapeVisitor
+// TODO : fix accepter
+class IRenderShape
 {
 public:
-	virtual ~IRenderShapeVisitor() = default;
+	virtual ~IRenderShape() = default;
 
-	virtual void Visit(const CRectangleShapeData & shape) = 0;
-	virtual void Visit(const CEllipseDataShape & shape) = 0;
-	virtual void Visit(const CTriangleShapeData & shape) = 0;
-
+	virtual void Render(const CRectangle & shape) = 0;
+	virtual void Render(const CEllipse & shape) = 0;
+	virtual void Render(const CTriangle & shape) = 0;
 };

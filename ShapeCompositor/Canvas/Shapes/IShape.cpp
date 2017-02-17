@@ -2,6 +2,6 @@
 #include "IShape.h"
 
 IShape::IShape()
-	: IRenderShapeAccept()
+	: IDrawable()
 {
 }

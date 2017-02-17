@@ -3,7 +3,7 @@
 #include "../ShapeCompositorView.h"
 
 CShapeRender::CShapeRender()
-	: IRenderShapeVisitor()
+	: IRenderShape()
 {
 }
 
@@ -64,7 +64,7 @@ HRESULT CShapeRender::EndDraw()
 }
 
 
-void CShapeRender::Visit(const CRectangleShapeData & shape)
+void CShapeRender::Render(const CRectangle & shape)
 {
 	auto vertices = shape.GetVertices();
 
@@ -107,7 +107,7 @@ void CShapeRender::Visit(const CRectangleShapeData & shape)
 
 }
 
-void CShapeRender::Visit(const CEllipseDataShape & shape)
+void CShapeRender::Render(const CEllipse & shape)
 {
 	auto position = shape.GetPosition();
 	SSize size = shape.GetSize();
@@ -138,7 +138,7 @@ void CShapeRender::Visit(const CEllipseDataShape & shape)
 	//InvalidateRect(m_pRenderTarget->GetHwnd(), &shape.GetOwnRect(), false);
 }
 
-void CShapeRender::Visit(const CTriangleShapeData & shape)
+void CShapeRender::Render(const CTriangle & shape)
 {
 	auto vertices = shape.GetVertices();
 
@@ -174,9 +174,4 @@ void CShapeRender::Visit(const CTriangleShapeData & shape)
 	// TODO : Check correctness place
 	//InvalidateRect(m_pRenderTarget->GetHwnd(), &shape.GetOwnRect(), true);
 	//ValidateRect(m_pRenderTarget->GetHwnd(), &shape.GetOwnRect());
-}
-
-void CShapeRender::Update(const CShapeModel * const & data)
-{
-	data->Accept(*this);
 }

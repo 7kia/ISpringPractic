@@ -39,7 +39,7 @@ private:
 	void RedoCommand();
 	void UpdateShapes(Vec2f point);
 
-	CShapePresenterPtr GetShape(const CPoint position);
+	CShapePtr GetShape(const CPoint position);
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
