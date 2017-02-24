@@ -36,7 +36,7 @@ public:
 // Операции
 public:
 	// TODO : transfer
-	HRESULT	Render();
+	HRESULT	Visit();
 
 	void					SetRenderTarget(ID2D1HwndRenderTarget * pRenderTarget);
 	ID2D1HwndRenderTarget * GetRenderTarget();

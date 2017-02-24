@@ -53,7 +53,7 @@ public:
 
 	//--------------------------------------------
 
-	HRESULT		Render();
+	HRESULT		Draw();
 	void		DeleteShape(size_t index);
 	void		DeleteShape(CShapePtr pShape);// TODO : see need it variant
 	void		DeleteLastShape();
@@ -76,7 +76,7 @@ private:
 	// Data
 public:
 	CShapeFactory								m_shapeFactory;
-	CShapeRender								m_shapeRenderer;// TODO : transfer to CShapeCompositiorView, fix Render
+	CD2DObjectRenderer								m_objectRenderer;// TODO : transfer to CShapeCompositiorView, fix Draw
 
 	CSelectShape								m_selectShape;
 

@@ -2,12 +2,13 @@
 #include "ShapeRenderer.h"
 #include "../ShapeCompositorView.h"
 
-CShapeRender::CShapeRender()
-	: IRenderShape()
+CD2DObjectRenderer::CD2DObjectRenderer()
+	: IShapeVisitor()
+	, IObjectRenderer()
 {
 }
 
-HRESULT CShapeRender::CreateRecources(CShapeCompositorView * window)
+HRESULT CD2DObjectRenderer::CreateRecources(CShapeCompositorView * window)
 {
 	ATLENSURE_SUCCEEDED(D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &m_pDirect2dFactory));
 
@@ -52,19 +53,24 @@ HRESULT CShapeRender::CreateRecources(CShapeCompositorView * window)
 	return hr;
 }
 
-void CShapeRender::ClearRecources()
+void CD2DObjectRenderer::ClearRecources()
 {
 	SafeRelease(&m_pRenderTarget);
 	SafeRelease(&m_pDirect2dFactory);
 }
 
-HRESULT CShapeRender::EndDraw()
+HRESULT CD2DObjectRenderer::EndDraw()
 {
 	return m_pRenderTarget->EndDraw();
 }
 
+void CD2DObjectRenderer::Draw(IDrawable &const shape)
+{
+	shape.Accept(*this);
+}
 
-void CShapeRender::Render(const CRectangle & shape)
+
+void CD2DObjectRenderer::Visit(const CRectangle & shape)
 {
 	auto vertices = shape.GetVertices();
 
@@ -98,7 +104,7 @@ void CShapeRender::Render(const CRectangle & shape)
 	m_geometrySink.Release();
 }
 
-void CShapeRender::Render(const CEllipse & shape)
+void CD2DObjectRenderer::Visit(const CEllipse & shape)
 {
 	auto position = shape.GetPosition();
 	SSize size = shape.GetSize();
@@ -127,7 +133,7 @@ void CShapeRender::Render(const CEllipse & shape)
 	m_outlineBrush.Release();
 }
 
-void CShapeRender::Render(const CTriangle & shape)
+void CD2DObjectRenderer::Visit(const CTriangle & shape)
 {
 	auto vertices = shape.GetVertices();
 

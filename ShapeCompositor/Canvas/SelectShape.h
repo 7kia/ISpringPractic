@@ -12,7 +12,7 @@ class CSelectShape
 	: public IDrawable
 {
 public:
-	CSelectShape(CShapeRender & shapeRenderer, const CShapeFactory & shapeFactory);
+	CSelectShape(CD2DObjectRenderer & shapeRenderer, const CShapeFactory & shapeFactory);
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
@@ -21,7 +21,7 @@ public:
 	void					ResetSelectShapePtr();
 	//--------------------------------------------
 	// IDrawable
-	void					Draw(IRenderShape & renderer) const override;// TODO : must be = 0
+	void					Accept(IShapeVisitor & renderer) const override;// TODO : must be = 0
 	//--------------------------------------------
 private:
 	void					SetViewPosition();

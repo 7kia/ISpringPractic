@@ -18,7 +18,7 @@ public:
 	//--------------------------------------------
 	// IDrawable
 
-	void Draw(IRenderShape & renderer) const override;
+	void Accept(IShapeVisitor & renderer) const override;
 
 	//--------------------------------------------
 	// IIsPointIntersection

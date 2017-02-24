@@ -1,15 +1,24 @@
 #pragma once
 
-#include "RenderShapeVisitor.h"
+#include "ShapeVisitor.h"
 #include "Canvas\Shapes\AllShapes.h"
 
 class CShapeCompositorView;
 
-class CShapeRender
-	: public IRenderShape
+class IObjectRenderer
 {
 public:
-	CShapeRender();
+	virtual ~IObjectRenderer() = default;
+
+	virtual void Draw(IDrawable &const shape) = 0;
+};
+
+class CD2DObjectRenderer
+	: public IShapeVisitor
+	, public IObjectRenderer
+{
+public:
+	CD2DObjectRenderer();
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
@@ -18,13 +27,20 @@ public:
 
 	HRESULT	EndDraw();
 	//--------------------------------------------
-	// IRenderShape
+	// IShapeVisitor
+	void Draw(IDrawable &const shape) override;
+	//--------------------------------------------
 
-	void Render(const CRectangle & shape) override;
-	void Render(const CEllipse & shape) override;
-	void Render(const CTriangle & shape) override;
+private:
+	//--------------------------------------------
+	// IShapeVisitor
+
+	void Visit(const CRectangle & shape) override;
+	void Visit(const CEllipse & shape) override;
+	void Visit(const CTriangle & shape) override;
 
 	//--------------------------------------------
+
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:

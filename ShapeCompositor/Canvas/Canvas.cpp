@@ -4,38 +4,39 @@
 
 CCanvas::CCanvas()
 	: IMouseEventHandler()
-	, m_selectShape(m_shapeRenderer, m_shapeFactory)
+	, m_selectShape(m_objectRenderer, m_shapeFactory)
 {
 }
 
 
 
-HRESULT CCanvas::Render()
+HRESULT CCanvas::Draw()
 {
 	for (const auto & shape : m_shapes)
 	{
-		shape->Draw(m_shapeRenderer);
+		m_objectRenderer.Draw(*shape);
 	}
 
-	m_selectShape.Draw(m_shapeRenderer);
+	m_objectRenderer.Draw(m_selectShape);
+	//m_selectShape.Accept(m_objectRenderer);
 
-	return m_shapeRenderer.EndDraw();
+	return m_objectRenderer.EndDraw();
 }
 
 HRESULT CCanvas::CreateRecources(CShapeCompositorView * window)
 {
-	return m_shapeRenderer.CreateRecources(window);
+	return m_objectRenderer.CreateRecources(window);
 }
 
 void CCanvas::ClearRecources()
 {
-	m_shapeRenderer.ClearRecources();
+	m_objectRenderer.ClearRecources();
 }
 
 void CCanvas::PushBackShape(SShapeData data)
 {
 	m_shapes.push_back(
-		m_shapeFactory.CreateShape(data, m_shapeRenderer)
+		m_shapeFactory.CreateShape(data, m_objectRenderer)
 	);
 }
 
@@ -48,7 +49,7 @@ void CCanvas::InsertShape(size_t insertIndex, SShapeData data)
 
 	m_shapes.insert(
 		m_shapes.begin() + insertIndex
-		, m_shapeFactory.CreateShape(data, m_shapeRenderer)	
+		, m_shapeFactory.CreateShape(data, m_objectRenderer)	
 	);
 }
 

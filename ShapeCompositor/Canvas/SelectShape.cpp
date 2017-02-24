@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "SelectShape.h"
 
-CSelectShape::CSelectShape(CShapeRender & shapeRenderer, const CShapeFactory & shapeFactory)
+CSelectShape::CSelectShape(CD2DObjectRenderer & shapeRenderer, const CShapeFactory & shapeFactory)
 	: IDrawable()
 {
 	SShapeData rectangleData;
@@ -40,17 +40,17 @@ void CSelectShape::ResetSelectShapePtr()
 	m_selectShape = nullptr;
 }
 
-void CSelectShape::Draw(IRenderShape & renderer) const
+void CSelectShape::Accept(IShapeVisitor & renderer) const
 {
 	if (m_selectShape != nullptr)
 	{
 		for (auto & shape : m_moveShape)
 		{
-			shape->Draw(renderer);
+			shape->Accept(renderer);
 		}
 		for (auto & shape : m_resizeShapes)
 		{
-			shape->Draw(renderer);
+			shape->Accept(renderer);
 		}
 	}
 }

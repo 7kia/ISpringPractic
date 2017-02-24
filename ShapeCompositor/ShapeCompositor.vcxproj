@@ -203,8 +203,7 @@
     <ClInclude Include="Canvas\Shapes\Triangle.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="Observer.h" />
-    <ClInclude Include="RenderShapeAccept.h" />
-    <ClInclude Include="RenderShapeVisitor.h" />
+    <ClInclude Include="ShapeVisitor.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ShapeCompositor.h" />
     <ClInclude Include="ShapeCompositorDoc.h" />

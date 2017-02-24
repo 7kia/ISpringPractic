@@ -6,7 +6,7 @@ CShapeFactory::CShapeFactory()
 {
 }
 
-CShapePtr CShapeFactory::CreateShape(const SShapeData & data, CShapeRender & shapeRenderer) const
+CShapePtr CShapeFactory::CreateShape(const SShapeData & data, CD2DObjectRenderer & shapeRenderer) const
 {
 	switch (data.type)
 	{

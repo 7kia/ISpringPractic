@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ShapeAttributes.h"
-#include "RenderShapeAccept.h"
+#include "ShapeVisitor.h"
 
 static const SSize DEFAULT_SIZE = SSize(50.f, 50.f);
 static const Color DEFAULT_OUTLINE_COLOR = Color(0.f, 0.f, 0.f);
@@ -32,6 +32,15 @@ struct SShapeData
 	Color outlineColor;
 };
 
+class IDrawable
+{
+public:
+	virtual ~IDrawable() = default;
+
+	// For render
+	virtual void Accept(IShapeVisitor & renderer) const {};// TODO : must be = 0
+};
+
 class IShape
 	: public IDrawable
 {
@@ -41,7 +50,6 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
-
 	// Position
 	virtual void SetPosition(Vec2f position) = 0;
 	virtual Vec2f GetPosition() const = 0;

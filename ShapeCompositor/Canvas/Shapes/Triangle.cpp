@@ -61,7 +61,7 @@ bool CTriangle::IsPointIntersection(const Vec2f point) const
 	return PointIsInsideTriangle(verteces[2], verteces[1], verteces[0], point);
 }
 
-void CTriangle::Draw(IRenderShape & renderer) const
+void CTriangle::Accept(IShapeVisitor & renderer) const
 {
-	renderer.Render(*this);
+	renderer.Visit(*this);
 }

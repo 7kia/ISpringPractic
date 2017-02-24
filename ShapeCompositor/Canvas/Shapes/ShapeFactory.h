@@ -12,7 +12,7 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
-	CShapePtr CreateShape(const SShapeData & data, CShapeRender & shapeRenderer) const;
+	CShapePtr CreateShape(const SShapeData & data, CD2DObjectRenderer & shapeRenderer) const;
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
