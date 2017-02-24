@@ -63,7 +63,7 @@ CShapeCompositorView::~CShapeCompositorView()
 // This method discards device-specific
 // resources if the Direct3D device dissapears during execution and
 // recreates the resources the next time it's invoked.
-HRESULT CShapeCompositorView::Render()
+HRESULT CShapeCompositorView::Draw()
 {
 	HRESULT hr = S_OK;
 
@@ -73,7 +73,7 @@ HRESULT CShapeCompositorView::Render()
 	m_pRenderTarget->SetTransform(matrix);
 	m_pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
 
-	hr = m_canvas.Render();
+	hr = m_canvas.Draw();
 
 	if (hr == D2DERR_RECREATE_TARGET)
 	{
@@ -237,7 +237,8 @@ void CShapeCompositorView::OnPaint()
 					   // TODO: добавьте свой код обработчика сообщений
 					   // Не вызывать CScrollView::OnPaint() для сообщений рисования
 
-	Render();
+	Draw();
+	
 }
 
 void CShapeCompositorView::OnLButtonlClk(UINT, CPoint)

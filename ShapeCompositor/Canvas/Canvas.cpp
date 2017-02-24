@@ -18,7 +18,6 @@ HRESULT CCanvas::Draw()
 	}
 
 	m_objectRenderer.Draw(m_selectShape);
-	//m_selectShape.Accept(m_objectRenderer);
 
 	return m_objectRenderer.EndDraw();
 }
