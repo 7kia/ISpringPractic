@@ -80,7 +80,7 @@ void CCanvas::ChangeSelectShape(const Vec2f mousePosition)
 {
 	auto selectShape = GetShape(Vec2f(float(mousePosition.x), float(mousePosition.y)));
 
-	if (!selectShape._Expired())
+	if (selectShape.get() != nullptr)
 	{
 		m_selectShape.SetShape(selectShape);
 	}
