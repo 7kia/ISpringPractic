@@ -10,6 +10,7 @@ static const SSize SELECTED_ELLIPSE_SIZE = SSize(10.f, 10.f);
 
 class CSelectShape
 	: public IDrawable
+	, public IFrame
 {
 public:
 	CSelectShape(CD2DObjectRenderer & shapeRenderer, const CShapeFactory & shapeFactory);
@@ -26,9 +27,10 @@ public:
 	void					SetShape(CShapePtr shape);
 	CShapePtr				GetShape() const;
 	void					ResetSelectShapePtr();
+	void					ResetUpdateParameters();
 
 	void					SetStateUpdate(bool state);
-	bool					IsUpdate() const;
+	bool					GetUpdateState() const;
 	bool					HaveSelectedShape() const;
 
 	void					SetUpdateType(UpdateType type);
@@ -45,7 +47,26 @@ public:
 	// IIsPointIntersection
 	bool					DefineUpdateType(const Vec2f point);
 	//--------------------------------------------
+	// IFrame
 
+	// Position
+	void SetPosition(Vec2f position) override;
+	Vec2f GetPosition() const override;
+	void Move(const Vec2f shift) override;
+	// Size
+	void SetSize(SSize size) override;
+	SSize GetSize() const override;
+	// Own rect
+	RECT GetOwnRect() const override;
+
+	// Get shape data
+	SFrameData GetFrameData() const override;// TODO : see need it
+	void SetFrameData(SFrameData const & data) override;
+	//--------------------------------------------
+
+
+	// For drag and drop
+	Vec2f	GetShift() const;
 private:
 	void					SetViewPosition();
 	void					SetMoveView();

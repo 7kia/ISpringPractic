@@ -41,12 +41,27 @@ void CSelectShape::ResetSelectShapePtr()
 	m_isUpdate = false;
 }
 
+void CSelectShape::ResetUpdateParameters()
+{
+	m_startMove = Vec2f();
+	m_start = Vec2f();
+	m_current = Vec2f();
+	m_end = Vec2f();
+	m_isUpdate = false;
+	m_updateType = UpdateType::None;
+}
+
 void CSelectShape::SetStateUpdate(bool state)
 {
 	m_isUpdate = state;
+
+	if (!m_isUpdate)
+	{
+		m_end = Vec2f();
+	}
 }
 
-bool CSelectShape::IsUpdate() const
+bool CSelectShape::GetUpdateState() const
 {
 	return m_isUpdate;
 }
@@ -114,7 +129,9 @@ void CSelectShape::HandleMoveMouse(const Vec2f point)
 
 			Vec2f shift = m_current - m_start;
 			Vec2f curPos = m_selectShape->GetPosition();
-			m_selectShape->SetPosition(curPos + shift);
+			//m_current = 
+			m_end = curPos + shift;
+			//SetPosition(curPos + shift);
 			m_start = m_current;
 		}
 		break;
@@ -159,6 +176,69 @@ bool CSelectShape::DefineUpdateType(const Vec2f point)
 	return false;
 }
 
+void CSelectShape::SetPosition(Vec2f position)
+{
+	m_selectShape->SetPosition(position);
+	m_frameData.position = position;
+
+	SetViewPosition();
+}
+
+Vec2f CSelectShape::GetPosition() const
+{
+	return m_selectShape->GetPosition();
+}
+
+void CSelectShape::Move(const Vec2f shift)
+{
+	SetPosition(GetPosition() + shift);
+}
+
+void CSelectShape::SetSize(SSize size)
+{
+	m_selectShape->SetSize(size);
+	m_frameData.size = size;
+
+	for (auto & shape : m_moveShape)
+	{
+		shape->SetSize(size);
+	}
+	for (auto & shape : m_resizeShapes)
+	{
+		shape->SetSize(size);
+	}
+}
+
+SSize CSelectShape::GetSize() const
+{
+	return m_selectShape->GetSize();
+}
+
+RECT CSelectShape::GetOwnRect() const
+{
+	return m_selectShape->GetOwnRect();
+}
+
+SFrameData CSelectShape::GetFrameData() const
+{
+	SFrameData info;
+	info.position = m_frameData.position;
+	info.size = m_frameData.size;
+	return info;
+}
+
+void CSelectShape::SetFrameData(SFrameData const & data)
+{
+	m_frameData.position = data.position;
+	m_frameData.size = data.size;
+}
+
+
+Vec2f CSelectShape::GetShift() const
+{
+	const Vec2f result = m_current - m_startMove;
+	return  m_current - m_startMove;
+}
 
 void CSelectShape::SetViewPosition()
 {
@@ -168,12 +248,7 @@ void CSelectShape::SetViewPosition()
 
 void CSelectShape::SetMoveView()
 {
-	SShapeData rectangleData = m_frameData;
-	rectangleData.outlineColor = BLACK_COLOR;
-	rectangleData.fillColor = NOT_COLOR;
-
-	m_moveShape[0]->SetShapeData(rectangleData);
-
+	m_moveShape[0]->SetFrameData(GetFrameData());
 }
 
 void CSelectShape::SetResizeView()

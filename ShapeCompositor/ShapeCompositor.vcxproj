@@ -189,6 +189,7 @@
     <ClInclude Include="Canvas\CanvasCommands\CanvasCommand.h" />
     <ClInclude Include="Canvas\CanvasCommands\AllCanvasCommand.h" />
     <ClInclude Include="Canvas\CanvasCommands\DeleteShapeCommand.h" />
+    <ClInclude Include="Canvas\CanvasCommands\MoveShapeCommand.h" />
     <ClInclude Include="Canvas\History.h" />
     <ClInclude Include="Canvas\MouseEventHandler.h" />
     <ClInclude Include="Canvas\SelectShape.h" />
@@ -215,6 +216,7 @@
     <ClCompile Include="Canvas\Canvas.cpp" />
     <ClCompile Include="Canvas\CanvasCommands\AddShapeCommand.cpp" />
     <ClCompile Include="Canvas\CanvasCommands\DeleteShapeCommand.cpp" />
+    <ClCompile Include="Canvas\CanvasCommands\MoveShapeCommand.cpp" />
     <ClCompile Include="Canvas\History.cpp" />
     <ClCompile Include="Canvas\SelectShape.cpp" />
     <ClCompile Include="Canvas\ShapeRenderer.cpp" />

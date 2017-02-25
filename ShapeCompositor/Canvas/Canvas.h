@@ -40,6 +40,11 @@ public:
 	void		ClearRecources();
 	//
 
+	// For drag and drop
+	bool		DoneUpdateSelectedShape() const;
+	Vec2f		GetShiftSelectedShape() const;
+	//
+
 	//--------------------------------------------
 	// IMouseEventHandler
 

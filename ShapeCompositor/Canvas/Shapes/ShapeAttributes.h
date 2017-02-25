@@ -41,6 +41,7 @@ struct Vec2f
 	Vec2f(float x, float y);
 
 	bool operator==(Vec2f const& vec) const;
+	bool operator!=(Vec2f const& vec) const;
 	Vec2f& operator=(const Vec2f& right);
 
 	float x = 0.f;
@@ -48,7 +49,13 @@ struct Vec2f
 };
 Vec2f const operator +(Vec2f const &first, Vec2f const &second);
 Vec2f const operator -(Vec2f const &first, Vec2f const &second);
+Vec2f const operator -(Vec2f const &first);
 
+static const SSize DEFAULT_SIZE = SSize(50.f, 50.f);
+static const Color DEFAULT_OUTLINE_COLOR = Color(0.f, 0.f, 0.f);
+static const Color DEFAULT_FILL_COLOR = Color(0.45f, 0.75f, 0.55f);
+
+/////////////////////////////////////////////////////////////
 // Mixin
 class IHaveVertex
 {
@@ -76,4 +83,36 @@ public:
 
 	// For render
 	virtual void Accept(IShapeVisitor & renderer) const {};// TODO : must be = 0
+};
+
+
+struct SFrameData
+{
+	SFrameData(const Vec2f position = Vec2f(), const SSize size = DEFAULT_SIZE);
+
+	Vec2f position;
+	SSize size;
+};
+
+
+class IFrame
+{
+public:
+	virtual ~IFrame() = default;
+
+	// Position
+	virtual void SetPosition(Vec2f position) = 0;
+	virtual Vec2f GetPosition() const = 0;
+
+	virtual void Move(const Vec2f shift) = 0;
+	// Size
+	virtual void SetSize(SSize size) = 0;
+	virtual SSize GetSize() const = 0;
+	// Own rect
+	virtual RECT GetOwnRect() const = 0;
+
+	// Get shape data
+	virtual SFrameData GetFrameData() const = 0;
+	virtual void SetFrameData(SFrameData const & data) = 0;
+
 };

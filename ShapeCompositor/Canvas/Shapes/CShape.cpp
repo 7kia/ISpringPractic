@@ -9,8 +9,7 @@ SShapeData::SShapeData(
 	, const Color outlineColor
 )
 	: type(type)
-	, position(position)
-	, size(size)
+	, SFrameData(position, size)
 	, fillColor(fillColor)
 	, outlineColor(outlineColor)
 {
@@ -54,6 +53,11 @@ Vec2f CShape::GetPosition() const
 	return m_position;
 }
 
+void CShape::Move(const Vec2f shift)
+{
+	SetPosition(GetPosition() + shift);
+}
+
 void CShape::SetFillColor(Color color)
 {
 	m_fillColor = color;
@@ -95,6 +99,20 @@ RECT CShape::GetOwnRect() const
 	rect.top = LONG(shapePosition.y - shapeSize.height / 2.f);
 
 	return rect;
+}
+
+SFrameData CShape::GetFrameData() const
+{
+	SFrameData info;
+	info.position = m_position;
+	info.size = m_size;
+	return info;
+}
+
+void CShape::SetFrameData(SFrameData const & data)
+{
+	m_position = data.position;
+	m_size = data.size;
 }
 
 TypeShape CShape::GetShape() const

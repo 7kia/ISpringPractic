@@ -63,6 +63,11 @@ bool Vec2f::operator==(Vec2f const & vec) const
 		&& (fabs(y - vec.y) < std::numeric_limits<float>::epsilon());
 }
 
+bool Vec2f::operator!=(Vec2f const & vec) const
+{
+	return !(*this == vec);
+}
+
 Vec2f & Vec2f::operator=(const Vec2f & right)
 {
 	x = right.x;
@@ -79,4 +84,15 @@ Vec2f const operator+(Vec2f const & first, Vec2f const & second)
 Vec2f const operator-(Vec2f const & first, Vec2f const & second)
 {
 	return Vec2f(first.x - second.x, first.y - second.y);
+}
+
+Vec2f const operator-(Vec2f const & first)
+{
+	return Vec2f(-first.x, -first.y);
+}
+
+SFrameData::SFrameData(const Vec2f position, const SSize size)
+	: position(position)
+	, size(size)
+{
 }

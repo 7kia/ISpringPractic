@@ -32,6 +32,18 @@ void CCanvas::ClearRecources()
 	m_objectRenderer.ClearRecources();
 }
 
+bool CCanvas::DoneUpdateSelectedShape() const
+{
+	return m_selectShape.HaveSelectedShape() 
+		&& !m_selectShape.GetUpdateState() 
+		&& (m_selectShape.GetShift() != Vec2f());
+}
+
+Vec2f CCanvas::GetShiftSelectedShape() const
+{
+	return m_selectShape.GetShift();
+}
+
 void CCanvas::PushBackShape(SShapeData data)
 {
 	m_shapes.push_back(
@@ -145,9 +157,12 @@ void CCanvas::HandleLButtHandleDown(CPoint point)
 	}	
 	ChangeSelectShape(Vec2f(float(point.x), float(point.y)));
 
-	if (m_selectShape.IsMove(Vec2f(float(point.x), float(point.y))))
+	if (m_selectShape.HaveSelectedShape())
 	{
-		m_selectShape.SetStateUpdate(true);
+		if (m_selectShape.IsMove(Vec2f(float(point.x), float(point.y))))
+		{
+			m_selectShape.SetStateUpdate(true);
+		}
 	}
 }
 
@@ -166,10 +181,9 @@ void CCanvas::HandleRButtHandleUp(CPoint point)
 
 void CCanvas::HandleMouseMove(CPoint point)
 {
-	if (m_selectShape.HaveSelectedShape() && m_selectShape.IsUpdate())
+	if (m_selectShape.HaveSelectedShape() && m_selectShape.GetUpdateState())
 	{
 		m_selectShape.HandleMoveMouse(Vec2f(float(point.x), float(point.y)));
-		//m_selectShape.SetStateUpdate(true);
 	}
 }
 

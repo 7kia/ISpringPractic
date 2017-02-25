@@ -35,27 +35,39 @@ public:
 	//--------------------------------------------
 	// IShape
 
-	// Position
-	void SetPosition(Vec2f position) override;
-	Vec2f GetPosition() const override;
 	// Inner Color
 	void SetFillColor(Color color) override;
 	Color GetFillColor() const override;
 	// Outer Color
 	void SetOutlineColor(Color color) override;
 	Color GetOutlineColor() const override;
+	// Type
+	TypeShape GetShape() const override;
+
+	SShapeData GetShapeData() const override;
+	void SetShapeData(SShapeData const & data) override;
+	//--------------------------------------------
+	// IFrame
+
+	// Position
+	void SetPosition(Vec2f position) override;
+	Vec2f GetPosition() const override;
+	void Move(const Vec2f shift) override;
 	// Size
 	void SetSize(SSize size) override;
 	SSize GetSize() const override;
 	// Own rect
 	RECT GetOwnRect() const override;
-	// Type
-	TypeShape GetShape() const override;
+
+	// Get shape data
+	SFrameData GetFrameData() const override;
+	void SetFrameData(SFrameData const & data) override;
+	//--------------------------------------------
+	
+
 
 	std::vector<Vec2f> GetFrameVertices() const;
 
-	SShapeData GetShapeData() const override;
-	void SetShapeData(SShapeData const & data) override;
 //////////////////////////////////////////////////////////////////////
 // Data
 protected:

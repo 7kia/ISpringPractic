@@ -310,6 +310,12 @@ void CShapeCompositorView::OnLButtonUp(UINT nFlags, CPoint point)
 	CView::OnLButtonUp(nFlags, point);
 	m_canvas.HandleLButtHandleUp(point);
 
+	if (m_canvas.DoneUpdateSelectedShape())
+	{
+		m_history.AddAndExecuteCommand(std::make_shared<CMoveShapeCanvasCommand>(m_canvas.GetSelectShape(), m_canvas.GetShiftSelectedShape()));
+		m_canvas.m_selectShape.ResetUpdateParameters();
+	}
+
 	RedrawWindow();
 }
 
