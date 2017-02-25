@@ -1,6 +1,5 @@
 #pragma once
 
-#include "ShapeVisitor.h"
 #include "Canvas\Shapes\AllShapes.h"
 
 class CShapeCompositorView;
@@ -10,7 +9,7 @@ class IObjectRenderer
 public:
 	virtual ~IObjectRenderer() = default;
 
-	virtual void Draw(IDrawable &const shape) = 0;
+	virtual void Draw(const IDrawable & shape) = 0;
 };
 
 class CD2DObjectRenderer
@@ -28,7 +27,7 @@ public:
 	HRESULT	EndDraw();
 	//--------------------------------------------
 	// IShapeVisitor
-	void Draw(IDrawable &const shape) override;
+	void Draw(const IDrawable & shape) override;
 	//--------------------------------------------
 
 private:

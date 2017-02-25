@@ -64,7 +64,7 @@ HRESULT CD2DObjectRenderer::EndDraw()
 	return m_pRenderTarget->EndDraw();
 }
 
-void CD2DObjectRenderer::Draw(IDrawable &const shape)
+void CD2DObjectRenderer::Draw(const IDrawable & shape)
 {
 	shape.Accept(*this);
 }

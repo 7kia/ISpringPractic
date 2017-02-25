@@ -67,3 +67,13 @@ public:
 		return false;
 	};
 };
+
+class IShapeVisitor;
+class IDrawable
+{
+public:
+	virtual ~IDrawable() = default;
+
+	// For render
+	virtual void Accept(IShapeVisitor & renderer) const {};// TODO : must be = 0
+};

@@ -32,15 +32,6 @@ struct SShapeData
 	Color outlineColor;
 };
 
-class IDrawable
-{
-public:
-	virtual ~IDrawable() = default;
-
-	// For render
-	virtual void Accept(IShapeVisitor & renderer) const {};// TODO : must be = 0
-};
-
 class IShape
 	: public IDrawable
 {
