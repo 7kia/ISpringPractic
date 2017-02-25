@@ -308,6 +308,8 @@ void CShapeCompositorView::OnLButtonUp(UINT nFlags, CPoint point)
 	// TODO: добавьте свой код обработчика сообщений или вызов стандартного
 
 	CView::OnLButtonUp(nFlags, point);
+	m_canvas.HandleLButtHandleUp(point);
+
 	RedrawWindow();
 }
 

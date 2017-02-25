@@ -82,7 +82,10 @@ void CCanvas::ChangeSelectShape(const Vec2f mousePosition)
 
 	if (selectShape.get() != nullptr)
 	{
-		m_selectShape.SetShape(selectShape);
+		if (m_selectShape.GetShape() != selectShape)
+		{
+			m_selectShape.SetShape(selectShape);
+		}
 	}
 	else
 	{
@@ -131,12 +134,25 @@ size_t CCanvas::GetIndexShape(CShapePtr pShape) const
 
 void CCanvas::HandleLButtHandleDown(CPoint point)
 {
+
+	if (m_selectShape.HaveSelectedShape())
+	{
+		if (m_selectShape.IsResize(Vec2f(float(point.x), float(point.y))))
+		{
+			m_selectShape.SetStateUpdate(true);
+			return;
+		}
+	}	
 	ChangeSelectShape(Vec2f(float(point.x), float(point.y)));
+
 }
 
 void CCanvas::HandleLButtHandleUp(CPoint point)
 {
-	// TODO
+	if (m_selectShape.HaveSelectedShape())
+	{
+		m_selectShape.SetStateUpdate(false);
+	}
 }
 
 void CCanvas::HandleRButtHandleUp(CPoint point)
@@ -146,7 +162,10 @@ void CCanvas::HandleRButtHandleUp(CPoint point)
 
 void CCanvas::HandleMouseMove(CPoint point)
 {
-	//m_pCanvas->ChangeSelectShape(Vec2f(float(point.x), float(point.y)));
+	//if (m_selectShape.DefineUpdateType(Vec2f(float(point.x), float(point.y))))
+	//{
+	//	// TODO : Resize and move
+	//}
 }
 
 

@@ -38,6 +38,55 @@ CShapePtr CSelectShape::GetShape() const
 void CSelectShape::ResetSelectShapePtr()
 {
 	m_selectShape = nullptr;
+	m_isUpdate = false;
+}
+
+void CSelectShape::SetStateUpdate(bool state)
+{
+	m_isUpdate = state;
+}
+
+bool CSelectShape::IsUpdate() const
+{
+	return m_isUpdate;
+}
+
+bool CSelectShape::HaveSelectedShape() const
+{
+	return m_selectShape.get() != nullptr;
+}
+
+void CSelectShape::SetUpdateType(UpdateType type)
+{
+	m_updateType = type;
+}
+
+CSelectShape::UpdateType CSelectShape::GetUpdateType() const
+{
+	return m_updateType;
+}
+
+bool CSelectShape::IsResize(const Vec2f point)
+{
+	for (const auto & resizeShape : m_resizeShapes)
+	{
+		if (resizeShape->IsPointIntersection(point))
+		{
+			SetUpdateType(UpdateType::Resize);
+			return true;
+		}
+	}
+	return false;
+}
+
+bool CSelectShape::IsMove(const Vec2f point)
+{
+	if (m_selectShape->IsPointIntersection(point))
+	{
+		SetUpdateType(UpdateType::Move);
+		return true;
+	}
+	return false;
 }
 
 void CSelectShape::Accept(IShapeVisitor & renderer) const
@@ -54,6 +103,28 @@ void CSelectShape::Accept(IShapeVisitor & renderer) const
 		}
 	}
 }
+
+bool CSelectShape::DefineUpdateType(const Vec2f point)
+{
+	if (HaveSelectedShape())
+	{
+		for (const auto & resizeShape : m_resizeShapes)
+		{
+			if (resizeShape->IsPointIntersection(point))
+			{
+				SetUpdateType(UpdateType::Resize);
+				return true;
+			}
+		}
+		if (m_selectShape->IsPointIntersection(point))
+		{
+			SetUpdateType(UpdateType::Move);
+			return true;
+		}
+	}
+	return false;
+}
+
 
 void CSelectShape::SetViewPosition()
 {
