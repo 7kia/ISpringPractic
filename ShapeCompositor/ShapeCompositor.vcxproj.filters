@@ -105,6 +105,9 @@
     <ClInclude Include="Canvas\CanvasCommands\MoveShapeCommand.h">
       <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
     </ClInclude>
+    <ClInclude Include="Canvas\CanvasCommands\ScaleShapeCommand.h">
+      <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ShapeCompositor.cpp">
@@ -162,6 +165,9 @@
       <Filter>Файлы исходного кода\Canvas</Filter>
     </ClCompile>
     <ClCompile Include="Canvas\CanvasCommands\MoveShapeCommand.cpp">
+      <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas\CanvasCommands\ScaleShapeCommand.cpp">
       <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
     </ClCompile>
   </ItemGroup>

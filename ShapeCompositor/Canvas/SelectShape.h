@@ -56,6 +56,7 @@ public:
 	// Size
 	void SetSize(SSize size) override;
 	SSize GetSize() const override;
+	void UpdateScale(const Vec2f shift)override;
 	// Own rect
 	RECT GetOwnRect() const override;
 
@@ -68,6 +69,7 @@ public:
 	// For drag and drop
 	Vec2f	GetShift() const;
 	void	MoveFrame(const Vec2f shift);
+	void	UpdateScaleFrame(const Vec2f shift);
 private:
 	void					SetViewPosition();
 	void					SetMoveView();

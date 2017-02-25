@@ -312,11 +312,33 @@ void CShapeCompositorView::OnLButtonUp(UINT nFlags, CPoint point)
 
 	if (m_canvas.DoneUpdateSelectedShape())
 	{
-		m_history.AddAndExecuteCommand(std::make_shared<CMoveShapeCanvasCommand>(
-			m_canvas.GetSelectShape(),
-			m_canvas.GetShiftSelectedShape(),
-			m_canvas.GetFrameSelectedShape()
-			));
+		switch (m_canvas.GetUpdateStateSelectedShape())
+		{
+		case CSelectShape::UpdateType::Move:
+			{
+			m_history.AddAndExecuteCommand(std::make_shared<CMoveShapeCanvasCommand>(
+				m_canvas.GetSelectShape(),
+				m_canvas.GetShiftSelectedShape(),
+				m_canvas.GetFrameSelectedShape()
+				));
+			}
+			break;
+		case CSelectShape::UpdateType::Resize:
+			{
+			m_history.AddAndExecuteCommand(std::make_shared<CScaleShapeCanvasCommand>(
+				m_canvas.GetSelectShape(),
+				m_canvas.GetShiftSelectedShape(),
+				m_canvas.GetFrameSelectedShape()
+				));
+
+			}
+			break;
+		case CSelectShape::UpdateType::None:
+			break;
+		default:
+			break;
+		}
+		
 		m_canvas.m_selectShape.ResetUpdateParameters();
 	}
 

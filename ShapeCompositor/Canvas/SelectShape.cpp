@@ -114,10 +114,6 @@ void CSelectShape::HandleMoveMouse(const Vec2f point)
 		}
 		break;
 	case UpdateType::Resize:
-		{
-
-		}
-		break;
 	case UpdateType::Move:
 		{
 			if (m_startMove == Vec2f())
@@ -214,6 +210,12 @@ SSize CSelectShape::GetSize() const
 	return m_selectShape->GetSize();
 }
 
+void CSelectShape::UpdateScale(const Vec2f shift)
+{
+	SetSize(GetSize() + SSize(shift.x, shift.y));
+	Move(Vec2f(shift.x / 2.f, shift.y / 2.f));
+}
+
 RECT CSelectShape::GetOwnRect() const
 {
 	return m_selectShape->GetOwnRect();
@@ -243,6 +245,14 @@ Vec2f CSelectShape::GetShift() const
 void CSelectShape::MoveFrame(const Vec2f shift)
 {
 	m_frameData.position = m_frameData.position + shift;
+	SetViewPosition();
+}
+
+void CSelectShape::UpdateScaleFrame(const Vec2f shift)
+{
+	m_frameData.size = m_frameData.size + SSize(shift.x, shift.y);
+	m_frameData.position = m_frameData.position + Vec2f(shift.x / 2.f, shift.y / 2.f);
+
 	SetViewPosition();
 }
 

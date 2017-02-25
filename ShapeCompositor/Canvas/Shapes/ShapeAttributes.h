@@ -15,6 +15,7 @@ struct SSize
 	float width = 0.f;
 	float height = 0.f;
 };
+SSize const operator +(SSize const &first, SSize const &second);
 
 struct Color
 {
@@ -111,6 +112,8 @@ public:
 	// Size
 	virtual void SetSize(SSize size) = 0;
 	virtual SSize GetSize() const = 0;
+
+	virtual void UpdateScale(const Vec2f shift) = 0;
 	// Own rect
 	virtual RECT GetOwnRect() const = 0;
 

@@ -49,6 +49,11 @@ CSelectShape * CCanvas::GetFrameSelectedShape()
 	return &m_selectShape;
 }
 
+CSelectShape::UpdateType CCanvas::GetUpdateStateSelectedShape() const
+{
+	return m_selectShape.GetUpdateType();
+}
+
 void CCanvas::PushBackShape(SShapeData data)
 {
 	m_shapes.push_back(

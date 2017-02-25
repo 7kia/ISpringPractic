@@ -44,6 +44,7 @@ public:
 	bool		DoneUpdateSelectedShape() const;
 	Vec2f		GetShiftSelectedShape() const;
 	CSelectShape * GetFrameSelectedShape();
+	CSelectShape::UpdateType	GetUpdateStateSelectedShape() const;
 	//
 
 	//--------------------------------------------

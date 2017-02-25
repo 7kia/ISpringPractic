@@ -76,6 +76,11 @@ Vec2f & Vec2f::operator=(const Vec2f & right)
 	return *this;
 }
 
+SSize const operator+(SSize const & first, SSize const & second)
+{
+	return SSize(first.width + second.width, first.height + second.height);
+}
+
 Vec2f const operator+(Vec2f const & first, Vec2f const & second)
 {
 	return Vec2f(first.x + second.x, first.y + second.y);

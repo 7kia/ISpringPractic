@@ -46,6 +46,8 @@ public:
 	// Size
 	void SetSize(SSize size) override;
 	SSize GetSize() const override;
+
+	void UpdateScale(const Vec2f shift) override;
 	// Own rect
 	RECT GetOwnRect() const override;
 
