@@ -4,32 +4,34 @@
 
 CScaleShapeCanvasCommand::CScaleShapeCanvasCommand(
 	CShapePtr pShape
-	, Vec2f shift
+	, SFrameData oldData
+	, SFrameData newData
 	, CSelectShape * pSelectedShape
 )
 	: m_pShape(pShape)
-	, m_shift(shift)
+	, m_oldData(oldData)
+	, m_newData(newData)
 	, m_pSelectedShape(pSelectedShape)
 {
 }
 
 void CScaleShapeCanvasCommand::Execute()
 {
-	m_pShape->UpdateScale(m_shift);
+	m_pShape->SetFrameData(m_newData);
 
 	if (m_pSelectedShape->GetShape() == m_pShape)
 	{
-		m_pSelectedShape->UpdateScaleFrame(m_shift);
+		m_pSelectedShape->SetFrameData(m_newData);
 	}
 }
 
 void CScaleShapeCanvasCommand::Cancel()
 {
-	m_pShape->UpdateScale(-m_shift);
+	m_pShape->SetFrameData(m_oldData);
 
 	if (m_pSelectedShape->GetShape() == m_pShape)
 	{
-		m_pSelectedShape->UpdateScaleFrame(-m_shift);
+		m_pSelectedShape->SetFrameData(m_oldData);
 	}
 }
 

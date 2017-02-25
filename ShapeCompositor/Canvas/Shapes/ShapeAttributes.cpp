@@ -91,6 +91,11 @@ Vec2f const operator-(Vec2f const & first, Vec2f const & second)
 	return Vec2f(first.x - second.x, first.y - second.y);
 }
 
+Vec2f const operator*(Vec2f const & first, Vec2f const & second)
+{
+	return Vec2f(first.x * second.x, first.y * second.y);
+}
+
 Vec2f const operator-(Vec2f const & first)
 {
 	return Vec2f(-first.x, -first.y);

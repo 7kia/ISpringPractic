@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <array>
 
 #include "Shapes\AllShapes.h"
 #include "ShapeRenderer.h"
@@ -18,8 +19,11 @@ public:
 	enum class UpdateType
 	{
 		None = -1,
-		Move,
-		Resize,
+		Move ,
+		MarkerLeftBottom ,
+		MarkerRightBottom ,
+		MarkerRightTop ,
+		MarkerLeftTop ,
 	};
 	//////////////////////////////////////////////////////////////////////
 	// Methods
@@ -44,9 +48,6 @@ public:
 	// IDrawable
 	void					Accept(IShapeVisitor & renderer) const override;// TODO : must be = 0
 	//--------------------------------------------
-	// IIsPointIntersection
-	bool					DefineUpdateType(const Vec2f point);
-	//--------------------------------------------
 	// IFrame
 
 	// Position
@@ -70,6 +71,7 @@ public:
 	Vec2f	GetShift() const;
 	void	MoveFrame(const Vec2f shift);
 	void	UpdateScaleFrame(const Vec2f shift);
+	SFrameData GetNewFrameData() const;
 private:
 	void					SetViewPosition();
 	void					SetMoveView();
@@ -77,17 +79,17 @@ private:
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
-	SShapeData						m_frameData;
+	SFrameData						m_frameData;
+	SFrameData						m_oldData;
 	CShapePtr						m_selectShape;
 
 	std::vector<CShapePtr>				m_moveShape;
-	std::vector<CShapePtr>				m_resizeShapes;
+	std::array<CShapePtr, 4>			m_resizeShapes;
 
 	// For drag and drop
 	Vec2f								m_startMove;
 	Vec2f								m_start;
 	Vec2f								m_current;
-	Vec2f								m_end;
 	bool								m_isUpdate = false;
 	UpdateType							m_updateType = UpdateType::None;
 };

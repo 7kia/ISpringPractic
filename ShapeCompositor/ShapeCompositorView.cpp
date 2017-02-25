@@ -323,11 +323,15 @@ void CShapeCompositorView::OnLButtonUp(UINT nFlags, CPoint point)
 				));
 			}
 			break;
-		case CSelectShape::UpdateType::Resize:
+		case CSelectShape::UpdateType::MarkerLeftTop:
+		case CSelectShape::UpdateType::MarkerLeftBottom:
+		case CSelectShape::UpdateType::MarkerRightBottom:
+		case CSelectShape::UpdateType::MarkerRightTop:
 			{
 			m_history.AddAndExecuteCommand(std::make_shared<CScaleShapeCanvasCommand>(
 				m_canvas.GetSelectShape(),
-				m_canvas.GetShiftSelectedShape(),
+				m_canvas.GetFrameSelectedShape()->GetFrameData(),
+				m_canvas.GetFrameSelectedShape()->GetNewFrameData(),
 				m_canvas.GetFrameSelectedShape()
 				));
 

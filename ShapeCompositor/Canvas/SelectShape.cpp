@@ -18,7 +18,7 @@ CSelectShape::CSelectShape(CD2DObjectRenderer & shapeRenderer, const CShapeFacto
 
 	for (size_t index = 0; index < 4; ++index)
 	{
-		m_resizeShapes.push_back(shapeFactory.CreateShape(ellipseData, shapeRenderer));
+		m_resizeShapes[index] = shapeFactory.CreateShape(ellipseData, shapeRenderer);
 	}
 }
 
@@ -26,6 +26,7 @@ void CSelectShape::SetShape(CShapePtr shape)
 {
 	m_selectShape = shape;
 	m_frameData = shape->GetShapeData();
+	m_oldData = m_frameData;
 
 	SetViewPosition();
 }
@@ -39,6 +40,8 @@ void CSelectShape::ResetSelectShapePtr()
 {
 	m_selectShape = nullptr;
 	m_isUpdate = false;
+
+	m_oldData = SFrameData();
 }
 
 void CSelectShape::ResetUpdateParameters()
@@ -46,19 +49,16 @@ void CSelectShape::ResetUpdateParameters()
 	m_startMove = Vec2f();
 	m_start = Vec2f();
 	m_current = Vec2f();
-	m_end = Vec2f();
 	m_isUpdate = false;
 	m_updateType = UpdateType::None;
+
 }
 
 void CSelectShape::SetStateUpdate(bool state)
 {
 	m_isUpdate = state;
 
-	if (!m_isUpdate)
-	{
-		m_end = Vec2f();
-	}
+
 }
 
 bool CSelectShape::GetUpdateState() const
@@ -83,14 +83,18 @@ CSelectShape::UpdateType CSelectShape::GetUpdateType() const
 
 bool CSelectShape::IsResize(const Vec2f point)
 {
+	size_t index = 1;
 	for (const auto & resizeShape : m_resizeShapes)
 	{
 		if (resizeShape->IsPointIntersection(point))
 		{
-			SetUpdateType(UpdateType::Resize);
+			SetUpdateType(UpdateType(index));
 			return true;
 		}
+		++index;
 	}
+
+
 	return false;
 }
 
@@ -113,7 +117,10 @@ void CSelectShape::HandleMoveMouse(const Vec2f point)
 
 		}
 		break;
-	case UpdateType::Resize:
+	case UpdateType::MarkerLeftTop:
+	case UpdateType::MarkerLeftBottom:
+	case UpdateType::MarkerRightBottom:
+	case UpdateType::MarkerRightTop:
 	case UpdateType::Move:
 		{
 			if (m_startMove == Vec2f())
@@ -123,11 +130,6 @@ void CSelectShape::HandleMoveMouse(const Vec2f point)
 			}
 			m_current = point;
 
-			Vec2f shift = m_current - m_start;
-			Vec2f curPos = m_selectShape->GetPosition();
-			//m_current = 
-			m_end = curPos + shift;
-			//SetPosition(curPos + shift);
 			m_start = m_current;
 		}
 		break;
@@ -151,26 +153,6 @@ void CSelectShape::Accept(IShapeVisitor & renderer) const
 	}
 }
 
-bool CSelectShape::DefineUpdateType(const Vec2f point)
-{
-	if (HaveSelectedShape())
-	{
-		for (const auto & resizeShape : m_resizeShapes)
-		{
-			if (resizeShape->IsPointIntersection(point))
-			{
-				SetUpdateType(UpdateType::Resize);
-				return true;
-			}
-		}
-		if (m_selectShape->IsPointIntersection(point))
-		{
-			SetUpdateType(UpdateType::Move);
-			return true;
-		}
-	}
-	return false;
-}
 
 void CSelectShape::SetPosition(Vec2f position)
 {
@@ -226,6 +208,7 @@ SFrameData CSelectShape::GetFrameData() const
 	SFrameData info;
 	info.position = m_frameData.position;
 	info.size = m_frameData.size;
+
 	return info;
 }
 
@@ -233,13 +216,13 @@ void CSelectShape::SetFrameData(SFrameData const & data)
 {
 	m_frameData.position = data.position;
 	m_frameData.size = data.size;
+	SetViewPosition();
 }
 
 
 Vec2f CSelectShape::GetShift() const
 {
-	const Vec2f result = m_current - m_startMove;
-	return  m_current - m_startMove;
+	return m_current - m_startMove;
 }
 
 void CSelectShape::MoveFrame(const Vec2f shift)
@@ -254,6 +237,43 @@ void CSelectShape::UpdateScaleFrame(const Vec2f shift)
 	m_frameData.position = m_frameData.position + Vec2f(shift.x / 2.f, shift.y / 2.f);
 
 	SetViewPosition();
+}
+
+SFrameData CSelectShape::GetNewFrameData() const
+{
+	SFrameData info;
+	const Vec2f shift = GetShift();
+
+	Vec2f direction = Vec2f(1.f, 1.f);
+	switch (m_updateType)
+	{
+	case UpdateType::MarkerLeftTop:
+	{
+		direction = Vec2f(-1.f, -1.f);
+	}
+	break;
+	case UpdateType::MarkerLeftBottom:
+	{
+		direction = Vec2f(-1.f, 1.f);
+	}
+	break;
+	case UpdateType::MarkerRightBottom:
+	{
+		direction = Vec2f(1.f, 1.f);
+	}
+	break;
+	case UpdateType::MarkerRightTop:
+	{
+		direction = Vec2f(1.f, -1.f);
+	}
+	break;
+	default:
+		break;
+	}
+	info.position = m_frameData.position + (Vec2f(shift.x / 2.f, shift.y / 2.f));
+	info.size = m_frameData.size + (SSize(shift.x * direction.x, shift.y * direction.y) );
+
+	return info;
 }
 
 void CSelectShape::SetViewPosition()

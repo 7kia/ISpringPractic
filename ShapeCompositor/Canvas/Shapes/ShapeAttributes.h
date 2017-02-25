@@ -50,6 +50,7 @@ struct Vec2f
 };
 Vec2f const operator +(Vec2f const &first, Vec2f const &second);
 Vec2f const operator -(Vec2f const &first, Vec2f const &second);
+Vec2f const operator *(Vec2f const &first, Vec2f const &second);
 Vec2f const operator -(Vec2f const &first);
 
 static const SSize DEFAULT_SIZE = SSize(50.f, 50.f);

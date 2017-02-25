@@ -9,7 +9,8 @@ class CScaleShapeCanvasCommand : public IMyCommand
 public:
 	CScaleShapeCanvasCommand(
 		CShapePtr pShape
-		, Vec2f shift
+		, SFrameData oldData
+		, SFrameData newData
 		, CSelectShape * pSelectedShape
 	);
 	//////////////////////////////////////////////////////////////////////
@@ -26,5 +27,6 @@ public:
 private:
 	CShapePtr	m_pShape;
 	CSelectShape * m_pSelectedShape = nullptr;
-	Vec2f		m_shift;
+	SFrameData		m_oldData;
+	SFrameData		m_newData;
 };
