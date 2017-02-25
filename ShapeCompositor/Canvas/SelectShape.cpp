@@ -89,6 +89,40 @@ bool CSelectShape::IsMove(const Vec2f point)
 	return false;
 }
 
+void CSelectShape::HandleMoveMouse(const Vec2f point)
+{
+	switch (m_updateType)
+	{
+	case UpdateType::None:
+		{
+
+		}
+		break;
+	case UpdateType::Resize:
+		{
+
+		}
+		break;
+	case UpdateType::Move:
+		{
+			if (m_startMove == Vec2f())
+			{
+				m_startMove = point;
+				m_start = point;
+			}
+			m_current = point;
+
+			Vec2f shift = m_current - m_start;
+			Vec2f curPos = m_selectShape->GetPosition();
+			m_selectShape->SetPosition(curPos + shift);
+			m_start = m_current;
+		}
+		break;
+	default:
+		break;
+	}
+}
+
 void CSelectShape::Accept(IShapeVisitor & renderer) const
 {
 	if (m_selectShape != nullptr)

@@ -145,6 +145,10 @@ void CCanvas::HandleLButtHandleDown(CPoint point)
 	}	
 	ChangeSelectShape(Vec2f(float(point.x), float(point.y)));
 
+	if (m_selectShape.IsMove(Vec2f(float(point.x), float(point.y))))
+	{
+		m_selectShape.SetStateUpdate(true);
+	}
 }
 
 void CCanvas::HandleLButtHandleUp(CPoint point)
@@ -162,10 +166,11 @@ void CCanvas::HandleRButtHandleUp(CPoint point)
 
 void CCanvas::HandleMouseMove(CPoint point)
 {
-	//if (m_selectShape.DefineUpdateType(Vec2f(float(point.x), float(point.y))))
-	//{
-	//	// TODO : Resize and move
-	//}
+	if (m_selectShape.HaveSelectedShape() && m_selectShape.IsUpdate())
+	{
+		m_selectShape.HandleMoveMouse(Vec2f(float(point.x), float(point.y)));
+		//m_selectShape.SetStateUpdate(true);
+	}
 }
 
 

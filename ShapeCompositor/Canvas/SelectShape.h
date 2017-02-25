@@ -37,7 +37,7 @@ public:
 	//
 	bool					IsResize(const Vec2f point);
 	bool					IsMove(const Vec2f point);
-
+	void					HandleMoveMouse(const Vec2f point);
 	//--------------------------------------------
 	// IDrawable
 	void					Accept(IShapeVisitor & renderer) const override;// TODO : must be = 0
