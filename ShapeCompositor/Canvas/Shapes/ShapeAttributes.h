@@ -90,6 +90,9 @@ struct SFrameData
 {
 	SFrameData(const Vec2f position = Vec2f(), const SSize size = DEFAULT_SIZE);
 
+	RECT GetOwnRect() const;
+	std::vector<Vec2f> GetFrameVertices() const;
+
 	Vec2f position;
 	SSize size;
 };

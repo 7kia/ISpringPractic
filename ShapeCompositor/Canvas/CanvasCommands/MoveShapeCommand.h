@@ -3,11 +3,15 @@
 #include "CanvasCommand.h"
 #include "Canvas\Shapes\AllShapes.h"
 
-class CCanvas;
+class CSelectShape;
 class CMoveShapeCanvasCommand : public IMyCommand
 {
 public:
-	CMoveShapeCanvasCommand(CShapePtr pShape, Vec2f shift);
+	CMoveShapeCanvasCommand(
+		CShapePtr pShape
+		, Vec2f shift
+		, CSelectShape * pSelectedShape
+	);
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
@@ -21,7 +25,7 @@ public:
 	// Data
 private:
 	TypeShape	m_type = TypeShape::Rectangle;
-	CCanvas *	m_pCanvas = nullptr;
 	CShapePtr	m_pShape;
+	CSelectShape * m_pSelectedShape = nullptr;
 	Vec2f		m_shift;
 };

@@ -67,6 +67,7 @@ public:
 
 	// For drag and drop
 	Vec2f	GetShift() const;
+	void	MoveFrame(const Vec2f shift);
 private:
 	void					SetViewPosition();
 	void					SetMoveView();

@@ -96,3 +96,25 @@ SFrameData::SFrameData(const Vec2f position, const SSize size)
 	, size(size)
 {
 }
+
+RECT SFrameData::GetOwnRect() const
+{
+	RECT rect;
+	rect.left = LONG(position.x - size.width / 2.f);
+	rect.right = LONG(position.x + size.width / 2.f);
+	rect.bottom = LONG(position.y + size.height / 2.f);
+	rect.top = LONG(position.y - size.height / 2.f);
+
+	return rect;
+}
+
+std::vector<Vec2f> SFrameData::GetFrameVertices() const
+{
+	RECT frame = GetOwnRect();
+	return{
+		Vec2f(float(frame.left), float(frame.bottom))// Left bootom
+		, Vec2f(float(frame.right), float(frame.bottom))// Right bootom
+		, Vec2f(float(frame.right), float(frame.top))// Right top
+		, Vec2f(float(frame.left), float(frame.top))// Left top
+	};
+}

@@ -43,6 +43,7 @@ public:
 	// For drag and drop
 	bool		DoneUpdateSelectedShape() const;
 	Vec2f		GetShiftSelectedShape() const;
+	CSelectShape * GetFrameSelectedShape();
 	//
 
 	//--------------------------------------------
@@ -78,7 +79,7 @@ private:
 	// Data
 public:
 	CShapeFactory								m_shapeFactory;
-	CD2DObjectRenderer								m_objectRenderer;// TODO : transfer to CShapeCompositiorView, fix Draw
+	CD2DObjectRenderer							m_objectRenderer;// TODO : transfer to CShapeCompositiorView, fix Draw
 
 	CSelectShape								m_selectShape;
 

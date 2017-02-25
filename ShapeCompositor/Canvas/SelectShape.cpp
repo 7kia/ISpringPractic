@@ -240,6 +240,12 @@ Vec2f CSelectShape::GetShift() const
 	return  m_current - m_startMove;
 }
 
+void CSelectShape::MoveFrame(const Vec2f shift)
+{
+	m_frameData.position = m_frameData.position + shift;
+	SetViewPosition();
+}
+
 void CSelectShape::SetViewPosition()
 {
 	SetMoveView();
@@ -253,7 +259,7 @@ void CSelectShape::SetMoveView()
 
 void CSelectShape::SetResizeView()
 {
-	auto vertices = m_selectShape->GetFrameVertices();
+	auto vertices = m_frameData.GetFrameVertices();// m_selectShape->
 	size_t indexEllipse = 0;
 	for (const auto & vertex : vertices)
 	{

@@ -44,6 +44,11 @@ Vec2f CCanvas::GetShiftSelectedShape() const
 	return m_selectShape.GetShift();
 }
 
+CSelectShape * CCanvas::GetFrameSelectedShape()
+{
+	return &m_selectShape;
+}
+
 void CCanvas::PushBackShape(SShapeData data)
 {
 	m_shapes.push_back(

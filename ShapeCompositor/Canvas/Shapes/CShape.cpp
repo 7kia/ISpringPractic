@@ -15,16 +15,6 @@ SShapeData::SShapeData(
 {
 }
 
-SPresenterData::SPresenterData()
-{
-}
-
-SPresenterData::SPresenterData(Vec2f position, SSize size)
-	: position(position)
-	, size(size)
-{
-}
-
 CShape::CShape(
 	const TypeShape type
 	, const Vec2f position

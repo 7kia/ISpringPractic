@@ -6,16 +6,6 @@
 
 #include "Observer.h"
 
-// TODO  : see need it
-struct SPresenterData
-{
-	Vec2f position;
-	SSize size;
-
-	SPresenterData();
-	SPresenterData(Vec2f position, SSize size);
-};
-
 // Mixin for avoid dublicate
 class CShape 
 	: public IShape
