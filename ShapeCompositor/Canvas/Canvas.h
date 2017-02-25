@@ -40,9 +40,6 @@ public:
 	void		ClearRecources();
 	//
 
-	void DeleteSelectShape();
-	//
-
 	//--------------------------------------------
 	// IMouseEventHandler
 

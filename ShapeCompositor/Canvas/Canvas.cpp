@@ -129,19 +129,6 @@ size_t CCanvas::GetIndexShape(CShapePtr pShape) const
 	return  std::find(m_shapes.begin(), m_shapes.end(), pShape) - m_shapes.begin();
 }
 
-void CCanvas::DeleteSelectShape()
-{
-	//m_pCanvas->DeleteShape(m_pCanvas->GetSelectShape());
-	CanvasCommandPtr createCommand = std::make_shared<CDeleteShapeCanvasCommand>(
-		this
-		, GetSelectShape()
-		, GetIndexSelectShape()
-		);
-	//AddCommand(createCommand);
-	//ExecuteCurrent();
-
-}
-
 void CCanvas::HandleLButtHandleDown(CPoint point)
 {
 	ChangeSelectShape(Vec2f(float(point.x), float(point.y)));

@@ -2,13 +2,10 @@
 #include "DeleteShapeCommand.h"
 #include "../Canvas.h"
 
-CDeleteShapeCanvasCommand::CDeleteShapeCanvasCommand(CCanvas *const pCanvas
-	, const CShapePtr shape
-	, size_t index
-)
+CDeleteShapeCanvasCommand::CDeleteShapeCanvasCommand(CCanvas *const pCanvas)
 	: m_pCanvas(pCanvas)
-	, m_data(shape->GetShapeData())
-	, m_index(index)
+	, m_data(pCanvas->GetSelectShape()->GetShapeData())
+	, m_index(pCanvas->GetIndexSelectShape())
 {
 }
 

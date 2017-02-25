@@ -7,11 +7,7 @@ class CCanvas;
 class CDeleteShapeCanvasCommand : public IMyCommand
 {
 public:
-	CDeleteShapeCanvasCommand(
-		CCanvas * pCanvas
-		, const CShapePtr shape
-		, size_t index
-	);
+	CDeleteShapeCanvasCommand(CCanvas * pCanvas);
 //////////////////////////////////////////////////////////////////////
 // Methods
 public:

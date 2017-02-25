@@ -2,43 +2,11 @@
 #include "History.h"
 #include "Canvas.h"
 
-CHistory::CHistory(CCanvas * pCanvas)
-	: m_pCanvas(pCanvas)
+CHistory::CHistory()
 {
 }
 
-void CHistory::AddTriangle()
-{
-	CanvasCommandPtr createCommand = std::make_shared<CAddShapeCanvasCommand>(m_pCanvas, TypeShape::Triangle);
-	AddCommand(createCommand);
-	ExecuteCurrent();
-}
-
-void CHistory::AddRectangle()
-{
-	CanvasCommandPtr createCommand = std::make_shared<CAddShapeCanvasCommand>(m_pCanvas, TypeShape::Rectangle);
-	AddCommand(createCommand);
-	ExecuteCurrent();
-}
-
-void CHistory::AddEllipse()
-{
-	CanvasCommandPtr createCommand = std::make_shared<CAddShapeCanvasCommand>(m_pCanvas, TypeShape::Ellipse);
-	AddCommand(createCommand);
-	ExecuteCurrent();
-}
-
-void CHistory::DeleteSelectShape()
-{
-	CShapePtr selectShape = m_pCanvas->GetSelectShape();
-	size_t index = m_pCanvas->GetIndexSelectShape();
-
-	CanvasCommandPtr createCommand = std::make_shared<CDeleteShapeCanvasCommand>(m_pCanvas, selectShape, index);
-	AddCommand(createCommand);
-	ExecuteCurrent();
-}
-
-void CHistory::AddCommand(const CanvasCommandPtr command)
+void CHistory::AddAndExecuteCommand(CanvasCommandPtr && command)
 {
 	// TODO : insert to middle queue
 	if (!m_history.empty() && (m_currentCommand != m_history.rbegin()))
@@ -47,12 +15,10 @@ void CHistory::AddCommand(const CanvasCommandPtr command)
 	}
 	m_history.push_back(command);
 	m_currentCommand = m_history.rbegin();
-}
 
-void CHistory::ExecuteCurrent()
-{
 	m_currentCommand->get()->Execute();
 }
+
 
 void CHistory::Undo()
 {

@@ -51,7 +51,6 @@ END_MESSAGE_MAP()
 // создание/уничтожение CShapeCompositorView
 
 CShapeCompositorView::CShapeCompositorView()
-	: m_history(&m_canvas)
 {
 }
 
@@ -95,19 +94,19 @@ ID2D1HwndRenderTarget * CShapeCompositorView::GetRenderTarget()
 
 void CShapeCompositorView::CreateTriangle()
 {
-	m_history.AddTriangle();
+	m_history.AddAndExecuteCommand(std::make_shared<CAddShapeCanvasCommand>(&m_canvas, TypeShape::Triangle));
 	RedrawWindow();
 }
 
 void CShapeCompositorView::CreateRectangle()
 {
-	m_history.AddRectangle();
+	m_history.AddAndExecuteCommand(std::make_shared<CAddShapeCanvasCommand>(&m_canvas, TypeShape::Rectangle));
 	RedrawWindow();
 }
 
 void CShapeCompositorView::CreateEllipse()
 {
-	m_history.AddEllipse();
+	m_history.AddAndExecuteCommand(std::make_shared<CAddShapeCanvasCommand>(&m_canvas, TypeShape::Ellipse));
 	RedrawWindow();
 }
 
@@ -266,7 +265,7 @@ BOOL CShapeCompositorView::PreTranslateMessage(MSG* pMsg)
 			{
 				case VK_DELETE:
 				{
-					m_history.DeleteSelectShape();
+					m_history.AddAndExecuteCommand(std::make_shared<CDeleteShapeCanvasCommand>(&m_canvas));
 					RedrawWindow();
 				}
 				break;
