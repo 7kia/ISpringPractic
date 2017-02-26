@@ -290,6 +290,7 @@ void CShapeCompositorView::OnLButtonDown(UINT nFlags, CPoint point)
 
 	CScrollView::OnLButtonDown(nFlags, point);
 
+	ChangeCursor(point);
 	m_canvas.HandleLButtHandleDown(point);
 	RedrawWindow();
 }
@@ -298,7 +299,7 @@ void CShapeCompositorView::OnMouseMove(UINT nFlags, CPoint point)
 {
 	// TODO: добавьте свой код обработчика сообщений или вызов стандартного
 	CView::OnMouseMove(nFlags, point);
-
+	ChangeCursor(point);
 	if (m_canvas.HandleMouseMove(point))
 	{
 		RedrawWindow();
@@ -312,6 +313,7 @@ void CShapeCompositorView::OnLButtonUp(UINT nFlags, CPoint point)
 
 	CView::OnLButtonUp(nFlags, point);
 	m_canvas.HandleLButtHandleUp(point);
+	ChangeCursor(point);
 
 	if (m_canvas.DoneUpdateSelectedShape())
 	{
@@ -359,4 +361,50 @@ BOOL CShapeCompositorView::OnEraseBkgnd(CDC* pDC)
 	// TODO: добавьте свой код обработчика сообщений или вызов стандартного
 
 	return TRUE;//CScrollView::OnEraseBkgnd(pDC);
+}
+
+void CShapeCompositorView::ChangeCursor(const CPoint mousePos)
+{
+	const Vec2f position = Vec2f(float(mousePos.x), float(mousePos.y));
+	const auto pSelectShape = m_canvas.GetSelectShape();
+	const auto pFrameSelectShape = m_canvas.GetFrameSelectedShape();
+	if (pSelectShape)
+	{
+		CSelectShape::UpdateType updateType = m_canvas.GetFrameSelectedShape()->GetUpdateType();
+		bool needChangeToNW = (updateType == CSelectShape::UpdateType::MarkerLeftTop)
+			|| (updateType == CSelectShape::UpdateType::MarkerRightBottom)
+			|| pFrameSelectShape->InLeftTopMarker(position)
+			|| pFrameSelectShape->InRightBottomMarker(position);
+		bool needChangeToNE = (updateType == CSelectShape::UpdateType::MarkerRightTop) 
+			|| (updateType == CSelectShape::UpdateType::MarkerLeftBottom)
+			|| pFrameSelectShape->InRightTopMarker(position)
+			|| pFrameSelectShape->InLeftBottomMarker(position);
+
+		if (needChangeToNW)
+		{
+			SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZENWSE));
+			return;
+		}
+		else if (needChangeToNE)
+		{
+			SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZENESW));
+			return;
+		}
+		else if (m_canvas.GetShape(position) != nullptr)
+		{
+			SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZEALL));
+		}
+	}
+	else
+	{
+		if (m_canvas.GetShape(position) != nullptr)
+		{
+			SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZEALL));
+		}
+		else
+		{
+			SetCursor(AfxGetApp()->LoadStandardCursor(IDC_ARROW));
+		}
+	}
+
 }

@@ -85,7 +85,7 @@ CSelectShape::UpdateType CSelectShape::GetUpdateType() const
 
 bool CSelectShape::IsResize(const Vec2f point)
 {
-	size_t index = 1;
+	size_t index = size_t(UpdateType::MarkerLeftBottom);
 	for (const auto & resizeShape : m_resizeShapes)
 	{
 		if (resizeShape->IsPointIntersection(point))
@@ -98,6 +98,26 @@ bool CSelectShape::IsResize(const Vec2f point)
 
 
 	return false;
+}
+
+bool CSelectShape::InLeftTopMarker(const Vec2f point)
+{
+	return m_resizeShapes[size_t(Marker::MarkerLeftTop)]->IsPointIntersection(point);
+}
+
+bool CSelectShape::InLeftBottomMarker(const Vec2f point)
+{
+	return m_resizeShapes[size_t(Marker::MarkerLeftBottom)]->IsPointIntersection(point);
+}
+
+bool CSelectShape::InRightTopMarker(const Vec2f point)
+{
+	return m_resizeShapes[size_t(Marker::MarkerRightTop)]->IsPointIntersection(point);
+}
+
+bool CSelectShape::InRightBottomMarker(const Vec2f point)
+{
+	return m_resizeShapes[size_t(Marker::MarkerRightBottom)]->IsPointIntersection(point);
 }
 
 bool CSelectShape::IsMove(const Vec2f point)
@@ -134,6 +154,7 @@ void CSelectShape::HandleMoveMouse(const Vec2f point)
 
 			SetFrameData(GetCurrentFrameData());
 			m_start = m_current;
+
 		}
 		break;
 	default:

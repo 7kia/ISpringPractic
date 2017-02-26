@@ -62,7 +62,6 @@ std::vector<Vec2f> CTriangle::GetVertices() const
 	{
 		//result = { third, second, first };
 		std::swap(first, third);
-
 	}
 	result = { first, second, third };
 

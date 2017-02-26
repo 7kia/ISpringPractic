@@ -47,6 +47,8 @@ public:
 	void					Undo();
 	void					Redo();
 
+	void					ChangeCursor(const CPoint mousePos);
+
 // Переопределение
 public:
 	virtual void OnDraw(CDC* pDC);  // переопределено для отрисовки этого представления

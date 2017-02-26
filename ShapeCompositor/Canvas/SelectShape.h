@@ -16,6 +16,13 @@ class CSelectShape
 public:
 	CSelectShape(CD2DObjectRenderer & shapeRenderer, const CShapeFactory & shapeFactory);
 
+	enum class Marker
+	{
+		MarkerLeftBottom = 0,
+		MarkerRightBottom,
+		MarkerRightTop,
+		MarkerLeftTop,
+	};
 	enum class UpdateType
 	{
 		None = -1,
@@ -42,6 +49,12 @@ public:
 
 	//
 	bool					IsResize(const Vec2f point);
+	bool					InLeftTopMarker(const Vec2f point);
+	bool					InLeftBottomMarker(const Vec2f point);
+	bool					InRightTopMarker(const Vec2f point);
+	bool					InRightBottomMarker(const Vec2f point);
+
+
 	bool					IsMove(const Vec2f point);
 	void					HandleMoveMouse(const Vec2f point);
 	//--------------------------------------------
