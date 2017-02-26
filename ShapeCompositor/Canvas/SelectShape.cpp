@@ -275,7 +275,8 @@ SFrameData CSelectShape::GetCurrentFrameData()
 	const Vec2f shift = m_current - m_start;
 	SSize resize = GetChangeResize();
 
-	info.position = m_frameData.position + (Vec2f(shift.x / 2.f, shift.y / 2.f));
+	const float shiftFactor = (m_updateType == UpdateType::Move) ? 1.f : 1.f / 2.f;
+	info.position = m_frameData.position + (Vec2f(shift.x * shiftFactor, shift.y * shiftFactor));
 	info.size = m_frameData.size + (SSize(shift.x * resize.width, shift.y * resize.height));
 
 	return info;

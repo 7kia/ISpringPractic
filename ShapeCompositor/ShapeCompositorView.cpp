@@ -226,7 +226,7 @@ void CShapeCompositorView::OnSize(UINT nType, int cx, int cy)
 		// the next time EndDraw is called.
 		m_pRenderTarget->Resize(D2D1::SizeU(cx, cy));
 	}
-
+	//RedrawWindow();
 }
 
 
@@ -358,5 +358,5 @@ BOOL CShapeCompositorView::OnEraseBkgnd(CDC* pDC)
 {
 	// TODO: добавьте свой код обработчика сообщений или вызов стандартного
 
-	return CScrollView::OnEraseBkgnd(pDC);
+	return TRUE;//CScrollView::OnEraseBkgnd(pDC);
 }
