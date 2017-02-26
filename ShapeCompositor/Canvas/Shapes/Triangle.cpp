@@ -47,11 +47,26 @@ bool PointIsInsideTriangle(Vec2f p0, Vec2f p1, Vec2f p2, Vec2f p)
 
 std::vector<Vec2f> CTriangle::GetVertices() const
 {
-	return{
-		Vec2f(m_position.x - m_size.width / 2.f, m_position.y + m_size.height / 2.f)
-		, Vec2f(m_position.x + m_size.width / 2.f, m_position.y + m_size.height / 2.f)
-		, Vec2f(m_position.x, m_position.y - m_size.height / 2.f)
-	};
+	Vec2f first = Vec2f(m_position.x - m_size.width / 2.f, m_position.y + m_size.height / 2.f);
+	Vec2f second = Vec2f(m_position.x + m_size.width / 2.f, m_position.y + m_size.height / 2.f);
+	Vec2f third = Vec2f(m_position.x, m_position.y - m_size.height / 2.f);
+
+	std::vector<Vec2f> result;
+
+	if (m_size.width < 0.f)
+	{
+		//result = { second, first, third };
+		std::swap(first, second);
+	}
+	if (m_size.height < 0.f)
+	{
+		//result = { third, second, first };
+		std::swap(first, third);
+
+	}
+	result = { first, second, third };
+
+	return result;
 }
 
 bool CTriangle::IsPointIntersection(const Vec2f point) const
