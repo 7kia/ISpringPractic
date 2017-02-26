@@ -70,8 +70,12 @@ public:
 	// For drag and drop
 	Vec2f	GetShift() const;
 	void	MoveFrame(const Vec2f shift);
-	void	UpdateScaleFrame(const Vec2f shift);
 	SFrameData GetNewFrameData() const;
+	SFrameData	GetOldFrameData();
+	SFrameData	GetCurrentFrameData();
+	SSize GetChangeResize() const;
+	void ReturnToOldState();
+
 private:
 	void					SetViewPosition();
 	void					SetMoveView();

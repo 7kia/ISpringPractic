@@ -12,8 +12,8 @@ class IMouseEventHandler
 public:
 	virtual ~IMouseEventHandler() = default;
 
-	virtual void HandleLButtHandleDown(CPoint point )= 0;
-	virtual void HandleLButtHandleUp(CPoint point) = 0;
-	virtual void HandleRButtHandleUp(CPoint point) = 0;
-	virtual void HandleMouseMove(CPoint point) = 0;
+	virtual bool HandleLButtHandleDown(CPoint point )= 0;
+	virtual bool HandleLButtHandleUp(CPoint point) = 0;
+	virtual bool HandleRButtHandleUp(CPoint point) = 0;
+	virtual bool HandleMouseMove(CPoint point) = 0;
 };

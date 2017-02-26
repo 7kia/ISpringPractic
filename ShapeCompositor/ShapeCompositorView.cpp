@@ -299,8 +299,11 @@ void CShapeCompositorView::OnMouseMove(UINT nFlags, CPoint point)
 	// TODO: добавьте свой код обработчика сообщений или вызов стандартного
 	CView::OnMouseMove(nFlags, point);
 
-	m_canvas.HandleMouseMove(point);
-	//RedrawWindow();
+	if (m_canvas.HandleMouseMove(point))
+	{
+		RedrawWindow();
+	}
+
 }
 
 void CShapeCompositorView::OnLButtonUp(UINT nFlags, CPoint point)
@@ -316,6 +319,7 @@ void CShapeCompositorView::OnLButtonUp(UINT nFlags, CPoint point)
 		{
 		case CSelectShape::UpdateType::Move:
 			{
+			m_canvas.GetFrameSelectedShape()->ReturnToOldState();
 			m_history.AddAndExecuteCommand(std::make_shared<CMoveShapeCanvasCommand>(
 				m_canvas.GetSelectShape(),
 				m_canvas.GetShiftSelectedShape(),
@@ -328,9 +332,10 @@ void CShapeCompositorView::OnLButtonUp(UINT nFlags, CPoint point)
 		case CSelectShape::UpdateType::MarkerRightBottom:
 		case CSelectShape::UpdateType::MarkerRightTop:
 			{
+			m_canvas.GetFrameSelectedShape()->ReturnToOldState();
 			m_history.AddAndExecuteCommand(std::make_shared<CScaleShapeCanvasCommand>(
 				m_canvas.GetSelectShape(),
-				m_canvas.GetFrameSelectedShape()->GetFrameData(),
+				m_canvas.GetFrameSelectedShape()->GetOldFrameData(),
 				m_canvas.GetFrameSelectedShape()->GetNewFrameData(),
 				m_canvas.GetFrameSelectedShape()
 				));

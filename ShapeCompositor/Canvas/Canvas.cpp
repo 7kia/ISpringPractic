@@ -154,7 +154,7 @@ size_t CCanvas::GetIndexShape(CShapePtr pShape) const
 	return  std::find(m_shapes.begin(), m_shapes.end(), pShape) - m_shapes.begin();
 }
 
-void CCanvas::HandleLButtHandleDown(CPoint point)
+bool CCanvas::HandleLButtHandleDown(CPoint point)
 {
 
 	if (m_selectShape.HaveSelectedShape())
@@ -162,7 +162,7 @@ void CCanvas::HandleLButtHandleDown(CPoint point)
 		if (m_selectShape.IsResize(Vec2f(float(point.x), float(point.y))))
 		{
 			m_selectShape.SetStateUpdate(true);
-			return;
+			return true;
 		}
 	}	
 	ChangeSelectShape(Vec2f(float(point.x), float(point.y)));
@@ -172,29 +172,36 @@ void CCanvas::HandleLButtHandleDown(CPoint point)
 		if (m_selectShape.IsMove(Vec2f(float(point.x), float(point.y))))
 		{
 			m_selectShape.SetStateUpdate(true);
+			return true;
 		}
 	}
+	return false;
 }
 
-void CCanvas::HandleLButtHandleUp(CPoint point)
+bool CCanvas::HandleLButtHandleUp(CPoint point)
 {
 	if (m_selectShape.HaveSelectedShape())
 	{
 		m_selectShape.SetStateUpdate(false);
+		return true;
 	}
+	return false;
 }
 
-void CCanvas::HandleRButtHandleUp(CPoint point)
+bool CCanvas::HandleRButtHandleUp(CPoint point)
 {
 	// TODO
+	return false;
 }
 
-void CCanvas::HandleMouseMove(CPoint point)
+bool CCanvas::HandleMouseMove(CPoint point)
 {
 	if (m_selectShape.HaveSelectedShape() && m_selectShape.GetUpdateState())
 	{
 		m_selectShape.HandleMoveMouse(Vec2f(float(point.x), float(point.y)));
+		return true;
 	}
+	return false;
 }
 
 

@@ -50,10 +50,10 @@ public:
 	//--------------------------------------------
 	// IMouseEventHandler
 
-	void HandleLButtHandleDown(CPoint point) override;
-	void HandleLButtHandleUp(CPoint point) override;
-	void HandleRButtHandleUp(CPoint point) override;
-	void HandleMouseMove(CPoint point) override;
+	bool HandleLButtHandleDown(CPoint point) override;
+	bool HandleLButtHandleUp(CPoint point) override;
+	bool HandleRButtHandleUp(CPoint point) override;
+	bool HandleMouseMove(CPoint point) override;
 
 	//--------------------------------------------
 
