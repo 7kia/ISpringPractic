@@ -20,18 +20,61 @@
 #endif
 
 #include "ShapeCompositorDoc.h"
-
 #include <propkey.h>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
+namespace
+{
+	std::string GetShapeName(ShapeType type)
+	{
+		switch (type)
+		{
+		case ShapeType::Triangle:
+			return "Triangle";
+		case ShapeType::Rectangle:
+			return "Rectangle";
+		case ShapeType::Ellipse:
+			return "Ellipse";
+		default:
+			throw std::runtime_error("Incorrect shape type");
+			break;
+		}
+		return "Triangle";
+	}
+
+	ShapeType GetShapeType(std::string const& typeStr)
+	{
+		if (typeStr == "Triangle")
+		{
+			return ShapeType::Triangle;
+		}
+		else if (typeStr == "Rectangle")
+		{
+			return ShapeType::Rectangle;
+		}
+		else if (typeStr == "Ellipse")
+		{
+			return ShapeType::Ellipse;
+		}
+		else
+		{
+			throw std::runtime_error("Incorrect shape type");
+		}
+	}
+}
+
+
 // CShapeCompositorDoc
 
 IMPLEMENT_DYNCREATE(CShapeCompositorDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CShapeCompositorDoc, CDocument)
+	ON_COMMAND(ID_FILE_SAVE_AS, &CShapeCompositorDoc::OnFileSaveAs)
+	ON_COMMAND(ID_FILE_OPEN, &CShapeCompositorDoc::OnFileOpen)
+	ON_COMMAND(ID_FILE_SAVE, &CShapeCompositorDoc::OnFileSave)
 END_MESSAGE_MAP()
 
 
@@ -45,6 +88,11 @@ CShapeCompositorDoc::CShapeCompositorDoc()
 
 CShapeCompositorDoc::~CShapeCompositorDoc()
 {
+}
+
+std::vector<CShapePtr>& CShapeCompositorDoc::GetShapes()
+{
+	return m_shapes;
 }
 
 BOOL CShapeCompositorDoc::OnNewDocument()
@@ -65,6 +113,7 @@ BOOL CShapeCompositorDoc::OnNewDocument()
 
 void CShapeCompositorDoc::Serialize(CArchive& ar)
 {
+	
 	if (ar.IsStoring())
 	{
 		// TODO: добавьте код сохранения
@@ -145,3 +194,185 @@ void CShapeCompositorDoc::Dump(CDumpContext& dc) const
 
 
 // команды CShapeCompositorDoc
+
+
+bool CShapeCompositorDoc::Save(const std::wstring path, std::vector<CShapePtr> const & shapes)
+{
+	if (path.empty())
+	{
+		return false;
+	}
+	try
+	{
+		boost::property_tree::ptree propertyTree;
+		for (auto &shape : shapes)
+		{
+			boost::property_tree::ptree child;
+			child.add("Type", GetShapeName(shape->GetType()));
+			child.add("X", std::to_string(shape->GetPosition().x));
+			child.add("Y", std::to_string(shape->GetPosition().y));
+			child.add("Width", std::to_string(shape->GetSize().width));
+			child.add("Height", std::to_string(shape->GetSize().height));
+			propertyTree.add_child("Shapes.Shape", child);
+		}
+		std::stringstream stream;
+		boost::property_tree::write_xml(stream, propertyTree);
+
+		std::ofstream out(path);
+		std::string str;
+		while (!stream.eof())
+		{
+			stream >> str;
+			out << str;
+		}
+		out.close();
+		return true;
+	}
+	catch (boost::property_tree::xml_parser_error)
+	{
+		std::cout << "XML parser error!" << std::endl;
+		throw;
+	}
+	return false;
+}
+
+bool CShapeCompositorDoc::Open(const std::wstring path, CCanvas & canvas)
+{
+	if (path.empty())
+	{
+		return false;
+	}
+	try
+	{
+		std::ifstream stream(path);
+		boost::property_tree::ptree propertyTree;
+		boost::property_tree::read_xml(stream, propertyTree);
+		for (auto &shape : propertyTree.get_child("Shapes"))
+		{
+			if (shape.first == "Shape")
+			{
+				std::string type = shape.second.get<std::string>("Type");
+				float x = shape.second.get<float>("X");
+				float y = shape.second.get<float>("Y");
+				float width = shape.second.get<float>("Width");
+				float height = shape.second.get<float>("Height");
+
+				SShapeData data;
+				data.type = GetShapeType(type);
+				data.position = Vec2f(x, y);
+				data.size = SSize(width, height);
+
+				canvas.PushBackShape(data);
+			}
+		}
+		stream.close();
+		return true;
+	}
+	catch (boost::property_tree::xml_parser_error)
+	{
+		std::cout << "XML parser error!" << std::endl;
+		throw;
+	}
+	return false;
+}
+
+void CShapeCompositorDoc::SetCanvas(CCanvas * pCanvas)
+{
+	m_pCanvas = pCanvas;
+}
+
+void CShapeCompositorDoc::SetHistory(CHistory * pHistory)
+{
+	m_pHistory = pHistory;
+}
+
+
+CString CShapeCompositorDoc::OpenSaveDialog()
+{
+	CString fileName;
+
+	CFileDialog fileDlg(FALSE
+		, _T("")
+		, _T("*.xml")
+		, OFN_HIDEREADONLY
+		, L"XML Files\0"    L"*.xml\0");
+	if (fileDlg.DoModal() == IDOK)
+	{
+		CString pathName = fileDlg.GetPathName();
+
+		// Implement opening and reading file in here.
+
+		//Change the window's title to the opened file's title.
+		fileName = fileDlg.GetFileTitle();
+
+		//if(fileName.Find)
+		// TODO : add checks for fromat
+		fileName.Append(L".xml");
+	}
+
+	return fileName;// GetSaveFileName(&ofn);
+}
+
+CString CShapeCompositorDoc::OpenLoadDialog()
+{
+	CString fileName;
+
+	CFileDialog fileDlg(TRUE
+		, NULL
+		, _T("*.xml")
+		, OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST
+		, L"XML Files\0"    L"*.xml\0");
+	if (fileDlg.DoModal() == IDOK)
+	{
+		CString pathName = fileDlg.GetPathName();
+
+		// Implement opening and reading file in here.
+
+		//Change the window's title to the opened file's title.
+		fileName = fileDlg.GetFileTitle();
+
+		//if(fileName.Find)
+		// TODO : add checks for fromat
+		fileName.Append(L".xml");
+	}
+
+	return fileName;// GetSaveFileName(&ofn);
+}
+
+
+void CShapeCompositorDoc::OnFileSaveAs()
+{
+	CString fileName = OpenSaveDialog();
+	if (fileName.GetLength() != 0)
+	{
+		m_fileToSave = fileName.GetString();
+		Save(m_fileToSave, m_shapes);
+	}
+}
+
+
+void CShapeCompositorDoc::OnFileOpen()
+{
+	CString fileName = OpenLoadDialog();
+	if (fileName.GetLength() != 0)
+	{
+		m_shapes.clear();
+		m_pHistory->Clear();
+		m_pCanvas->GetFrameSelectedShape()->ResetSelectShapePtr();// TODO : see can rewrite
+
+		m_fileToSave = fileName.GetString();
+		Open(m_fileToSave, *m_pCanvas);
+	}
+}
+
+void CShapeCompositorDoc::OnFileSave()
+{
+	if (m_fileToSave.empty())
+	{
+		OnFileSaveAs();
+	}
+	else
+	{
+		Save(m_fileToSave, m_shapes);
+	}
+}

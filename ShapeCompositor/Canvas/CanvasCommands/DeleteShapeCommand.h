@@ -20,7 +20,7 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
-	TypeShape m_type = TypeShape::Rectangle;
+	ShapeType m_type = ShapeType::Rectangle;
 	SShapeData m_data;
 	size_t m_index = 0;
 	CCanvas * m_pCanvas = nullptr;

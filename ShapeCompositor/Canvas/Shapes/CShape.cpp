@@ -2,7 +2,7 @@
 #include "CShape.h"
 
 SShapeData::SShapeData(
-	const TypeShape type
+	const ShapeType type
 	, const Vec2f position
 	, const SSize size
 	, const Color fillColor
@@ -16,7 +16,7 @@ SShapeData::SShapeData(
 }
 
 CShape::CShape(
-	const TypeShape type
+	const ShapeType type
 	, const Vec2f position
 	, const SSize size
 	, const Color fillColor
@@ -116,7 +116,7 @@ void CShape::SetFrameData(SFrameData const & data)
 	m_size = data.size;
 }
 
-TypeShape CShape::GetShape() const
+ShapeType CShape::GetType() const
 {
 	return m_type;
 }

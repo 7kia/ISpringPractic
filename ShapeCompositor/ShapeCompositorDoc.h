@@ -15,6 +15,17 @@
 
 #pragma once
 
+#include <vector>
+#include <memory>
+#include <sstream>
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <boost\property_tree\ptree.hpp>
+#include <boost\property_tree\xml_parser.hpp>
+
+#include "Canvas\Canvas.h"
+#include "Canvas\History.h"
 
 class CShapeCompositorDoc : public CDocument
 {
@@ -24,14 +35,25 @@ protected: // создать только из сериализации
 
 // Атрибуты
 public:
-
 // Операции
 public:
+	std::vector<CShapePtr>& GetShapes();
 
+	static bool Save(const std::wstring path, std::vector<CShapePtr> const& shapes);
+	static bool Open(const std::wstring path, CCanvas & canvas);
+
+	void SetCanvas(CCanvas * pCanvas);
+	void SetHistory(CHistory * pHistory);
+
+	afx_msg void OnFileSaveAs();
+	afx_msg void OnFileOpen();
+	afx_msg void OnFileSave();
 // Переопределение
 public:
 	virtual BOOL OnNewDocument();
 	virtual void Serialize(CArchive& ar);
+
+
 #ifdef SHARED_HANDLERS
 	virtual void InitializeSearchContent();
 	virtual void OnDrawThumbnail(CDC& dc, LPRECT lprcBounds);
@@ -46,10 +68,17 @@ public:
 #endif
 
 protected:
+	std::vector<CShapePtr> m_shapes;
+	CCanvas* m_pCanvas = nullptr;
+	CHistory* m_pHistory = nullptr;
 
+	std::wstring m_fileToSave;
 // Созданные функции схемы сообщений
 protected:
 	DECLARE_MESSAGE_MAP()
+
+	CString OpenSaveDialog();
+	CString OpenLoadDialog();
 
 #ifdef SHARED_HANDLERS
 	// Вспомогательная функция, задающая содержимое поиска для обработчика поиска

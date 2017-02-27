@@ -7,7 +7,7 @@ class CCanvas;
 class CAddShapeCanvasCommand : public IMyCommand
 {
 public:
-	CAddShapeCanvasCommand(CCanvas * pCanvas, TypeShape type);//TypeShape
+	CAddShapeCanvasCommand(CCanvas * pCanvas, ShapeType type);//ShapeType
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
@@ -20,6 +20,6 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
-	TypeShape m_type = TypeShape::Rectangle;
+	ShapeType m_type = ShapeType::Rectangle;
 	CCanvas * m_pCanvas = nullptr;
 };

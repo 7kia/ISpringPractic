@@ -94,19 +94,19 @@ ID2D1HwndRenderTarget * CShapeCompositorView::GetRenderTarget()
 
 void CShapeCompositorView::CreateTriangle()
 {
-	m_history.AddAndExecuteCommand(std::make_shared<CAddShapeCanvasCommand>(&m_canvas, TypeShape::Triangle));
+	m_history.AddAndExecuteCommand(std::make_shared<CAddShapeCanvasCommand>(&m_canvas, ShapeType::Triangle));
 	RedrawWindow();
 }
 
 void CShapeCompositorView::CreateRectangle()
 {
-	m_history.AddAndExecuteCommand(std::make_shared<CAddShapeCanvasCommand>(&m_canvas, TypeShape::Rectangle));
+	m_history.AddAndExecuteCommand(std::make_shared<CAddShapeCanvasCommand>(&m_canvas, ShapeType::Rectangle));
 	RedrawWindow();
 }
 
 void CShapeCompositorView::CreateEllipse()
 {
-	m_history.AddAndExecuteCommand(std::make_shared<CAddShapeCanvasCommand>(&m_canvas, TypeShape::Ellipse));
+	m_history.AddAndExecuteCommand(std::make_shared<CAddShapeCanvasCommand>(&m_canvas, ShapeType::Ellipse));
 	RedrawWindow();
 }
 
@@ -179,6 +179,10 @@ int CShapeCompositorView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	try
 	{
+		GetDocument()->SetCanvas(&m_canvas);
+		GetDocument()->SetHistory(&m_history);
+		m_canvas.SetDocument(GetDocument());
+
 		// Enable D2D support for this window:  
 
 		CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);

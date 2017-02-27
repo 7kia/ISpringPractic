@@ -4,7 +4,7 @@
 #include "ShapeVisitor.h"
 
 
-enum class TypeShape
+enum class ShapeType
 {
 	Triangle
 	, Rectangle
@@ -15,14 +15,14 @@ enum class TypeShape
 struct SShapeData : public SFrameData
 {
 	SShapeData(
-		const TypeShape type = TypeShape::Rectangle
+		const ShapeType type = ShapeType::Rectangle
 		, const Vec2f position = Vec2f()
 		, const SSize size = DEFAULT_SIZE
 		, const Color fillColor = DEFAULT_FILL_COLOR
 		, const Color outlineColor = DEFAULT_OUTLINE_COLOR
 	);
 
-	TypeShape type;
+	ShapeType type;
 	Color fillColor;
 	Color outlineColor;
 };
@@ -48,5 +48,5 @@ public:
 	virtual void SetShapeData(SShapeData const & data) = 0;
 
 	// Type
-	virtual TypeShape GetShape() const = 0;
+	virtual ShapeType GetType() const = 0;
 };

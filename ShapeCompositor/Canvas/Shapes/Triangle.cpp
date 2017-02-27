@@ -8,7 +8,7 @@ CTriangle::CTriangle(
 	, const Color outlineColor
 )
 	: CShape(
-		TypeShape::Triangle
+		ShapeType::Triangle
 		, position
 		, size
 		, fillColor

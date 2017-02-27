@@ -5,14 +5,14 @@ CSelectShape::CSelectShape(CD2DObjectRenderer & shapeRenderer, const CShapeFacto
 	: IDrawable()
 {
 	SShapeData rectangleData;
-	rectangleData.type = TypeShape::Rectangle;
+	rectangleData.type = ShapeType::Rectangle;
 	rectangleData.outlineColor = BLACK_COLOR;
 	rectangleData.fillColor = NOT_COLOR;
 
 	m_moveShape.push_back(shapeFactory.CreateShape(rectangleData, shapeRenderer));
 	
 	SShapeData ellipseData;
-	ellipseData.type = TypeShape::Ellipse;
+	ellipseData.type = ShapeType::Ellipse;
 	ellipseData.outlineColor = BLACK_COLOR;
 	ellipseData.fillColor = BLACK_COLOR;
 
@@ -56,14 +56,12 @@ void CSelectShape::ResetUpdateParameters()
 
 }
 
-void CSelectShape::SetStateUpdate(bool state)
+void CSelectShape::SetUpdateState(bool state)
 {
 	m_isUpdate = state;
-
-
 }
 
-bool CSelectShape::GetUpdateState() const
+bool CSelectShape::IsUpdate() const
 {
 	return m_isUpdate;
 }

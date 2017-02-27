@@ -8,7 +8,7 @@ CRectangle::CRectangle(
 	, const Color outlineColor
 )
 	: CShape(
-		TypeShape::Rectangle
+		ShapeType::Rectangle
 		, position
 		, size
 		, fillColor

@@ -23,6 +23,7 @@ static const LONG VIEW_WIDTH = 640;
 static const LONG VIEW_HEIGHT = 480;
 
 class CShapeCompositorView;
+class CShapeCompositorDoc;
 class CCanvasController;
 
 
@@ -70,7 +71,10 @@ public:
 
 	void PushBackShape(SShapeData data);
 	void InsertShape(size_t insertIndex, SShapeData data);
+	std::vector<CShapePtr>* GetShapes() const;
 
+
+	void SetDocument(CShapeCompositorDoc * document);
 private:
 
 	bool		IsSelectShape(size_t index) const;
@@ -85,6 +89,7 @@ public:
 	CSelectShape								m_selectShape;
 
 	// TODO : see might require do private
-	std::vector<CShapePtr>						m_shapes;
+	std::vector<CShapePtr>*						m_pShapes;
 private:
+	CShapeCompositorDoc *						m_pDocument = nullptr;
 };

@@ -13,7 +13,7 @@ class CShape
 {
 public:
 	CShape(
-		const TypeShape type
+		const ShapeType type
 		, const Vec2f position = Vec2f()
 		, const SSize size = DEFAULT_SIZE
 		, const Color fillColor = DEFAULT_FILL_COLOR
@@ -32,7 +32,7 @@ public:
 	void SetOutlineColor(Color color) override;
 	Color GetOutlineColor() const override;
 	// Type
-	TypeShape GetShape() const override;
+	ShapeType GetType() const override;
 
 	SShapeData GetShapeData() const override;
 	void SetShapeData(SShapeData const & data) override;
@@ -67,7 +67,7 @@ protected:
 	SSize m_size;
 	Color m_fillColor;
 	Color m_outlineColor;
-	TypeShape m_type;
+	ShapeType m_type;
 };
 
 using CShapePtr = std::shared_ptr<CShape>;

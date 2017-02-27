@@ -10,21 +10,21 @@ CShapePtr CShapeFactory::CreateShape(const SShapeData & data, CD2DObjectRenderer
 {
 	switch (data.type)
 	{
-	case TypeShape::Triangle:
+	case ShapeType::Triangle:
 		return std::make_shared<CTriangle>(
 			data.position
 			, data.size
 			, data.fillColor
 			, data.outlineColor
 			);
-	case TypeShape::Rectangle:
+	case ShapeType::Rectangle:
 		return std::make_shared<CRectangle>(
 			data.position
 			, data.size
 			, data.fillColor
 			, data.outlineColor
 			);
-	case TypeShape::Ellipse:
+	case ShapeType::Ellipse:
 		return std::make_shared<CEllipse>(
 			data.position
 			, data.size

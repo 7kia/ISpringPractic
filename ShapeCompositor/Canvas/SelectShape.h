@@ -40,8 +40,8 @@ public:
 	void					ResetSelectShapePtr();
 	void					ResetUpdateParameters();
 
-	void					SetStateUpdate(bool state);
-	bool					GetUpdateState() const;
+	void					SetUpdateState(bool state);
+	bool					IsUpdate() const;
 	bool					HaveSelectedShape() const;
 
 	void					SetUpdateType(UpdateType type);

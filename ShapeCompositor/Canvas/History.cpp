@@ -37,3 +37,9 @@ void CHistory::Redo()
 		m_currentCommand->get()->Execute();
 	}
 }
+
+void CHistory::Clear()
+{
+	m_history.clear();
+	m_currentCommand = m_history.rbegin();
+}

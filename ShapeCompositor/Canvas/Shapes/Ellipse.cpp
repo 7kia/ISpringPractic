@@ -8,7 +8,7 @@ CEllipse::CEllipse(
 	, const Color outlineColor
 )
 	: CShape(
-		TypeShape::Ellipse
+		ShapeType::Ellipse
 		, position
 		, size
 		, fillColor
