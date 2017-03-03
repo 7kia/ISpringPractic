@@ -72,9 +72,6 @@ namespace
 IMPLEMENT_DYNCREATE(CShapeCompositorDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CShapeCompositorDoc, CDocument)
-	ON_COMMAND(ID_FILE_SAVE_AS, &CShapeCompositorDoc::OnFileSaveAs)
-	ON_COMMAND(ID_FILE_OPEN, &CShapeCompositorDoc::OnFileOpen)
-	ON_COMMAND(ID_FILE_SAVE, &CShapeCompositorDoc::OnFileSave)
 END_MESSAGE_MAP()
 
 
@@ -303,11 +300,7 @@ CString CShapeCompositorDoc::OpenSaveDialog()
 		// Implement opening and reading file in here.
 
 		//Change the window's title to the opened file's title.
-		fileName = fileDlg.GetFileTitle();
-
-		//if(fileName.Find)
-		// TODO : add checks for fromat
-		fileName.Append(L".xml");
+		fileName = pathName;
 	}
 
 	return fileName;// GetSaveFileName(&ofn);
@@ -329,11 +322,11 @@ CString CShapeCompositorDoc::OpenLoadDialog()
 		// Implement opening and reading file in here.
 
 		//Change the window's title to the opened file's title.
-		fileName = fileDlg.GetFileTitle();
+		fileName = pathName;
 
 		//if(fileName.Find)
 		// TODO : add checks for fromat
-		fileName.Append(L".xml");
+		//fileName.Append(L".xml");
 	}
 
 	return fileName;// GetSaveFileName(&ofn);

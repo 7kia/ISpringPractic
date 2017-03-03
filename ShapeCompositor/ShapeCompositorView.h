@@ -82,6 +82,10 @@ protected:
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 
+	afx_msg void OnFileSaveAs();
+	afx_msg void OnFileOpen();
+	afx_msg void OnFileSave();
+
 public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	// buttons

@@ -40,6 +40,9 @@ BEGIN_MESSAGE_MAP(CShapeCompositorView, CScrollView)
 	ON_COMMAND(ID_ADD_ELLIPSE, CShapeCompositorView::CreateEllipse)
 	ON_COMMAND(ID_UNDO, CShapeCompositorView::Undo)
 	ON_COMMAND(ID_REDO, CShapeCompositorView::Redo)
+	ON_COMMAND(ID_FILE_SAVE_AS, &CShapeCompositorView::OnFileSaveAs)
+	ON_COMMAND(ID_FILE_OPEN, &CShapeCompositorView::OnFileOpen)
+	ON_COMMAND(ID_FILE_SAVE, &CShapeCompositorView::OnFileSave)
 	ON_WM_SIZE()
 	ON_WM_PAINT()
 	ON_WM_ERASEBKGND()
@@ -231,6 +234,24 @@ void CShapeCompositorView::OnSize(UINT nType, int cx, int cy)
 		m_pRenderTarget->Resize(D2D1::SizeU(cx, cy));
 	}
 	//RedrawWindow();
+}
+
+void CShapeCompositorView::OnFileSaveAs()
+{
+	GetDocument()->OnFileSave();
+	RedrawWindow();
+}
+
+void CShapeCompositorView::OnFileOpen()
+{
+	GetDocument()->OnFileOpen();
+	RedrawWindow();
+}
+
+void CShapeCompositorView::OnFileSave()
+{
+	GetDocument()->OnFileSave();
+	RedrawWindow();
 }
 
 
