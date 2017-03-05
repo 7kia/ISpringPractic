@@ -288,48 +288,42 @@ CString CShapeCompositorDoc::OpenSaveDialog()
 {
 	CString fileName;
 
-	CFileDialog fileDlg(FALSE
+	CFileDialog fileDlg(
+		FALSE
 		, _T("")
 		, _T("*.xml")
 		, OFN_HIDEREADONLY
-		, L"XML Files\0"    L"*.xml\0");
+		, L"XML Files\0"    L"*.xml\0"
+	);
 	if (fileDlg.DoModal() == IDOK)
 	{
 		CString pathName = fileDlg.GetPathName();
 
-		// Implement opening and reading file in here.
-
-		//Change the window's title to the opened file's title.
 		fileName = pathName;
 	}
 
-	return fileName;// GetSaveFileName(&ofn);
+	return fileName;
 }
 
 CString CShapeCompositorDoc::OpenLoadDialog()
 {
 	CString fileName;
 
-	CFileDialog fileDlg(TRUE
+	CFileDialog fileDlg(
+		TRUE
 		, NULL
 		, _T("*.xml")
 		, OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST
-		, L"XML Files\0"    L"*.xml\0");
+		, L"XML Files\0"    L"*.xml\0"
+	);
 	if (fileDlg.DoModal() == IDOK)
 	{
 		CString pathName = fileDlg.GetPathName();
 
-		// Implement opening and reading file in here.
-
-		//Change the window's title to the opened file's title.
 		fileName = pathName;
-
-		//if(fileName.Find)
-		// TODO : add checks for fromat
-		//fileName.Append(L".xml");
 	}
 
-	return fileName;// GetSaveFileName(&ofn);
+	return fileName;
 }
 
 
