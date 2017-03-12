@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "SelectShape.h"
 
-CSelectShape::CSelectShape(CD2DObjectRenderer & shapeRenderer, const CShapeFactory & shapeFactory)
+CSelectShape::CSelectShape(const CShapeFactory & shapeFactory)
 	: IDrawable()
 {
 	SShapeData rectangleData;
@@ -9,7 +9,7 @@ CSelectShape::CSelectShape(CD2DObjectRenderer & shapeRenderer, const CShapeFacto
 	rectangleData.outlineColor = BLACK_COLOR;
 	rectangleData.fillColor = NOT_COLOR;
 
-	m_moveShape.push_back(shapeFactory.CreateShape(rectangleData, shapeRenderer));
+	m_moveShape.push_back(shapeFactory.CreateShape(rectangleData));
 	
 	SShapeData ellipseData;
 	ellipseData.type = ShapeType::Ellipse;
@@ -18,7 +18,7 @@ CSelectShape::CSelectShape(CD2DObjectRenderer & shapeRenderer, const CShapeFacto
 
 	for (size_t index = 0; index < 4; ++index)
 	{
-		m_resizeShapes[index] = shapeFactory.CreateShape(ellipseData, shapeRenderer);
+		m_resizeShapes[index] = shapeFactory.CreateShape(ellipseData);
 	}
 }
 

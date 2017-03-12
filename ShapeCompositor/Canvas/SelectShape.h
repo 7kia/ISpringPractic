@@ -14,7 +14,7 @@ class CSelectShape
 	, public IFrame
 {
 public:
-	CSelectShape(CD2DObjectRenderer & shapeRenderer, const CShapeFactory & shapeFactory);
+	CSelectShape(const CShapeFactory & shapeFactory);
 
 	enum class Marker
 	{

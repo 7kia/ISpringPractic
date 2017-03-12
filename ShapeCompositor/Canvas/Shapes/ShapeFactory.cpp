@@ -1,12 +1,11 @@
 #include "stdafx.h"
-#include "../Canvas.h"
 #include "ShapeFactory.h"
 
 CShapeFactory::CShapeFactory()
 {
 }
 
-CShapePtr CShapeFactory::CreateShape(const SShapeData & data, CD2DObjectRenderer & shapeRenderer) const
+CShapePtr CShapeFactory::CreateShape(const SShapeData & data) const
 {
 	switch (data.type)
 	{

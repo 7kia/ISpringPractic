@@ -179,8 +179,6 @@
     <None Include="res\ShapeCompositor.rc2">
       <Filter>Файлы ресурсов</Filter>
     </None>
-    <None Include="ClassDiagram.cd" />
-    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ShapeCompositor.rc">

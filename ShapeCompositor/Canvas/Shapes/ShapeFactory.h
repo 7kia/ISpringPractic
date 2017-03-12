@@ -1,7 +1,6 @@
 #pragma once
 
 #include "AllShapes.h"
-#include "../ShapeRenderer.h"
 
 #include <vector>
 
@@ -12,7 +11,7 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
-	CShapePtr CreateShape(const SShapeData & data, CD2DObjectRenderer & shapeRenderer) const;
+	CShapePtr CreateShape(const SShapeData & data) const;
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:

@@ -241,8 +241,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
-    <None Include="ClassDiagram1.cd" />
     <None Include="res\ribbon.mfcribbon-ms" />
     <None Include="res\ShapeCompositor.rc2" />
     <None Include="ShapeCompositor.reg" />

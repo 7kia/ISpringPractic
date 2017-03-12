@@ -4,7 +4,7 @@
 
 CCanvas::CCanvas()
 	: IMouseEventHandler()
-	, m_selectShape(m_objectRenderer, m_shapeFactory)
+	, m_selectShape(m_shapeFactory)
 {
 }
 
@@ -57,7 +57,7 @@ CSelectShape::UpdateType CCanvas::GetUpdateStateSelectedShape() const
 void CCanvas::PushBackShape(SShapeData data)
 {
 	m_pShapes->push_back(
-		m_shapeFactory.CreateShape(data, m_objectRenderer)
+		m_shapeFactory.CreateShape(data)
 	);
 }
 
@@ -70,7 +70,7 @@ void CCanvas::InsertShape(size_t insertIndex, SShapeData data)
 
 	m_pShapes->insert(
 		m_pShapes->begin() + insertIndex
-		, m_shapeFactory.CreateShape(data, m_objectRenderer)	
+		, m_shapeFactory.CreateShape(data)	
 	);
 }
 
