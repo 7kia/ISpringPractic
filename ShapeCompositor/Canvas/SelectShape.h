@@ -59,7 +59,7 @@ public:
 	void					HandleMoveMouse(const Vec2f point);
 	//--------------------------------------------
 	// IDrawable
-	void					Accept(IShapeVisitor & renderer) const override;// TODO : must be = 0
+	void					Accept(IObjectVisitor & renderer) const override;// TODO : must be = 0
 	//--------------------------------------------
 	// IFrame
 

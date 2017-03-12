@@ -29,6 +29,8 @@ class CCanvasController;
 
 class CCanvas
 	: public IMouseEventHandler
+	, public IDrawable
+	, public CFrame
 {
 public:
 	CCanvas();
@@ -45,6 +47,7 @@ public:
 	bool		DoneUpdateSelectedShape() const;
 	Vec2f		GetShiftSelectedShape() const;
 	CSelectShape * GetFrameSelectedShape();
+	const CSelectShape * GetFrameSelectedShape() const;
 	CSelectShape::UpdateType	GetUpdateStateSelectedShape() const;
 	//
 
@@ -57,8 +60,9 @@ public:
 	bool HandleMouseMove(CPoint point) override;
 
 	//--------------------------------------------
-
-	HRESULT		Draw();
+	// 	IDrawable
+	void Accept(IObjectVisitor & renderer) const override;
+	//--------------------------------------------
 	void		DeleteShape(size_t index);
 	void		DeleteShape(CShapePtr pShape);// TODO : see need it variant
 	void		DeleteLastShape();
@@ -84,7 +88,6 @@ private:
 	// Data
 public:
 	CShapeFactory								m_shapeFactory;
-	CD2DObjectRenderer							m_objectRenderer;// TODO : transfer to CShapeCompositiorView, fix Draw
 
 	CSelectShape								m_selectShape;
 

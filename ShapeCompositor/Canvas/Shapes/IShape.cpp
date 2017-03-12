@@ -3,6 +3,5 @@
 
 IShape::IShape()
 	: IDrawable()
-	, IFrame()
 {
 }

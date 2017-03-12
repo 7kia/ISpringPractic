@@ -44,7 +44,7 @@ std::vector<Vec2f> CRectangle::GetVertices() const
 	};
 }
 
-void CRectangle::Accept(IShapeVisitor & renderer) const
+void CRectangle::Accept(IObjectVisitor & renderer) const
 {
 	renderer.Visit(*this);
 }

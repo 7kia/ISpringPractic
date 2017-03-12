@@ -128,3 +128,76 @@ std::vector<Vec2f> SFrameData::GetFrameVertices() const
 		, Vec2f(float(frame.left), float(frame.top))// Left top
 	};
 }
+
+CFrame::CFrame(
+	const Vec2f & position
+	, const SSize & size
+)
+	: m_position(position)
+	, m_size(size)
+{
+}
+
+
+void CFrame::SetPosition(Vec2f position)
+{
+	m_position = position;
+}
+
+Vec2f CFrame::GetPosition() const
+{
+	return m_position;
+}
+
+void CFrame::Move(const Vec2f shift)
+{
+	SetPosition(GetPosition() + shift);
+}
+
+void CFrame::SetSize(SSize size)
+{
+	m_size = size;
+}
+
+SSize CFrame::GetSize() const
+{
+	return m_size;
+}
+
+void CFrame::UpdateScale(const Vec2f shift)
+{
+	// TODO : add check
+	m_size.width += shift.x;
+	m_size.height += shift.y;
+
+	m_position.x += shift.x / 2.f;
+	m_position.y += shift.y / 2.f;
+
+}
+
+RECT CFrame::GetOwnRect() const
+{
+	SSize shapeSize = GetSize();
+	Vec2f shapePosition = GetPosition();
+	RECT rect;
+	rect.left = LONG(shapePosition.x - shapeSize.width / 2.f);
+	rect.right = LONG(shapePosition.x + shapeSize.width / 2.f);
+	rect.bottom = LONG(shapePosition.y + shapeSize.height / 2.f);
+	rect.top = LONG(shapePosition.y - shapeSize.height / 2.f);
+
+	return rect;
+}
+
+SFrameData CFrame::GetFrameData() const
+{
+	SFrameData info;
+	info.position = m_position;
+	info.size = m_size;
+	return info;
+}
+
+void CFrame::SetFrameData(SFrameData const & data)
+{
+	m_position = data.position;
+	m_size = data.size;
+}

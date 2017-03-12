@@ -77,14 +77,14 @@ public:
 	};
 };
 
-class IShapeVisitor;
+class IObjectVisitor;
 class IDrawable
 {
 public:
 	virtual ~IDrawable() = default;
 
 	// For render
-	virtual void Accept(IShapeVisitor & renderer) const {};// TODO : must be = 0
+	virtual void Accept(IObjectVisitor & renderer) const {};// TODO : must be = 0
 };
 
 
@@ -122,4 +122,38 @@ public:
 	virtual SFrameData GetFrameData() const = 0;
 	virtual void SetFrameData(SFrameData const & data) = 0;
 
+};
+
+class CFrame
+	: public IFrame
+{
+public:
+	CFrame(
+		const Vec2f & position
+		, const SSize & size
+	);
+	//////////////////////////////////////////////////////////////////////
+	// Methods
+public:
+
+	// Position
+	void SetPosition(Vec2f position) override;
+	Vec2f GetPosition() const override;
+	void Move(const Vec2f shift) override;
+	// Size
+	void SetSize(SSize size) override;
+	SSize GetSize() const override;
+
+	void UpdateScale(const Vec2f shift) override;
+	// Own rect
+	RECT GetOwnRect() const override;
+
+	// Get shape data
+	SFrameData GetFrameData() const override;
+	void SetFrameData(SFrameData const & data) override;
+	//////////////////////////////////////////////////////////////////////
+	// Data
+protected:
+	Vec2f m_position;
+	SSize m_size;
 };

@@ -1,9 +1,10 @@
 #include "stdafx.h"
 #include "ShapeRenderer.h"
 #include "../ShapeCompositorView.h"
+#include "Canvas.h"
 
 CD2DObjectRenderer::CD2DObjectRenderer()
-	: IShapeVisitor()
+	: IObjectVisitor()
 	, IObjectRenderer()
 {
 }
@@ -165,4 +166,16 @@ void CD2DObjectRenderer::Visit(const CTriangle & shape)
 	m_outlineBrush.Release();
 	m_pathGeometry.Release();
 	m_geometrySink.Release();
+}
+
+void CD2DObjectRenderer::Visit(const CCanvas & canvas)
+{
+	for (const auto & shape : *canvas.GetShapes())
+	{
+		Draw(*shape);
+	}
+
+	Draw(*canvas.GetFrameSelectedShape());
+
+	//return m_objectRenderer.EndDraw();// TODO : transfer
 }

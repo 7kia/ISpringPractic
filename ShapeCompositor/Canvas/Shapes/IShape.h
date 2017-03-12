@@ -29,7 +29,6 @@ struct SShapeData : public SFrameData
 
 class IShape
 	: public IDrawable
-	, public IFrame
 {
 public:
 	IShape();

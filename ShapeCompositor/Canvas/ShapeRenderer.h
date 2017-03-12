@@ -3,6 +3,7 @@
 #include "Canvas\Shapes\AllShapes.h"
 
 class CShapeCompositorView;
+class CCanvas;
 
 class IObjectRenderer
 {
@@ -13,7 +14,7 @@ public:
 };
 
 class CD2DObjectRenderer
-	: public IShapeVisitor
+	: public IObjectVisitor
 	, public IObjectRenderer
 {
 public:
@@ -26,19 +27,21 @@ public:
 
 	HRESULT	EndDraw();
 	//--------------------------------------------
-	// IShapeVisitor
+	// IObjectVisitor
 	void Draw(const IDrawable & shape) override;
 	//--------------------------------------------
 
 private:
 	//--------------------------------------------
-	// IShapeVisitor
+	// IObjectVisitor
 
 	void Visit(const CRectangle & shape) override;
 	void Visit(const CEllipse & shape) override;
 	void Visit(const CTriangle & shape) override;
 
 	//--------------------------------------------
+
+	void Visit(const CCanvas & canvas);// TODO : see need interface for canvas
 
 	//////////////////////////////////////////////////////////////////////
 	// Data

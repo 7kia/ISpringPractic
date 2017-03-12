@@ -19,7 +19,7 @@ public:
 	//--------------------------------------------
 	// IDrawable
 
-	void Accept(IShapeVisitor & renderer) const override;
+	void Accept(IObjectVisitor & renderer) const override;
 
 	//--------------------------------------------
 	// IHaveVertex

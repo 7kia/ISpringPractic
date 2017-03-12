@@ -75,7 +75,8 @@ HRESULT CShapeCompositorView::Draw()
 	m_pRenderTarget->SetTransform(matrix);
 	m_pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
 
-	hr = m_canvas.Draw();
+	m_objectRenderer.Draw(m_canvas);
+	hr = m_objectRenderer.EndDraw();
 
 	if (hr == D2DERR_RECREATE_TARGET)
 	{
@@ -87,7 +88,7 @@ HRESULT CShapeCompositorView::Draw()
 
 void CShapeCompositorView::SetRenderTarget(ID2D1HwndRenderTarget * pRenderTarget)
 {
-	m_pRenderTarget = pRenderTarget;
+	m_pRenderTarget = pRenderTarget;// TODO : need it
 }
 
 ID2D1HwndRenderTarget * CShapeCompositorView::GetRenderTarget()
@@ -191,7 +192,7 @@ int CShapeCompositorView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
 
 		// Create a Direct2D factory.
-		ATLENSURE_SUCCEEDED(m_canvas.CreateRecources(this));
+		ATLENSURE_SUCCEEDED(m_objectRenderer.CreateRecources(this));
 
 	}
 	catch (...)

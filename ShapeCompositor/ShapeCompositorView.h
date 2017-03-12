@@ -60,6 +60,7 @@ protected:
 	CHistory m_history;
 
 	ID2D1HwndRenderTarget * m_pRenderTarget = nullptr;
+	CD2DObjectRenderer		m_objectRenderer;// TODO : transfer to CShapeCompositiorView, fix Draw
 
 	// For test OnMouseMove
 	CPoint m_start;// TODO : delete

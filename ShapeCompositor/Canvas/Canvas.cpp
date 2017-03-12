@@ -4,32 +4,15 @@
 
 CCanvas::CCanvas()
 	: IMouseEventHandler()
+	, IDrawable()
+	, CFrame(Vec2f(), SSize(640.f, 480.f))
 	, m_selectShape(m_shapeFactory)
 {
 }
 
-
-
-HRESULT CCanvas::Draw()
+void CCanvas::Accept(IObjectVisitor & renderer) const
 {
-	for (const auto & shape : *m_pShapes)
-	{
-		m_objectRenderer.Draw(*shape);
-	}
-
-	m_objectRenderer.Draw(m_selectShape);
-
-	return m_objectRenderer.EndDraw();
-}
-
-HRESULT CCanvas::CreateRecources(CShapeCompositorView * window)
-{
-	return m_objectRenderer.CreateRecources(window);
-}
-
-void CCanvas::ClearRecources()
-{
-	m_objectRenderer.ClearRecources();
+	renderer.Visit(*this);
 }
 
 bool CCanvas::DoneUpdateSelectedShape() const
@@ -45,6 +28,11 @@ Vec2f CCanvas::GetShiftSelectedShape() const
 }
 
 CSelectShape * CCanvas::GetFrameSelectedShape()
+{
+	return &m_selectShape;
+}
+
+const CSelectShape * CCanvas::GetFrameSelectedShape() const
 {
 	return &m_selectShape;
 }

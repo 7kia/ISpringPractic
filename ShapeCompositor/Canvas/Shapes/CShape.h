@@ -10,6 +10,7 @@
 class CShape 
 	: public IShape
 	, public IIsPointIntersection
+	, public CFrame
 {
 public:
 	CShape(
@@ -37,24 +38,6 @@ public:
 	SShapeData GetShapeData() const override;
 	void SetShapeData(SShapeData const & data) override;
 	//--------------------------------------------
-	// IFrame
-
-	// Position
-	void SetPosition(Vec2f position) override;
-	Vec2f GetPosition() const override;
-	void Move(const Vec2f shift) override;
-	// Size
-	void SetSize(SSize size) override;
-	SSize GetSize() const override;
-
-	void UpdateScale(const Vec2f shift) override;
-	// Own rect
-	RECT GetOwnRect() const override;
-
-	// Get shape data
-	SFrameData GetFrameData() const override;
-	void SetFrameData(SFrameData const & data) override;
-	//--------------------------------------------
 	
 
 
@@ -63,8 +46,6 @@ public:
 //////////////////////////////////////////////////////////////////////
 // Data
 protected:
-	Vec2f m_position;
-	SSize m_size;
 	Color m_fillColor;
 	Color m_outlineColor;
 	ShapeType m_type;

@@ -24,29 +24,14 @@ CShape::CShape(
 )
 	: IShape()
 	, IIsPointIntersection()
+	, CFrame(position, size)
 	, m_type(type)
-	, m_position(position)
-	, m_size(size)
 	, m_fillColor(fillColor)
 	, m_outlineColor(outlineColor)
 {
 }
 
 
-void CShape::SetPosition(Vec2f position)
-{
-	m_position = position;
-}
-
-Vec2f CShape::GetPosition() const
-{
-	return m_position;
-}
-
-void CShape::Move(const Vec2f shift)
-{
-	SetPosition(GetPosition() + shift);
-}
 
 void CShape::SetFillColor(Color color)
 {
@@ -68,53 +53,6 @@ Color CShape::GetOutlineColor() const
 	return m_outlineColor;
 }
 
-void CShape::SetSize(SSize size)
-{
-	m_size = size;
-}
-
-SSize CShape::GetSize() const
-{
-	return m_size;
-}
-
-void CShape::UpdateScale(const Vec2f shift)
-{
-	// TODO : add check
-	m_size.width += shift.x;
-	m_size.height += shift.y;
-
-	m_position.x += shift.x / 2.f;
-	m_position.y += shift.y / 2.f;
-
-}
-
-RECT CShape::GetOwnRect() const
-{
-	SSize shapeSize = GetSize();
-	Vec2f shapePosition = GetPosition();
-	RECT rect;
-	rect.left = LONG(shapePosition.x - shapeSize.width / 2.f);
-	rect.right = LONG(shapePosition.x + shapeSize.width / 2.f);
-	rect.bottom = LONG(shapePosition.y + shapeSize.height / 2.f);
-	rect.top = LONG(shapePosition.y - shapeSize.height / 2.f);
-
-	return rect;
-}
-
-SFrameData CShape::GetFrameData() const
-{
-	SFrameData info;
-	info.position = m_position;
-	info.size = m_size;
-	return info;
-}
-
-void CShape::SetFrameData(SFrameData const & data)
-{
-	m_position = data.position;
-	m_size = data.size;
-}
 
 ShapeType CShape::GetType() const
 {

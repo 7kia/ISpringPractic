@@ -160,7 +160,7 @@ void CSelectShape::HandleMoveMouse(const Vec2f point)
 	}
 }
 
-void CSelectShape::Accept(IShapeVisitor & renderer) const
+void CSelectShape::Accept(IObjectVisitor & renderer) const
 {
 	if (m_selectShape != nullptr)
 	{

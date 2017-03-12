@@ -27,7 +27,7 @@ bool CEllipse::IsPointIntersection(const Vec2f point) const
 	return ((b * x) + (a * y)) <= (a * b);
 }
 
-void CEllipse::Accept(IShapeVisitor & renderer) const
+void CEllipse::Accept(IObjectVisitor & renderer) const
 {
 	renderer.Visit(*this);
 }
