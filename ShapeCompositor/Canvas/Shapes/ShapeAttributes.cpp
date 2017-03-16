@@ -175,15 +175,15 @@ void CFrame::UpdateScale(const Vec2f shift)
 
 }
 
-RECT CFrame::GetOwnRect() const
+SRectF CFrame::GetOwnRect() const
 {
 	SSize shapeSize = GetSize();
 	Vec2f shapePosition = GetPosition();
-	RECT rect;
-	rect.left = LONG(shapePosition.x - shapeSize.width / 2.f);
-	rect.right = LONG(shapePosition.x + shapeSize.width / 2.f);
-	rect.bottom = LONG(shapePosition.y + shapeSize.height / 2.f);
-	rect.top = LONG(shapePosition.y - shapeSize.height / 2.f);
+	SRectF rect;
+	rect.left = shapePosition.x - shapeSize.width / 2.f;
+	rect.right = shapePosition.x + shapeSize.width / 2.f;
+	rect.bottom = shapePosition.y - shapeSize.height / 2.f;
+	rect.top = shapePosition.y + shapeSize.height / 2.f;
 
 	return rect;
 }

@@ -99,6 +99,13 @@ struct SFrameData
 	SSize size;
 };
 
+struct SRectF
+{
+	float    left;
+	float    top;
+	float    right;
+	float    bottom;
+};
 
 class IFrame
 {
@@ -116,7 +123,7 @@ public:
 
 	virtual void UpdateScale(const Vec2f shift) = 0;
 	// Own rect
-	virtual RECT GetOwnRect() const = 0;
+	virtual SRectF GetOwnRect() const = 0;
 
 	// Get shape data
 	virtual SFrameData GetFrameData() const = 0;
@@ -146,7 +153,7 @@ public:
 
 	void UpdateScale(const Vec2f shift) override;
 	// Own rect
-	RECT GetOwnRect() const override;
+	SRectF GetOwnRect() const override;
 
 	// Get shape data
 	SFrameData GetFrameData() const override;

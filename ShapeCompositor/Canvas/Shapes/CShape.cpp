@@ -61,12 +61,12 @@ ShapeType CShape::GetType() const
 
 std::vector<Vec2f> CShape::GetFrameVertices() const
 {
-	RECT frame = GetOwnRect();
+	const SRectF frame = GetOwnRect();
 	return{
-		Vec2f(float(frame.left), float(frame.bottom))// Left bootom
-		, Vec2f(float(frame.right), float(frame.bottom))// Right bootom
-		, Vec2f(float(frame.right), float(frame.top))// Right top
-		, Vec2f(float(frame.left), float(frame.top))// Left top
+		Vec2f(frame.left, frame.bottom)// Left bootom
+		, Vec2f(frame.right, frame.bottom)// Right bootom
+		, Vec2f(frame.right, frame.top)// Right top
+		, Vec2f(frame.left, frame.top)// Left top
 	};
 }
 

@@ -19,7 +19,7 @@ CRectangle::CRectangle(
 
 bool CRectangle::IsPointIntersection(const Vec2f point) const
 {
-	RECT ownRect = GetOwnRect();
+	SRectF ownRect = GetOwnRect();
 	if (ownRect.left > ownRect.right)
 	{
 		std::swap(ownRect.left, ownRect.right);
@@ -34,13 +34,13 @@ bool CRectangle::IsPointIntersection(const Vec2f point) const
 
 std::vector<Vec2f> CRectangle::GetVertices() const
 {
-	const RECT ownRect = GetOwnRect();
+	const SRectF ownRect = GetOwnRect();
 
 	return{
-		Vec2f(float(ownRect.left),float(ownRect.top))
-		, Vec2f(float(ownRect.right),float(ownRect.top))
-		, Vec2f(float(ownRect.right),float(ownRect.bottom))
-		, Vec2f(float(ownRect.left),float(ownRect.bottom))
+		Vec2f(ownRect.left, ownRect.top)
+		, Vec2f(ownRect.right, ownRect.top)
+		, Vec2f(ownRect.right, ownRect.bottom)
+		, Vec2f(ownRect.left, ownRect.bottom)
 	};
 }
 

@@ -9,7 +9,7 @@ BOOST_AUTO_TEST_SUITE(CShape_suite)
 
 struct Shape_
 {
-	CRectangleShape shape;
+	CRectangle shape;
 
 	Shape_()
 		: shape(Vec2f(), DEFAULT_SIZE, DEFAULT_FILL_COLOR, DEFAULT_OUTLINE_COLOR)
@@ -56,7 +56,7 @@ BOOST_AUTO_TEST_SUITE(CRectangle_suite)
 
 struct Rectangle_
 {
-	CRectangleShape rectangle;
+	CRectangle rectangle;
 
 	Rectangle_()
 		: rectangle(Vec2f(), DEFAULT_SIZE, DEFAULT_FILL_COLOR, DEFAULT_OUTLINE_COLOR)
@@ -106,8 +106,8 @@ struct Triangle_
 
 	Vec2f pos;
 
-	CTriangleShape triangle;
-	CTriangleShape secondTriangle;
+	CTriangle triangle;
+	CTriangle secondTriangle;
 
 	Triangle_()
 		: first(-11.f, 29.f)
@@ -146,8 +146,8 @@ BOOST_AUTO_TEST_SUITE_END()// Triangle_
 
 struct Ellipse_
 {
-	CEllipseShape circle;
-	CEllipseShape ellipse;
+	CEllipse circle;
+	CEllipse ellipse;
 
 	Ellipse_()
 		: circle(Vec2f(), SSize(1.f, 1.f), DEFAULT_FILL_COLOR, DEFAULT_OUTLINE_COLOR)

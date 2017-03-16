@@ -72,7 +72,7 @@ public:
 	SSize GetSize() const override;
 	void UpdateScale(const Vec2f shift)override;
 	// Own rect
-	RECT GetOwnRect() const override;
+	SRectF GetOwnRect() const override;
 
 	// Get shape data
 	SFrameData GetFrameData() const override;// TODO : see need it

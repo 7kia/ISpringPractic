@@ -150,23 +150,41 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\ShapeCompositor\Canvas\Canvas.h" />
+    <ClInclude Include="..\ShapeCompositor\Canvas\CanvasCommands\AddShapeCommand.h" />
+    <ClInclude Include="..\ShapeCompositor\Canvas\CanvasCommands\AllCanvasCommand.h" />
+    <ClInclude Include="..\ShapeCompositor\Canvas\CanvasCommands\CanvasCommand.h" />
+    <ClInclude Include="..\ShapeCompositor\Canvas\CanvasCommands\DeleteShapeCommand.h" />
+    <ClInclude Include="..\ShapeCompositor\Canvas\CanvasCommands\MoveShapeCommand.h" />
+    <ClInclude Include="..\ShapeCompositor\Canvas\CanvasCommands\ScaleShapeCommand.h" />
+    <ClInclude Include="..\ShapeCompositor\Canvas\ObjectRenderer.h" />
+    <ClInclude Include="..\ShapeCompositor\Canvas\SelectShape.h" />
     <ClInclude Include="..\ShapeCompositor\Canvas\Shapes\AllShapes.h" />
     <ClInclude Include="..\ShapeCompositor\Canvas\Shapes\CShape.h" />
-    <ClInclude Include="..\ShapeCompositor\Canvas\Shapes\EllipseShape.h" />
+    <ClInclude Include="..\ShapeCompositor\Canvas\Shapes\Ellipse.h" />
     <ClInclude Include="..\ShapeCompositor\Canvas\Shapes\IShape.h" />
-    <ClInclude Include="..\ShapeCompositor\Canvas\Shapes\RectangleShape.h" />
+    <ClInclude Include="..\ShapeCompositor\Canvas\Shapes\Rectangle.h" />
     <ClInclude Include="..\ShapeCompositor\Canvas\Shapes\ShapeAttributes.h" />
-    <ClInclude Include="..\ShapeCompositor\Canvas\Shapes\TriangleShape.h" />
+    <ClInclude Include="..\ShapeCompositor\Canvas\Shapes\ShapeFactory.h" />
+    <ClInclude Include="..\ShapeCompositor\Canvas\Shapes\Triangle.h" />
+    <ClInclude Include="..\ShapeCompositor\Observer.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\ShapeCompositor\Canvas\Canvas.cpp" />
+    <ClCompile Include="..\ShapeCompositor\Canvas\CanvasCommands\AddShapeCommand.cpp" />
+    <ClCompile Include="..\ShapeCompositor\Canvas\CanvasCommands\DeleteShapeCommand.cpp" />
+    <ClCompile Include="..\ShapeCompositor\Canvas\CanvasCommands\MoveShapeCommand.cpp" />
+    <ClCompile Include="..\ShapeCompositor\Canvas\CanvasCommands\ScaleShapeCommand.cpp" />
+    <ClCompile Include="..\ShapeCompositor\Canvas\SelectShape.cpp" />
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\CShape.cpp" />
-    <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\EllipseShape.cpp" />
+    <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\Ellipse.cpp" />
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\IShape.cpp" />
-    <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\RectangleShape.cpp" />
+    <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\Rectangle.cpp" />
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\ShapeAttributes.cpp" />
-    <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\TriangleShape.cpp" />
+    <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\ShapeFactory.cpp" />
+    <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\Triangle.cpp" />
     <ClCompile Include="ShapeTests.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -175,6 +193,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Tests.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\ShapeCompositor\ShapeCompositor.reg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

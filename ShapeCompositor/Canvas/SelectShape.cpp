@@ -232,7 +232,7 @@ void CSelectShape::UpdateScale(const Vec2f shift)
 	Move(Vec2f(shift.x / 2.f, shift.y / 2.f));
 }
 
-RECT CSelectShape::GetOwnRect() const
+SRectF CSelectShape::GetOwnRect() const
 {
 	return m_selectShape->GetOwnRect();
 }
