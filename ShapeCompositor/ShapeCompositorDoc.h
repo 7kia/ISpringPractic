@@ -27,6 +27,7 @@
 #include "Canvas\Canvas.h"
 #include "Canvas\History.h"
 
+class CShapeCompositorView;
 class CShapeCompositorDoc : public CDocument
 {
 protected: // создать только из сериализации
@@ -38,11 +39,15 @@ public:
 // Операции
 public:
 	static bool Save(const std::wstring path, std::vector<CShapePtr> const& shapes);
-	static std::vector<SShapeData> Open(const std::wstring path);
+	static bool Open(
+		const std::wstring path
+		, CCanvas & canvas
+		, const CShapeFactory & factory
+	);
 
 
 	afx_msg void OnFileSaveAs(std::vector<CShapePtr> const & shapes);
-	afx_msg void OnFileOpen(CHistory & history, CCanvas & canvas);
+	afx_msg void OnFileOpen(CShapeCompositorView * view);
 	afx_msg void OnFileSave(std::vector<CShapePtr> const & shapes);
 // Переопределение
 public:

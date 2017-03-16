@@ -11,7 +11,7 @@ public:
 		CShapePtr pShape
 		, SFrameData oldData
 		, SFrameData newData
-		, CSelectShape * pSelectedShape
+		, CSelectShape & selectedShape
 	);
 	//////////////////////////////////////////////////////////////////////
 	// Methods

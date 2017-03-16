@@ -50,6 +50,15 @@ public:
 
 	void					ChangeCursor(const CPoint mousePos);
 
+	// For document
+	void					ClearHistory();
+	void					ResetSelectedShape();
+	CCanvas &				GetCanvas();
+	const CShapeFactory &	GetShapeFactory() const;
+
+private:
+	void					CreateCommandForSelectedShape();
+	void					ChangeSelectedShape(const Vec2f mousePos);
 // Переопределение
 public:
 	virtual void OnDraw(CDC* pDC);  // переопределено для отрисовки этого представления
@@ -59,6 +68,10 @@ public:
 protected:
 	CCanvas m_canvas;
 	CHistory m_history;
+
+	// Fromn canvas TODO
+	CSelectShape m_selectShape;
+	CShapeFactory m_shapeFactory;
 
 	ID2D1HwndRenderTarget * m_pRenderTarget = nullptr;
 	CD2DObjectRenderer		m_objectRenderer;// TODO : transfer to CShapeCompositiorView, fix Draw

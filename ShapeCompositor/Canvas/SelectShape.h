@@ -54,6 +54,7 @@ public:
 	bool					InRightTopMarker(const Vec2f point);
 	bool					InRightBottomMarker(const Vec2f point);
 
+	bool					DoneUpdate() const;
 
 	bool					IsMove(const Vec2f point);
 	void					HandleMoveMouse(const Vec2f point);

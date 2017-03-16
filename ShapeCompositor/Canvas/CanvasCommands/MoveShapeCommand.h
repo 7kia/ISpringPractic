@@ -10,7 +10,7 @@ public:
 	CMoveShapeCanvasCommand(
 		CShapePtr pShape
 		, Vec2f shift
-		, CSelectShape * pSelectedShape
+		, CSelectShape & selectedShape
 	);
 	//////////////////////////////////////////////////////////////////////
 	// Methods

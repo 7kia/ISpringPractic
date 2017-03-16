@@ -6,7 +6,6 @@
 
 #include "Shapes\ShapeFactory.h"
 #include "ObjectRenderer.h"
-#include "SelectShape.h"
 #include "CanvasCommands\AllCanvasCommand.h"
 #include "MouseEventHandler.h"
 
@@ -22,8 +21,7 @@ class CCanvasController;
 
 
 class CCanvas
-	: public IMouseEventHandler
-	, public IDrawable
+	: public IDrawable
 	, public CFrame
 {
 public:
@@ -33,20 +31,8 @@ public:
 public:
 
 	// For drag and drop
-	bool		DoneUpdateSelectedShape() const;
-	Vec2f		GetShiftSelectedShape() const;
-	CSelectShape * GetFrameSelectedShape();
-	const CSelectShape * GetFrameSelectedShape() const;
-	CSelectShape::UpdateType	GetUpdateStateSelectedShape() const;
+	bool		IsSelectShape(size_t index, const CShapePtr selectedShape) const;
 	//
-
-	//--------------------------------------------
-	// IMouseEventHandler
-
-	bool HandleLButtHandleDown(const Vec2f  point) override;
-	bool HandleLButtHandleUp(const Vec2f  point) override;
-	bool HandleRButtHandleUp(const Vec2f  point) override;
-	bool HandleMouseMove(const Vec2f  point) override;
 
 	//--------------------------------------------
 	// 	IDrawable
@@ -56,27 +42,20 @@ public:
 	void		DeleteShape(CShapePtr pShape);// TODO : see need it variant
 	void		DeleteLastShape();
 
-	void				ChangeSelectShape(const Vec2f mousePosition);
 	CShapePtr			GetShape(const Vec2f mousePosition);// TODO : see need private
-	CShapePtr			GetSelectShape();
-	const CShapePtr		GetSelectShape() const;// TODO : see need it
-	size_t				GetIndexSelectShape() const;
+	size_t				GetShapeIndex(const CShapePtr pShape) const;
 
-	void PushBackShape(SShapeData data);
-	void InsertShape(size_t insertIndex, SShapeData data);
+	void PushBackShape(CShapePtr & shape);
+	void InsertShape(size_t insertIndex, CShapePtr & shape);
 	std::vector<CShapePtr> GetShapes() const;
-	void SetShapes(const std::vector<SShapeData> &  shapesData);
-private:
 
-	bool		IsSelectShape(size_t index) const;
+
+private:
 
 	size_t		GetIndexShape(CShapePtr pShape) const;
 	//////////////////////////////////////////////////////////////////////
 	// Data
 public:
-	CShapeFactory								m_shapeFactory;
-
-	CSelectShape								m_selectShape;
 
 	// TODO : see might require do private
 	std::vector<CShapePtr>						m_shapes;

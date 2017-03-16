@@ -4,6 +4,7 @@
 
 class CShapeCompositorView;
 class CCanvas;
+class CSelectShape;
 
 class CD2DObjectRenderer
 	: public IObjectVisitor
@@ -34,7 +35,7 @@ private:
 	//--------------------------------------------
 
 	void Visit(const CCanvas & canvas);// TODO : see need interface for canvas
-
+	void Visit(const CSelectShape & selectedShape);
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:

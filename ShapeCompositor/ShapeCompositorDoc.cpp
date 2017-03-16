@@ -20,6 +20,7 @@
 #endif
 
 #include "ShapeCompositorDoc.h"
+#include "ShapeCompositorView.h"
 #include <propkey.h>
 
 #ifdef _DEBUG
@@ -234,13 +235,15 @@ bool CShapeCompositorDoc::Save(const std::wstring path, std::vector<CShapePtr> c
 	return false;
 }
 
-std::vector<SShapeData> CShapeCompositorDoc::Open(const std::wstring path)
+bool CShapeCompositorDoc::Open(
+	const std::wstring path
+	, CCanvas & canvas
+	, const CShapeFactory & factory
+)
 {
-	std::vector<SShapeData> result;
-
 	if (path.empty())
 	{
-		return std::vector<SShapeData>();
+		return false;
 	}
 	try
 	{
@@ -262,19 +265,18 @@ std::vector<SShapeData> CShapeCompositorDoc::Open(const std::wstring path)
 				data.position = Vec2f(x, y);
 				data.size = SSize(width, height);
 
-				result.push_back(data);
+				canvas.PushBackShape(factory.CreateShape(data));
 			}
 		}
 		stream.close();
-		return result;
+		return true;
 	}
 	catch (boost::property_tree::xml_parser_error e)
 	{
 		std::cout << e.what() << std::endl;
-		std::cout << "XML parser error!" << std::endl;
 		throw;
 	}
-	return std::vector<SShapeData>();
+	return false;
 }
 
 CString CShapeCompositorDoc::OpenSaveDialog()
@@ -331,17 +333,17 @@ void CShapeCompositorDoc::OnFileSaveAs(std::vector<CShapePtr> const & shapes)
 }
 
 
-void CShapeCompositorDoc::OnFileOpen(CHistory & history, CCanvas & canvas)
+void CShapeCompositorDoc::OnFileOpen(CShapeCompositorView * view)
 {
 	CString fileName = OpenLoadDialog();
 	if (fileName.GetLength() != 0)
 	{
 		m_shapesData.clear();
-		history.Clear();
-		canvas.GetFrameSelectedShape()->ResetSelectShapePtr();// TODO : see can rewrite
+		view->ClearHistory();
+		view->ResetSelectedShape();
 
 		m_fileToSave = fileName.GetString();
-		canvas.SetShapes(Open(m_fileToSave));
+		Open(m_fileToSave, view->GetCanvas(), view->GetShapeFactory());
 	}
 }
 

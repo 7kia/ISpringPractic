@@ -118,6 +118,13 @@ bool CSelectShape::InRightBottomMarker(const Vec2f point)
 	return m_resizeShapes[size_t(Marker::MarkerRightBottom)]->IsPointIntersection(point);
 }
 
+bool CSelectShape::DoneUpdate() const
+{
+	return HaveSelectedShape()
+		&& !IsUpdate()
+		&& (GetShift() != Vec2f());
+}
+
 bool CSelectShape::IsMove(const Vec2f point)
 {
 	if (m_selectShape->IsPointIntersection(point))

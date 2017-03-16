@@ -2,6 +2,7 @@
 #include "D2DObjectRenderer.h"
 #include "../ShapeCompositorView.h"
 #include "Canvas.h"
+#include "SelectShape.h"
 
 CD2DObjectRenderer::CD2DObjectRenderer()
 	: IObjectVisitor()
@@ -174,6 +175,9 @@ void CD2DObjectRenderer::Visit(const CCanvas & canvas)
 	{
 		Draw(*shape);
 	}
+}
 
-	Draw(*canvas.GetFrameSelectedShape());
+void CD2DObjectRenderer::Visit(const CSelectShape & selectedShape)
+{
+	Draw(selectedShape);
 }

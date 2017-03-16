@@ -2,12 +2,17 @@
 
 #include "CanvasCommand.h"
 #include "Canvas\Shapes\AllShapes.h"
+#include "Canvas\Shapes\ShapeFactory.h"
 
 class CCanvas;
 class CAddShapeCanvasCommand : public IMyCommand
 {
 public:
-	CAddShapeCanvasCommand(CCanvas * pCanvas, ShapeType type);//ShapeType
+	CAddShapeCanvasCommand(
+		CCanvas * pCanvas
+		, ShapeType type
+		, const CShapeFactory & factory
+	);//ShapeType
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
@@ -22,4 +27,5 @@ public:
 private:
 	ShapeType m_type = ShapeType::Rectangle;
 	CCanvas * m_pCanvas = nullptr;
+	const CShapeFactory * m_pFactory = nullptr;
 };
