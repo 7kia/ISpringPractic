@@ -108,6 +108,9 @@
     <ClInclude Include="Canvas\CanvasCommands\ScaleShapeCommand.h">
       <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
     </ClInclude>
+    <ClInclude Include="Canvas\ObjectRenderer.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ShapeCompositor.cpp">
@@ -172,7 +175,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ShapeCompositor.reg" />
     <None Include="res\ribbon.mfcribbon-ms">
       <Filter>Файлы ресурсов</Filter>
     </None>

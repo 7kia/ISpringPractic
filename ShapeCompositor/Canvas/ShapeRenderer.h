@@ -1,17 +1,9 @@
 #pragma once
 
-#include "Canvas\Shapes\AllShapes.h"
+#include "Canvas\ObjectRenderer.h"
 
 class CShapeCompositorView;
 class CCanvas;
-
-class IObjectRenderer
-{
-public:
-	virtual ~IObjectRenderer() = default;
-
-	virtual void Draw(const IDrawable & shape) = 0;
-};
 
 class CD2DObjectRenderer
 	: public IObjectVisitor

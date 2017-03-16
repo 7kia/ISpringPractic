@@ -183,8 +183,6 @@ int CShapeCompositorView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	try
 	{
-		m_canvas.SetDocument(GetDocument());
-
 		// Enable D2D support for this window:  
 
 		CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);

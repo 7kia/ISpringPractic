@@ -193,6 +193,7 @@
     <ClInclude Include="Canvas\CanvasCommands\ScaleShapeCommand.h" />
     <ClInclude Include="Canvas\History.h" />
     <ClInclude Include="Canvas\MouseEventHandler.h" />
+    <ClInclude Include="Canvas\ObjectRenderer.h" />
     <ClInclude Include="Canvas\SelectShape.h" />
     <ClInclude Include="Canvas\ShapeRenderer.h" />
     <ClInclude Include="Canvas\Shapes\AllShapes.h" />
@@ -243,7 +244,6 @@
   <ItemGroup>
     <None Include="res\ribbon.mfcribbon-ms" />
     <None Include="res\ShapeCompositor.rc2" />
-    <None Include="ShapeCompositor.reg" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ShapeCompositor.rc" />

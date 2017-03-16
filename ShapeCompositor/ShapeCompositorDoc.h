@@ -37,8 +37,6 @@ protected: // создать только из сериализации
 public:
 // Операции
 public:
-	std::vector<CShapePtr>& GetShapes();
-
 	static bool Save(const std::wstring path, std::vector<CShapePtr> const& shapes);
 	static std::vector<SShapeData> Open(const std::wstring path);
 

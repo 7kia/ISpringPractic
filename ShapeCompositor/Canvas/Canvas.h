@@ -11,7 +11,7 @@
 #include <vector>
 
 #include "Shapes\ShapeFactory.h"
-#include "ShapeRenderer.h"
+#include "ObjectRenderer.h"
 #include "SelectShape.h"
 #include "CanvasCommands\AllCanvasCommand.h"
 #include "MouseEventHandler.h"
@@ -72,9 +72,6 @@ public:
 	void InsertShape(size_t insertIndex, SShapeData data);
 	std::vector<CShapePtr> GetShapes() const;
 	void SetShapes(const std::vector<SShapeData> &  shapesData);
-
-
-	void SetDocument(CShapeCompositorDoc * document);
 private:
 
 	bool		IsSelectShape(size_t index) const;
@@ -90,5 +87,4 @@ public:
 	// TODO : see might require do private
 	std::vector<CShapePtr>						m_shapes;
 private:
-	CShapeCompositorDoc *						m_pDocument = nullptr;
 };

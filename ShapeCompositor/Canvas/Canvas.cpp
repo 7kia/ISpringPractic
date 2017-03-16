@@ -76,11 +76,6 @@ void CCanvas::SetShapes(const std::vector<SShapeData> & shapesData)
 	}
 }
 
-void CCanvas::SetDocument(CShapeCompositorDoc * document)
-{
-	m_pDocument = document;
-}
-
 void CCanvas::DeleteShape(size_t index)
 {
 	if (IsSelectShape(index))
