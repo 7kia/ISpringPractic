@@ -17,6 +17,7 @@
 #include "ShapeCompositorDoc.h"
 #include "Canvas\Canvas.h"
 #include "Canvas\History.h"
+#include "Canvas\D2DObjectRenderer.h"
 #pragma comment(lib, "d2d1")
 
 static const FLOAT DEFAULT_DPI = 96.f;

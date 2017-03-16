@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "ShapeRenderer.h"
+#include "D2DObjectRenderer.h"
 #include "../ShapeCompositorView.h"
 #include "Canvas.h"
 

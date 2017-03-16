@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "Canvas.h"
-#include "../ShapeCompositorView.h"
 
 CCanvas::CCanvas()
 	: IMouseEventHandler()
@@ -156,22 +155,22 @@ size_t CCanvas::GetIndexShape(CShapePtr pShape) const
 	return  std::find(m_shapes.begin(), m_shapes.end(), pShape) - m_shapes.begin();
 }
 
-bool CCanvas::HandleLButtHandleDown(CPoint point)
+bool CCanvas::HandleLButtHandleDown(const Vec2f point)
 {
 
 	if (m_selectShape.HaveSelectedShape())
 	{
-		if (m_selectShape.IsResize(Vec2f(float(point.x), float(point.y))))
+		if (m_selectShape.IsResize(point))
 		{
 			m_selectShape.SetUpdateState(true);
 			return true;
 		}
 	}	
-	ChangeSelectShape(Vec2f(float(point.x), float(point.y)));
+	ChangeSelectShape(point);
 
 	if (m_selectShape.HaveSelectedShape())
 	{
-		if (m_selectShape.IsMove(Vec2f(float(point.x), float(point.y))))
+		if (m_selectShape.IsMove(point))
 		{
 			m_selectShape.SetUpdateState(true);
 			return true;
@@ -180,7 +179,7 @@ bool CCanvas::HandleLButtHandleDown(CPoint point)
 	return false;
 }
 
-bool CCanvas::HandleLButtHandleUp(CPoint point)
+bool CCanvas::HandleLButtHandleUp(const Vec2f  point)
 {
 	if (m_selectShape.HaveSelectedShape())
 	{
@@ -190,13 +189,13 @@ bool CCanvas::HandleLButtHandleUp(CPoint point)
 	return false;
 }
 
-bool CCanvas::HandleRButtHandleUp(CPoint point)
+bool CCanvas::HandleRButtHandleUp(const Vec2f  point)
 {
 	// TODO
 	return false;
 }
 
-bool CCanvas::HandleMouseMove(CPoint point)
+bool CCanvas::HandleMouseMove(const Vec2f  point)
 {
 	if (m_selectShape.HaveSelectedShape() && m_selectShape.IsUpdate())
 	{

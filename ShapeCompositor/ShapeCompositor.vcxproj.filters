@@ -69,9 +69,6 @@
     <ClInclude Include="Canvas\CanvasCommands\AllCanvasCommand.h">
       <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
     </ClInclude>
-    <ClInclude Include="Canvas\ShapeRenderer.h">
-      <Filter>Файлы исходного кода\Canvas</Filter>
-    </ClInclude>
     <ClInclude Include="Observer.h">
       <Filter>Файлы исходного кода</Filter>
     </ClInclude>
@@ -111,6 +108,9 @@
     <ClInclude Include="Canvas\ObjectRenderer.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
+    <ClInclude Include="Canvas\D2DObjectRenderer.h">
+      <Filter>Файлы исходного кода\Canvas</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ShapeCompositor.cpp">
@@ -143,9 +143,6 @@
     <ClCompile Include="Canvas\CanvasCommands\AddShapeCommand.cpp">
       <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
     </ClCompile>
-    <ClCompile Include="Canvas\ShapeRenderer.cpp">
-      <Filter>Файлы исходного кода\Canvas</Filter>
-    </ClCompile>
     <ClCompile Include="Canvas\SelectShape.cpp">
       <Filter>Файлы исходного кода\Canvas</Filter>
     </ClCompile>
@@ -172,6 +169,9 @@
     </ClCompile>
     <ClCompile Include="Canvas\CanvasCommands\ScaleShapeCommand.cpp">
       <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas\D2DObjectRenderer.cpp">
+      <Filter>Файлы исходного кода\Canvas</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

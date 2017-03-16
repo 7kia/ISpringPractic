@@ -4,7 +4,7 @@
 #include <array>
 
 #include "Shapes\AllShapes.h"
-#include "ShapeRenderer.h"
+#include "ObjectRenderer.h"
 #include "Shapes\ShapeFactory.h"
 
 static const SSize SELECTED_ELLIPSE_SIZE = SSize(10.f, 10.f);

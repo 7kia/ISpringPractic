@@ -313,7 +313,7 @@ void CShapeCompositorView::OnLButtonDown(UINT nFlags, CPoint point)
 	CScrollView::OnLButtonDown(nFlags, point);
 
 	ChangeCursor(point);
-	m_canvas.HandleLButtHandleDown(point);
+	m_canvas.HandleLButtHandleDown(Vec2f(float(point.x), float(point.y)));
 	RedrawWindow();
 }
 
@@ -322,7 +322,7 @@ void CShapeCompositorView::OnMouseMove(UINT nFlags, CPoint point)
 	// TODO: добавьте свой код обработчика сообщений или вызов стандартного
 	CView::OnMouseMove(nFlags, point);
 	ChangeCursor(point);
-	if (m_canvas.HandleMouseMove(point))
+	if (m_canvas.HandleMouseMove(Vec2f(float(point.x), float(point.y))))
 	{
 		RedrawWindow();
 	}
@@ -334,7 +334,7 @@ void CShapeCompositorView::OnLButtonUp(UINT nFlags, CPoint point)
 	// TODO: добавьте свой код обработчика сообщений или вызов стандартного
 
 	CView::OnLButtonUp(nFlags, point);
-	m_canvas.HandleLButtHandleUp(point);
+	m_canvas.HandleLButtHandleUp(Vec2f(float(point.x), float(point.y)));
 	ChangeCursor(point);
 
 	if (m_canvas.DoneUpdateSelectedShape())
