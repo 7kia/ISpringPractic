@@ -170,12 +170,10 @@ void CD2DObjectRenderer::Visit(const CTriangle & shape)
 
 void CD2DObjectRenderer::Visit(const CCanvas & canvas)
 {
-	for (const auto & shape : *canvas.GetShapes())
+	for (const auto & shape : canvas.GetShapes())
 	{
 		Draw(*shape);
 	}
 
 	Draw(*canvas.GetFrameSelectedShape());
-
-	//return m_objectRenderer.EndDraw();// TODO : transfer
 }

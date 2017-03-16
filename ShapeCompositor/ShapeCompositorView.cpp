@@ -183,8 +183,6 @@ int CShapeCompositorView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	try
 	{
-		GetDocument()->SetCanvas(&m_canvas);
-		GetDocument()->SetHistory(&m_history);
 		m_canvas.SetDocument(GetDocument());
 
 		// Enable D2D support for this window:  
@@ -192,7 +190,7 @@ int CShapeCompositorView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
 
 		// Create a Direct2D factory.
-		ATLENSURE_SUCCEEDED(m_objectRenderer.CreateRecources(this));
+		ATLENSURE_SUCCEEDED(m_objectRenderer.CreateRecources(this));// TODO : delete dependment to this
 
 	}
 	catch (...)
@@ -239,19 +237,19 @@ void CShapeCompositorView::OnSize(UINT nType, int cx, int cy)
 
 void CShapeCompositorView::OnFileSaveAs()
 {
-	GetDocument()->OnFileSave();
+	GetDocument()->OnFileSave(m_canvas.GetShapes());
 	RedrawWindow();
 }
 
 void CShapeCompositorView::OnFileOpen()
 {
-	GetDocument()->OnFileOpen();
+	GetDocument()->OnFileOpen(m_history, m_canvas);
 	RedrawWindow();
 }
 
 void CShapeCompositorView::OnFileSave()
 {
-	GetDocument()->OnFileSave();
+	GetDocument()->OnFileSave(m_canvas.GetShapes());
 	RedrawWindow();
 }
 

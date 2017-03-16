@@ -40,14 +40,12 @@ public:
 	std::vector<CShapePtr>& GetShapes();
 
 	static bool Save(const std::wstring path, std::vector<CShapePtr> const& shapes);
-	static bool Open(const std::wstring path, CCanvas & canvas);
+	static std::vector<SShapeData> Open(const std::wstring path);
 
-	void SetCanvas(CCanvas * pCanvas);
-	void SetHistory(CHistory * pHistory);
 
-	afx_msg void OnFileSaveAs();
-	afx_msg void OnFileOpen();
-	afx_msg void OnFileSave();
+	afx_msg void OnFileSaveAs(std::vector<CShapePtr> const & shapes);
+	afx_msg void OnFileOpen(CHistory & history, CCanvas & canvas);
+	afx_msg void OnFileSave(std::vector<CShapePtr> const & shapes);
 // Переопределение
 public:
 	virtual BOOL OnNewDocument();
@@ -68,10 +66,8 @@ public:
 #endif
 
 protected:
-	std::vector<CShapePtr> m_shapes;
-	CCanvas* m_pCanvas = nullptr;
-	CHistory* m_pHistory = nullptr;
-
+	std::vector<SShapeData> m_shapesData;
+	
 	std::wstring m_fileToSave;
 // Созданные функции схемы сообщений
 protected:

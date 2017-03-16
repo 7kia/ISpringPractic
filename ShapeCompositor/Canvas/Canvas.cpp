@@ -44,33 +44,41 @@ CSelectShape::UpdateType CCanvas::GetUpdateStateSelectedShape() const
 
 void CCanvas::PushBackShape(SShapeData data)
 {
-	m_pShapes->push_back(
+	m_shapes.push_back(
 		m_shapeFactory.CreateShape(data)
 	);
 }
 
 void CCanvas::InsertShape(size_t insertIndex, SShapeData data)
 {
-	if (!IsBetween(insertIndex, size_t(0), m_pShapes->size()))
+	if (!IsBetween(insertIndex, size_t(0), m_shapes.size()))
 	{
 		throw std::runtime_error("Index out range");
 	}
 
-	m_pShapes->insert(
-		m_pShapes->begin() + insertIndex
+	m_shapes.insert(
+		m_shapes.begin() + insertIndex
 		, m_shapeFactory.CreateShape(data)	
 	);
 }
 
-std::vector<CShapePtr>* CCanvas::GetShapes() const
+std::vector<CShapePtr> CCanvas::GetShapes() const
 {
-	return m_pShapes;
+	return m_shapes;
+}
+
+void CCanvas::SetShapes(const std::vector<SShapeData> & shapesData)
+{
+	m_shapes.clear();
+	for (const auto & data : shapesData)
+	{
+		PushBackShape(data);
+	}
 }
 
 void CCanvas::SetDocument(CShapeCompositorDoc * document)
 {
 	m_pDocument = document;
-	m_pShapes = &m_pDocument->GetShapes();
 }
 
 void CCanvas::DeleteShape(size_t index)
@@ -80,7 +88,7 @@ void CCanvas::DeleteShape(size_t index)
 		m_selectShape.ResetSelectShapePtr();
 	}
 
-	m_pShapes->erase(m_pShapes->begin() + index);
+	m_shapes.erase(m_shapes.begin() + index);
 }
 
 void CCanvas::DeleteShape(CShapePtr pShape)
@@ -94,7 +102,7 @@ void CCanvas::DeleteShape(CShapePtr pShape)
 
 void CCanvas::DeleteLastShape()
 {
-	DeleteShape(m_pShapes->size() - 1);
+	DeleteShape(m_shapes.size() - 1);
 }
 
 void CCanvas::ChangeSelectShape(const Vec2f mousePosition)
@@ -117,7 +125,7 @@ void CCanvas::ChangeSelectShape(const Vec2f mousePosition)
 CShapePtr CCanvas::GetShape(const Vec2f mousePosition)
 {
 	CShapePtr foundShape;
-	for (auto iter = m_pShapes->rbegin(); iter != m_pShapes->rend(); ++iter)
+	for (auto iter = m_shapes.rbegin(); iter != m_shapes.rend(); ++iter)
 	{
 		if ((*iter)->IsPointIntersection(mousePosition))
 		{
@@ -145,12 +153,12 @@ size_t CCanvas::GetIndexSelectShape() const
 
 bool CCanvas::IsSelectShape(size_t index) const
 {
-	return m_selectShape.GetShape() == (*m_pShapes)[index];
+	return m_selectShape.GetShape() == m_shapes[index];
 }
 
 size_t CCanvas::GetIndexShape(CShapePtr pShape) const 
 {
-	return  std::find(m_pShapes->begin(), m_pShapes->end(), pShape) - m_pShapes->begin();
+	return  std::find(m_shapes.begin(), m_shapes.end(), pShape) - m_shapes.begin();
 }
 
 bool CCanvas::HandleLButtHandleDown(CPoint point)

@@ -87,10 +87,6 @@ CShapeCompositorDoc::~CShapeCompositorDoc()
 {
 }
 
-std::vector<CShapePtr>& CShapeCompositorDoc::GetShapes()
-{
-	return m_shapes;
-}
 
 BOOL CShapeCompositorDoc::OnNewDocument()
 {
@@ -202,9 +198,14 @@ bool CShapeCompositorDoc::Save(const std::wstring path, std::vector<CShapePtr> c
 	try
 	{
 		boost::property_tree::ptree propertyTree;
-		for (auto &shape : shapes)
+
+		boost::property_tree::ptree child;
+		if (shapes.size() == 0)
 		{
-			boost::property_tree::ptree child;
+			propertyTree.add_child("Shapes", child);
+		}
+		for (auto &shape : shapes)
+		{		
 			child.add("Type", GetShapeName(shape->GetType()));
 			child.add("X", std::to_string(shape->GetPosition().x));
 			child.add("Y", std::to_string(shape->GetPosition().y));
@@ -233,11 +234,13 @@ bool CShapeCompositorDoc::Save(const std::wstring path, std::vector<CShapePtr> c
 	return false;
 }
 
-bool CShapeCompositorDoc::Open(const std::wstring path, CCanvas & canvas)
+std::vector<SShapeData> CShapeCompositorDoc::Open(const std::wstring path)
 {
+	std::vector<SShapeData> result;
+
 	if (path.empty())
 	{
-		return false;
+		return std::vector<SShapeData>();
 	}
 	try
 	{
@@ -259,30 +262,20 @@ bool CShapeCompositorDoc::Open(const std::wstring path, CCanvas & canvas)
 				data.position = Vec2f(x, y);
 				data.size = SSize(width, height);
 
-				canvas.PushBackShape(data);
+				result.push_back(data);
 			}
 		}
 		stream.close();
-		return true;
+		return result;
 	}
-	catch (boost::property_tree::xml_parser_error)
+	catch (boost::property_tree::xml_parser_error e)
 	{
+		std::cout << e.what() << std::endl;
 		std::cout << "XML parser error!" << std::endl;
 		throw;
 	}
-	return false;
+	return std::vector<SShapeData>();
 }
-
-void CShapeCompositorDoc::SetCanvas(CCanvas * pCanvas)
-{
-	m_pCanvas = pCanvas;
-}
-
-void CShapeCompositorDoc::SetHistory(CHistory * pHistory)
-{
-	m_pHistory = pHistory;
-}
-
 
 CString CShapeCompositorDoc::OpenSaveDialog()
 {
@@ -327,39 +320,39 @@ CString CShapeCompositorDoc::OpenLoadDialog()
 }
 
 
-void CShapeCompositorDoc::OnFileSaveAs()
+void CShapeCompositorDoc::OnFileSaveAs(std::vector<CShapePtr> const & shapes)
 {
 	CString fileName = OpenSaveDialog();
 	if (fileName.GetLength() != 0)
 	{
 		m_fileToSave = fileName.GetString();
-		Save(m_fileToSave, m_shapes);
+		Save(m_fileToSave, shapes);
 	}
 }
 
 
-void CShapeCompositorDoc::OnFileOpen()
+void CShapeCompositorDoc::OnFileOpen(CHistory & history, CCanvas & canvas)
 {
 	CString fileName = OpenLoadDialog();
 	if (fileName.GetLength() != 0)
 	{
-		m_shapes.clear();
-		m_pHistory->Clear();
-		m_pCanvas->GetFrameSelectedShape()->ResetSelectShapePtr();// TODO : see can rewrite
+		m_shapesData.clear();
+		history.Clear();
+		canvas.GetFrameSelectedShape()->ResetSelectShapePtr();// TODO : see can rewrite
 
 		m_fileToSave = fileName.GetString();
-		Open(m_fileToSave, *m_pCanvas);
+		canvas.SetShapes(Open(m_fileToSave));
 	}
 }
 
-void CShapeCompositorDoc::OnFileSave()
+void CShapeCompositorDoc::OnFileSave(std::vector<CShapePtr> const & shapes)
 {
 	if (m_fileToSave.empty())
 	{
-		OnFileSaveAs();
+		OnFileSaveAs(shapes);
 	}
 	else
 	{
-		Save(m_fileToSave, m_shapes);
+		Save(m_fileToSave, shapes);
 	}
 }

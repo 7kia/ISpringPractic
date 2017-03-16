@@ -38,11 +38,6 @@ public:
 	// Methods
 public:
 
-	// The function must call before use canvas
-	HRESULT		CreateRecources(CShapeCompositorView * window);
-	void		ClearRecources();
-	//
-
 	// For drag and drop
 	bool		DoneUpdateSelectedShape() const;
 	Vec2f		GetShiftSelectedShape() const;
@@ -75,7 +70,8 @@ public:
 
 	void PushBackShape(SShapeData data);
 	void InsertShape(size_t insertIndex, SShapeData data);
-	std::vector<CShapePtr>* GetShapes() const;
+	std::vector<CShapePtr> GetShapes() const;
+	void SetShapes(const std::vector<SShapeData> &  shapesData);
 
 
 	void SetDocument(CShapeCompositorDoc * document);
@@ -92,7 +88,7 @@ public:
 	CSelectShape								m_selectShape;
 
 	// TODO : see might require do private
-	std::vector<CShapePtr>*						m_pShapes;
+	std::vector<CShapePtr>						m_shapes;
 private:
 	CShapeCompositorDoc *						m_pDocument = nullptr;
 };
