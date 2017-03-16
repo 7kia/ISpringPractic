@@ -129,6 +129,11 @@ std::vector<Vec2f> SFrameData::GetFrameVertices() const
 	};
 }
 
+bool SFrameData::operator==(SFrameData const & data) const
+{
+	return (size == data.size) && (position == data.position);
+}
+
 CFrame::CFrame(
 	const Vec2f & position
 	, const SSize & size

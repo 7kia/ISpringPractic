@@ -95,6 +95,8 @@ struct SFrameData
 	RECT GetOwnRect() const;
 	std::vector<Vec2f> GetFrameVertices() const;
 
+	bool operator==(SFrameData const& data) const;
+
 	Vec2f position;
 	SSize size;
 };

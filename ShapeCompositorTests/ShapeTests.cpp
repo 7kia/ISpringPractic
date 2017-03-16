@@ -47,6 +47,34 @@ BOOST_FIXTURE_TEST_SUITE(Shape, Shape_)
 
 		BOOST_CHECK(shape.GetSize() == size);
 	}
+	BOOST_AUTO_TEST_CASE(Can_change_frame_data)
+	{
+		SSize size(1.2f, 99.f);
+		Vec2f pos(4.5f, -9.4f);
+
+		SFrameData setData(pos, size);
+
+		shape.SetFrameData(setData);
+
+		BOOST_CHECK(shape.GetFrameData() == setData);
+	}
+
+	BOOST_AUTO_TEST_CASE(Can_change_shape_data)
+	{
+		SSize size(4.2f, 9.6f);
+		Vec2f pos(4.6f, -19.4f);
+
+		SShapeData setData(ShapeType::Ellipse
+			, pos
+			, size
+			, Color(1.f, 0.5f, 0.25f)
+			, Color(0.6f, 0.35f, 0.325f)
+		);
+
+		shape.SetShapeData(setData);
+
+		BOOST_CHECK(shape.GetShapeData() == setData);
+	}
 BOOST_AUTO_TEST_SUITE_END()// Shape_
 
 BOOST_AUTO_TEST_SUITE_END()// CShape
