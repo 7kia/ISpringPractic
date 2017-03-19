@@ -185,6 +185,7 @@
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\ShapeAttributes.cpp" />
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\ShapeFactory.cpp" />
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\Triangle.cpp" />
+    <ClCompile Include="CanvasTests.cpp" />
     <ClCompile Include="ShapeTests.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

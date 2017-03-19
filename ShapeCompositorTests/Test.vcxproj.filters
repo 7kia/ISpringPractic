@@ -140,6 +140,9 @@
     <ClCompile Include="..\ShapeCompositor\Canvas\SelectShape.cpp">
       <Filter>Файлы исходного кода\TestClasses\Canvas</Filter>
     </ClCompile>
+    <ClCompile Include="CanvasTests.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\ShapeCompositor\ShapeCompositor.reg" />

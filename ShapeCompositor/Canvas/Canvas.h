@@ -42,16 +42,18 @@ public:
 	void		DeleteShape(CShapePtr pShape);// TODO : see need it variant
 	void		DeleteLastShape();
 
-	CShapePtr			GetShape(const Vec2f mousePosition);// TODO : see need private
-	size_t				GetShapeIndex(const CShapePtr pShape) const;
+	CShapePtr				GetShape(size_t index);
+	CShapePtr				GetShape(const Vec2f mousePosition);
+	size_t					GetShapeIndex(const CShapePtr pShape) const;
+	std::vector<CShapePtr>	GetShapes() const;
 
-	void PushBackShape(CShapePtr & shape);
-	void InsertShape(size_t insertIndex, CShapePtr & shape);
-	std::vector<CShapePtr> GetShapes() const;
+	void					PushBackShape(CShapePtr & shape);
+	void					InsertShape(size_t insertIndex, CShapePtr & shape);
 
+	size_t					GetAmountShapes() const;
 
 private:
-
+	void		CheckIndex(size_t index) const;
 	size_t		GetIndexShape(CShapePtr pShape) const;
 	//////////////////////////////////////////////////////////////////////
 	// Data

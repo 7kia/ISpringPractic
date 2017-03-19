@@ -20,15 +20,17 @@ void CCanvas::PushBackShape(CShapePtr & shape)
 
 void CCanvas::InsertShape(size_t insertIndex, CShapePtr & shape)
 {
-	if (!IsBetween(insertIndex, size_t(0), m_shapes.size()))
-	{
-		throw std::runtime_error("Index out range");
-	}
+	CheckIndex(insertIndex);
 
 	m_shapes.insert(
 		m_shapes.begin() + insertIndex
 		, shape
 	);
+}
+
+size_t CCanvas::GetAmountShapes() const
+{
+	return m_shapes.size();
 }
 
 std::vector<CShapePtr> CCanvas::GetShapes() const
@@ -38,7 +40,7 @@ std::vector<CShapePtr> CCanvas::GetShapes() const
 
 void CCanvas::DeleteShape(size_t index)
 {
-
+	CheckIndex(index);
 	m_shapes.erase(m_shapes.begin() + index);
 }
 
@@ -54,6 +56,13 @@ void CCanvas::DeleteShape(CShapePtr pShape)
 void CCanvas::DeleteLastShape()
 {
 	DeleteShape(m_shapes.size() - 1);
+}
+
+CShapePtr CCanvas::GetShape(size_t index)
+{
+	CheckIndex(index);
+
+	return m_shapes[index];
 }
 
 CShapePtr CCanvas::GetShape(const Vec2f mousePosition)
@@ -93,7 +102,16 @@ bool CCanvas::IsSelectShape(size_t index, const CShapePtr selectedShape) const
 	return selectedShape == m_shapes[index];
 }
 
-size_t CCanvas::GetIndexShape(CShapePtr pShape) const 
+void CCanvas::CheckIndex(size_t index) const
+{
+	size_t maxValue = (m_shapes.size() > 0) ? m_shapes.size() - 1 : m_shapes.size();
+	if (!IsBetween(index, size_t(0), maxValue))
+	{
+		throw std::runtime_error("Index out range");
+	}
+}
+
+size_t CCanvas::GetIndexShape(CShapePtr pShape) const
 {
 	return  std::find(m_shapes.begin(), m_shapes.end(), pShape) - m_shapes.begin();
 }
