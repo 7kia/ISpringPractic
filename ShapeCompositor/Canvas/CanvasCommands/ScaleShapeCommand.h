@@ -3,7 +3,7 @@
 #include "CanvasCommand.h"
 #include "Canvas\Shapes\AllShapes.h"
 
-class CSelectShape;
+class CSelectedShape;
 class CScaleShapeCanvasCommand : public IMyCommand
 {
 public:
@@ -11,7 +11,7 @@ public:
 		CShapePtr pShape
 		, SFrameData oldData
 		, SFrameData newData
-		, CSelectShape & selectedShape
+		, CSelectedShape & selectedShape
 	);
 	//////////////////////////////////////////////////////////////////////
 	// Methods
@@ -26,7 +26,7 @@ public:
 	// Data
 private:
 	CShapePtr	m_pShape;
-	CSelectShape * m_pSelectedShape = nullptr;
+	CSelectedShape * m_pSelectedShape = nullptr;
 	SFrameData		m_oldData;
 	SFrameData		m_newData;
 };

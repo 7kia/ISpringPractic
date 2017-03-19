@@ -3,14 +3,14 @@
 #include "CanvasCommand.h"
 #include "Canvas\Shapes\AllShapes.h"
 
-class CSelectShape;
+class CSelectedShape;
 class CMoveShapeCanvasCommand : public IMyCommand
 {
 public:
 	CMoveShapeCanvasCommand(
 		CShapePtr pShape
 		, Vec2f shift
-		, CSelectShape & selectedShape
+		, CSelectedShape & selectedShape
 	);
 	//////////////////////////////////////////////////////////////////////
 	// Methods
@@ -25,6 +25,6 @@ public:
 	// Data
 private:
 	CShapePtr	m_pShape;
-	CSelectShape * m_pSelectedShape = nullptr;
+	CSelectedShape * m_pSelectedShape = nullptr;
 	Vec2f		m_shift;
 };

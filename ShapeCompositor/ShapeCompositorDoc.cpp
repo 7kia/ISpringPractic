@@ -338,9 +338,9 @@ void CShapeCompositorDoc::OnFileOpen(CShapeCompositorView * view)
 	CString fileName = OpenLoadDialog();
 	if (fileName.GetLength() != 0)
 	{
-		m_shapesData.clear();
 		view->ClearHistory();
 		view->ResetSelectedShape();
+		view->ClearCanvas();
 
 		m_fileToSave = fileName.GetString();
 		Open(m_fileToSave, view->GetCanvas(), view->GetShapeFactory());

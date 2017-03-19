@@ -419,13 +419,13 @@ void CShapeCompositorView::ChangeCursor(const CPoint mousePos)
 	//const auto pFrameSelectShape = m_canvas.GetFrameSelectedShape();
 	if (m_selectShape.GetShape())
 	{
-		CSelectShape::UpdateType updateType = m_selectShape.GetUpdateType();
-		bool needChangeToNW = (updateType == CSelectShape::UpdateType::MarkerLeftTop)
-			|| (updateType == CSelectShape::UpdateType::MarkerRightBottom)
+		CSelectedShape::UpdateType updateType = m_selectShape.GetUpdateType();
+		bool needChangeToNW = (updateType == CSelectedShape::UpdateType::MarkerLeftTop)
+			|| (updateType == CSelectedShape::UpdateType::MarkerRightBottom)
 			|| m_selectShape.InLeftTopMarker(position)
 			|| m_selectShape.InRightBottomMarker(position);
-		bool needChangeToNE = (updateType == CSelectShape::UpdateType::MarkerRightTop) 
-			|| (updateType == CSelectShape::UpdateType::MarkerLeftBottom)
+		bool needChangeToNE = (updateType == CSelectedShape::UpdateType::MarkerRightTop) 
+			|| (updateType == CSelectedShape::UpdateType::MarkerLeftBottom)
 			|| m_selectShape.InRightTopMarker(position)
 			|| m_selectShape.InLeftBottomMarker(position);
 
@@ -463,6 +463,11 @@ void CShapeCompositorView::ClearHistory()
 	m_history.Clear();
 }
 
+void CShapeCompositorView::ClearCanvas()
+{
+	m_canvas.Clear();
+}
+
 void CShapeCompositorView::ResetSelectedShape()
 {
 	m_selectShape.ResetSelectShapePtr();
@@ -482,7 +487,7 @@ void CShapeCompositorView::CreateCommandForSelectedShape()
 {
 	switch (m_selectShape.GetUpdateType())
 	{
-	case CSelectShape::UpdateType::Move:
+	case CSelectedShape::UpdateType::Move:
 	{
 		m_selectShape.ReturnToOldState();
 		m_history.AddAndExecuteCommand(std::make_shared<CMoveShapeCanvasCommand>(
@@ -492,10 +497,10 @@ void CShapeCompositorView::CreateCommandForSelectedShape()
 			));
 	}
 	break;
-	case CSelectShape::UpdateType::MarkerLeftTop:
-	case CSelectShape::UpdateType::MarkerLeftBottom:
-	case CSelectShape::UpdateType::MarkerRightBottom:
-	case CSelectShape::UpdateType::MarkerRightTop:
+	case CSelectedShape::UpdateType::MarkerLeftTop:
+	case CSelectedShape::UpdateType::MarkerLeftBottom:
+	case CSelectedShape::UpdateType::MarkerRightBottom:
+	case CSelectedShape::UpdateType::MarkerRightTop:
 	{
 		m_selectShape.ReturnToOldState();
 		m_history.AddAndExecuteCommand(std::make_shared<CScaleShapeCanvasCommand>(
@@ -507,7 +512,7 @@ void CShapeCompositorView::CreateCommandForSelectedShape()
 
 	}
 	break;
-	case CSelectShape::UpdateType::None:
+	case CSelectedShape::UpdateType::None:
 		break;
 	default:
 		break;

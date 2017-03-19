@@ -41,6 +41,7 @@ public:
 	void					DeleteShape(size_t index);
 	void					DeleteShape(CShapePtr pShape);// TODO : see need it variant
 	void					DeleteLastShape();
+	void					Clear();
 
 	CShapePtr				GetShape(size_t index);
 	CShapePtr				GetShape(const Vec2f mousePosition);

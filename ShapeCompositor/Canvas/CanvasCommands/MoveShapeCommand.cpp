@@ -5,7 +5,7 @@
 CMoveShapeCanvasCommand::CMoveShapeCanvasCommand(
 	CShapePtr pShape
 	, Vec2f shift
-	, CSelectShape & selectedShape
+	, CSelectedShape & selectedShape
 )
 	: m_pShape(pShape)
 	, m_shift(shift)

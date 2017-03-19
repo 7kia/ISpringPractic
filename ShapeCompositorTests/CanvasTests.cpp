@@ -127,6 +127,15 @@ BOOST_FIXTURE_TEST_SUITE(Canvas, CanvasFixture)
 		{
 			BOOST_CHECK_THROW(emptyCanvas.DeleteLastShape(), std::runtime_error);
 		}
+		BOOST_AUTO_TEST_CASE(Can_clear_canvas)
+		{
+			BOOST_CHECK_EQUAL(fullCanvas.GetAmountShapes(), 3);
+
+			fullCanvas.Clear();
+
+			BOOST_CHECK_EQUAL(fullCanvas.GetAmountShapes(), 0);
+		}
+
 	BOOST_AUTO_TEST_SUITE_END()// Delete
 
 

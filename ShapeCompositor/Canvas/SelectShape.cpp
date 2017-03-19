@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "SelectShape.h"
 
-CSelectShape::CSelectShape(const CShapeFactory & shapeFactory)
+CSelectedShape::CSelectedShape(const CShapeFactory & shapeFactory)
 	: IDrawable()
 {
 	SShapeData rectangleData;
@@ -22,7 +22,7 @@ CSelectShape::CSelectShape(const CShapeFactory & shapeFactory)
 	}
 }
 
-void CSelectShape::SetShape(CShapePtr shape)
+void CSelectedShape::SetShape(CShapePtr shape)
 {
 	m_selectShape = shape;
 	m_frameData = shape->GetShapeData();
@@ -31,12 +31,12 @@ void CSelectShape::SetShape(CShapePtr shape)
 	SetViewPosition();
 }
 
-CShapePtr CSelectShape::GetShape() const
+CShapePtr CSelectedShape::GetShape() const
 {
 	return m_selectShape;
 }
 
-void CSelectShape::ResetSelectShapePtr()
+void CSelectedShape::ResetSelectShapePtr()
 {
 	m_selectShape = nullptr;
 	m_isUpdate = false;
@@ -44,7 +44,7 @@ void CSelectShape::ResetSelectShapePtr()
 	m_oldData = SFrameData();
 }
 
-void CSelectShape::ResetUpdateParameters()
+void CSelectedShape::ResetUpdateParameters()
 {
 	m_startMove = Vec2f();
 	m_start = Vec2f();
@@ -56,32 +56,32 @@ void CSelectShape::ResetUpdateParameters()
 
 }
 
-void CSelectShape::SetUpdateState(bool state)
+void CSelectedShape::SetUpdateState(bool state)
 {
 	m_isUpdate = state;
 }
 
-bool CSelectShape::IsUpdate() const
+bool CSelectedShape::IsUpdate() const
 {
 	return m_isUpdate;
 }
 
-bool CSelectShape::HaveSelectedShape() const
+bool CSelectedShape::HaveSelectedShape() const
 {
 	return m_selectShape.get() != nullptr;
 }
 
-void CSelectShape::SetUpdateType(UpdateType type)
+void CSelectedShape::SetUpdateType(UpdateType type)
 {
 	m_updateType = type;
 }
 
-CSelectShape::UpdateType CSelectShape::GetUpdateType() const
+CSelectedShape::UpdateType CSelectedShape::GetUpdateType() const
 {
 	return m_updateType;
 }
 
-bool CSelectShape::IsResize(const Vec2f point)
+bool CSelectedShape::IsResize(const Vec2f point)
 {
 	size_t index = size_t(UpdateType::MarkerLeftBottom);
 	for (const auto & resizeShape : m_resizeShapes)
@@ -98,34 +98,34 @@ bool CSelectShape::IsResize(const Vec2f point)
 	return false;
 }
 
-bool CSelectShape::InLeftTopMarker(const Vec2f point)
+bool CSelectedShape::InLeftTopMarker(const Vec2f point)
 {
 	return m_resizeShapes[size_t(Marker::MarkerLeftTop)]->IsPointIntersection(point);
 }
 
-bool CSelectShape::InLeftBottomMarker(const Vec2f point)
+bool CSelectedShape::InLeftBottomMarker(const Vec2f point)
 {
 	return m_resizeShapes[size_t(Marker::MarkerLeftBottom)]->IsPointIntersection(point);
 }
 
-bool CSelectShape::InRightTopMarker(const Vec2f point)
+bool CSelectedShape::InRightTopMarker(const Vec2f point)
 {
 	return m_resizeShapes[size_t(Marker::MarkerRightTop)]->IsPointIntersection(point);
 }
 
-bool CSelectShape::InRightBottomMarker(const Vec2f point)
+bool CSelectedShape::InRightBottomMarker(const Vec2f point)
 {
 	return m_resizeShapes[size_t(Marker::MarkerRightBottom)]->IsPointIntersection(point);
 }
 
-bool CSelectShape::DoneUpdate() const
+bool CSelectedShape::DoneUpdate() const
 {
 	return HaveSelectedShape()
 		&& !IsUpdate()
 		&& (GetShift() != Vec2f());
 }
 
-bool CSelectShape::IsMove(const Vec2f point)
+bool CSelectedShape::IsMove(const Vec2f point)
 {
 	if (m_selectShape->IsPointIntersection(point))
 	{
@@ -135,7 +135,7 @@ bool CSelectShape::IsMove(const Vec2f point)
 	return false;
 }
 
-void CSelectShape::HandleMoveMouse(const Vec2f point)
+void CSelectedShape::HandleMoveMouse(const Vec2f point)
 {
 	switch (m_updateType)
 	{
@@ -167,7 +167,7 @@ void CSelectShape::HandleMoveMouse(const Vec2f point)
 	}
 }
 
-void CSelectShape::Accept(IObjectVisitor & renderer) const
+void CSelectedShape::Accept(IObjectVisitor & renderer) const
 {
 	if (m_selectShape != nullptr)
 	{
@@ -183,7 +183,7 @@ void CSelectShape::Accept(IObjectVisitor & renderer) const
 }
 
 
-void CSelectShape::SetPosition(Vec2f position)
+void CSelectedShape::SetPosition(Vec2f position)
 {
 	if (HaveSelectedShape())
 	{
@@ -195,7 +195,7 @@ void CSelectShape::SetPosition(Vec2f position)
 	SetViewPosition();
 }
 
-Vec2f CSelectShape::GetPosition() const
+Vec2f CSelectedShape::GetPosition() const
 {
 	if (!HaveSelectedShape())
 	{
@@ -205,12 +205,12 @@ Vec2f CSelectShape::GetPosition() const
 	return m_selectShape->GetPosition();
 }
 
-void CSelectShape::Move(const Vec2f shift)
+void CSelectedShape::Move(const Vec2f shift)
 {
 	SetPosition(GetPosition() + shift);
 }
 
-void CSelectShape::SetSize(SSize size)
+void CSelectedShape::SetSize(SSize size)
 {
 	if (HaveSelectedShape())
 	{
@@ -228,23 +228,23 @@ void CSelectShape::SetSize(SSize size)
 	}
 }
 
-SSize CSelectShape::GetSize() const
+SSize CSelectedShape::GetSize() const
 {
 	return m_selectShape->GetSize();
 }
 
-void CSelectShape::UpdateScale(const Vec2f shift)
+void CSelectedShape::UpdateScale(const Vec2f shift)
 {
 	SetSize(GetSize() + SSize(shift.x, shift.y));
 	Move(Vec2f(shift.x / 2.f, shift.y / 2.f));
 }
 
-SRectF CSelectShape::GetOwnRect() const
+SRectF CSelectedShape::GetOwnRect() const
 {
 	return m_selectShape->GetOwnRect();
 }
 
-SFrameData CSelectShape::GetFrameData() const
+SFrameData CSelectedShape::GetFrameData() const
 {
 	SFrameData info;
 	info.position = m_frameData.position;
@@ -253,7 +253,7 @@ SFrameData CSelectShape::GetFrameData() const
 	return info;
 }
 
-void CSelectShape::SetFrameData(SFrameData const & data)
+void CSelectedShape::SetFrameData(SFrameData const & data)
 {
 	if (HaveSelectedShape())
 	{
@@ -266,19 +266,19 @@ void CSelectShape::SetFrameData(SFrameData const & data)
 }
 
 
-Vec2f CSelectShape::GetShift() const
+Vec2f CSelectedShape::GetShift() const
 {
 	return m_current - m_startMove;
 }
 
-void CSelectShape::MoveFrame(const Vec2f shift)
+void CSelectedShape::MoveFrame(const Vec2f shift)
 {
 	m_frameData.position = m_frameData.position + shift;
 	SetViewPosition();
 }
 
 
-SFrameData CSelectShape::GetNewFrameData() const
+SFrameData CSelectedShape::GetNewFrameData() const
 {
 	SFrameData info;
 	const Vec2f shift = GetShift();
@@ -290,12 +290,12 @@ SFrameData CSelectShape::GetNewFrameData() const
 	return info;
 }
 
-SFrameData CSelectShape::GetOldFrameData()
+SFrameData CSelectedShape::GetOldFrameData()
 {
 	return m_oldData;
 }
 
-SFrameData CSelectShape::GetCurrentFrameData()
+SFrameData CSelectedShape::GetCurrentFrameData()
 {
 	SFrameData info;
 	const Vec2f shift = m_current - m_start;
@@ -308,7 +308,7 @@ SFrameData CSelectShape::GetCurrentFrameData()
 	return info;
 }
 
-SSize CSelectShape::GetChangeResize() const
+SSize CSelectedShape::GetChangeResize() const
 {
 	SSize result;
 	switch (m_updateType)
@@ -339,23 +339,23 @@ SSize CSelectShape::GetChangeResize() const
 	return SSize();
 }
 
-void CSelectShape::ReturnToOldState()
+void CSelectedShape::ReturnToOldState()
 {
 	SetFrameData(GetOldFrameData());
 }
 
-void CSelectShape::SetViewPosition()
+void CSelectedShape::SetViewPosition()
 {
 	SetMoveView();
 	SetResizeView();
 }
 
-void CSelectShape::SetMoveView()
+void CSelectedShape::SetMoveView()
 {
 	m_moveShape[0]->SetFrameData(GetFrameData());
 }
 
-void CSelectShape::SetResizeView()
+void CSelectedShape::SetResizeView()
 {
 	auto vertices = m_frameData.GetFrameVertices();// m_selectShape->
 	size_t indexEllipse = 0;

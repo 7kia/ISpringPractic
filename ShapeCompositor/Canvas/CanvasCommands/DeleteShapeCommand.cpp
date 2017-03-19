@@ -4,7 +4,7 @@
 
 CDeleteShapeCanvasCommand::CDeleteShapeCanvasCommand(
 	CCanvas & canvas
-	, CSelectShape & selectedShape
+	, CSelectedShape & selectedShape
 	, const CShapeFactory & factory
 )
 	: m_pCanvas(&canvas)

@@ -6,7 +6,7 @@ CScaleShapeCanvasCommand::CScaleShapeCanvasCommand(
 	CShapePtr pShape
 	, SFrameData oldData
 	, SFrameData newData
-	, CSelectShape & selectedShape
+	, CSelectedShape & selectedShape
 )
 	: m_pShape(pShape)
 	, m_oldData(oldData)

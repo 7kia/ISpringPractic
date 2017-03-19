@@ -177,7 +177,7 @@ void CD2DObjectRenderer::Visit(const CCanvas & canvas)
 	}
 }
 
-void CD2DObjectRenderer::Visit(const CSelectShape & selectedShape)
+void CD2DObjectRenderer::Visit(const CSelectedShape & selectedShape)
 {
 	Draw(selectedShape);
 }

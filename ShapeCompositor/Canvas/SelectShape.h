@@ -9,12 +9,12 @@
 
 static const SSize SELECTED_ELLIPSE_SIZE = SSize(10.f, 10.f);
 
-class CSelectShape
+class CSelectedShape
 	: public IDrawable
 	, public IFrame
 {
 public:
-	CSelectShape(const CShapeFactory & shapeFactory);
+	CSelectedShape(const CShapeFactory & shapeFactory);
 
 	enum class Marker
 	{

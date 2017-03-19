@@ -52,6 +52,7 @@ public:
 
 	// For document
 	void					ClearHistory();
+	void					ClearCanvas();
 	void					ResetSelectedShape();
 	CCanvas &				GetCanvas();
 	const CShapeFactory &	GetShapeFactory() const;
@@ -70,7 +71,7 @@ protected:
 	CHistory m_history;
 
 	// Fromn canvas TODO
-	CSelectShape m_selectShape;
+	CSelectedShape m_selectShape;
 	CShapeFactory m_shapeFactory;
 
 	ID2D1HwndRenderTarget * m_pRenderTarget = nullptr;

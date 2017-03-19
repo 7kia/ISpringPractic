@@ -58,6 +58,11 @@ void CCanvas::DeleteLastShape()
 	DeleteShape(m_shapes.size() - 1);
 }
 
+void CCanvas::Clear()
+{
+	m_shapes.clear();
+}
+
 CShapePtr CCanvas::GetShape(size_t index)
 {
 	CheckIndex(index);

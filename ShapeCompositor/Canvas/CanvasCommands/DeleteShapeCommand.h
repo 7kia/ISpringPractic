@@ -10,7 +10,7 @@ class CDeleteShapeCanvasCommand : public IMyCommand
 public:
 	CDeleteShapeCanvasCommand(
 		CCanvas & pCanvas
-		, CSelectShape & seletedShape
+		, CSelectedShape & seletedShape
 		, const CShapeFactory & factory
 	);
 //////////////////////////////////////////////////////////////////////
@@ -29,6 +29,6 @@ private:
 	SShapeData m_data;
 	size_t m_index = 0;
 	CCanvas * m_pCanvas = nullptr;
-	CSelectShape * m_pSelectShape = nullptr;
+	CSelectedShape * m_pSelectShape = nullptr;
 	const CShapeFactory * m_pFactory = nullptr;
 };
