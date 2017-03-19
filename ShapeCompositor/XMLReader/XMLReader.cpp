@@ -63,6 +63,7 @@ bool CXMLReader::Save(const std::wstring path, std::vector<CShapePtr> const & sh
 		}
 		for (auto &shape : shapes)
 		{
+			boost::property_tree::ptree child;
 			child.add("Type", GetShapeName(shape->GetType()));
 			child.add("X", std::to_string(shape->GetPosition().x));
 			child.add("Y", std::to_string(shape->GetPosition().y));

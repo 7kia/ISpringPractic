@@ -255,7 +255,7 @@ void CShapeCompositorView::OnSize(UINT nType, int cx, int cy)
 
 void CShapeCompositorView::OnFileSaveAs()
 {
-	GetDocument()->OnFileSave(m_canvas.GetShapes());
+	GetDocument()->OnFileSaveAs(m_canvas.GetShapes());
 	RedrawWindow();
 }
 
