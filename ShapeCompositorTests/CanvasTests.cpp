@@ -87,7 +87,6 @@ BOOST_FIXTURE_TEST_SUITE(Canvas, CanvasFixture)
 			BOOST_CHECK_EQUAL(fullCanvas.GetShape(0), ellipse);
 			BOOST_CHECK_EQUAL(fullCanvas.GetShape(1), rectangle);
 		}
-
 		BOOST_AUTO_TEST_CASE(Can_delete_shape_by_index)
 		{
 			fullCanvas.DeleteShape(0);
@@ -111,7 +110,6 @@ BOOST_FIXTURE_TEST_SUITE(Canvas, CanvasFixture)
 			BOOST_CHECK_EQUAL(fullCanvas.GetShape(1), triangle);
 			BOOST_CHECK_EQUAL(fullCanvas.GetShape(2), rectangle);
 		}
-
 		BOOST_AUTO_TEST_CASE(Can_delete_last_shape)
 		{
 			emptyCanvas.PushBackShape(ellipse);
@@ -129,8 +127,80 @@ BOOST_FIXTURE_TEST_SUITE(Canvas, CanvasFixture)
 		{
 			BOOST_CHECK_THROW(emptyCanvas.DeleteLastShape(), std::runtime_error);
 		}
-
 	BOOST_AUTO_TEST_SUITE_END()// Delete
+
+
+	BOOST_AUTO_TEST_SUITE(GetShape)
+		BOOST_AUTO_TEST_CASE(GetShape_by_index)
+		{
+			BOOST_CHECK_EQUAL(fullCanvas.GetShape(0), ellipse);
+			BOOST_CHECK_EQUAL(fullCanvas.GetShape(1), triangle);
+			BOOST_CHECK_EQUAL(fullCanvas.GetShape(2), rectangle);
+		}
+		
+		struct GetShapeByMousePositionFixture
+		{
+			const Vec2f firstPos = Vec2f(0.5f, 0.5f);
+			const Vec2f secondPos = Vec2f(1.5f, 0.5f);
+			const Vec2f thirdPos = Vec2f(0.5f, 1.25f);
+			const SSize size = SSize(1.f, 1.f);
+
+			CShapeFactory factory;
+			CCanvas canvas;
+
+			CShapePtr ellipse;
+			CShapePtr rectangle;
+			CShapePtr triangle;
+
+
+			GetShapeByMousePositionFixture()
+				: ellipse(factory.CreateShape(SShapeData(ShapeType::Ellipse, firstPos, size)))
+				, triangle(factory.CreateShape(SShapeData(ShapeType::Triangle, secondPos, size)))
+				, rectangle(factory.CreateShape(SShapeData(ShapeType::Rectangle, thirdPos, size)))
+			{
+				canvas.PushBackShape(ellipse);
+				canvas.PushBackShape(triangle);
+				canvas.PushBackShape(rectangle);
+			}
+		};
+		BOOST_FIXTURE_TEST_SUITE(GetShapeByMousePosition, GetShapeByMousePositionFixture)
+			BOOST_AUTO_TEST_CASE(Check_centers)
+			{
+				BOOST_CHECK_EQUAL(canvas.GetShape(firstPos), ellipse);
+				BOOST_CHECK_EQUAL(canvas.GetShape(secondPos), triangle);
+				BOOST_CHECK_EQUAL(canvas.GetShape(thirdPos), rectangle);
+			}
+			BOOST_AUTO_TEST_CASE(Check_other_point)
+			{
+				BOOST_CHECK_EQUAL(canvas.GetShape(firstPos + Vec2f(-0.25f, 0.f)), ellipse);
+				BOOST_CHECK_EQUAL(canvas.GetShape(secondPos + Vec2f(-0.25f, 0.f)), triangle);
+				BOOST_CHECK_EQUAL(canvas.GetShape(thirdPos + Vec2f(0.25f, 0.f)), rectangle);
+			}
+			BOOST_AUTO_TEST_CASE(Check_overlap)
+			{
+				BOOST_CHECK_EQUAL(canvas.GetShape(firstPos + Vec2f(0.f, 0.22f)), ellipse);
+				BOOST_CHECK_EQUAL(canvas.GetShape(firstPos + Vec2f(0.f, 0.25f)), rectangle);
+				BOOST_CHECK_EQUAL(canvas.GetShape(firstPos + Vec2f(0.f, 0.28f)), rectangle);
+				BOOST_CHECK_EQUAL(canvas.GetShape(thirdPos + Vec2f(0.0f, 0.35f)), rectangle);
+			}
+		BOOST_AUTO_TEST_SUITE_END()// GetShapeByMousePositionFixture
+
+	BOOST_AUTO_TEST_SUITE_END()// GetShape
+
+	BOOST_AUTO_TEST_CASE(GetShapeIndex)
+	{
+		BOOST_CHECK_EQUAL(fullCanvas.GetShapeIndex(ellipse), 0);
+		BOOST_CHECK_EQUAL(fullCanvas.GetShapeIndex(triangle), 1);
+		BOOST_CHECK_EQUAL(fullCanvas.GetShapeIndex(rectangle), 2);
+	}
+	BOOST_AUTO_TEST_CASE(GetShapes)
+	{
+		auto shapes = fullCanvas.GetShapes();
+		
+		BOOST_CHECK_EQUAL(shapes[0], ellipse);
+		BOOST_CHECK_EQUAL(shapes[1], triangle);
+		BOOST_CHECK_EQUAL(shapes[2], rectangle);
+	}
 
 BOOST_AUTO_TEST_SUITE_END()// CanvasFixture
 

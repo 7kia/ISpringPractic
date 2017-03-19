@@ -31,16 +31,16 @@ public:
 public:
 
 	// For drag and drop
-	bool		IsSelectShape(size_t index, const CShapePtr selectedShape) const;
+	bool					IsSelectShape(size_t index, const CShapePtr selectedShape) const;
 	//
 
 	//--------------------------------------------
 	// 	IDrawable
-	void Accept(IObjectVisitor & renderer) const override;
+	void					Accept(IObjectVisitor & renderer) const override;
 	//--------------------------------------------
-	void		DeleteShape(size_t index);
-	void		DeleteShape(CShapePtr pShape);// TODO : see need it variant
-	void		DeleteLastShape();
+	void					DeleteShape(size_t index);
+	void					DeleteShape(CShapePtr pShape);// TODO : see need it variant
+	void					DeleteLastShape();
 
 	CShapePtr				GetShape(size_t index);
 	CShapePtr				GetShape(const Vec2f mousePosition);
@@ -53,13 +53,13 @@ public:
 	size_t					GetAmountShapes() const;
 
 private:
-	void		CheckIndex(size_t index) const;
-	size_t		GetIndexShape(CShapePtr pShape) const;
+	void					CheckIndex(size_t index) const;
+	size_t					GetIndexShape(CShapePtr pShape) const;
 	//////////////////////////////////////////////////////////////////////
 	// Data
 public:
 
 	// TODO : see might require do private
-	std::vector<CShapePtr>						m_shapes;
+	std::vector<CShapePtr>	m_shapes;
 private:
 };
