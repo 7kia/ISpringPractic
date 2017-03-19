@@ -15,17 +15,11 @@
 
 #pragma once
 
-#include <vector>
-#include <memory>
-#include <sstream>
-#include <fstream>
-#include <iostream>
-#include <string>
-#include <boost\property_tree\ptree.hpp>
-#include <boost\property_tree\xml_parser.hpp>
+
 
 #include "Canvas\Canvas.h"
 #include "Canvas\History.h"
+#include "XMLReader\XMLReader.h"
 
 class CShapeCompositorView;
 class CShapeCompositorDoc : public CDocument
@@ -38,14 +32,6 @@ protected: // создать только из сериализации
 public:
 // Операции
 public:
-	static bool Save(const std::wstring path, std::vector<CShapePtr> const& shapes);
-	static bool Open(
-		const std::wstring path
-		, CCanvas & canvas
-		, const CShapeFactory & factory
-	);
-
-
 	afx_msg void OnFileSaveAs(std::vector<CShapePtr> const & shapes);
 	afx_msg void OnFileOpen(CShapeCompositorView * view);
 	afx_msg void OnFileSave(std::vector<CShapePtr> const & shapes);
@@ -69,7 +55,7 @@ public:
 #endif
 
 protected:
-	std::vector<SShapeData> m_shapesData;
+	CXMLReader m_xmlReader;
 	
 	std::wstring m_fileToSave;
 // Созданные функции схемы сообщений

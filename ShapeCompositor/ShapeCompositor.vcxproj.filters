@@ -22,6 +22,9 @@
     <Filter Include="Файлы исходного кода\Canvas\CanvasCommand">
       <UniqueIdentifier>{9b10ba3d-3a3d-4c44-bd81-9a5303ad472e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы исходного кода\XMLReader">
+      <UniqueIdentifier>{7d5d682d-2cc7-4771-b6c9-a675bd07671c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ShapeCompositor.h">
@@ -111,6 +114,9 @@
     <ClInclude Include="Canvas\D2DObjectRenderer.h">
       <Filter>Файлы исходного кода\Canvas</Filter>
     </ClInclude>
+    <ClInclude Include="XMLReader\XMLReader.h">
+      <Filter>Файлы исходного кода\XMLReader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ShapeCompositor.cpp">
@@ -172,6 +178,9 @@
     </ClCompile>
     <ClCompile Include="Canvas\D2DObjectRenderer.cpp">
       <Filter>Файлы исходного кода\Canvas</Filter>
+    </ClCompile>
+    <ClCompile Include="XMLReader\XMLReader.cpp">
+      <Filter>Файлы исходного кода\XMLReader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
