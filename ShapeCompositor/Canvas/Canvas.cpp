@@ -38,6 +38,11 @@ std::vector<CShapePtr> CCanvas::GetShapes() const
 	return m_shapes;
 }
 
+void CCanvas::SetShapes(const std::vector<CShapePtr>& shapes)
+{
+	m_shapes = shapes;
+}
+
 void CCanvas::DeleteShape(size_t index)
 {
 	CheckIndex(index);

@@ -210,6 +210,22 @@ BOOST_FIXTURE_TEST_SUITE(Canvas, CanvasFixture)
 		BOOST_CHECK_EQUAL(shapes[1], triangle);
 		BOOST_CHECK_EQUAL(shapes[2], rectangle);
 	}
+	BOOST_AUTO_TEST_CASE(SetShapes)
+	{
+		std::vector<CShapePtr> addShapes = {
+			factory.CreateShape(SShapeData(ShapeType::Triangle))
+			, factory.CreateShape(SShapeData(ShapeType::Ellipse))
+			, factory.CreateShape(SShapeData(ShapeType::Rectangle))
+		};
+		fullCanvas.SetShapes(addShapes);
+
+		auto currentShapes = fullCanvas.GetShapes();
+		BOOST_CHECK_EQUAL(currentShapes[0], addShapes[0]);
+		BOOST_CHECK_EQUAL(currentShapes[1], addShapes[1]);
+		BOOST_CHECK_EQUAL(currentShapes[2], addShapes[2]);
+	}
+
+
 
 BOOST_AUTO_TEST_SUITE_END()// CanvasFixture
 

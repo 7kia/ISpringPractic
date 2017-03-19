@@ -55,14 +55,14 @@ bool CXMLReader::Save(const std::wstring path, std::vector<CShapePtr> const & sh
 	try
 	{
 		boost::property_tree::ptree propertyTree;
-
-		boost::property_tree::ptree child;
 		if (shapes.size() == 0)
 		{
+			boost::property_tree::ptree child;
 			propertyTree.add_child("Shapes", child);
 		}
 		for (auto &shape : shapes)
 		{
+			boost::property_tree::ptree child;
 			child.add("Type", GetShapeName(shape->GetType()));
 			child.add("X", std::to_string(shape->GetPosition().x));
 			child.add("Y", std::to_string(shape->GetPosition().y));
@@ -106,6 +106,8 @@ bool CXMLReader::Open(
 		std::ifstream stream(path);
 		boost::property_tree::ptree propertyTree;
 		boost::property_tree::read_xml(stream, propertyTree);
+
+		std::vector<CShapePtr> shapesData;
 		for (auto &shape : propertyTree.get_child("Shapes"))
 		{
 			if (shape.first == "Shape")
@@ -121,9 +123,13 @@ bool CXMLReader::Open(
 				data.position = Vec2f(x, y);
 				data.size = SSize(width, height);
 
-				canvas.PushBackShape(factory.CreateShape(data));
+				shapesData.push_back(factory.CreateShape(data));
 			}
 		}
+
+		canvas.Clear();
+		canvas.SetShapes(shapesData);
+
 		stream.close();
 		return true;
 	}

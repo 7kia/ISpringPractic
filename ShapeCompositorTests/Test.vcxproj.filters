@@ -25,6 +25,9 @@
     <Filter Include="Файлы исходного кода\TestClasses\Canvas\CanvasCommand">
       <UniqueIdentifier>{d4d69241-c730-4a5b-bb33-106652e5a3bf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы исходного кода\TestClasses\XMLReader">
+      <UniqueIdentifier>{781876d4-a409-437c-b56b-ce1d186633ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -90,6 +93,9 @@
     <ClInclude Include="..\ShapeCompositor\Canvas\SelectShape.h">
       <Filter>Файлы исходного кода\TestClasses\Canvas</Filter>
     </ClInclude>
+    <ClInclude Include="..\ShapeCompositor\XMLReader\XMLReader.h">
+      <Filter>Файлы исходного кода\TestClasses\XMLReader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -142,6 +148,12 @@
     </ClCompile>
     <ClCompile Include="CanvasTests.cpp">
       <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="XMLReaderTests.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ShapeCompositor\XMLReader\XMLReader.cpp">
+      <Filter>Файлы исходного кода\TestClasses\XMLReader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

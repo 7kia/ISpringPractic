@@ -209,7 +209,6 @@ void CShapeCompositorDoc::OnFileOpen(CShapeCompositorView * view)
 	{
 		view->ClearHistory();
 		view->ResetSelectedShape();
-		view->ClearCanvas();
 
 		m_fileToSave = fileName.GetString();
 		m_xmlReader.Open(m_fileToSave, view->GetCanvas(), view->GetShapeFactory());

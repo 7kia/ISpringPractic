@@ -47,6 +47,7 @@ public:
 	CShapePtr				GetShape(const Vec2f mousePosition);
 	size_t					GetShapeIndex(const CShapePtr pShape) const;
 	std::vector<CShapePtr>	GetShapes() const;
+	void					SetShapes(const std::vector<CShapePtr> & shapes);
 
 	void					PushBackShape(CShapePtr & shape);
 	void					InsertShape(size_t insertIndex, CShapePtr & shape);
