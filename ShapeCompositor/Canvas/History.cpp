@@ -3,10 +3,11 @@
 #include "Canvas.h"
 
 CHistory::CHistory()
+	: IHistory()
 {
 }
 
-void CHistory::AddAndExecuteCommand(CanvasCommandPtr && command)
+void CHistory::AddAndExecuteCommand(const CanvasCommandPtr & command)
 {
 	// TODO : insert to middle queue
 	if (!m_history.empty() && (m_currentCommand != m_history.rbegin()))

@@ -101,7 +101,7 @@ ID2D1HwndRenderTarget * CShapeCompositorView::GetRenderTarget()
 
 void CShapeCompositorView::CreateTriangle()
 {
-	m_history.AddAndExecuteCommand(
+	m_canvas.AddAndExecuteCommand(
 		std::make_shared<CAddShapeCanvasCommand>(
 			&m_canvas
 			, ShapeType::Triangle
@@ -113,7 +113,7 @@ void CShapeCompositorView::CreateTriangle()
 
 void CShapeCompositorView::CreateRectangle()
 {
-	m_history.AddAndExecuteCommand(
+	m_canvas.AddAndExecuteCommand(
 		std::make_shared<CAddShapeCanvasCommand>(
 			&m_canvas
 			, ShapeType::Rectangle
@@ -125,7 +125,7 @@ void CShapeCompositorView::CreateRectangle()
 
 void CShapeCompositorView::CreateEllipse()
 {
-	m_history.AddAndExecuteCommand(std::make_shared<CAddShapeCanvasCommand>(
+	m_canvas.AddAndExecuteCommand(std::make_shared<CAddShapeCanvasCommand>(
 		&m_canvas
 		, ShapeType::Ellipse
 		, m_shapeFactory
@@ -136,13 +136,13 @@ void CShapeCompositorView::CreateEllipse()
 
 void CShapeCompositorView::Undo()
 {
-	m_history.Undo();
+	m_canvas.UndoCommand();
 	RedrawWindow();
 }
 
 void CShapeCompositorView::Redo()
 {
-	m_history.Redo();
+	m_canvas.RedoCommand();
 	RedrawWindow();
 }
 
@@ -307,7 +307,7 @@ BOOL CShapeCompositorView::PreTranslateMessage(MSG* pMsg)
 			{
 				case VK_DELETE:
 				{
-					m_history.AddAndExecuteCommand(
+					m_canvas.AddAndExecuteCommand(
 						std::make_shared<CDeleteShapeCanvasCommand>(
 							m_canvas
 							, m_selectShape
@@ -460,7 +460,7 @@ void CShapeCompositorView::ChangeCursor(const CPoint mousePos)
 
 void CShapeCompositorView::ClearHistory()
 {
-	m_history.Clear();
+	m_canvas.ClearHistory();
 }
 
 void CShapeCompositorView::ClearCanvas()
@@ -490,7 +490,7 @@ void CShapeCompositorView::CreateCommandForSelectedShape()
 	case CSelectedShape::UpdateType::Move:
 	{
 		m_selectShape.ReturnToOldState();
-		m_history.AddAndExecuteCommand(std::make_shared<CMoveShapeCanvasCommand>(
+		m_canvas.AddAndExecuteCommand(std::make_shared<CMoveShapeCanvasCommand>(
 			m_selectShape.GetShape(),
 			m_selectShape.GetShift(),
 			m_selectShape
@@ -503,7 +503,7 @@ void CShapeCompositorView::CreateCommandForSelectedShape()
 	case CSelectedShape::UpdateType::MarkerRightTop:
 	{
 		m_selectShape.ReturnToOldState();
-		m_history.AddAndExecuteCommand(std::make_shared<CScaleShapeCanvasCommand>(
+		m_canvas.AddAndExecuteCommand(std::make_shared<CScaleShapeCanvasCommand>(
 			m_selectShape.GetShape(),
 			m_selectShape.GetOldFrameData(),// TODO : see can delete other arguments
 			m_selectShape.GetNewFrameData(),

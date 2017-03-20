@@ -96,6 +96,9 @@
     <ClInclude Include="..\ShapeCompositor\XMLReader\XMLReader.h">
       <Filter>Файлы исходного кода\TestClasses\XMLReader</Filter>
     </ClInclude>
+    <ClInclude Include="..\ShapeCompositor\Canvas\History.h">
+      <Filter>Файлы исходного кода\TestClasses\Canvas</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -154,6 +157,9 @@
     </ClCompile>
     <ClCompile Include="..\ShapeCompositor\XMLReader\XMLReader.cpp">
       <Filter>Файлы исходного кода\TestClasses\XMLReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ShapeCompositor\Canvas\History.cpp">
+      <Filter>Файлы исходного кода\TestClasses\Canvas</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

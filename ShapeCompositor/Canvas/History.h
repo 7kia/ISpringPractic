@@ -5,25 +5,53 @@
 #include <vector>
 #include <deque>
 
-class CCanvas;
+class IHistory
+{
+public:
+	virtual ~IHistory() = default;
+	//////////////////////////////////////////////////////////////////////
+	// Methods
+public:
+	virtual void AddAndExecuteCommand(const CanvasCommandPtr & command) = 0;
 
-class CHistory
+	virtual void Undo() = 0;
+	virtual void Redo() = 0;
+
+	virtual void Clear() = 0;
+};
+
+class CHistory : public IHistory
 {
 public:
 	CHistory();
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
-	void AddAndExecuteCommand(CanvasCommandPtr && command);
+	void AddAndExecuteCommand(const CanvasCommandPtr & command) override;
 
-	void Undo();
-	void Redo();
+	void Undo() override;
+	void Redo() override;
 
-	void Clear();
+	void Clear() override;
 private:
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
 	std::deque<CanvasCommandPtr>						m_history;
 	std::deque<CanvasCommandPtr>::reverse_iterator		m_currentCommand = m_history.rbegin();
+};
+
+class IHistoryManipulator
+{
+public:
+	virtual ~IHistoryManipulator() = default;
+	//////////////////////////////////////////////////////////////////////
+	// Methods
+public:
+	virtual void AddAndExecuteCommand(const CanvasCommandPtr & command) = 0;
+
+	virtual void UndoCommand() = 0;
+	virtual void RedoCommand() = 0;
+
+	virtual void ClearHistory() = 0;
 };

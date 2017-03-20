@@ -8,7 +8,7 @@
 #include "ObjectRenderer.h"
 #include "CanvasCommands\AllCanvasCommand.h"
 #include "MouseEventHandler.h"
-
+#include "History.h"
 
 static const size_t MAX_COMMANDS = 5;
 
@@ -23,6 +23,7 @@ class CCanvasController;
 class CCanvas
 	: public IDrawable
 	, public CFrame
+	, public IHistoryManipulator
 {
 public:
 	CCanvas();
@@ -33,7 +34,14 @@ public:
 	// For drag and drop
 	bool					IsSelectShape(size_t index, const CShapePtr selectedShape) const;
 	//
+	//--------------------------------------------
+	// 	IHistory
+	void AddAndExecuteCommand(const CanvasCommandPtr & command) override;
 
+	void UndoCommand() override;
+	void RedoCommand() override;
+
+	void ClearHistory() override;
 	//--------------------------------------------
 	// 	IDrawable
 	void					Accept(IObjectVisitor & renderer) const override;
@@ -60,7 +68,7 @@ private:
 	//////////////////////////////////////////////////////////////////////
 	// Data
 public:
-
+	CHistory m_history;
 	// TODO : see might require do private
 	std::vector<CShapePtr>	m_shapes;
 private:

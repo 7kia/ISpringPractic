@@ -68,7 +68,6 @@ public:
 
 protected:
 	CCanvas m_canvas;
-	CHistory m_history;
 
 	// Fromn canvas TODO
 	CSelectedShape m_selectShape;
@@ -77,8 +76,6 @@ protected:
 	ID2D1HwndRenderTarget * m_pRenderTarget = nullptr;
 	CD2DObjectRenderer		m_objectRenderer;// TODO : transfer to CShapeCompositiorView, fix Draw
 
-	// For test OnMouseMove
-	CPoint m_start;// TODO : delete
 // Реализация
 public:
 	virtual ~CShapeCompositorView();

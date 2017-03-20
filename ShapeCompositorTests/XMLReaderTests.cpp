@@ -4,7 +4,6 @@
 
 BOOST_AUTO_TEST_SUITE(CXMLReader_suite)
 
-
 struct XMLReaderFixture
 {
 	CXMLReader xmlReader;

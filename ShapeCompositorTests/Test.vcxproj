@@ -157,6 +157,7 @@
     <ClInclude Include="..\ShapeCompositor\Canvas\CanvasCommands\DeleteShapeCommand.h" />
     <ClInclude Include="..\ShapeCompositor\Canvas\CanvasCommands\MoveShapeCommand.h" />
     <ClInclude Include="..\ShapeCompositor\Canvas\CanvasCommands\ScaleShapeCommand.h" />
+    <ClInclude Include="..\ShapeCompositor\Canvas\History.h" />
     <ClInclude Include="..\ShapeCompositor\Canvas\ObjectRenderer.h" />
     <ClInclude Include="..\ShapeCompositor\Canvas\SelectShape.h" />
     <ClInclude Include="..\ShapeCompositor\Canvas\Shapes\AllShapes.h" />
@@ -178,6 +179,7 @@
     <ClCompile Include="..\ShapeCompositor\Canvas\CanvasCommands\DeleteShapeCommand.cpp" />
     <ClCompile Include="..\ShapeCompositor\Canvas\CanvasCommands\MoveShapeCommand.cpp" />
     <ClCompile Include="..\ShapeCompositor\Canvas\CanvasCommands\ScaleShapeCommand.cpp" />
+    <ClCompile Include="..\ShapeCompositor\Canvas\History.cpp" />
     <ClCompile Include="..\ShapeCompositor\Canvas\SelectShape.cpp" />
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\CShape.cpp" />
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\Ellipse.cpp" />

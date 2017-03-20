@@ -112,6 +112,26 @@ bool CCanvas::IsSelectShape(size_t index, const CShapePtr selectedShape) const
 	return selectedShape == m_shapes[index];
 }
 
+void CCanvas::AddAndExecuteCommand(const CanvasCommandPtr & command)
+{
+	m_history.AddAndExecuteCommand(command);
+}
+
+void CCanvas::UndoCommand()
+{
+	m_history.Undo();
+}
+
+void CCanvas::RedoCommand()
+{
+	m_history.Redo();
+}
+
+void CCanvas::ClearHistory()
+{
+	m_history.Clear();
+}
+
 void CCanvas::CheckIndex(size_t index) const
 {
 	size_t maxValue = (m_shapes.size() > 0) ? m_shapes.size() - 1 : m_shapes.size();
