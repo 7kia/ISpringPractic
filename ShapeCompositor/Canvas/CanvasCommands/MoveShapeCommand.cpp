@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "MoveShapeCommand.h"
-#include "../SelectShape.h"
+#include "../SelectedShape.h"
 
 CMoveShapeCanvasCommand::CMoveShapeCanvasCommand(
 	CShapePtr pShape

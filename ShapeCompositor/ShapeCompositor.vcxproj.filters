@@ -78,9 +78,6 @@
     <ClInclude Include="Canvas\MouseEventHandler.h">
       <Filter>Файлы исходного кода\Canvas</Filter>
     </ClInclude>
-    <ClInclude Include="Canvas\SelectShape.h">
-      <Filter>Файлы исходного кода\Canvas</Filter>
-    </ClInclude>
     <ClInclude Include="Canvas\CanvasCommands\DeleteShapeCommand.h">
       <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
     </ClInclude>
@@ -117,6 +114,9 @@
     <ClInclude Include="XMLReader\XMLReader.h">
       <Filter>Файлы исходного кода\XMLReader</Filter>
     </ClInclude>
+    <ClInclude Include="Canvas\SelectedShape.h">
+      <Filter>Файлы исходного кода\Canvas</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ShapeCompositor.cpp">
@@ -149,9 +149,6 @@
     <ClCompile Include="Canvas\CanvasCommands\AddShapeCommand.cpp">
       <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
     </ClCompile>
-    <ClCompile Include="Canvas\SelectShape.cpp">
-      <Filter>Файлы исходного кода\Canvas</Filter>
-    </ClCompile>
     <ClCompile Include="Canvas\CanvasCommands\DeleteShapeCommand.cpp">
       <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
     </ClCompile>
@@ -181,6 +178,9 @@
     </ClCompile>
     <ClCompile Include="XMLReader\XMLReader.cpp">
       <Filter>Файлы исходного кода\XMLReader</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas\SelectedShape.cpp">
+      <Filter>Файлы исходного кода\Canvas</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

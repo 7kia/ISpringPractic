@@ -90,13 +90,13 @@
     <ClInclude Include="..\ShapeCompositor\Canvas\ObjectRenderer.h">
       <Filter>Файлы исходного кода\TestClasses\Canvas</Filter>
     </ClInclude>
-    <ClInclude Include="..\ShapeCompositor\Canvas\SelectShape.h">
-      <Filter>Файлы исходного кода\TestClasses\Canvas</Filter>
-    </ClInclude>
     <ClInclude Include="..\ShapeCompositor\XMLReader\XMLReader.h">
       <Filter>Файлы исходного кода\TestClasses\XMLReader</Filter>
     </ClInclude>
     <ClInclude Include="..\ShapeCompositor\Canvas\History.h">
+      <Filter>Файлы исходного кода\TestClasses\Canvas</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ShapeCompositor\Canvas\SelectedShape.h">
       <Filter>Файлы исходного кода\TestClasses\Canvas</Filter>
     </ClInclude>
   </ItemGroup>
@@ -146,9 +146,6 @@
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\Triangle.cpp">
       <Filter>Файлы исходного кода\TestClasses\Canvas\Shapes</Filter>
     </ClCompile>
-    <ClCompile Include="..\ShapeCompositor\Canvas\SelectShape.cpp">
-      <Filter>Файлы исходного кода\TestClasses\Canvas</Filter>
-    </ClCompile>
     <ClCompile Include="CanvasTests.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
@@ -159,6 +156,9 @@
       <Filter>Файлы исходного кода\TestClasses\XMLReader</Filter>
     </ClCompile>
     <ClCompile Include="..\ShapeCompositor\Canvas\History.cpp">
+      <Filter>Файлы исходного кода\TestClasses\Canvas</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ShapeCompositor\Canvas\SelectedShape.cpp">
       <Filter>Файлы исходного кода\TestClasses\Canvas</Filter>
     </ClCompile>
   </ItemGroup>

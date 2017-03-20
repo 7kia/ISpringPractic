@@ -2,7 +2,7 @@
 
 #include "CanvasCommand.h"
 #include "Canvas\Shapes\AllShapes.h"
-#include "Canvas\SelectShape.h"
+#include "Canvas\SelectedShape.h"
 
 class CCanvas;
 class CDeleteShapeCanvasCommand : public IMyCommand

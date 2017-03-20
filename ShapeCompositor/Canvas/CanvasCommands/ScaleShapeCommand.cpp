@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "ScaleShapeCommand.h"
-#include "../SelectShape.h"
+#include "../SelectedShape.h"
 
 CScaleShapeCanvasCommand::CScaleShapeCanvasCommand(
 	CShapePtr pShape

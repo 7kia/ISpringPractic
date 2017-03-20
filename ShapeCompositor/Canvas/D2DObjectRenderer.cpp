@@ -2,7 +2,7 @@
 #include "D2DObjectRenderer.h"
 #include "../ShapeCompositorView.h"
 #include "Canvas.h"
-#include "SelectShape.h"
+#include "SelectedShape.h"
 
 CD2DObjectRenderer::CD2DObjectRenderer()
 	: IObjectVisitor()
