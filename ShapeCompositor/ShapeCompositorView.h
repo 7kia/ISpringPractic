@@ -70,7 +70,7 @@ protected:
 	CCanvas m_canvas;
 
 	// Fromn canvas TODO
-	CSelectedShape m_selectShape;
+	CSelectedShape m_selectedShape;
 	CShapeFactory m_shapeFactory;
 
 	ID2D1HwndRenderTarget * m_pRenderTarget = nullptr;

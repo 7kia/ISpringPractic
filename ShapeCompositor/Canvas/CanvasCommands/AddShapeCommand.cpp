@@ -6,10 +6,12 @@ CAddShapeCanvasCommand::CAddShapeCanvasCommand(
 	CCanvas * pCanvas
 	, ShapeType type
 	, const CShapeFactory & factory
+	, CSelectedShape & seletedShape
 )
 	: m_pCanvas(pCanvas)
 	, m_type(type)
 	, m_pFactory(&factory)
+	, m_pSelectShape(&seletedShape)
 {
 }
 
@@ -27,5 +29,9 @@ void CAddShapeCanvasCommand::Execute()
 
 void CAddShapeCanvasCommand::Cancel()
 {
+	if (m_pCanvas->IsSelectShape(m_pCanvas->GetAmountShapes() - 1, m_pSelectShape->GetShape()))
+	{
+		m_pSelectShape->ResetSelectShapePtr();
+	}
 	m_pCanvas->DeleteLastShape();
 }

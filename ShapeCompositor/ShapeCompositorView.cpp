@@ -55,7 +55,7 @@ END_MESSAGE_MAP()
 
 CShapeCompositorView::CShapeCompositorView()
 	: m_shapeFactory()// TODO : see can rewrite
-	, m_selectShape(m_shapeFactory)
+	, m_selectedShape(m_shapeFactory)
 {
 }
 
@@ -78,7 +78,7 @@ HRESULT CShapeCompositorView::Draw()
 	m_pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
 
 	m_objectRenderer.Draw(m_canvas);
-	m_objectRenderer.Draw(m_selectShape);
+	m_objectRenderer.Draw(m_selectedShape);
 	hr = m_objectRenderer.EndDraw();
 
 	if (hr == D2DERR_RECREATE_TARGET)
@@ -106,6 +106,7 @@ void CShapeCompositorView::CreateTriangle()
 			&m_canvas
 			, ShapeType::Triangle
 			, m_shapeFactory
+			, m_selectedShape
 		)
 	);
 	RedrawWindow();
@@ -118,6 +119,7 @@ void CShapeCompositorView::CreateRectangle()
 			&m_canvas
 			, ShapeType::Rectangle
 			, m_shapeFactory
+			, m_selectedShape
 		)
 	);
 	RedrawWindow();
@@ -129,6 +131,7 @@ void CShapeCompositorView::CreateEllipse()
 		&m_canvas
 		, ShapeType::Ellipse
 		, m_shapeFactory
+		, m_selectedShape
 		)
 	);
 	RedrawWindow();
@@ -310,7 +313,7 @@ BOOL CShapeCompositorView::PreTranslateMessage(MSG* pMsg)
 					m_canvas.AddAndExecuteCommand(
 						std::make_shared<CDeleteShapeCanvasCommand>(
 							m_canvas
-							, m_selectShape
+							, m_selectedShape
 							, m_shapeFactory
 						)
 					);
@@ -343,11 +346,11 @@ void CShapeCompositorView::OnLButtonDown(UINT nFlags, CPoint point)
 
 	const Vec2f mousePos = Vec2f(float(point.x), float(point.y));
 	bool isResize = false;
-	if (m_selectShape.HaveSelectedShape())
+	if (m_selectedShape.HaveSelectedShape())
 	{
-		if (m_selectShape.IsResize(mousePos))
+		if (m_selectedShape.IsResize(mousePos))
 		{
-			m_selectShape.SetUpdateState(true);
+			m_selectedShape.SetUpdateState(true);
 			isResize = true;
 		}
 	}
@@ -356,11 +359,11 @@ void CShapeCompositorView::OnLButtonDown(UINT nFlags, CPoint point)
 	{
 		ChangeSelectedShape(mousePos);
 
-		if (m_selectShape.HaveSelectedShape())
+		if (m_selectedShape.HaveSelectedShape())
 		{
-			if (m_selectShape.IsMove(mousePos))
+			if (m_selectedShape.IsMove(mousePos))
 			{
-				m_selectShape.SetUpdateState(true);
+				m_selectedShape.SetUpdateState(true);
 			}
 		}
 	}
@@ -375,9 +378,9 @@ void CShapeCompositorView::OnMouseMove(UINT nFlags, CPoint point)
 	CView::OnMouseMove(nFlags, point);
 	ChangeCursor(point);
 
-	if (m_selectShape.HaveSelectedShape() && m_selectShape.IsUpdate())
+	if (m_selectedShape.HaveSelectedShape() && m_selectedShape.IsUpdate())
 	{
-		m_selectShape.HandleMoveMouse(Vec2f(float(point.x), float(point.y)));
+		m_selectedShape.HandleMoveMouse(Vec2f(float(point.x), float(point.y)));
 		RedrawWindow();
 	}
 
@@ -389,17 +392,17 @@ void CShapeCompositorView::OnLButtonUp(UINT nFlags, CPoint point)
 
 	CView::OnLButtonUp(nFlags, point);
 
-	if (m_selectShape.HaveSelectedShape())
+	if (m_selectedShape.HaveSelectedShape())
 	{
-		m_selectShape.SetUpdateState(false);
+		m_selectedShape.SetUpdateState(false);
 	}
 
 	ChangeCursor(point);
 
-	if (m_selectShape.DoneUpdate())
+	if (m_selectedShape.DoneUpdate())
 	{
 		CreateCommandForSelectedShape();
-		m_selectShape.ResetUpdateParameters();
+		m_selectedShape.ResetUpdateParameters();
 	}
 
 	RedrawWindow();
@@ -417,17 +420,17 @@ void CShapeCompositorView::ChangeCursor(const CPoint mousePos)
 	const Vec2f position = Vec2f(float(mousePos.x), float(mousePos.y));
 	//const auto pSelectShape = m_canvas.GetSelectShape();
 	//const auto pFrameSelectShape = m_canvas.GetFrameSelectedShape();
-	if (m_selectShape.GetShape())
+	if (m_selectedShape.GetShape())
 	{
-		CSelectedShape::UpdateType updateType = m_selectShape.GetUpdateType();
+		CSelectedShape::UpdateType updateType = m_selectedShape.GetUpdateType();
 		bool needChangeToNW = (updateType == CSelectedShape::UpdateType::MarkerLeftTop)
 			|| (updateType == CSelectedShape::UpdateType::MarkerRightBottom)
-			|| m_selectShape.InLeftTopMarker(position)
-			|| m_selectShape.InRightBottomMarker(position);
+			|| m_selectedShape.InLeftTopMarker(position)
+			|| m_selectedShape.InRightBottomMarker(position);
 		bool needChangeToNE = (updateType == CSelectedShape::UpdateType::MarkerRightTop) 
 			|| (updateType == CSelectedShape::UpdateType::MarkerLeftBottom)
-			|| m_selectShape.InRightTopMarker(position)
-			|| m_selectShape.InLeftBottomMarker(position);
+			|| m_selectedShape.InRightTopMarker(position)
+			|| m_selectedShape.InLeftBottomMarker(position);
 
 		if (needChangeToNW)
 		{
@@ -470,7 +473,7 @@ void CShapeCompositorView::ClearCanvas()
 
 void CShapeCompositorView::ResetSelectedShape()
 {
-	m_selectShape.ResetSelectShapePtr();
+	m_selectedShape.ResetSelectShapePtr();
 }
 
 CCanvas & CShapeCompositorView::GetCanvas()
@@ -485,15 +488,15 @@ const CShapeFactory & CShapeCompositorView::GetShapeFactory() const
 
 void CShapeCompositorView::CreateCommandForSelectedShape()
 {
-	switch (m_selectShape.GetUpdateType())
+	switch (m_selectedShape.GetUpdateType())
 	{
 	case CSelectedShape::UpdateType::Move:
 	{
-		m_selectShape.ReturnToOldState();
+		m_selectedShape.ReturnToOldState();
 		m_canvas.AddAndExecuteCommand(std::make_shared<CMoveShapeCanvasCommand>(
-			m_selectShape.GetShape(),
-			m_selectShape.GetShift(),
-			m_selectShape
+			m_selectedShape.GetShape(),
+			m_selectedShape.GetFinalShift(),
+			m_selectedShape
 			));
 	}
 	break;
@@ -502,12 +505,12 @@ void CShapeCompositorView::CreateCommandForSelectedShape()
 	case CSelectedShape::UpdateType::MarkerRightBottom:
 	case CSelectedShape::UpdateType::MarkerRightTop:
 	{
-		m_selectShape.ReturnToOldState();
+		m_selectedShape.ReturnToOldState();
 		m_canvas.AddAndExecuteCommand(std::make_shared<CScaleShapeCanvasCommand>(
-			m_selectShape.GetShape(),
-			m_selectShape.GetOldFrameData(),// TODO : see can delete other arguments
-			m_selectShape.GetNewFrameData(),
-			m_selectShape
+			m_selectedShape.GetShape(),
+			m_selectedShape.GetOldFrameData(),// TODO : see can delete other arguments
+			m_selectedShape.GetNewFrameData(),
+			m_selectedShape
 			));
 
 	}
@@ -526,13 +529,13 @@ void CShapeCompositorView::ChangeSelectedShape(const Vec2f mousePos)
 
 	if (selectShape.get() != nullptr)
 	{
-		if (m_selectShape.GetShape() != selectShape)
+		if (m_selectedShape.GetShape() != selectShape)
 		{
-			m_selectShape.SetShape(selectShape);
+			m_selectedShape.SetShape(selectShape);
 		}
 	}
 	else
 	{
-		m_selectShape.ResetSelectShapePtr();
+		m_selectedShape.ResetSelectShapePtr();
 	}
 }
