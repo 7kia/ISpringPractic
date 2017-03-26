@@ -226,7 +226,6 @@
     <ClCompile Include="Canvas\D2DObjectRenderer.cpp" />
     <ClCompile Include="Canvas\Shapes\CShape.cpp" />
     <ClCompile Include="Canvas\Shapes\Ellipse.cpp" />
-    <ClCompile Include="Canvas\Shapes\IShape.cpp" />
     <ClCompile Include="Canvas\Shapes\Rectangle.cpp" />
     <ClCompile Include="Canvas\Shapes\ShapeAttributes.cpp" />
     <ClCompile Include="Canvas\Shapes\ShapeFactory.cpp" />

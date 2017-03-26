@@ -22,9 +22,7 @@ CShape::CShape(
 	, const Color fillColor
 	, const Color outlineColor
 )
-	: IShape()
-	, IIsPointIntersection()
-	, CFrame(position, size)
+	: CFrame(position, size)
 	, m_type(type)
 	, m_fillColor(fillColor)
 	, m_outlineColor(outlineColor)

@@ -11,19 +11,22 @@ static const SSize SELECTED_ELLIPSE_SIZE = SSize(10.f, 10.f);
 static const SSize MIN_SHAPE_SIZE = SSize(50.f, 50.f);
 
 class CSelectedShape
-	: public IDrawable
-	, public IFrame
+	: public IFrame
 {
 public:
 	CSelectedShape(const CShapeFactory & shapeFactory);
 
-	enum class Marker
+	enum class ShapeIndex
 	{
-		MarkerLeftBottom = 0,
-		MarkerRightBottom,
-		MarkerRightTop,
-		MarkerLeftTop,
+		MarkerLeftBottom = 0
+		, MarkerRightBottom
+		, MarkerRightTop
+		, MarkerLeftTop
+		, Frame
+		, Amount
 	};
+
+	using ArrayShapes = std::array<CShapePtr, size_t(ShapeIndex::Amount)>;
 	enum class UpdateType
 	{
 		None = -1,
@@ -60,8 +63,11 @@ public:
 	bool					IsMove(const Vec2f point);
 	void					HandleMoveMouse(const Vec2f point);
 	//--------------------------------------------
-	// IDrawable
-	void					Accept(IObjectVisitor & renderer) const override;// TODO : must be = 0
+
+	// For draw
+	ArrayShapes				GetShapes() const;
+
+
 	//--------------------------------------------
 	// IFrame
 
@@ -118,8 +124,7 @@ private:
 	SFrameData						m_oldData;
 	CShapePtr						m_selectedShape;
 
-	std::vector<CShapePtr>				m_moveShape;
-	std::array<CShapePtr, 4>			m_resizeShapes;
+	ArrayShapes						m_resizeShapes;
 
 	// For drag and drop
 	boost::optional<Vec2f>				m_startMove;

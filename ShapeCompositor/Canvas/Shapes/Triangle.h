@@ -17,7 +17,7 @@ public:
 	// Methods
 public:
 	//--------------------------------------------
-	// IDrawable
+	// IShape(for draw
 
 	void Accept(IObjectVisitor & renderer) const override;
 

@@ -14,7 +14,7 @@ void CCanvas::PushBackShape(CShapePtr & shape)
 
 void CCanvas::InsertShape(size_t insertIndex, CShapePtr & shape)
 {
-	CheckIndex(insertIndex);
+	CheckIndex(insertIndex, true);
 
 	m_shapes.insert(
 		m_shapes.begin() + insertIndex
@@ -126,9 +126,9 @@ void CCanvas::ClearHistory()
 	m_history.Clear();
 }
 
-void CCanvas::CheckIndex(size_t index) const
+void CCanvas::CheckIndex(size_t index, bool isInsert) const
 {
-	size_t maxValue = (m_shapes.size() > 0) ? m_shapes.size() - 1 : m_shapes.size();
+	size_t maxValue = ((m_shapes.size() != 0) && !isInsert) ? m_shapes.size() - 1 : m_shapes.size();
 	if (!IsBetween(index, size_t(0), maxValue))
 	{
 		throw std::runtime_error("Index out range");

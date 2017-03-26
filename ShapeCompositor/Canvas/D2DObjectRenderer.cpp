@@ -66,7 +66,7 @@ HRESULT CD2DObjectRenderer::EndDraw()
 	return m_pRenderTarget->EndDraw();
 }
 
-void CD2DObjectRenderer::Draw(const IDrawable & shape)
+void CD2DObjectRenderer::Draw(const IShape & shape)
 {
 	shape.Accept(*this);
 }
@@ -169,7 +169,3 @@ void CD2DObjectRenderer::Visit(const CTriangle & shape)
 	m_geometrySink.Release();
 }
 
-void CD2DObjectRenderer::Visit(const CSelectedShape & selectedShape)
-{
-	Draw(selectedShape);
-}

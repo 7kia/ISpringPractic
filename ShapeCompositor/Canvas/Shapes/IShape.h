@@ -27,11 +27,12 @@ struct SShapeData : public SFrameData
 	Color outlineColor;
 };
 
+
+class IObjectVisitor;
 class IShape
-	: public IDrawable
 {
 public:
-	IShape();
+	IShape() = default;
 	virtual ~IShape() = default;
 	//////////////////////////////////////////////////////////////////////
 	// Methods
@@ -48,4 +49,8 @@ public:
 
 	// Type
 	virtual ShapeType GetType() const = 0;
+
+	// For draw
+	virtual void Accept(IObjectVisitor & renderer) const = 0;
+
 };

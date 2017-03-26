@@ -81,7 +81,14 @@ HRESULT CShapeCompositorView::Draw()
 	{
 		m_objectRenderer.Draw(*shape);
 	}
-	m_objectRenderer.Draw(m_selectedShape);
+
+	if (m_selectedShape.HaveSelectedShape())
+	{
+		for (const auto & shape : m_selectedShape.GetShapes())
+		{
+			m_objectRenderer.Draw(*shape);
+		}
+	}
 
 	hr = m_objectRenderer.EndDraw();
 
@@ -502,6 +509,8 @@ void CShapeCompositorView::CreateCommandForSelectedShape()
 			m_selectedShape.GetFinalShift(),
 			m_selectedShape
 			));
+		m_selectedShape.ResetUpdateParameters();
+
 	}
 	break;
 	case CSelectedShape::UpdateType::MarkerLeftTop:
@@ -516,7 +525,7 @@ void CShapeCompositorView::CreateCommandForSelectedShape()
 			m_selectedShape.GetNewFrameData(),
 			m_selectedShape
 			));
-
+		m_selectedShape.ResetUpdateParameters();
 	}
 	break;
 	case CSelectedShape::UpdateType::None:

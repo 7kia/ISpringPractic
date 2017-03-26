@@ -21,7 +21,7 @@ public:
 	HRESULT	EndDraw();
 	//--------------------------------------------
 	// IObjectVisitor
-	void Draw(const IDrawable & shape) override;
+	void Draw(const IShape & shape) override;
 	//--------------------------------------------
 
 private:
@@ -34,7 +34,6 @@ private:
 
 	//--------------------------------------------
 
-	void Visit(const CSelectedShape & selectedShape);
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:

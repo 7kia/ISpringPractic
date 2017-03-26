@@ -2,24 +2,24 @@
 #include "SelectedShape.h"
 
 CSelectedShape::CSelectedShape(const CShapeFactory & shapeFactory)
-	: IDrawable()
-{
-	SShapeData rectangleData;
-	rectangleData.type = ShapeType::Rectangle;
-	rectangleData.outlineColor = BLACK_COLOR;
-	rectangleData.fillColor = NOT_COLOR;
-
-	m_moveShape.push_back(shapeFactory.CreateShape(rectangleData));
-	
+	: IFrame()
+{	
 	SShapeData ellipseData;
 	ellipseData.type = ShapeType::Ellipse;
 	ellipseData.outlineColor = BLACK_COLOR;
 	ellipseData.fillColor = BLACK_COLOR;
 
-	for (size_t index = 0; index < 4; ++index)
+	for (size_t index = size_t(ShapeIndex::MarkerLeftBottom); index <= size_t(ShapeIndex::MarkerLeftTop); ++index)
 	{
 		m_resizeShapes[index] = shapeFactory.CreateShape(ellipseData);
 	}
+
+	SShapeData rectangleData;
+	rectangleData.type = ShapeType::Rectangle;
+	rectangleData.outlineColor = BLACK_COLOR;
+	rectangleData.fillColor = NOT_COLOR;
+
+	m_resizeShapes[size_t(ShapeIndex::Frame)] = shapeFactory.CreateShape(rectangleData);
 }
 
 void CSelectedShape::SetShape(CShapePtr shape)
@@ -100,22 +100,22 @@ bool CSelectedShape::IsResize(const Vec2f point)
 
 bool CSelectedShape::InLeftTopMarker(const Vec2f point)
 {
-	return m_resizeShapes[size_t(Marker::MarkerLeftTop)]->IsPointIntersection(point);
+	return m_resizeShapes[size_t(ShapeIndex::MarkerLeftTop)]->IsPointIntersection(point);
 }
 
 bool CSelectedShape::InLeftBottomMarker(const Vec2f point)
 {
-	return m_resizeShapes[size_t(Marker::MarkerLeftBottom)]->IsPointIntersection(point);
+	return m_resizeShapes[size_t(ShapeIndex::MarkerLeftBottom)]->IsPointIntersection(point);
 }
 
 bool CSelectedShape::InRightTopMarker(const Vec2f point)
 {
-	return m_resizeShapes[size_t(Marker::MarkerRightTop)]->IsPointIntersection(point);
+	return m_resizeShapes[size_t(ShapeIndex::MarkerRightTop)]->IsPointIntersection(point);
 }
 
 bool CSelectedShape::InRightBottomMarker(const Vec2f point)
 {
-	return m_resizeShapes[size_t(Marker::MarkerRightBottom)]->IsPointIntersection(point);
+	return m_resizeShapes[size_t(ShapeIndex::MarkerRightBottom)]->IsPointIntersection(point);
 }
 
 bool CSelectedShape::DoneUpdate() const
@@ -167,21 +167,6 @@ void CSelectedShape::HandleMoveMouse(const Vec2f point)
 	}
 }
 
-void CSelectedShape::Accept(IObjectVisitor & renderer) const
-{
-	if (m_selectedShape != nullptr)
-	{
-		for (auto & shape : m_moveShape)
-		{
-			shape->Accept(renderer);
-		}
-		for (auto & shape : m_resizeShapes)
-		{
-			shape->Accept(renderer);
-		}
-	}
-}
-
 
 void CSelectedShape::SetPosition(Vec2f position)
 {
@@ -218,10 +203,6 @@ void CSelectedShape::SetSize(SSize size)
 	}
 	m_frameData.size = size;
 
-	for (auto & shape : m_moveShape)
-	{
-		shape->SetSize(size);
-	}
 	for (auto & shape : m_resizeShapes)
 	{
 		shape->SetSize(size);
@@ -336,7 +317,7 @@ void CSelectedShape::SetViewPosition()
 
 void CSelectedShape::SetMoveView()
 {
-	m_moveShape[0]->SetFrameData(GetFrameData());
+	m_resizeShapes[size_t(ShapeIndex::Frame)]->SetFrameData(GetFrameData());
 }
 
 void CSelectedShape::SetResizeView()
@@ -365,11 +346,18 @@ SFrameData CSelectedShape::GetFrameData(const Vec2f shift) const
 	SFrameData info;
 	SSize directionResize = GetDirectionResize();
 
-	info.size = GetCorrectSize(m_frameData.size + (SSize(shift.x * directionResize.width, shift.y * directionResize.height)));
-	SSize & newSize = info.size;
-	Vec2f differentSizes = Vec2f(newSize.width - m_frameData.size.width, newSize.height - m_frameData.size.height);
-	info.position = GetCorrectPosition(newSize, Vec2f(differentSizes.x  / 2.f * directionResize.width
-		, differentSizes.y  / 2.f * directionResize.height), m_frameData.position);
+	if ( (m_updateType != UpdateType::Move) && (m_updateType != UpdateType::None))
+	{
+		info.size = GetCorrectSize(m_frameData.size + (SSize(shift.x * directionResize.width, shift.y * directionResize.height)));
+		SSize & newSize = info.size;
+		Vec2f differentSizes = Vec2f(newSize.width - m_frameData.size.width, newSize.height - m_frameData.size.height);
+		info.position = GetCorrectPosition(newSize, Vec2f(differentSizes.x / 2.f * directionResize.width
+			, differentSizes.y / 2.f * directionResize.height), m_frameData.position);
+	}
+	else if(m_updateType == UpdateType::Move)
+	{
+		info.position = m_frameData.position + shift;
+	}
 
 	return info;
 }
@@ -442,5 +430,10 @@ Vec2f CSelectedShape::GetCorrectPositionShift(
 		correctShift.y = 0.f;
 	}
 	return correctShift;
+}
+
+CSelectedShape::ArrayShapes CSelectedShape::GetShapes() const
+{
+	return m_resizeShapes;
 }
 

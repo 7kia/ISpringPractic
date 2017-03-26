@@ -77,16 +77,6 @@ public:
 	};
 };
 
-class IObjectVisitor;
-class IDrawable
-{
-public:
-	virtual ~IDrawable() = default;
-
-	// For render
-	virtual void Accept(IObjectVisitor & renderer) const {};// TODO : must be = 0
-};
-
 
 struct SFrameData
 {

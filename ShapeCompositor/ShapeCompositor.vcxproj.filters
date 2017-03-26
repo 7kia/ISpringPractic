@@ -140,9 +140,6 @@
     <ClCompile Include="Canvas\Shapes\ShapeAttributes.cpp">
       <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
     </ClCompile>
-    <ClCompile Include="Canvas\Shapes\IShape.cpp">
-      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
-    </ClCompile>
     <ClCompile Include="Canvas\Shapes\ShapeFactory.cpp">
       <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
     </ClCompile>
