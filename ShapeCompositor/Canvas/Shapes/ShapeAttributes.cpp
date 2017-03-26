@@ -169,17 +169,6 @@ SSize CFrame::GetSize() const
 	return m_size;
 }
 
-void CFrame::UpdateScale(const Vec2f shift)
-{
-	// TODO : add check
-	m_size.width += shift.x;
-	m_size.height += shift.y;
-
-	m_position.x += shift.x / 2.f;
-	m_position.y += shift.y / 2.f;
-
-}
-
 SRectF CFrame::GetOwnRect() const
 {
 	SSize shapeSize = GetSize();

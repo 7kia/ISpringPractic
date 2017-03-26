@@ -123,7 +123,6 @@ public:
 	virtual void SetSize(SSize size) = 0;
 	virtual SSize GetSize() const = 0;
 
-	virtual void UpdateScale(const Vec2f shift) = 0;
 	// Own rect
 	virtual SRectF GetOwnRect() const = 0;
 
@@ -153,7 +152,6 @@ public:
 	void SetSize(SSize size) override;
 	SSize GetSize() const override;
 
-	void UpdateScale(const Vec2f shift) override;
 	// Own rect
 	SRectF GetOwnRect() const override;
 

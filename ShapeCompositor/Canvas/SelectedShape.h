@@ -72,7 +72,6 @@ public:
 	// Size
 	void SetSize(SSize size) override;
 	SSize GetSize() const override;
-	void UpdateScale(const Vec2f shift)override;
 	// Own rect
 	SRectF GetOwnRect() const override;
 
@@ -97,6 +96,7 @@ private:
 	void					SetResizeView();
 
 	bool					CheckSize(const SSize size) const;
+	SFrameData				GetFrameData(const Vec2f shift) const;
 	SSize					GetCorrectSize(const SSize size) const;
 	Vec2f					GetCorrectPosition(
 												const SSize newSize
