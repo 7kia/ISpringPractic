@@ -57,8 +57,8 @@ public:
 	size_t					GetAmountShapes() const;
 
 private:
-	void					CheckIndex(size_t index, bool isInsert = false) const;
-	size_t					GetIndexShape(CShapePtr pShape) const;
+	void					CheckShapeIndex(size_t index, bool isInsert = false) const;
+	size_t					GetIShapeIndex(CShapePtr pShape) const;
 	//////////////////////////////////////////////////////////////////////
 	// Data
 public:

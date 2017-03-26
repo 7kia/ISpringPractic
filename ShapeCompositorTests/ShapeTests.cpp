@@ -9,7 +9,30 @@ BOOST_AUTO_TEST_SUITE(CShape_suite)
 
 struct Shape_
 {
-	CShape shape;
+	class CTestShape : public CShape
+	{
+	public:
+		CTestShape(
+			const ShapeType type
+			, const Vec2f position
+			, const SSize size
+			, const Color fillColor
+			, const Color outlineColor
+		) 
+			: CShape(
+				type
+				, position
+				, size
+				, fillColor
+				, outlineColor
+			)
+		{
+
+		};
+
+		void Accept(IObjectVisitor & renderer) const {};
+	};
+	CTestShape shape;
 
 	Shape_()
 		: shape(

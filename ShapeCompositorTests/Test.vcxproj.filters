@@ -131,9 +131,6 @@
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\Ellipse.cpp">
       <Filter>Файлы исходного кода\TestClasses\Canvas\Shapes</Filter>
     </ClCompile>
-    <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\IShape.cpp">
-      <Filter>Файлы исходного кода\TestClasses\Canvas\Shapes</Filter>
-    </ClCompile>
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\Rectangle.cpp">
       <Filter>Файлы исходного кода\TestClasses\Canvas\Shapes</Filter>
     </ClCompile>

@@ -183,7 +183,6 @@
     <ClCompile Include="..\ShapeCompositor\Canvas\SelectedShape.cpp" />
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\CShape.cpp" />
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\Ellipse.cpp" />
-    <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\IShape.cpp" />
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\Rectangle.cpp" />
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\ShapeAttributes.cpp" />
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\ShapeFactory.cpp" />
