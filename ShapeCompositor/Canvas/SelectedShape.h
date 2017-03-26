@@ -6,7 +6,7 @@
 #include "Shapes\AllShapes.h"
 #include "ObjectRenderer.h"
 #include "Shapes\ShapeFactory.h"
-
+#include <boost\optional.hpp>
 static const SSize SELECTED_ELLIPSE_SIZE = SSize(10.f, 10.f);
 static const SSize MIN_SHAPE_SIZE = SSize(50.f, 50.f);
 
@@ -89,8 +89,6 @@ public:
 	SFrameData	GetOldFrameData();
 	SFrameData	GetCurrentFrameData();
 	SSize GetDirectionResize() const;
-	Vec2f GetDirectionShift(const Vec2f shift) const;
-
 	void ReturnToOldState();
 
 private:
@@ -106,11 +104,13 @@ private:
 												, const Vec2f startPosition
 												) const;
 
-	Vec2f					GetCorrectShift(
-											const Vec2f & shift
-											, bool conditionForX
-											, bool conditionForY
-											) const;
+	Vec2f					GetPositionShift(const Vec2f shift) const;
+	Vec2f					GetCorrectPositionShift(
+								const Vec2f shift
+								, bool conditionForX
+								, bool conditionForY
+							) const;
+
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
@@ -122,7 +122,7 @@ private:
 	std::array<CShapePtr, 4>			m_resizeShapes;
 
 	// For drag and drop
-	Vec2f								m_startMove;
+	boost::optional<Vec2f>				m_startMove;
 	Vec2f								m_start;
 	Vec2f								m_current;
 	bool								m_isUpdate = false;

@@ -2,14 +2,8 @@
 #include "Canvas.h"
 
 CCanvas::CCanvas()
-	: IDrawable()
-	, CFrame(Vec2f(), SSize(640.f, 480.f))
+	: CFrame(Vec2f(), SSize(640.f, 480.f))
 {
-}
-
-void CCanvas::Accept(IObjectVisitor & renderer) const
-{
-	renderer.Visit(*this);
 }
 
 

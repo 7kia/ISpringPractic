@@ -77,8 +77,12 @@ HRESULT CShapeCompositorView::Draw()
 	m_pRenderTarget->SetTransform(matrix);
 	m_pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
 
-	m_objectRenderer.Draw(m_canvas);
+	for (const auto & shape : m_canvas.GetShapes())
+	{
+		m_objectRenderer.Draw(*shape);
+	}
 	m_objectRenderer.Draw(m_selectedShape);
+
 	hr = m_objectRenderer.EndDraw();
 
 	if (hr == D2DERR_RECREATE_TARGET)

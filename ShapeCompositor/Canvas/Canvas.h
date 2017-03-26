@@ -21,9 +21,7 @@ class CCanvasController;
 
 
 class CCanvas
-	: public IDrawable
-	, public CFrame
-	, public IHistoryManipulator
+	: public CFrame
 {
 public:
 	CCanvas();
@@ -35,16 +33,12 @@ public:
 	bool					IsSelectShape(size_t index, const CShapePtr selectedShape) const;
 	//
 	//--------------------------------------------
-	// 	IHistory
-	void AddAndExecuteCommand(const CanvasCommandPtr & command) override;
+	void AddAndExecuteCommand(const CanvasCommandPtr & command);
 
-	void UndoCommand() override;
-	void RedoCommand() override;
+	void UndoCommand();
+	void RedoCommand();
 
-	void ClearHistory() override;
-	//--------------------------------------------
-	// 	IDrawable
-	void					Accept(IObjectVisitor & renderer) const override;
+	void ClearHistory();
 	//--------------------------------------------
 	void					DeleteShape(size_t index);
 	void					DeleteShape(CShapePtr pShape);// TODO : see need it variant

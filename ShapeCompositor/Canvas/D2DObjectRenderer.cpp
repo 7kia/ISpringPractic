@@ -169,14 +169,6 @@ void CD2DObjectRenderer::Visit(const CTriangle & shape)
 	m_geometrySink.Release();
 }
 
-void CD2DObjectRenderer::Visit(const CCanvas & canvas)
-{
-	for (const auto & shape : canvas.GetShapes())
-	{
-		Draw(*shape);
-	}
-}
-
 void CD2DObjectRenderer::Visit(const CSelectedShape & selectedShape)
 {
 	Draw(selectedShape);

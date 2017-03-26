@@ -46,7 +46,7 @@ void CSelectedShape::ResetSelectShapePtr()
 
 void CSelectedShape::ResetUpdateParameters()
 {
-	m_startMove = Vec2f();
+	m_startMove.reset();
 	m_start = Vec2f();
 	m_current = Vec2f();
 	m_isUpdate = false;
@@ -150,7 +150,7 @@ void CSelectedShape::HandleMoveMouse(const Vec2f point)
 	case UpdateType::MarkerRightTop:
 	case UpdateType::Move:
 		{
-			if (m_startMove == Vec2f())
+			if (!m_startMove)
 			{
 				m_startMove = point;
 				m_start = point;
@@ -268,7 +268,11 @@ void CSelectedShape::SetFrameData(SFrameData const & data)
 
 Vec2f CSelectedShape::GetFinalShift() const
 {
-	return m_current - m_startMove;
+	if (m_startMove)
+	{
+		return m_current - *m_startMove;
+	}
+	return m_current;
 }
 
 void CSelectedShape::MoveFrame(const Vec2f shift)
@@ -285,7 +289,6 @@ SFrameData CSelectedShape::GetNewFrameData() const
 	SSize directionResize = GetDirectionResize();
 	const SSize newSize = m_frameData.size + (SSize(shift.x * directionResize.width, shift.y * directionResize.height));
 
-	const Vec2f directionShift = GetDirectionShift(Vec2f(shift.x / 2.f, shift.y / 2.f));
 	info.position = GetCorrectPosition(newSize, Vec2f(shift.x / 2.f, shift.y / 2.f), m_frameData.position);
 
 	info.size = GetCorrectSize(newSize);
@@ -306,8 +309,8 @@ SFrameData CSelectedShape::GetCurrentFrameData()
 
 	const SSize newSize = m_frameData.size + (SSize(shift.x * directionResize.width, shift.y * directionResize.height));
 
-	const Vec2f directionShift = GetDirectionShift(Vec2f(shift.x / 2.f, shift.y / 2.f));
-	info.position = GetCorrectPosition(newSize, Vec2f(shift.x / 2.f, shift.y / 2.f), m_frameData.position);
+	const auto positionShift = GetPositionShift(shift);
+	info.position = GetCorrectPosition(newSize, Vec2f(positionShift.x / 2.f, positionShift.y / 2.f), m_frameData.position);
 	info.size = GetCorrectSize(newSize);
 
 	return info;
@@ -318,60 +321,30 @@ SSize CSelectedShape::GetDirectionResize() const
 	SSize result;
 	switch (m_updateType)
 	{
-		case UpdateType::MarkerLeftTop:
-		{
-			return SSize(-1.f, -1.f);
-		}
+	case UpdateType::MarkerLeftTop:
+	{
+		return SSize(-1.f, -1.f);
+	}
+	break;
+	case UpdateType::MarkerLeftBottom:
+	{
+		return SSize(-1.f, 1.f);
+	}
+	break;
+	case UpdateType::MarkerRightBottom:
+	{
+		return SSize(1.f, 1.f);
+	}
+	break;
+	case UpdateType::MarkerRightTop:
+	{
+		return SSize(1.f, -1.f);
+	}
+	break;
+	default:
 		break;
-		case UpdateType::MarkerLeftBottom:
-		{
-			return SSize(-1.f, 1.f);
-		}
-		break;
-		case UpdateType::MarkerRightBottom:
-		{
-			return SSize(1.f, 1.f);
-		}
-		break;
-		case UpdateType::MarkerRightTop:
-		{
-			return SSize(1.f, -1.f);
-		}
-		break;
-		default:
-			break;
 	}
 	return SSize();
-}
-
-Vec2f CSelectedShape::GetDirectionShift(const Vec2f shift) const
-{
-	switch (m_updateType)
-	{
-		case UpdateType::MarkerLeftTop:
-		{		
-			return GetCorrectShift(shift, shift.x > 0, shift.y > 0);
-		}
-		break;
-		case UpdateType::MarkerLeftBottom:
-		{
-			return GetCorrectShift(shift, shift.x > 0, shift.y < 0);
-		}
-		break;
-		case UpdateType::MarkerRightBottom:
-		{
-			return GetCorrectShift(shift, shift.x < 0, shift.y < 0);
-		}
-		break;
-		case UpdateType::MarkerRightTop:
-		{
-			return GetCorrectShift(shift, shift.x < 0, shift.y > 0);
-		}
-		break;
-		default:
-			break;
-	}
-	return Vec2f();
 }
 
 void CSelectedShape::ReturnToOldState()
@@ -440,21 +413,33 @@ Vec2f CSelectedShape::GetCorrectPosition(
 	return result;
 }
 
+Vec2f CSelectedShape::GetPositionShift(const Vec2f shift) const
+{
+	//(m_updateType == UpdateType::Move) ? 1.f : 1.f / 2.f;
+	//auto rect = m_selectedShape->GetOwnRect();
+	switch (m_updateType)
+	{
+	case UpdateType::MarkerLeftTop:
+		return GetCorrectPositionShift(shift, shift.x < 0.f, shift.y < 0.f);
+	}
+	return shift;
+}
 
-Vec2f CSelectedShape::GetCorrectShift(
-	const Vec2f & shift
+Vec2f CSelectedShape::GetCorrectPositionShift(
+	const Vec2f shift
 	, bool conditionForX
 	, bool conditionForY
 ) const
 {
-	Vec2f result = shift;
+	Vec2f correctShift = shift;
 	if (conditionForX)
 	{
-		result.x = 0.f;
+		correctShift.x = 0.f;
 	}
 	if (conditionForY)
 	{
-		result.y = 0.f;
+		correctShift.y = 0.f;
 	}
-	return result;
+	return correctShift;
 }
+

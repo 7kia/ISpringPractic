@@ -40,18 +40,3 @@ private:
 	std::deque<CanvasCommandPtr>						m_history;
 	std::deque<CanvasCommandPtr>::reverse_iterator		m_currentCommand = m_history.rbegin();
 };
-
-class IHistoryManipulator
-{
-public:
-	virtual ~IHistoryManipulator() = default;
-	//////////////////////////////////////////////////////////////////////
-	// Methods
-public:
-	virtual void AddAndExecuteCommand(const CanvasCommandPtr & command) = 0;
-
-	virtual void UndoCommand() = 0;
-	virtual void RedoCommand() = 0;
-
-	virtual void ClearHistory() = 0;
-};

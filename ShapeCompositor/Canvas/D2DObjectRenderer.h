@@ -34,7 +34,6 @@ private:
 
 	//--------------------------------------------
 
-	void Visit(const CCanvas & canvas);// TODO : see need interface for canvas
 	void Visit(const CSelectedShape & selectedShape);
 	//////////////////////////////////////////////////////////////////////
 	// Data
