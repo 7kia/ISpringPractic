@@ -275,31 +275,24 @@ SFrameData CSelectedShape::GetCurrentFrameData()
 
 SSize CSelectedShape::GetDirectionResize() const
 {
-	SSize result;
 	switch (m_updateType)
 	{
-	case UpdateType::MarkerLeftTop:
-	{
-		return SSize(-1.f, -1.f);
-	}
-	break;
-	case UpdateType::MarkerLeftBottom:
-	{
-		return SSize(-1.f, 1.f);
-	}
-	break;
-	case UpdateType::MarkerRightBottom:
-	{
-		return SSize(1.f, 1.f);
-	}
-	break;
-	case UpdateType::MarkerRightTop:
-	{
-		return SSize(1.f, -1.f);
-	}
-	break;
-	default:
-		break;
+		case UpdateType::MarkerLeftTop:
+		{
+			return SSize(-1.f, -1.f);
+		}
+		case UpdateType::MarkerLeftBottom:
+		{
+			return SSize(-1.f, 1.f);
+		}
+		case UpdateType::MarkerRightBottom:
+		{
+			return SSize(1.f, 1.f);
+		}
+		case UpdateType::MarkerRightTop:
+		{
+			return SSize(1.f, -1.f);
+		}
 	}
 	return SSize();
 }
