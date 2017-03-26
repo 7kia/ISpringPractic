@@ -321,14 +321,17 @@ BOOL CShapeCompositorView::PreTranslateMessage(MSG* pMsg)
 			{
 				case VK_DELETE:
 				{
-					m_canvas.AddAndExecuteCommand(
-						std::make_shared<CDeleteShapeCanvasCommand>(
-							m_canvas
-							, m_selectedShape
-							, m_shapeFactory
-						)
-					);
-					RedrawWindow();
+					if (m_selectedShape.HaveSelectedShape())
+					{
+						m_canvas.AddAndExecuteCommand(
+							std::make_shared<CDeleteShapeCanvasCommand>(
+								m_canvas
+								, m_selectedShape
+								, m_shapeFactory
+								)
+						);
+						RedrawWindow();
+					}			
 				}
 				break;
 			default:
