@@ -154,8 +154,8 @@ static SRectF GetFrameRect(const SSize & size, const Vec2f & position)
 	SRectF rect;
 	rect.left = position.x - size.width / 2.f;
 	rect.right = position.x + size.width / 2.f;
-	rect.bottom = position.y - size.height / 2.f;
-	rect.top = position.y + size.height / 2.f;
+	rect.bottom = position.y + size.height / 2.f;
+	rect.top = position.y - size.height / 2.f;
 
 	return rect;
 };
