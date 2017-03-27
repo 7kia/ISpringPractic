@@ -113,7 +113,7 @@ public:
 
 
 	// Get shape data
-	virtual SFrameData GetFrameData() const = 0;
+	virtual SFrameData GetNewFrameData() const = 0;
 	virtual void SetFrameData(SFrameData const & data) = 0;
 
 };
@@ -139,7 +139,7 @@ public:
 	SSize GetSize() const override;
 
 	// Get shape data
-	SFrameData GetFrameData() const override;
+	SFrameData GetNewFrameData() const override;
 	void SetFrameData(SFrameData const & data) override;
 	//////////////////////////////////////////////////////////////////////
 	// Data

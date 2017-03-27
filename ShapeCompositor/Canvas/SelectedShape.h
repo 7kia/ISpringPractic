@@ -30,11 +30,11 @@ public:
 	enum class UpdateType
 	{
 		None = -1,
-		Move ,
 		MarkerLeftBottom ,
 		MarkerRightBottom ,
 		MarkerRightTop ,
 		MarkerLeftTop ,
+		Move,
 	};
 	//////////////////////////////////////////////////////////////////////
 	// Methods
@@ -82,7 +82,7 @@ public:
 	SRectF GetOwnRect() const;
 
 	// Get shape data
-	SFrameData GetFrameData() const override;// TODO : see need it
+	SFrameData GetNewFrameData() const override;// TODO : see need it
 	void SetFrameData(SFrameData const & data) override;
 	//--------------------------------------------
 
@@ -90,7 +90,7 @@ public:
 	// For drag and drop
 	Vec2f	GetFinalShift() const;
 	void	MoveFrame(const Vec2f shift);
-	SFrameData GetNewFrameData() const;
+	SFrameData GetFinalFrameData() const;
 	SFrameData	GetOldFrameData();
 	SFrameData	GetCurrentFrameData();
 	SSize GetDirectionResize() const;
@@ -102,7 +102,7 @@ private:
 	void					SetResizeView();
 
 	bool					CheckSize(const SSize size) const;
-	SFrameData				GetFrameData(const Vec2f shift) const;
+	SFrameData				GetNewFrameData(const Vec2f shift) const;
 	SSize					GetCorrectSize(const SSize size) const;
 	Vec2f					GetCorrectPosition(
 												const SSize newSize

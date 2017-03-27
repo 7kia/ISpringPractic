@@ -53,7 +53,6 @@ void CSelectedShape::ResetUpdateParameters()
 	m_updateType = UpdateType::None;
 
 	m_oldData = m_frameData;
-
 }
 
 void CSelectedShape::SetUpdateState(bool state)
@@ -83,15 +82,13 @@ CSelectedShape::UpdateType CSelectedShape::GetUpdateType() const
 
 bool CSelectedShape::IsResize(const Vec2f point)
 {
-	size_t index = size_t(UpdateType::MarkerLeftBottom);
-	for (const auto & resizeShape : m_resizeShapes)
+	for(size_t index = size_t(ShapeIndex::MarkerLeftBottom); index <= size_t(ShapeIndex::MarkerLeftTop); ++index)
 	{
-		if (resizeShape->IsPointIntersection(point))
+		if (m_resizeShapes[index]->IsPointIntersection(point))
 		{
 			SetUpdateType(UpdateType(index));
 			return true;
 		}
-		++index;
 	}
 
 
@@ -220,7 +217,7 @@ SRectF CSelectedShape::GetOwnRect() const
 	return GetFrameRect(m_selectedShape->GetSize(), m_selectedShape->GetPosition());
 }
 
-SFrameData CSelectedShape::GetFrameData() const
+SFrameData CSelectedShape::GetNewFrameData() const
 {
 	SFrameData info;
 	info.position = m_frameData.position;
@@ -258,9 +255,9 @@ void CSelectedShape::MoveFrame(const Vec2f shift)
 }
 
 
-SFrameData CSelectedShape::GetNewFrameData() const
+SFrameData CSelectedShape::GetFinalFrameData() const
 {
-	return GetFrameData(GetFinalShift());
+	return GetNewFrameData(GetFinalShift());
 }
 
 SFrameData CSelectedShape::GetOldFrameData()
@@ -270,7 +267,7 @@ SFrameData CSelectedShape::GetOldFrameData()
 
 SFrameData CSelectedShape::GetCurrentFrameData()
 {
-	return GetFrameData(m_current - m_start);
+	return GetNewFrameData(m_current - m_start);
 }
 
 SSize CSelectedShape::GetDirectionResize() const
@@ -310,7 +307,7 @@ void CSelectedShape::SetViewPosition()
 
 void CSelectedShape::SetMoveView()
 {
-	m_resizeShapes[size_t(ShapeIndex::Frame)]->SetFrameData(GetFrameData());
+	m_resizeShapes[size_t(ShapeIndex::Frame)]->SetFrameData(GetNewFrameData());
 }
 
 void CSelectedShape::SetResizeView()
@@ -334,23 +331,38 @@ bool CSelectedShape::CheckSize(const SSize size) const
 	return (size.width >= MIN_SHAPE_SIZE.width) && (size.height >= MIN_SHAPE_SIZE.height);
 }
 
-SFrameData CSelectedShape::GetFrameData(const Vec2f shift) const
+SFrameData CSelectedShape::GetNewFrameData(const Vec2f shift) const
 {
 	SFrameData info;
-	SSize directionResize = GetDirectionResize();
 
-	if ( (m_updateType != UpdateType::Move) && (m_updateType != UpdateType::None))
+
+	switch (m_updateType)
 	{
-		info.size = GetCorrectSize(m_frameData.size + (SSize(shift.x * directionResize.width, shift.y * directionResize.height)));
-		SSize & newSize = info.size;
-		Vec2f differentSizes = Vec2f(newSize.width - m_frameData.size.width, newSize.height - m_frameData.size.height);
-		info.position = GetCorrectPosition(newSize, Vec2f(differentSizes.x / 2.f * directionResize.width
-			, differentSizes.y / 2.f * directionResize.height), m_frameData.position);
+	case UpdateType::Move:
+		{
+			info.position = m_frameData.position + shift;
+			info.size = m_frameData.size;
+		}
+		break;
+	case UpdateType::MarkerLeftTop:
+	case UpdateType::MarkerLeftBottom:
+	case UpdateType::MarkerRightBottom:
+	case UpdateType::MarkerRightTop:
+		{
+			SSize directionResize = GetDirectionResize();
+
+			info.size = GetCorrectSize(m_frameData.size + (SSize(shift.x * directionResize.width, shift.y * directionResize.height)));
+			const SSize & newSize = info.size;
+			const Vec2f differentSizes = Vec2f(newSize.width - m_frameData.size.width, newSize.height - m_frameData.size.height);
+			const Vec2f positionShift = Vec2f(differentSizes.x  * directionResize.width / 2.f
+												, differentSizes.y * directionResize.height / 2.f);
+			info.position = GetCorrectPosition(newSize, positionShift, m_frameData.position);
+		}
+		break;
+	default:
+		break;
 	}
-	else if(m_updateType == UpdateType::Move)
-	{
-		info.position = m_frameData.position + shift;
-	}
+	
 
 	return info;
 }

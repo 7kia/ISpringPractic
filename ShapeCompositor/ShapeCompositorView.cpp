@@ -512,8 +512,6 @@ void CShapeCompositorView::CreateCommandForSelectedShape()
 			m_selectedShape.GetFinalShift(),
 			m_selectedShape
 			));
-		m_selectedShape.ResetUpdateParameters();
-
 	}
 	break;
 	case CSelectedShape::UpdateType::MarkerLeftTop:
@@ -525,10 +523,9 @@ void CShapeCompositorView::CreateCommandForSelectedShape()
 		m_canvas.AddAndExecuteCommand(std::make_shared<CScaleShapeCanvasCommand>(
 			m_selectedShape.GetShape(),
 			m_selectedShape.GetOldFrameData(),// TODO : see can delete other arguments
-			m_selectedShape.GetNewFrameData(),
+			m_selectedShape.GetFinalFrameData(),
 			m_selectedShape
 			));
-		m_selectedShape.ResetUpdateParameters();
 	}
 	break;
 	case CSelectedShape::UpdateType::None:
