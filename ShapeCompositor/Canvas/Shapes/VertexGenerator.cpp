@@ -9,7 +9,7 @@ std::vector<Vec2f> CVertexGenerator::GetVertices(const IShape & shape)
 
 void CVertexGenerator::Visit(const CRectangle & shape)
 {
-	const SRectF ownRect = GetFrameRect(shape.GetSize(), shape.GetPosition());
+	const SRectF ownRect = GetFrameRect(shape);
 
 	m_generatedVerteces = {
 		Vec2f(ownRect.left, ownRect.top)

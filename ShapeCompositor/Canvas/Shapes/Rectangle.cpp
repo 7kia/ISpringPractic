@@ -19,7 +19,7 @@ CRectangle::CRectangle(
 
 bool CRectangle::IsPointIntersection(const Vec2f point) const
 {
-	SRectF ownRect = GetFrameRect(GetSize(), GetPosition());
+	SRectF ownRect = GetFrameRect(*this);
 	if (ownRect.left > ownRect.right)
 	{
 		std::swap(ownRect.left, ownRect.right);

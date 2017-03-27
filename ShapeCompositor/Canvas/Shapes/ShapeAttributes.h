@@ -142,9 +142,12 @@ protected:
 };
 
 // Own rect
-static SRectF GetFrameRect(const SSize & size, const Vec2f & position)
+static SRectF GetFrameRect(const IFrame & frame)
 {
 	SRectF rect;
+	const Vec2f position = frame.GetPosition();
+	const SSize size = frame.GetSize();
+
 	rect.left = position.x - size.width / 2.f;
 	rect.right = position.x + size.width / 2.f;
 	rect.bottom = position.y + size.height / 2.f;

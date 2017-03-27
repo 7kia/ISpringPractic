@@ -109,7 +109,16 @@ SFrameData::SFrameData(const Vec2f position, const SSize size)
 
 std::vector<Vec2f> SFrameData::GetFrameVertices() const
 {
-	SRectF frame = GetFrameRect(size, position);
+	//////////////////////////////////////
+	// TODO : rewrite, delete SFrameData, 
+	SRectF frame;
+
+	frame.left = position.x - size.width / 2.f;
+	frame.right = position.x + size.width / 2.f;
+	frame.bottom = position.y + size.height / 2.f;
+	frame.top = position.y - size.height / 2.f;
+	//////////////////////////////////////
+
 	return{
 		Vec2f(frame.left, frame.bottom)// Left bootom
 		, Vec2f(frame.right, frame.bottom)// Right bootom

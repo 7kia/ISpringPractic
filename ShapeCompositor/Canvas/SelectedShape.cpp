@@ -214,7 +214,7 @@ SSize CSelectedShape::GetSize() const
 
 SRectF CSelectedShape::GetOwnRect() const
 {
-	return GetFrameRect(m_selectedShape->GetSize(), m_selectedShape->GetPosition());
+	return GetFrameRect(*m_selectedShape);
 }
 
 SFrameData CSelectedShape::GetFrameData() const
