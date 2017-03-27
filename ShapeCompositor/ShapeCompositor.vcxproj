@@ -204,6 +204,7 @@
     <ClInclude Include="Canvas\Shapes\ShapeAttributes.h" />
     <ClInclude Include="Canvas\Shapes\ShapeFactory.h" />
     <ClInclude Include="Canvas\Shapes\Triangle.h" />
+    <ClInclude Include="Canvas\Shapes\VertexGenerator.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="ShapeVisitor.h" />
@@ -230,6 +231,7 @@
     <ClCompile Include="Canvas\Shapes\ShapeAttributes.cpp" />
     <ClCompile Include="Canvas\Shapes\ShapeFactory.cpp" />
     <ClCompile Include="Canvas\Shapes\Triangle.cpp" />
+    <ClCompile Include="Canvas\Shapes\VertexGenerator.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="ShapeCompositor.cpp" />
     <ClCompile Include="ShapeCompositorDoc.cpp" />

@@ -82,7 +82,7 @@ public:
 	SRectF GetOwnRect() const;
 
 	// Get shape data
-	SFrameData GetNewFrameData() const override;// TODO : see need it
+	SFrameData GetFrameData() const override;// TODO : see need it
 	void SetFrameData(SFrameData const & data) override;
 	//--------------------------------------------
 

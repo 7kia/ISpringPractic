@@ -3,12 +3,11 @@
 class CRectangle;
 class CEllipse;
 class CTriangle;
-class CCanvas;
 
-class IObjectVisitor
+class IShapeVisitor
 {
 public:
-	virtual ~IObjectVisitor() = default;
+	virtual ~IShapeVisitor() = default;
 
 	virtual void Visit(const CRectangle & shape) = 0;
 	virtual void Visit(const CEllipse & shape) = 0;

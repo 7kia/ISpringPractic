@@ -32,19 +32,7 @@ bool CRectangle::IsPointIntersection(const Vec2f point) const
 		&& IsBetween(point.y, float(ownRect.top), float(ownRect.bottom));
 }
 
-std::vector<Vec2f> CRectangle::GetVertices() const
-{
-	const SRectF ownRect = GetFrameRect(GetSize(), GetPosition());
-
-	return{
-		Vec2f(ownRect.left, ownRect.top)
-		, Vec2f(ownRect.right, ownRect.top)
-		, Vec2f(ownRect.right, ownRect.bottom)
-		, Vec2f(ownRect.left, ownRect.bottom)
-	};
-}
-
-void CRectangle::Accept(IObjectVisitor & renderer) const
+void CRectangle::Accept(IShapeVisitor & renderer) const
 {
 	renderer.Visit(*this);
 }

@@ -5,8 +5,8 @@
 #include "SelectedShape.h"
 
 CD2DObjectRenderer::CD2DObjectRenderer()
-	: IObjectVisitor()
-	, IObjectRenderer()
+	: IShapeVisitor()
+	, IShapeRenderer()
 {
 }
 
@@ -74,7 +74,7 @@ void CD2DObjectRenderer::Draw(const IShape & shape)
 
 void CD2DObjectRenderer::Visit(const CRectangle & shape)
 {
-	auto vertices = shape.GetVertices();
+	auto vertices = m_vertexGenerator.GetVertices(shape);
 
 	Color fillColor = shape.GetFillColor();
 	m_pRenderTarget->CreateSolidColorBrush(
@@ -137,7 +137,7 @@ void CD2DObjectRenderer::Visit(const CEllipse & shape)
 
 void CD2DObjectRenderer::Visit(const CTriangle & shape)
 {
-	auto vertices = shape.GetVertices();
+	auto vertices = m_vertexGenerator.GetVertices(shape);
 
 	Color fillColor = shape.GetFillColor();
 	m_pRenderTarget->CreateSolidColorBrush(

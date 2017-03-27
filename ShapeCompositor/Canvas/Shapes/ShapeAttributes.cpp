@@ -159,7 +159,7 @@ SSize CFrame::GetSize() const
 }
 
 
-SFrameData CFrame::GetNewFrameData() const
+SFrameData CFrame::GetFrameData() const
 {
 	SFrameData info;
 	info.position = m_position;

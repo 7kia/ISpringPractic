@@ -28,7 +28,7 @@ struct SShapeData : public SFrameData
 };
 
 
-class IObjectVisitor;
+class IShapeVisitor;
 class IShape
 {
 public:
@@ -51,6 +51,6 @@ public:
 	virtual ShapeType GetType() const = 0;
 
 	// For draw
-	virtual void Accept(IObjectVisitor & renderer) const = 0;
+	virtual void Accept(IShapeVisitor & renderer) const = 0;
 
 };

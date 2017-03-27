@@ -1,14 +1,15 @@
 #pragma once
 
 #include "Canvas\ObjectRenderer.h"
+#include "Shapes\VertexGenerator.h"
 
 class CShapeCompositorView;
 class CCanvas;
 class CSelectedShape;
 
 class CD2DObjectRenderer
-	: public IObjectVisitor
-	, public IObjectRenderer
+	: public IShapeVisitor
+	, public IShapeRenderer
 {
 public:
 	CD2DObjectRenderer();
@@ -20,13 +21,13 @@ public:
 
 	HRESULT	EndDraw();
 	//--------------------------------------------
-	// IObjectVisitor
+	// IShapeVisitor
 	void Draw(const IShape & shape) override;
 	//--------------------------------------------
 
 private:
 	//--------------------------------------------
-	// IObjectVisitor
+	// IShapeVisitor
 
 	void Visit(const CRectangle & shape) override;
 	void Visit(const CEllipse & shape) override;
@@ -50,4 +51,6 @@ private:
 	CComPtr<ID2D1SolidColorBrush>				m_pLightSlateGrayBrush;
 	CComPtr<ID2D1SolidColorBrush>				m_pCornflowerBlueBrush;
 
+
+	CVertexGenerator							m_vertexGenerator;
 };

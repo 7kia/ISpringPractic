@@ -3,10 +3,10 @@
 #include "Canvas\Shapes\AllShapes.h"
 
 
-class IObjectRenderer
+class IShapeRenderer
 {
 public:
-	virtual ~IObjectRenderer() = default;
+	virtual ~IShapeRenderer() = default;
 
 	virtual void Draw(const IShape & shape) = 0;
 };

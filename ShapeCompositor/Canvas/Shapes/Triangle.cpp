@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Triangle.h"
+#include "VertexGenerator.h"
 
 CTriangle::CTriangle(
 	const Vec2f position
@@ -14,7 +15,6 @@ CTriangle::CTriangle(
 		, fillColor
 		, outlineColor
 	)
-	, IHaveVertex()
 {
 }
 
@@ -44,38 +44,15 @@ bool PointIsInsideTriangle(Vec2f p0, Vec2f p1, Vec2f p2, Vec2f p)
 		PointIsOnTheLeft(p2, p0, p);
 }
 
-
-std::vector<Vec2f> CTriangle::GetVertices() const
-{
-	Vec2f first = Vec2f(m_position.x - m_size.width / 2.f, m_position.y + m_size.height / 2.f);
-	Vec2f second = Vec2f(m_position.x + m_size.width / 2.f, m_position.y + m_size.height / 2.f);
-	Vec2f third = Vec2f(m_position.x, m_position.y - m_size.height / 2.f);
-
-	std::vector<Vec2f> result;
-
-	if (m_size.width < 0.f)
-	{
-		//result = { second, first, third };
-		std::swap(first, second);
-	}
-	if (m_size.height < 0.f)
-	{
-		//result = { third, second, first };
-		std::swap(first, third);
-	}
-	result = { first, second, third };
-
-	return result;
-}
-
 bool CTriangle::IsPointIntersection(const Vec2f point) const
 {
-	auto verteces = GetVertices();
+	CVertexGenerator vertexGenerator;
+	auto verteces = vertexGenerator.GetVertices(*this);
 
 	return PointIsInsideTriangle(verteces[2], verteces[1], verteces[0], point);
 }
 
-void CTriangle::Accept(IObjectVisitor & renderer) const
+void CTriangle::Accept(IShapeVisitor & renderer) const
 {
 	renderer.Visit(*this);
 }

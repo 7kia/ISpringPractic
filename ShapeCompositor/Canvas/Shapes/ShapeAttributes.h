@@ -59,13 +59,6 @@ static const Color DEFAULT_FILL_COLOR = Color(0.45f, 0.75f, 0.55f);
 
 /////////////////////////////////////////////////////////////
 // Mixin
-class IHaveVertex
-{
-public:
-	virtual ~IHaveVertex() = default;
-
-	virtual std::vector<Vec2f> GetVertices() const = 0;
-};
 
 class IIsPointIntersection
 {
@@ -91,10 +84,10 @@ struct SFrameData
 
 struct SRectF
 {
-	float    left;
-	float    top;
-	float    right;
-	float    bottom;
+	float left;
+	float top;
+	float right;
+	float bottom;
 };
 
 class IFrame
@@ -113,7 +106,7 @@ public:
 
 
 	// Get shape data
-	virtual SFrameData GetNewFrameData() const = 0;
+	virtual SFrameData GetFrameData() const = 0;
 	virtual void SetFrameData(SFrameData const & data) = 0;
 
 };
@@ -139,7 +132,7 @@ public:
 	SSize GetSize() const override;
 
 	// Get shape data
-	SFrameData GetNewFrameData() const override;
+	SFrameData GetFrameData() const override;
 	void SetFrameData(SFrameData const & data) override;
 	//////////////////////////////////////////////////////////////////////
 	// Data

@@ -57,17 +57,6 @@ ShapeType CShape::GetType() const
 	return m_type;
 }
 
-std::vector<Vec2f> CShape::GetFrameVertices() const
-{
-	const SRectF frame = GetFrameRect(GetSize(), GetPosition());
-	return{
-		Vec2f(frame.left, frame.bottom)// Left bootom
-		, Vec2f(frame.right, frame.bottom)// Right bootom
-		, Vec2f(frame.right, frame.top)// Right top
-		, Vec2f(frame.left, frame.top)// Left top
-	};
-}
-
 SShapeData CShape::GetShapeData() const
 {
 	SShapeData info;

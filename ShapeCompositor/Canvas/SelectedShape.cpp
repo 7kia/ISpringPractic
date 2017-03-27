@@ -217,7 +217,7 @@ SRectF CSelectedShape::GetOwnRect() const
 	return GetFrameRect(m_selectedShape->GetSize(), m_selectedShape->GetPosition());
 }
 
-SFrameData CSelectedShape::GetNewFrameData() const
+SFrameData CSelectedShape::GetFrameData() const
 {
 	SFrameData info;
 	info.position = m_frameData.position;
@@ -307,7 +307,7 @@ void CSelectedShape::SetViewPosition()
 
 void CSelectedShape::SetMoveView()
 {
-	m_resizeShapes[size_t(ShapeIndex::Frame)]->SetFrameData(GetNewFrameData());
+	m_resizeShapes[size_t(ShapeIndex::Frame)]->SetFrameData(GetFrameData());
 }
 
 void CSelectedShape::SetResizeView()

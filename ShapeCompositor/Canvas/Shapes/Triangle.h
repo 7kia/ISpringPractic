@@ -4,7 +4,6 @@
 
 class CTriangle
 	: public CShape
-	, public IHaveVertex
 {
 public:
 	CTriangle(
@@ -19,11 +18,8 @@ public:
 	//--------------------------------------------
 	// IShape(for draw
 
-	void Accept(IObjectVisitor & renderer) const override;
+	void Accept(IShapeVisitor & renderer) const override;
 
-	//--------------------------------------------
-	// IHaveVertex
-	std::vector<Vec2f> GetVertices() const;
 	//--------------------------------------------
 	// IIsPointIntersection
 	bool IsPointIntersection(const Vec2f point) const override;

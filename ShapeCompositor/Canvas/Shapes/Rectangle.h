@@ -4,7 +4,6 @@
 
 class CRectangle
 	: public CShape
-	, public IHaveVertex
 {
 public:
 	CRectangle(
@@ -19,11 +18,7 @@ public:
 	//--------------------------------------------
 	// IDrawable
 
-	void Accept(IObjectVisitor & renderer) const override;
-
-	//--------------------------------------------
-	// IHaveVertex
-	std::vector<Vec2f> GetVertices() const;
+	void Accept(IShapeVisitor & renderer) const override;
 	//--------------------------------------------
 	// IIsPointIntersection
 	bool IsPointIntersection(const Vec2f point) const override;
