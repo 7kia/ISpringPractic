@@ -77,12 +77,10 @@ public:
 	};
 };
 
-
 struct SFrameData
 {
 	SFrameData(const Vec2f position = Vec2f(), const SSize size = DEFAULT_SIZE);
 
-	RECT GetOwnRect() const;
 	std::vector<Vec2f> GetFrameVertices() const;
 
 	bool operator==(SFrameData const& data) const;
@@ -113,8 +111,6 @@ public:
 	virtual void SetSize(SSize size) = 0;
 	virtual SSize GetSize() const = 0;
 
-	// Own rect
-	virtual SRectF GetOwnRect() const = 0;
 
 	// Get shape data
 	virtual SFrameData GetFrameData() const = 0;
@@ -142,9 +138,6 @@ public:
 	void SetSize(SSize size) override;
 	SSize GetSize() const override;
 
-	// Own rect
-	SRectF GetOwnRect() const override;
-
 	// Get shape data
 	SFrameData GetFrameData() const override;
 	void SetFrameData(SFrameData const & data) override;
@@ -153,4 +146,16 @@ public:
 protected:
 	Vec2f m_position;
 	SSize m_size;
+};
+
+// Own rect
+static SRectF GetFrameRect(const SSize & size, const Vec2f & position)
+{
+	SRectF rect;
+	rect.left = position.x - size.width / 2.f;
+	rect.right = position.x + size.width / 2.f;
+	rect.bottom = position.y - size.height / 2.f;
+	rect.top = position.y + size.height / 2.f;
+
+	return rect;
 };

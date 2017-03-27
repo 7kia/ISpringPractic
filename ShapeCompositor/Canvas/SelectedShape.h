@@ -78,8 +78,8 @@ public:
 	// Size
 	void SetSize(SSize size) override;
 	SSize GetSize() const override;
-	// Own rect
-	SRectF GetOwnRect() const override;
+
+	SRectF GetOwnRect() const;
 
 	// Get shape data
 	SFrameData GetFrameData() const override;// TODO : see need it
@@ -110,7 +110,6 @@ private:
 												, const Vec2f startPosition
 												) const;
 
-	Vec2f					GetPositionShift(const Vec2f shift) const;
 	Vec2f					GetCorrectPositionShift(
 								const Vec2f shift
 								, bool conditionForX

@@ -59,7 +59,7 @@ ShapeType CShape::GetType() const
 
 std::vector<Vec2f> CShape::GetFrameVertices() const
 {
-	const SRectF frame = GetOwnRect();
+	const SRectF frame = GetFrameRect(GetSize(), GetPosition());
 	return{
 		Vec2f(frame.left, frame.bottom)// Left bootom
 		, Vec2f(frame.right, frame.bottom)// Right bootom

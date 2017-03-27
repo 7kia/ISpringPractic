@@ -217,7 +217,7 @@ SSize CSelectedShape::GetSize() const
 
 SRectF CSelectedShape::GetOwnRect() const
 {
-	return m_selectedShape->GetOwnRect();
+	return GetFrameRect(m_selectedShape->GetSize(), m_selectedShape->GetPosition());
 }
 
 SFrameData CSelectedShape::GetFrameData() const
@@ -393,18 +393,6 @@ Vec2f CSelectedShape::GetCorrectPosition(
 	}
 
 	return startPosition;
-}
-
-Vec2f CSelectedShape::GetPositionShift(const Vec2f shift) const
-{
-	//(m_updateType == UpdateType::Move) ? 1.f : 1.f / 2.f;
-	//auto rect = m_selectedShape->GetOwnRect();
-	switch (m_updateType)
-	{
-	case UpdateType::MarkerLeftTop:
-		return GetCorrectPositionShift(shift, shift.x > 0.f, shift.y > 0.f);
-	}
-	return shift;
 }
 
 Vec2f CSelectedShape::GetCorrectPositionShift(

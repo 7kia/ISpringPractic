@@ -21,7 +21,6 @@ class CCanvasController;
 
 
 class CCanvas
-	: public CFrame
 {
 public:
 	CCanvas();
@@ -55,6 +54,9 @@ public:
 	void					InsertShape(size_t insertIndex, CShapePtr & shape);
 
 	size_t					GetAmountShapes() const;
+	// Size
+	void					SetSize(const SSize size);
+	SSize					GetSize() const;
 
 private:
 	void					CheckShapeIndex(size_t index, bool isInsert = false) const;
@@ -62,8 +64,11 @@ private:
 	//////////////////////////////////////////////////////////////////////
 	// Data
 public:
+private:
 	CHistory m_history;
 	// TODO : see might require do private
 	std::vector<CShapePtr>	m_shapes;
-private:
+
+	SSize m_size;
+
 };

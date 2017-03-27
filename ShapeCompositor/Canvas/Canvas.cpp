@@ -2,7 +2,7 @@
 #include "Canvas.h"
 
 CCanvas::CCanvas()
-	: CFrame(Vec2f(), SSize(640.f, 480.f))
+	: m_size(640.f, 480.f)
 {
 }
 
@@ -25,6 +25,16 @@ void CCanvas::InsertShape(size_t insertIndex, CShapePtr & shape)
 size_t CCanvas::GetAmountShapes() const
 {
 	return m_shapes.size();
+}
+
+void CCanvas::SetSize(const SSize size)
+{
+	m_size = size;
+}
+
+SSize CCanvas::GetSize() const
+{
+	return m_size;
 }
 
 std::vector<CShapePtr> CCanvas::GetShapes() const
