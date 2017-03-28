@@ -43,6 +43,7 @@ BEGIN_MESSAGE_MAP(CShapeCompositorView, CScrollView)
 	ON_COMMAND(ID_FILE_SAVE_AS, &CShapeCompositorView::OnFileSaveAs)
 	ON_COMMAND(ID_FILE_OPEN, &CShapeCompositorView::OnFileOpen)
 	ON_COMMAND(ID_FILE_SAVE, &CShapeCompositorView::OnFileSave)
+	ON_COMMAND(ID_FILE_NEW, &CShapeCompositorView::OnFileNew)
 	ON_WM_SIZE()
 	ON_WM_PAINT()
 	ON_WM_ERASEBKGND()
@@ -283,6 +284,16 @@ void CShapeCompositorView::OnFileSave()
 {
 	GetDocument()->OnFileSave(m_canvas.GetShapes());
 	RedrawWindow();
+}
+
+void CShapeCompositorView::OnFileNew()
+{
+
+	if (!m_canvas.IsSave())
+	{
+		OnFileSaveAs();
+		m_canvas.SetSaveState(true);
+	}
 }
 
 

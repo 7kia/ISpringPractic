@@ -98,6 +98,7 @@ protected:
 	afx_msg void OnFileSaveAs();
 	afx_msg void OnFileOpen();
 	afx_msg void OnFileSave();
+	afx_msg void OnFileNew();
 
 public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);

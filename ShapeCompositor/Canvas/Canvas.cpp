@@ -37,6 +37,16 @@ SSize CCanvas::GetSize() const
 	return m_size;
 }
 
+bool CCanvas::IsSave() const
+{
+	return m_isSave;
+}
+
+void CCanvas::SetSaveState(bool value)
+{
+	m_isSave = value;
+}
+
 std::vector<CShapePtr> CCanvas::GetShapes() const
 {
 	return m_shapes;
@@ -123,16 +133,20 @@ bool CCanvas::IsSelectShape(size_t index, const CShapePtr selectedShape) const
 void CCanvas::AddAndExecuteCommand(const CanvasCommandPtr & command)
 {
 	m_history.AddAndExecuteCommand(command);
+
+	m_isSave = false;
 }
 
 void CCanvas::UndoCommand()
 {
 	m_history.Undo();
+	m_isSave = false;
 }
 
 void CCanvas::RedoCommand()
 {
 	m_history.Redo();
+	m_isSave = false;
 }
 
 void CCanvas::ClearHistory()

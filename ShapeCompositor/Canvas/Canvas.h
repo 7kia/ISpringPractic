@@ -58,6 +58,10 @@ public:
 	void					SetSize(const SSize size);
 	SSize					GetSize() const;
 
+	// For save to document
+	bool					IsSave() const;
+	void					SetSaveState(bool value);
+
 private:
 	void					CheckShapeIndex(size_t index, bool isInsert = false) const;
 	size_t					GetIShapeIndex(CShapePtr pShape) const;
@@ -71,4 +75,5 @@ private:
 
 	SSize m_size;
 
+	bool m_isSave = false;
 };
