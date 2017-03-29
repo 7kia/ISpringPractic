@@ -123,6 +123,15 @@
     <ClInclude Include="Canvas\Buildings\BuildingType.h">
       <Filter>Файлы исходного кода\Canvas\Buildings</Filter>
     </ClInclude>
+    <ClInclude Include="Canvas\Buildings\BuildingCounter.h">
+      <Filter>Файлы исходного кода\Canvas\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="Canvas\Buildings\BuildingFactory.h">
+      <Filter>Файлы исходного кода\Canvas\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="Canvas\Buildings\Building.h">
+      <Filter>Файлы исходного кода\Canvas\Buildings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ShapeCompositor.cpp">
@@ -186,6 +195,15 @@
       <Filter>Файлы исходного кода\Canvas</Filter>
     </ClCompile>
     <ClCompile Include="Canvas\Buildings\BuildingType.cpp">
+      <Filter>Файлы исходного кода\Canvas\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas\Buildings\BuildingCounter.cpp">
+      <Filter>Файлы исходного кода\Canvas\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas\Buildings\BuildingFactory.cpp">
+      <Filter>Файлы исходного кода\Canvas\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas\Buildings\Building.cpp">
       <Filter>Файлы исходного кода\Canvas\Buildings</Filter>
     </ClCompile>
   </ItemGroup>

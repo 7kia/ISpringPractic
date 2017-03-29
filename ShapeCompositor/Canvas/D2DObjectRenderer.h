@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Canvas\ObjectRenderer.h"
+#include "Canvas\Buildings\Building.h"
 
 class CShapeCompositorView;
 class CCanvas;
@@ -31,6 +32,7 @@ private:
 	void Visit(const CRectangle & shape) override;
 	void Visit(const CEllipse & shape) override;
 	void Visit(const CTriangle & shape) override;
+	void Visit(const CBuilding & shape) override;
 
 	//--------------------------------------------
 

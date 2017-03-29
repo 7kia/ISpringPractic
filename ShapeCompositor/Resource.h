@@ -43,13 +43,15 @@
 #define ID_ADD_ELLIPSE                  32777
 #define ID_REDO                         32779
 #define ID_UNDO                         32780
+#define ID_BUTTON2                      32783
+#define ID_ADD_HOUSE                    32783
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        316
-#define _APS_NEXT_COMMAND_VALUE         32783
+#define _APS_NEXT_COMMAND_VALUE         32784
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           310
 #endif

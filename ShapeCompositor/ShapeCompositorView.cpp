@@ -38,6 +38,7 @@ BEGIN_MESSAGE_MAP(CShapeCompositorView, CScrollView)
 	ON_COMMAND(ID_ADD_TRIANGLE, CShapeCompositorView::CreateTriangle)
 	ON_COMMAND(ID_ADD_RECTANGLE, CShapeCompositorView::CreateRectangle)
 	ON_COMMAND(ID_ADD_ELLIPSE, CShapeCompositorView::CreateEllipse)
+	ON_COMMAND(ID_ADD_HOUSE, CShapeCompositorView::CreateHouse)
 	ON_COMMAND(ID_UNDO, CShapeCompositorView::Undo)
 	ON_COMMAND(ID_REDO, CShapeCompositorView::Redo)
 	ON_COMMAND(ID_FILE_SAVE_AS, &CShapeCompositorView::OnFileSaveAs)
@@ -146,6 +147,12 @@ void CShapeCompositorView::CreateEllipse()
 		, m_selectedShape
 		)
 	);
+	RedrawWindow();
+}
+
+void CShapeCompositorView::CreateHouse()
+{
+	m_canvas.PushBackShape(m_buildingFactory.CreateBuilding(CBuildingType::Type::House, Vec2f(250.f, 250.f)));
 	RedrawWindow();
 }
 
@@ -571,5 +578,5 @@ void CShapeCompositorView::CreateBuildingTypes()
 	m_buildingTypes[size_t(CBuildingType::Type::House)].SetSize(SSize(50.f, 50.f));
 	m_buildingTypes[size_t(CBuildingType::Type::House)].SetTextureName("House.png");
 
-
+	m_buildingCounters[size_t(CBuildingType::Type::House)] = CBuildingCounter(CBuildingType::Type::House, 3);
 }

@@ -18,7 +18,9 @@
 #include "Canvas\Canvas.h"
 #include "Canvas\History.h"
 #include "Canvas\D2DObjectRenderer.h"
-#include "Canvas\Buildings\BuildingType.h"
+#include "Canvas\Buildings\BuildingFactory.h"
+#include "Canvas\Buildings\BuildingCounter.h"
+
 #pragma comment(lib, "d2d1")
 
 static const FLOAT DEFAULT_DPI = 96.f;
@@ -46,6 +48,8 @@ public:
 	void					CreateTriangle();
 	void					CreateRectangle();
 	void					CreateEllipse();
+	void					CreateHouse();
+
 	void					Undo();
 	void					Redo();
 
@@ -75,9 +79,11 @@ protected:
 	// Fromn canvas TODO
 	CSelectedShape m_selectedShape;
 	CShapeFactory m_shapeFactory;
+	CBuildingFactory m_buildingFactory;
 
 	std::array<CBuildingType, size_t(CBuildingType::Type::Amount)> m_buildingTypes;
-
+	std::array<CBuildingCounter, size_t(CBuildingType::Type::Amount)> m_buildingCounters;
+	
 	ID2D1HwndRenderTarget * m_pRenderTarget = nullptr;
 	CD2DObjectRenderer		m_objectRenderer;// TODO : transfer to CShapeCompositiorView, fix Draw
 

@@ -169,3 +169,37 @@ void CD2DObjectRenderer::Visit(const CTriangle & shape)
 	m_geometrySink.Release();
 }
 
+void CD2DObjectRenderer::Visit(const CBuilding & shape)
+{
+	auto vertices = shape.GetVertices();
+
+	Color fillColor = shape.GetFillColor();
+	m_pRenderTarget->CreateSolidColorBrush(
+		D2D1::ColorF(D2D1::ColorF(fillColor.r, fillColor.g, fillColor.b, fillColor.a)),
+		&m_fillBrush
+	);
+
+	Color outlineColor = shape.GetOutlineColor();
+	m_pRenderTarget->CreateSolidColorBrush(
+		D2D1::ColorF(D2D1::ColorF(outlineColor.r, outlineColor.g, outlineColor.b, outlineColor.a)),
+		&m_outlineBrush
+	);
+
+	m_pDirect2dFactory->CreatePathGeometry(&m_pathGeometry);
+	m_pathGeometry->Open(&m_geometrySink);
+	m_geometrySink->BeginFigure({ vertices[0].x, vertices[0].y }, D2D1_FIGURE_BEGIN_FILLED);
+	for (size_t i = 1; i < vertices.size(); ++i)
+	{
+		m_geometrySink->AddLine({ vertices[i].x, vertices[i].y });
+	}
+	m_geometrySink->EndFigure(D2D1_FIGURE_END_CLOSED);
+	m_geometrySink->Close();
+	m_pRenderTarget->FillGeometry(m_pathGeometry, m_fillBrush);
+	m_pRenderTarget->DrawGeometry(m_pathGeometry, m_outlineBrush);
+
+	m_fillBrush.Release();
+	m_outlineBrush.Release();
+	m_pathGeometry.Release();
+	m_geometrySink.Release();
+}
+
