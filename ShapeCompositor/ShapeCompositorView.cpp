@@ -243,7 +243,10 @@ int CShapeCompositorView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 		// Create a Direct2D factory.
 		ATLENSURE_SUCCEEDED(m_objectRenderer.CreateRecources(this));// TODO : delete dependment to this
-
+		
+		
+		m_imageFactory.SetRenderTarget(m_pRenderTarget);
+		m_textureStorage.push_back(m_imageFactory.CreateTexture("res/House.png"));
 		CreateBuildingTypes();
 	}
 	catch (...)

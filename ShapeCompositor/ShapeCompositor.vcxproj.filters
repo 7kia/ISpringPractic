@@ -138,6 +138,12 @@
     <ClInclude Include="Canvas\Picture\Picture.h">
       <Filter>Файлы исходного кода\Canvas\Picture</Filter>
     </ClInclude>
+    <ClInclude Include="Canvas\Picture\TextureStorage.h">
+      <Filter>Файлы исходного кода\Canvas\Picture</Filter>
+    </ClInclude>
+    <ClInclude Include="Canvas\Picture\D2DImageFactory.h">
+      <Filter>Файлы исходного кода\Canvas\Picture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ShapeCompositor.cpp">
@@ -213,7 +219,10 @@
       <Filter>Файлы исходного кода\Canvas\Buildings</Filter>
     </ClCompile>
     <ClCompile Include="Canvas\Picture\Picture.cpp">
-      <Filter>Файлы исходного кода</Filter>
+      <Filter>Файлы исходного кода\Canvas\Picture</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas\Picture\D2DImageFactory.cpp">
+      <Filter>Файлы исходного кода\Canvas\Picture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

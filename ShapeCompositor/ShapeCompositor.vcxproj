@@ -198,7 +198,9 @@
     <ClInclude Include="Canvas\History.h" />
     <ClInclude Include="Canvas\MouseEventHandler.h" />
     <ClInclude Include="Canvas\ObjectRenderer.h" />
+    <ClInclude Include="Canvas\Picture\D2DImageFactory.h" />
     <ClInclude Include="Canvas\Picture\Picture.h" />
+    <ClInclude Include="Canvas\Picture\TextureStorage.h" />
     <ClInclude Include="Canvas\SelectedShape.h" />
     <ClInclude Include="Canvas\D2DObjectRenderer.h" />
     <ClInclude Include="Canvas\Shapes\AllShapes.h" />
@@ -231,6 +233,7 @@
     <ClCompile Include="Canvas\CanvasCommands\MoveShapeCommand.cpp" />
     <ClCompile Include="Canvas\CanvasCommands\ScaleShapeCommand.cpp" />
     <ClCompile Include="Canvas\History.cpp" />
+    <ClCompile Include="Canvas\Picture\D2DImageFactory.cpp" />
     <ClCompile Include="Canvas\Picture\Picture.cpp" />
     <ClCompile Include="Canvas\SelectedShape.cpp" />
     <ClCompile Include="Canvas\D2DObjectRenderer.cpp" />
