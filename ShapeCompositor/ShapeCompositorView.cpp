@@ -58,13 +58,6 @@ END_MESSAGE_MAP()
 CShapeCompositorView::CShapeCompositorView()
 	: m_shapeFactory()// TODO : see can rewrite
 	, m_selectedShape(m_shapeFactory)
-	, m_pictureMap(
-		"House.png"
-		, Vec2f(340.f, 200.f)
-		, SSize(640.f, 480.f)
-		, BUILDING_FILL_COLOR
-		, BUILDING_OUTLINE_COLOR
-	)
 {
 }
 
@@ -244,9 +237,18 @@ int CShapeCompositorView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		// Create a Direct2D factory.
 		ATLENSURE_SUCCEEDED(m_objectRenderer.CreateRecources(this));// TODO : delete dependment to this
 		
-		
+		// TODO : rewrite Normal
 		m_imageFactory.SetRenderTarget(m_pRenderTarget);
 		m_textureStorage.push_back(m_imageFactory.CreateTexture("res/House.png"));
+
+		m_pictureMap = CPicture(
+			m_textureStorage[0]
+			, Vec2f(340.f, 200.f)
+			, SSize(640.f, 480.f)
+			, BUILDING_FILL_COLOR
+			, BUILDING_OUTLINE_COLOR
+		);
+
 		CreateBuildingTypes();
 	}
 	catch (...)

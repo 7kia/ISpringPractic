@@ -2,14 +2,14 @@
 #include "Picture.h"
 
 CPicture::CPicture(
-	const std::string textureName
+	ID2D1Bitmap * pTexture
 	, const Vec2f position
 	, const SSize size
 	, const Color fillColor
 	, const Color outlineColor
 
 )
-	: m_textureName(textureName)
+	: m_pTexture(pTexture)
 	, CRectangle(
 		position
 		, size
@@ -22,4 +22,9 @@ CPicture::CPicture(
 void CPicture::Accept(IShapeVisitor & renderer) const
 {
 	renderer.Visit(*this);
+}
+
+ID2D1Bitmap * CPicture::GetTexture() const
+{
+	return m_pTexture;
 }
