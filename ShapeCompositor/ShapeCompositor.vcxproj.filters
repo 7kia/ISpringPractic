@@ -117,9 +117,6 @@
     <ClInclude Include="Canvas\SelectedShape.h">
       <Filter>Файлы исходного кода\Canvas</Filter>
     </ClInclude>
-    <ClInclude Include="Canvas\Shapes\VertexGenerator.h">
-      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ShapeCompositor.cpp">
@@ -181,9 +178,6 @@
     </ClCompile>
     <ClCompile Include="Canvas\SelectedShape.cpp">
       <Filter>Файлы исходного кода\Canvas</Filter>
-    </ClCompile>
-    <ClCompile Include="Canvas\Shapes\VertexGenerator.cpp">
-      <Filter>Файлы исходного кода</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

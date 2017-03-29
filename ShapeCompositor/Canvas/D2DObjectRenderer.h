@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Canvas\ObjectRenderer.h"
-#include "Shapes\VertexGenerator.h"
 
 class CShapeCompositorView;
 class CCanvas;
@@ -50,7 +49,4 @@ private:
 
 	CComPtr<ID2D1SolidColorBrush>				m_pLightSlateGrayBrush;
 	CComPtr<ID2D1SolidColorBrush>				m_pCornflowerBlueBrush;
-
-
-	CVertexGenerator							m_vertexGenerator;
 };

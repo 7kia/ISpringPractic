@@ -74,7 +74,7 @@ void CD2DObjectRenderer::Draw(const IShape & shape)
 
 void CD2DObjectRenderer::Visit(const CRectangle & shape)
 {
-	auto vertices = m_vertexGenerator.GetVertices(shape);
+	auto vertices = shape.GetVertices();
 
 	Color fillColor = shape.GetFillColor();
 	m_pRenderTarget->CreateSolidColorBrush(
@@ -137,7 +137,7 @@ void CD2DObjectRenderer::Visit(const CEllipse & shape)
 
 void CD2DObjectRenderer::Visit(const CTriangle & shape)
 {
-	auto vertices = m_vertexGenerator.GetVertices(shape);
+	auto vertices = shape.GetVertices();
 
 	Color fillColor = shape.GetFillColor();
 	m_pRenderTarget->CreateSolidColorBrush(

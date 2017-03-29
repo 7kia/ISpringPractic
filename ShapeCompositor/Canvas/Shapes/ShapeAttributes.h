@@ -53,6 +53,8 @@ Vec2f const operator -(Vec2f const &first, Vec2f const &second);
 Vec2f const operator *(Vec2f const &first, Vec2f const &second);
 Vec2f const operator -(Vec2f const &first);
 
+using ListVertices = std::vector<Vec2f>;
+
 static const SSize DEFAULT_SIZE = SSize(50.f, 50.f);
 static const Color DEFAULT_OUTLINE_COLOR = Color(0.f, 0.f, 0.f);
 static const Color DEFAULT_FILL_COLOR = Color(0.45f, 0.75f, 0.55f);
@@ -68,18 +70,6 @@ public:
 	virtual bool IsPointIntersection(const Vec2f point) const {
 		return false;
 	};
-};
-
-struct SFrameData
-{
-	SFrameData(const Vec2f position = Vec2f(), const SSize size = DEFAULT_SIZE);
-
-	std::vector<Vec2f> GetFrameVertices() const;
-
-	bool operator==(SFrameData const& data) const;
-
-	Vec2f position;
-	SSize size;
 };
 
 struct SRectF
@@ -103,12 +93,6 @@ public:
 	// Size
 	virtual void SetSize(SSize size) = 0;
 	virtual SSize GetSize() const = 0;
-
-
-	// Get shape data
-	virtual SFrameData GetFrameData() const = 0;
-	virtual void SetFrameData(SFrameData const & data) = 0;
-
 };
 
 class CFrame
@@ -116,8 +100,8 @@ class CFrame
 {
 public:
 	CFrame(
-		const Vec2f & position
-		, const SSize & size
+		const Vec2f & position = Vec2f()
+		, const SSize & size = DEFAULT_SIZE
 	);
 	//////////////////////////////////////////////////////////////////////
 	// Methods
@@ -132,8 +116,12 @@ public:
 	SSize GetSize() const override;
 
 	// Get shape data
-	SFrameData GetFrameData() const override;
-	void SetFrameData(SFrameData const & data) override;
+	CFrame GetFrameData() const;
+	void SetFrameData(CFrame const & data);
+
+	std::vector<Vec2f> GetFrameVertices() const;
+
+	bool operator==(const CFrame & frame) const;
 	//////////////////////////////////////////////////////////////////////
 	// Data
 protected:
@@ -142,16 +130,4 @@ protected:
 };
 
 // Own rect
-static SRectF GetFrameRect(const IFrame & frame)
-{
-	SRectF rect;
-	const Vec2f position = frame.GetPosition();
-	const SSize size = frame.GetSize();
-
-	rect.left = position.x - size.width / 2.f;
-	rect.right = position.x + size.width / 2.f;
-	rect.bottom = position.y + size.height / 2.f;
-	rect.top = position.y - size.height / 2.f;
-
-	return rect;
-};
+SRectF GetFrameRect(const IFrame & frame);

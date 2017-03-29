@@ -82,17 +82,17 @@ public:
 	SRectF GetOwnRect() const;
 
 	// Get shape data
-	SFrameData GetFrameData() const override;// TODO : see need it
-	void SetFrameData(SFrameData const & data) override;
+	CFrame GetFrameData() const;// TODO : see need it
+	void SetFrameData(CFrame const & data);
 	//--------------------------------------------
 
 
 	// For drag and drop
 	Vec2f	GetFinalShift() const;
 	void	MoveFrame(const Vec2f shift);
-	SFrameData GetFinalFrameData() const;
-	SFrameData	GetOldFrameData();
-	SFrameData	GetCurrentFrameData();
+	CFrame GetFinalFrameData() const;
+	CFrame	GetOldFrameData();
+	CFrame	GetCurrentFrameData();
 	SSize GetDirectionResize() const;
 	void ReturnToOldState();
 
@@ -102,7 +102,7 @@ private:
 	void					SetResizeView();
 
 	bool					CheckSize(const SSize size) const;
-	SFrameData				GetNewFrameData(const Vec2f shift) const;
+	CFrame				GetNewFrameData(const Vec2f shift) const;
 	SSize					GetCorrectSize(const SSize size) const;
 	Vec2f					GetCorrectPosition(
 												const SSize newSize
@@ -119,8 +119,8 @@ private:
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
-	SFrameData						m_frameData;
-	SFrameData						m_oldData;
+	CFrame						m_frameData;
+	CFrame						m_oldData;
 	CShapePtr						m_selectedShape;
 
 	ArrayShapes						m_resizeShapes;

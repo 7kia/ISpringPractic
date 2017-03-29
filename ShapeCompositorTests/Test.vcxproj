@@ -168,7 +168,6 @@
     <ClInclude Include="..\ShapeCompositor\Canvas\Shapes\ShapeAttributes.h" />
     <ClInclude Include="..\ShapeCompositor\Canvas\Shapes\ShapeFactory.h" />
     <ClInclude Include="..\ShapeCompositor\Canvas\Shapes\Triangle.h" />
-    <ClInclude Include="..\ShapeCompositor\Canvas\Shapes\VertexGenerator.h" />
     <ClInclude Include="..\ShapeCompositor\Observer.h" />
     <ClInclude Include="..\ShapeCompositor\XMLReader\XMLReader.h" />
     <ClInclude Include="stdafx.h" />
@@ -188,7 +187,6 @@
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\ShapeAttributes.cpp" />
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\ShapeFactory.cpp" />
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\Triangle.cpp" />
-    <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\VertexGenerator.cpp" />
     <ClCompile Include="..\ShapeCompositor\XMLReader\XMLReader.cpp" />
     <ClCompile Include="CanvasTests.cpp" />
     <ClCompile Include="ShapeTests.cpp" />

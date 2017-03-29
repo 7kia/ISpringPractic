@@ -101,35 +101,36 @@ Vec2f const operator-(Vec2f const & first)
 	return Vec2f(-first.x, -first.y);
 }
 
-SFrameData::SFrameData(const Vec2f position, const SSize size)
-	: position(position)
-	, size(size)
+SRectF GetFrameRect(const IFrame & frame)
 {
+	SRectF rect;
+	const Vec2f position = frame.GetPosition();
+	const SSize size = frame.GetSize();
+
+	rect.left = position.x - size.width / 2.f;
+	rect.right = position.x + size.width / 2.f;
+	rect.bottom = position.y + size.height / 2.f;
+	rect.top = position.y - size.height / 2.f;
+
+	return rect;
 }
 
-std::vector<Vec2f> SFrameData::GetFrameVertices() const
-{
-	//////////////////////////////////////
-	// TODO : rewrite, delete SFrameData, 
-	SRectF frame;
 
-	frame.left = position.x - size.width / 2.f;
-	frame.right = position.x + size.width / 2.f;
-	frame.bottom = position.y + size.height / 2.f;
-	frame.top = position.y - size.height / 2.f;
-	//////////////////////////////////////
+std::vector<Vec2f> CFrame::GetFrameVertices() const
+{
+	const SRectF ownRect = ::GetFrameRect(*this);
 
 	return{
-		Vec2f(frame.left, frame.bottom)// Left bootom
-		, Vec2f(frame.right, frame.bottom)// Right bootom
-		, Vec2f(frame.right, frame.top)// Right top
-		, Vec2f(frame.left, frame.top)// Left top
+		Vec2f(ownRect.left, ownRect.bottom)// Left bootom
+		, Vec2f(ownRect.right, ownRect.bottom)// Right bootom
+		, Vec2f(ownRect.right, ownRect.top)// Right top
+		, Vec2f(ownRect.left, ownRect.top)// Left top
 	};
 }
 
-bool SFrameData::operator==(SFrameData const & data) const
+bool CFrame::operator==(const CFrame & frame) const
 {
-	return (size == data.size) && (position == data.position);
+	return (frame.GetSize() == GetSize()) && (frame.GetPosition() == GetPosition());
 }
 
 CFrame::CFrame(
@@ -167,17 +168,13 @@ SSize CFrame::GetSize() const
 	return m_size;
 }
 
-
-SFrameData CFrame::GetFrameData() const
+CFrame CFrame::GetFrameData() const
 {
-	SFrameData info;
-	info.position = m_position;
-	info.size = m_size;
-	return info;
+	return CFrame(m_position, m_size);
 }
 
-void CFrame::SetFrameData(SFrameData const & data)
+void CFrame::SetFrameData(CFrame const & data)
 {
-	m_position = data.position;
-	m_size = data.size;
+	m_position = data.GetPosition();
+	m_size = data.GetSize();
 }

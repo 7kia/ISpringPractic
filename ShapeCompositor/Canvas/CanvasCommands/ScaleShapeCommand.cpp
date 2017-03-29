@@ -4,8 +4,8 @@
 
 CScaleShapeCanvasCommand::CScaleShapeCanvasCommand(
 	CShapePtr pShape
-	, SFrameData oldData
-	, SFrameData newData
+	, CFrame oldData
+	, CFrame newData
 	, CSelectedShape & selectedShape
 )
 	: m_pShape(pShape)

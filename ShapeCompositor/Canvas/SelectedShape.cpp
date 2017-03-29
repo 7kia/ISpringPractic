@@ -25,7 +25,7 @@ CSelectedShape::CSelectedShape(const CShapeFactory & shapeFactory)
 void CSelectedShape::SetShape(CShapePtr shape)
 {
 	m_selectedShape = shape;
-	m_frameData = shape->GetShapeData();
+	m_frameData = shape->GetFrameData();
 	m_oldData = m_frameData;
 
 	SetViewPosition();
@@ -41,7 +41,7 @@ void CSelectedShape::ResetSelectShapePtr()
 	m_selectedShape = nullptr;
 	m_isUpdate = false;
 
-	m_oldData = SFrameData();
+	m_oldData = CFrame();
 }
 
 void CSelectedShape::ResetUpdateParameters()
@@ -172,7 +172,7 @@ void CSelectedShape::SetPosition(Vec2f position)
 		m_selectedShape->SetPosition(position);
 	}
 
-	m_frameData.position = position;
+	m_frameData.SetPosition(position);
 
 	SetViewPosition();
 }
@@ -198,7 +198,7 @@ void CSelectedShape::SetSize(SSize size)
 	{
 		m_selectedShape->SetSize(size);
 	}
-	m_frameData.size = size;
+	m_frameData.SetSize(size);
 
 	for (auto & shape : m_resizeShapes)
 	{
@@ -214,27 +214,22 @@ SSize CSelectedShape::GetSize() const
 
 SRectF CSelectedShape::GetOwnRect() const
 {
-	return GetFrameRect(*m_selectedShape);
+	return ::GetFrameRect(*m_selectedShape);
 }
 
-SFrameData CSelectedShape::GetFrameData() const
+CFrame CSelectedShape::GetFrameData() const
 {
-	SFrameData info;
-	info.position = m_frameData.position;
-	info.size = m_frameData.size;
-
-	return info;
+	return m_frameData;
 }
 
-void CSelectedShape::SetFrameData(SFrameData const & data)
+void CSelectedShape::SetFrameData(CFrame const & data)
 {
 	if (HaveSelectedShape())
 	{
 		m_selectedShape->SetFrameData(data);
 	}
 
-	m_frameData.position = data.position;
-	m_frameData.size = data.size;
+	m_frameData = data;
 	SetViewPosition();
 }
 
@@ -250,22 +245,22 @@ Vec2f CSelectedShape::GetFinalShift() const
 
 void CSelectedShape::MoveFrame(const Vec2f shift)
 {
-	m_frameData.position = m_frameData.position + shift;
+	m_frameData.SetPosition(m_frameData.GetPosition() + shift);
 	SetViewPosition();
 }
 
 
-SFrameData CSelectedShape::GetFinalFrameData() const
+CFrame CSelectedShape::GetFinalFrameData() const
 {
 	return GetNewFrameData(GetFinalShift());
 }
 
-SFrameData CSelectedShape::GetOldFrameData()
+CFrame CSelectedShape::GetOldFrameData()
 {
 	return m_oldData;
 }
 
-SFrameData CSelectedShape::GetCurrentFrameData()
+CFrame CSelectedShape::GetCurrentFrameData()
 {
 	return GetNewFrameData(m_current - m_start);
 }
@@ -331,17 +326,17 @@ bool CSelectedShape::CheckSize(const SSize size) const
 	return (size.width >= MIN_SHAPE_SIZE.width) && (size.height >= MIN_SHAPE_SIZE.height);
 }
 
-SFrameData CSelectedShape::GetNewFrameData(const Vec2f shift) const
+CFrame CSelectedShape::GetNewFrameData(const Vec2f shift) const
 {
-	SFrameData info;
+	CFrame info;
 
 
 	switch (m_updateType)
 	{
 	case UpdateType::Move:
 		{
-			info.position = m_frameData.position + shift;
-			info.size = m_frameData.size;
+			info.SetPosition(m_frameData.GetPosition() + shift);
+			info.SetSize(m_frameData.GetSize());
 		}
 		break;
 	case UpdateType::MarkerLeftTop:
@@ -351,12 +346,14 @@ SFrameData CSelectedShape::GetNewFrameData(const Vec2f shift) const
 		{
 			SSize directionResize = GetDirectionResize();
 
-			info.size = GetCorrectSize(m_frameData.size + (SSize(shift.x * directionResize.width, shift.y * directionResize.height)));
-			const SSize & newSize = info.size;
-			const Vec2f differentSizes = Vec2f(newSize.width - m_frameData.size.width, newSize.height - m_frameData.size.height);
+			const Vec2f framePosition = m_frameData.GetPosition();
+			const SSize frameSize = m_frameData.GetSize();
+			info.SetSize(GetCorrectSize(frameSize + SSize(shift.x * directionResize.width, shift.y * directionResize.height)));
+			const SSize newSize = info.GetSize();
+			const Vec2f differentSizes = Vec2f(newSize.width - frameSize.width, newSize.height - frameSize.height);
 			const Vec2f positionShift = Vec2f(differentSizes.x  * directionResize.width / 2.f
 												, differentSizes.y * directionResize.height / 2.f);
-			info.position = GetCorrectPosition(newSize, positionShift, m_frameData.position);
+			info.SetPosition(GetCorrectPosition(newSize, positionShift, framePosition));
 		}
 		break;
 	default:

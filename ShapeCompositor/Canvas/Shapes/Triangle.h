@@ -12,6 +12,7 @@ public:
 		, const Color fillColor = DEFAULT_FILL_COLOR
 		, const Color outlineColor = DEFAULT_OUTLINE_COLOR
 	);
+
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
@@ -24,6 +25,9 @@ public:
 	// IIsPointIntersection
 	bool IsPointIntersection(const Vec2f point) const override;
 	//--------------------------------------------
+
+
+	ListVertices GetVertices() const;
 
 private:
 

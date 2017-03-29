@@ -4,7 +4,6 @@
 #include "stdafx.h"
 #include "Canvas/Shapes/CShape.h"
 #include "Canvas/Shapes/ShapeFactory.h"
-#include "Canvas\Shapes\VertexGenerator.h"
 
 BOOST_AUTO_TEST_SUITE(CShape_suite)
 
@@ -82,7 +81,7 @@ BOOST_FIXTURE_TEST_SUITE(Shape, Shape_)
 		SSize size(1.2f, 99.f);
 		Vec2f pos(4.5f, -9.4f);
 
-		SFrameData setData(pos, size);
+		CFrame setData(pos, size);
 
 		shape.SetFrameData(setData);
 
@@ -111,7 +110,6 @@ BOOST_AUTO_TEST_SUITE(CRectangle_suite)
 struct Rectangle_
 {
 	CRectangle rectangle;
-	CVertexGenerator vertexGenerator;
 	Rectangle_()
 	{
 
@@ -125,12 +123,12 @@ BOOST_FIXTURE_TEST_SUITE(Rectangle, Rectangle_)
 		float height = 4.1f;
 		rectangle.SetSize(SSize(width, height));
 
-		auto verteces = vertexGenerator.GetVertices(rectangle);
+		auto verteces = rectangle.GetVertices();
 
-		BOOST_CHECK(verteces[0] == Vec2f(- width / 2.f, -height / 2.f));
-		BOOST_CHECK(verteces[1] == Vec2f(width / 2.f, -height / 2.f));
-		BOOST_CHECK(verteces[2] == Vec2f(width / 2.f, height / 2.f));
-		BOOST_CHECK(verteces[3] == Vec2f(-width / 2.f, height / 2.f));
+		BOOST_CHECK(verteces[0] == Vec2f(- width / 2.f, height / 2.f));
+		BOOST_CHECK(verteces[1] == Vec2f(width / 2.f, height / 2.f));
+		BOOST_CHECK(verteces[2] == Vec2f(width / 2.f, -height / 2.f));
+		BOOST_CHECK(verteces[3] == Vec2f(-width / 2.f, -height / 2.f));
 	}
 	BOOST_AUTO_TEST_CASE(Check_point_intersection)
 	{
@@ -161,7 +159,6 @@ struct Triangle_
 
 	CTriangle triangle;
 	CTriangle secondTriangle;
-	CVertexGenerator vertexGenerator;
 
 	Triangle_()
 		: first(-11.f, 29.f)
@@ -176,7 +173,7 @@ struct Triangle_
 BOOST_FIXTURE_TEST_SUITE(Triangle, Triangle_)
 	BOOST_AUTO_TEST_CASE(Have_points)
 	{
-		auto verteces = vertexGenerator.GetVertices(triangle);
+		auto verteces = triangle.GetVertices();
 
 		BOOST_CHECK(verteces[0] == first);
 		BOOST_CHECK(verteces[1] == second);

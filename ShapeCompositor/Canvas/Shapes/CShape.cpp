@@ -9,10 +9,20 @@ SShapeData::SShapeData(
 	, const Color outlineColor
 )
 	: type(type)
-	, SFrameData(position, size)
+	, position(position)
+	, size(size)
 	, fillColor(fillColor)
 	, outlineColor(outlineColor)
 {
+}
+
+bool SShapeData::operator==(const SShapeData & shapeData) const
+{
+	return (position == shapeData.position)
+		&& (size == shapeData.size)
+		&& (type == shapeData.type)
+		&& (fillColor == shapeData.fillColor)
+		&& (outlineColor == shapeData.outlineColor);
 }
 
 CShape::CShape(
@@ -76,3 +86,4 @@ void CShape::SetShapeData(SShapeData const & data)
 	m_fillColor = data.fillColor;
 	m_outlineColor = data.outlineColor;
 }
+

@@ -12,7 +12,7 @@ enum class ShapeType
 };
 
 // TODO  : see need it
-struct SShapeData : public SFrameData
+struct SShapeData
 {
 	SShapeData(
 		const ShapeType type = ShapeType::Rectangle
@@ -22,6 +22,10 @@ struct SShapeData : public SFrameData
 		, const Color outlineColor = DEFAULT_OUTLINE_COLOR
 	);
 
+	bool operator==(const SShapeData & shapeData) const;
+
+	Vec2f position;
+	SSize size;
 	ShapeType type;
 	Color fillColor;
 	Color outlineColor;
