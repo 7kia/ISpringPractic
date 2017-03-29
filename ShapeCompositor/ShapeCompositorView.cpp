@@ -239,12 +239,14 @@ int CShapeCompositorView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		
 		// TODO : rewrite Normal
 		m_imageFactory.SetRenderTarget(m_pRenderTarget);
-		m_textureStorage.push_back(m_imageFactory.CreateTexture("res/House.png"));
+		m_textureStorage.push_back(m_imageFactory.CreateTexture("res/Map.png"));
 
+		const SSize MAP_SIZE = SSize(3531.f, 2503.f);
+		const Vec2f MAP_POSITION = Vec2f(MAP_SIZE.width / 2.f, MAP_SIZE.height / 2.f);
 		m_pictureMap = CPicture(
 			m_textureStorage[0]
-			, Vec2f(340.f, 200.f)
-			, SSize(640.f, 480.f)
+			, MAP_POSITION
+			, MAP_SIZE
 			, BUILDING_FILL_COLOR
 			, BUILDING_OUTLINE_COLOR
 		);
