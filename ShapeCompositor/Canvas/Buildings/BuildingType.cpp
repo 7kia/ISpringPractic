@@ -15,15 +15,6 @@ std::string CBuildingType::GetName() const
 	return m_name;
 }
 
-void CBuildingType::SetTextureName(const std::string & textureName)
-{
-	m_textureName = textureName;
-}
-
-std::string CBuildingType::GetTextureName() const
-{
-	return m_textureName;
-}
 
 void CBuildingType::SetSize(const SSize & size)
 {
@@ -33,4 +24,14 @@ void CBuildingType::SetSize(const SSize & size)
 SSize CBuildingType::GetSize() const
 {
 	return m_size;
+}
+
+void CBuildingType::SetTexture(ID2D1Bitmap * pTexture)
+{
+	m_pTexture = pTexture;
+}
+
+ID2D1Bitmap * CBuildingType::GetTexture() const
+{
+	return m_pTexture;
 }

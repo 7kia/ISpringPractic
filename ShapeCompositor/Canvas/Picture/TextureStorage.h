@@ -3,20 +3,40 @@
 #include <memory>
 #include <commdlg.h>
 #include <d2d1.h>
+#include <atlbase.h>
 
-class CTexture
+
+namespace Texture
 {
-public:
-	CTexture() =default;
-	//////////////////////////////////////////////////////////////////////
-	// Methods
-public:
+	enum class Id
+	{
+		House = 0
+		, Map
+	};
 
-	//void			Set();
-	//void			Get();
-	//////////////////////////////////////////////////////////////////////
-	// Data
-private:
-	std::shared_ptr<CD2DBitmap> m_spBitmap;
+	using TextureStorage = std::vector<CComPtr<ID2D1Bitmap>>;
 
-};
+	
+	//class CStorageCell : public IClass
+	//{
+	//public:
+	//	CClass();
+	//	//////////////////////////////////////////////////////////////////////
+	//	// Methods
+	//public:
+	//	//--------------------------------------------
+	//	// NameInterface
+
+	//	/*
+	//	there place  something inheritance methods from NameInterface
+	//	*/
+
+	//	//--------------------------------------------
+
+	//	void			Set();
+	//	void			Get();
+	//	//////////////////////////////////////////////////////////////////////
+	//	// Data
+	//private:
+	//};
+}

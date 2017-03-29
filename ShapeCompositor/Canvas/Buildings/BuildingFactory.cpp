@@ -1,12 +1,11 @@
 #include "stdafx.h"
 #include "BuildingFactory.h"
 
-CShapePtr CBuildingFactory::CreateBuilding(const CBuildingType::Type type, const Vec2f position) const
+CShapePtr CBuildingFactory::CreateBuilding(CBuildingType* type, const Vec2f position) const
 {
-	switch (type)
+	if (type != nullptr)
 	{
-	case CBuildingType::Type::House:
-		{
+	
 		return std::make_shared<CBuilding>(
 				type
 				, position
@@ -14,10 +13,9 @@ CShapePtr CBuildingFactory::CreateBuilding(const CBuildingType::Type type, const
 				, BUILDING_FILL_COLOR
 				, BUILDING_OUTLINE_COLOR
 			);
-		}
-		break;
-	default:
+	}
+	else
+	{
 		throw std::runtime_error("The building type not exist");
-		break;
 	}
 }

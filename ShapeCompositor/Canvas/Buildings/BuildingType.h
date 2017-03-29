@@ -22,18 +22,18 @@ public:
 	void			SetName(const std::string & name);
 	std::string		GetName() const;
 
-	void			SetTextureName(const std::string & textureName);
-	std::string		GetTextureName() const;
 
 	void			SetSize(const SSize & size);
 	SSize			GetSize() const;
+
+	void			SetTexture(ID2D1Bitmap * pTexture);
+	ID2D1Bitmap *	GetTexture() const;
 
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
 	std::string m_name;
 	SSize		m_size;
-	std::string m_textureName;
+	ID2D1Bitmap * m_pTexture = nullptr;
 
-	// TODO : add data
 };

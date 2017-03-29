@@ -9,7 +9,7 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
-	CShapePtr CreateBuilding(const CBuildingType::Type type, const Vec2f position) const;
+	CShapePtr CreateBuilding(CBuildingType* type, const Vec2f position) const;
 
 	//////////////////////////////////////////////////////////////////////
 	// Data

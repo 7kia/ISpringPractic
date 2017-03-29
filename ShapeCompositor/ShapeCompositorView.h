@@ -22,6 +22,8 @@
 #include "Canvas\Buildings\BuildingCounter.h"
 #include "Canvas\Picture\Picture.h"
 #include "Canvas\Picture\D2DImageFactory.h"
+#include "Canvas\Picture\TextureStorage.h"
+
 #pragma comment(lib, "d2d1")
 
 static const FLOAT DEFAULT_DPI = 96.f;
@@ -67,6 +69,8 @@ private:
 	void					CreateCommandForSelectedShape();
 	void					ChangeSelectedShape(const Vec2f mousePos);
 
+	void					LoadTextures();
+	void					LoadTexture(const std::string & name);
 	void					CreateBuildingTypes();
 // Переопределение
 public:
@@ -87,7 +91,7 @@ protected:
 	std::array<CBuildingCounter, size_t(CBuildingType::Type::Amount)> m_buildingCounters;
 	CPicture m_pictureMap;
 
-	std::vector<CComPtr<ID2D1Bitmap>> m_textureStorage;
+	Texture::TextureStorage m_textureStorage;
 	//
 
 	ID2D1HwndRenderTarget * m_pRenderTarget = nullptr;

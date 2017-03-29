@@ -11,7 +11,7 @@ class CBuilding
 {
 public:
 	CBuilding(
-		const CBuildingType::Type type
+		CBuildingType* pType = nullptr
 		, const Vec2f position = Vec2f()
 		, const SSize size = DEFAULT_SIZE
 		, const Color fillColor = BUILDING_FILL_COLOR
@@ -26,10 +26,12 @@ public:
 	void Accept(IShapeVisitor & renderer) const override;
 	//--------------------------------------------
 
+	void SetBuildingType(CBuildingType* pType);
+	CBuildingType* GetBuildingType() const;
 private:
 
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
-	CBuildingType::Type m_type;
+	CBuildingType* m_pType = nullptr;
 };

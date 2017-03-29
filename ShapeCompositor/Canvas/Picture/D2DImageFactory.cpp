@@ -52,6 +52,7 @@ CComPtr<ID2D1Bitmap> CD2DImageFactory::CreateTexture(const std::string & name)
 	//Step 3: Format convert the frame to 32bppPBGRA
 	if (SUCCEEDED(hr))
 	{
+		m_pConvertedSourceBitmap.Release();
 		hr = m_pIWICFactory->CreateFormatConverter(&m_pConvertedSourceBitmap);
 	}
 

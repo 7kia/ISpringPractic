@@ -156,7 +156,11 @@ void CShapeCompositorView::CreateHouse()
 {
 	if (m_buildingCounters[size_t(CBuildingType::Type::House)].Increment())
 	{
-		m_canvas.PushBackShape(m_buildingFactory.CreateBuilding(CBuildingType::Type::House, Vec2f(250.f, 250.f)));
+		m_canvas.PushBackShape(
+			m_buildingFactory.CreateBuilding(
+				&m_buildingTypes[size_t(CBuildingType::Type::House)], Vec2f(250.f, 250.f)
+			)
+		);
 	}
 	RedrawWindow();
 }
@@ -239,12 +243,13 @@ int CShapeCompositorView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		
 		// TODO : rewrite Normal
 		m_imageFactory.SetRenderTarget(m_pRenderTarget);
-		m_textureStorage.push_back(m_imageFactory.CreateTexture("res/Map.png"));
+
+		LoadTextures();
 
 		const SSize MAP_SIZE = SSize(3531.f, 2503.f);
 		const Vec2f MAP_POSITION = Vec2f(MAP_SIZE.width / 2.f, MAP_SIZE.height / 2.f);
 		m_pictureMap = CPicture(
-			m_textureStorage[0]
+			m_textureStorage[size_t(Texture::Id::Map)]
 			, MAP_POSITION
 			, MAP_SIZE
 			, BUILDING_FILL_COLOR
@@ -603,11 +608,23 @@ void CShapeCompositorView::ChangeSelectedShape(const Vec2f mousePos)
 	}
 }
 
+void CShapeCompositorView::LoadTextures()
+{
+	LoadTexture("House.png");
+	LoadTexture("Map.png");
+
+}
+
+void CShapeCompositorView::LoadTexture(const std::string & name)
+{
+	m_textureStorage.push_back(m_imageFactory.CreateTexture("res/" + name));
+}
+
 void CShapeCompositorView::CreateBuildingTypes()
 {
 	m_buildingTypes[size_t(CBuildingType::Type::House)].SetName("House");
 	m_buildingTypes[size_t(CBuildingType::Type::House)].SetSize(SSize(50.f, 50.f));
-	m_buildingTypes[size_t(CBuildingType::Type::House)].SetTextureName("House.png");
+	m_buildingTypes[size_t(CBuildingType::Type::House)].SetTexture(m_textureStorage[size_t(Texture::Id::House)]);
 
 	m_buildingCounters[size_t(CBuildingType::Type::House)] = CBuildingCounter(CBuildingType::Type::House, 3);
 }

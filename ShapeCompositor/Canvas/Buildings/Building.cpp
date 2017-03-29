@@ -2,13 +2,13 @@
 #include "Building.h"
 
 CBuilding::CBuilding(
-	const CBuildingType::Type type
+	CBuildingType* pType
 	, const Vec2f position
 	, const SSize size
 	, const Color fillColor 
 	, const Color outlineColor
 )
-	: m_type(type)
+	: m_pType(pType)
 	, CRectangle(
 		position
 		, size
@@ -21,4 +21,14 @@ CBuilding::CBuilding(
 void CBuilding::Accept(IShapeVisitor & renderer) const
 {
 	renderer.Visit(*this);
+}
+
+void CBuilding::SetBuildingType(CBuildingType * pType)
+{
+	m_pType = pType;
+}
+
+CBuildingType * CBuilding::GetBuildingType() const
+{
+	return m_pType;
 }
