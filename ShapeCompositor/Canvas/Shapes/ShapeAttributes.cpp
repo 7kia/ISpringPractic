@@ -101,9 +101,9 @@ Vec2f const operator-(Vec2f const & first)
 	return Vec2f(-first.x, -first.y);
 }
 
-SRectF GetFrameRect(const IFrame & frame)
+D2D1_RECT_F GetFrameRect(const IFrame & frame)
 {
-	SRectF rect;
+	D2D1_RECT_F rect;
 	const Vec2f position = frame.GetPosition();
 	const SSize size = frame.GetSize();
 
@@ -118,7 +118,7 @@ SRectF GetFrameRect(const IFrame & frame)
 
 std::vector<Vec2f> CFrame::GetFrameVertices() const
 {
-	const SRectF ownRect = ::GetFrameRect(*this);
+	const D2D1_RECT_F ownRect = ::GetFrameRect(*this);
 
 	return{
 		Vec2f(ownRect.left, ownRect.bottom)// Left bootom

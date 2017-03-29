@@ -212,7 +212,7 @@ SSize CSelectedShape::GetSize() const
 }
 
 
-SRectF CSelectedShape::GetOwnRect() const
+D2D1_RECT_F CSelectedShape::GetOwnRect() const
 {
 	return ::GetFrameRect(*m_selectedShape);
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <d2d1.h>
+#include <D2d1.h>
 #include <functional>
 #include <vector>
 
@@ -72,14 +72,6 @@ public:
 	};
 };
 
-struct SRectF
-{
-	float left;
-	float top;
-	float right;
-	float bottom;
-};
-
 class IFrame
 {
 public:
@@ -130,4 +122,4 @@ protected:
 };
 
 // Own rect
-SRectF GetFrameRect(const IFrame & frame);
+D2D1_RECT_F GetFrameRect(const IFrame & frame);

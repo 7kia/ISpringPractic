@@ -79,7 +79,7 @@ public:
 	void SetSize(SSize size) override;
 	SSize GetSize() const override;
 
-	SRectF GetOwnRect() const;
+	D2D1_RECT_F GetOwnRect() const;
 
 	// Get shape data
 	CFrame GetFrameData() const;// TODO : see need it

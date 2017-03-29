@@ -175,29 +175,16 @@ void CD2DObjectRenderer::Visit(const CBuilding & shape)
 	const Vec2f position = shape.GetPosition();
 	auto shapeType = shape.GetBuildingType();
 
-	const auto frame = GetFrameRect(shape);
-	auto rectangle = D2D1::RectF(
-		frame.left
-		, frame.top
-		, frame.right
-		, frame.bottom
-	);
+	auto rectangle = GetFrameRect(shape);
 	m_pRenderTarget->DrawBitmap(shapeType->GetTexture(), rectangle);
-
 }
 
 void CD2DObjectRenderer::Visit(const CPicture & shape)
 {
-	auto vertices = shape.GetVertices();
-
 	const SSize size = shape.GetSize();
 	const Vec2f position = shape.GetPosition();
-	auto rectangle = D2D1::RectF(
-		position.x - size.width / 2.f
-		, position.y - size.height / 2.f
-		, size.width
-		, size.height
-	);
+
+	auto rectangle = GetFrameRect(shape);
 
 	m_pRenderTarget->DrawBitmap(shape.GetTexture(), rectangle);
 }
