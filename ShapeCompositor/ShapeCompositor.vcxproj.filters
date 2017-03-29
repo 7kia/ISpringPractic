@@ -28,6 +28,9 @@
     <Filter Include="Файлы исходного кода\Canvas\Buildings">
       <UniqueIdentifier>{582b84e8-714f-47ba-b3c5-b2a462b0947c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы исходного кода\Canvas\Picture">
+      <UniqueIdentifier>{278e3f10-3c4d-4175-8b1a-d9a70015119a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ShapeCompositor.h">
@@ -132,6 +135,9 @@
     <ClInclude Include="Canvas\Buildings\Building.h">
       <Filter>Файлы исходного кода\Canvas\Buildings</Filter>
     </ClInclude>
+    <ClInclude Include="Canvas\Picture\Picture.h">
+      <Filter>Файлы исходного кода\Canvas\Picture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ShapeCompositor.cpp">
@@ -205,6 +211,9 @@
     </ClCompile>
     <ClCompile Include="Canvas\Buildings\Building.cpp">
       <Filter>Файлы исходного кода\Canvas\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas\Picture\Picture.cpp">
+      <Filter>Файлы исходного кода</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -58,6 +58,13 @@ END_MESSAGE_MAP()
 CShapeCompositorView::CShapeCompositorView()
 	: m_shapeFactory()// TODO : see can rewrite
 	, m_selectedShape(m_shapeFactory)
+	, m_pictureMap(
+		"House.png"
+		, Vec2f(340.f, 200.f)
+		, SSize(640.f, 480.f)
+		, BUILDING_FILL_COLOR
+		, BUILDING_OUTLINE_COLOR
+	)
 {
 }
 
@@ -78,6 +85,8 @@ HRESULT CShapeCompositorView::Draw()
 	m_pRenderTarget->BeginDraw();
 	m_pRenderTarget->SetTransform(matrix);
 	m_pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
+
+	m_objectRenderer.Draw(m_pictureMap);
 
 	for (const auto & shape : m_canvas.GetShapes())
 	{
@@ -152,7 +161,10 @@ void CShapeCompositorView::CreateEllipse()
 
 void CShapeCompositorView::CreateHouse()
 {
-	m_canvas.PushBackShape(m_buildingFactory.CreateBuilding(CBuildingType::Type::House, Vec2f(250.f, 250.f)));
+	if (m_buildingCounters[size_t(CBuildingType::Type::House)].Increment())
+	{
+		m_canvas.PushBackShape(m_buildingFactory.CreateBuilding(CBuildingType::Type::House, Vec2f(250.f, 250.f)));
+	}
 	RedrawWindow();
 }
 
@@ -342,13 +354,25 @@ BOOL CShapeCompositorView::PreTranslateMessage(MSG* pMsg)
 				{
 					if (m_selectedShape.HaveSelectedShape())
 					{
+						// TODO : fix
+						if (m_buildingCounters[size_t(CBuildingType::Type::House)].Decrement())
+						{
+							const size_t index = m_canvas.GetShapeIndex(m_selectedShape.GetShape());
+							if (m_canvas.IsSelectShape(index, m_selectedShape.GetShape()))
+							{
+								m_selectedShape.ResetSelectShapePtr();
+							}
+							m_canvas.DeleteShape(index);
+						}
+
+						/*
 						m_canvas.AddAndExecuteCommand(
 							std::make_shared<CDeleteShapeCanvasCommand>(
 								m_canvas
 								, m_selectedShape
 								, m_shapeFactory
 								)
-						);
+						);*/
 						RedrawWindow();
 					}			
 				}

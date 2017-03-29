@@ -17,6 +17,7 @@ bool CBuildingCounter::Increment()
 	}
 
 	++m_count;
+	return true;
 }
 
 bool CBuildingCounter::Decrement()
@@ -27,6 +28,7 @@ bool CBuildingCounter::Decrement()
 	}
 	
 	--m_count;
+	return true;
 }
 
 

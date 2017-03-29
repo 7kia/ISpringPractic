@@ -2,6 +2,7 @@
 
 #include "Canvas\ObjectRenderer.h"
 #include "Canvas\Buildings\Building.h"
+#include "Canvas\Picture\Picture.h"
 
 class CShapeCompositorView;
 class CCanvas;
@@ -33,6 +34,7 @@ private:
 	void Visit(const CEllipse & shape) override;
 	void Visit(const CTriangle & shape) override;
 	void Visit(const CBuilding & shape) override;
+	void Visit(const CPicture & shape) override;
 
 	//--------------------------------------------
 
