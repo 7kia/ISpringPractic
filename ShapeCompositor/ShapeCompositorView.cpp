@@ -225,6 +225,7 @@ int CShapeCompositorView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		// Create a Direct2D factory.
 		ATLENSURE_SUCCEEDED(m_objectRenderer.CreateRecources(this));// TODO : delete dependment to this
 
+		CreateBuildingTypes();
 	}
 	catch (...)
 	{
@@ -562,4 +563,13 @@ void CShapeCompositorView::ChangeSelectedShape(const Vec2f mousePos)
 	{
 		m_selectedShape.ResetSelectShapePtr();
 	}
+}
+
+void CShapeCompositorView::CreateBuildingTypes()
+{
+	m_buildingTypes[size_t(CBuildingType::Type::House)].SetName("House");
+	m_buildingTypes[size_t(CBuildingType::Type::House)].SetSize(SSize(50.f, 50.f));
+	m_buildingTypes[size_t(CBuildingType::Type::House)].SetTextureName("House.png");
+
+
 }

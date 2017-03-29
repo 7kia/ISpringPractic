@@ -18,6 +18,7 @@
 #include "Canvas\Canvas.h"
 #include "Canvas\History.h"
 #include "Canvas\D2DObjectRenderer.h"
+#include "Canvas\Buildings\BuildingType.h"
 #pragma comment(lib, "d2d1")
 
 static const FLOAT DEFAULT_DPI = 96.f;
@@ -60,6 +61,8 @@ public:
 private:
 	void					CreateCommandForSelectedShape();
 	void					ChangeSelectedShape(const Vec2f mousePos);
+
+	void					CreateBuildingTypes();
 // Переопределение
 public:
 	virtual void OnDraw(CDC* pDC);  // переопределено для отрисовки этого представления
@@ -72,6 +75,8 @@ protected:
 	// Fromn canvas TODO
 	CSelectedShape m_selectedShape;
 	CShapeFactory m_shapeFactory;
+
+	std::array<CBuildingType, size_t(CBuildingType::Type::Amount)> m_buildingTypes;
 
 	ID2D1HwndRenderTarget * m_pRenderTarget = nullptr;
 	CD2DObjectRenderer		m_objectRenderer;// TODO : transfer to CShapeCompositiorView, fix Draw
