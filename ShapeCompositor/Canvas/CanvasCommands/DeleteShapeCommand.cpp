@@ -3,15 +3,15 @@
 #include "../Canvas.h"
 
 CDeleteShapeCanvasCommand::CDeleteShapeCanvasCommand(
-	CCanvas & canvas
+	IAddAndDeleteShape * canvas
 	, CSelectedShape & selectedShape
 	, const CShapeFactory & factory
 )
-	: m_pCanvas(&canvas)
+	: m_pCanvas(canvas)
 	, m_pSelectShape(&selectedShape)
 	, m_pFactory(&factory)
 	, m_data(selectedShape.GetShape()->GetShapeData())
-	, m_index(canvas.GetShapeIndex(selectedShape.GetShape()))
+	, m_index(canvas->GetShapeIndex(selectedShape.GetShape()))
 {
 }
 

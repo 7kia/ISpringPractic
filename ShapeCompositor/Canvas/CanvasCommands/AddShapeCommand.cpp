@@ -3,7 +3,7 @@
 #include "../Canvas.h"
 
 CAddShapeCanvasCommand::CAddShapeCanvasCommand(
-	CCanvas * pCanvas
+	IAddAndDeleteShape * pCanvas
 	, ShapeType type
 	, const CShapeFactory & factory
 	, CSelectedShape & seletedShape

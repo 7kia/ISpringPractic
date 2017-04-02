@@ -4,13 +4,13 @@
 #include "../Canvas.h"
 
 CChangeShapeRectCanvasCommand::CChangeShapeRectCanvasCommand(
-	CCanvas * pCanvas
+	IGetShape * pShapeStorage
 	, const CFrame & oldData
 	, const CFrame & newData
 	, CSelectedShape & selectedShape
 )
-	: m_pCanvas(pCanvas)
-	, m_index(pCanvas->GetShapeIndex(selectedShape.GetShape()))
+	: m_pCanvas(pShapeStorage)
+	, m_index(pShapeStorage->GetShapeIndex(selectedShape.GetShape()))
 	, m_oldFrame(oldData)
 	, m_newData(newData)
 	, m_pSelectedShape(&selectedShape)

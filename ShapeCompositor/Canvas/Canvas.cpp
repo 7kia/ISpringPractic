@@ -7,12 +7,12 @@ CCanvas::CCanvas(const SSize & size)
 }
 
 
-void CCanvas::PushBackShape(CShapePtr & shape)
+void CCanvas::PushBackShape(const CShapePtr & shape)
 {
 	m_shapes.push_back(shape);
 }
 
-void CCanvas::InsertShape(size_t insertIndex, CShapePtr & shape)
+void CCanvas::InsertShape(size_t insertIndex, const CShapePtr & shape)
 {
 	CheckShapeIndex(insertIndex, m_shapes.size());
 
@@ -52,7 +52,7 @@ std::vector<CShapePtr> CCanvas::GetShapes() const
 	return m_shapes;
 }
 
-void CCanvas::SetShapes(const std::vector<CShapePtr>& shapes)
+void CCanvas::SetShapes(const std::vector<CShapePtr> & shapes)
 {
 	m_shapes = shapes;
 }
@@ -67,9 +67,9 @@ void CCanvas::DeleteShape(size_t index)
 	m_shapes.erase(m_shapes.begin() + index);
 }
 
-void CCanvas::DeleteShape(CShapePtr pShape)
+void CCanvas::DeleteShape(const CShapePtr & pShape)
 {
-	size_t index = GetIShapeIndex(pShape);
+	size_t index = GetShapeIndex(pShape);
 	if (index != size_t(-1))
 	{
 		DeleteShape(index);
@@ -111,25 +111,7 @@ CShapePtr CCanvas::GetShape(const Vec2f mousePosition)
 	return foundShape;
 }
 
-size_t CCanvas::GetShapeIndex(const CShapePtr pShape) const
-{
-	const auto iter = std::find_if(
-		m_shapes.begin()
-		, m_shapes.end()
-		, [&](CShapePtr pElement)
-		{
-			if (pShape == pElement)
-			{
-				return true;
-			}
-			return false;
-		}
-	);
-
-	return iter - m_shapes.begin();
-}
-
-bool CCanvas::IsSelectShape(size_t index, const CShapePtr selectedShape) const
+bool CCanvas::IsSelectShape(size_t index, const CShapePtr & selectedShape) const
 {
 	return selectedShape == m_shapes[index];
 }
@@ -166,7 +148,7 @@ void CCanvas::CheckShapeIndex(size_t index, size_t max) const
 	}
 }
 
-size_t CCanvas::GetIShapeIndex(CShapePtr pShape) const
+size_t CCanvas::GetShapeIndex(const CShapePtr &  pShape) const
 {
 	return  std::find(m_shapes.begin(), m_shapes.end(), pShape) - m_shapes.begin();
 }

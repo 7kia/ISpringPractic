@@ -4,12 +4,12 @@
 #include "Canvas\Shapes\AllShapes.h"
 
 class CSelectedShape;
-class CCanvas;
+class IGetShape;
 class CChangeShapeRectCanvasCommand : public IMyCommand
 {
 public:
 	CChangeShapeRectCanvasCommand(
-		CCanvas * pCanvas
+		IGetShape * pShapeStorage
 		, const CFrame & oldData
 		, const CFrame & newData
 		, CSelectedShape & selectedShape
@@ -26,7 +26,7 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
-	CCanvas *	m_pCanvas = nullptr;
+	IGetShape *	m_pCanvas = nullptr;
 	size_t		m_index;
 	CSelectedShape * m_pSelectedShape = nullptr;
 	CFrame		m_oldFrame;

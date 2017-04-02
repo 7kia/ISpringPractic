@@ -347,7 +347,7 @@ BOOL CShapeCompositorView::PreTranslateMessage(MSG* pMsg)
 					{
 						m_canvas.AddAndExecuteCommand(
 							std::make_shared<CDeleteShapeCanvasCommand>(
-								m_canvas
+								&m_canvas
 								, m_selectedShape
 								, m_shapeFactory
 								)
@@ -538,7 +538,7 @@ void CShapeCompositorView::CreateCommandForSelectedShape()
 
 		m_canvas.AddAndExecuteCommand(std::make_shared<CChangeShapeRectCanvasCommand>(
 			&m_canvas,
-			m_selectedShape.GetOldFrameData(),// TODO : see can delete other arguments
+			m_selectedShape.GetOldFrameData(),
 			finalFrame,
 			m_selectedShape
 			));
