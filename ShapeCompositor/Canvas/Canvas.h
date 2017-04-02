@@ -23,7 +23,7 @@ class CCanvasController;
 class CCanvas
 {
 public:
-	CCanvas();
+	CCanvas(const SSize & size = SSize());
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
@@ -55,7 +55,7 @@ public:
 
 	size_t					GetAmountShapes() const;
 	// Size
-	void					SetSize(const SSize size);
+	void					SetSize(const SSize & size);
 	SSize					GetSize() const;
 
 	// For save to document

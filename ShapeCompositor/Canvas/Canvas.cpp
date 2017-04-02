@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "Canvas.h"
 
-CCanvas::CCanvas()
-	: m_size(640.f, 480.f)
+CCanvas::CCanvas(const SSize & size)
+	: m_size(size)
 {
 }
 
@@ -27,7 +27,7 @@ size_t CCanvas::GetAmountShapes() const
 	return m_shapes.size();
 }
 
-void CCanvas::SetSize(const SSize size)
+void CCanvas::SetSize(const SSize & size)
 {
 	m_size = size;
 }

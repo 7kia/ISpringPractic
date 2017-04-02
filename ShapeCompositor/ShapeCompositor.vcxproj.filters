@@ -102,12 +102,6 @@
     <ClInclude Include="ShapeVisitor.h">
       <Filter>Файлы исходного кода</Filter>
     </ClInclude>
-    <ClInclude Include="Canvas\CanvasCommands\MoveShapeCommand.h">
-      <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
-    </ClInclude>
-    <ClInclude Include="Canvas\CanvasCommands\ScaleShapeCommand.h">
-      <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
-    </ClInclude>
     <ClInclude Include="Canvas\ObjectRenderer.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
@@ -128,6 +122,9 @@
     </ClInclude>
     <ClInclude Include="Canvas\Picture\D2DImageFactory.h">
       <Filter>Файлы исходного кода\Canvas\Picture</Filter>
+    </ClInclude>
+    <ClInclude Include="Canvas\CanvasCommands\ChangeShapeRectCommand.h">
+      <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -176,12 +173,6 @@
     <ClCompile Include="Canvas\History.cpp">
       <Filter>Файлы исходного кода\Canvas</Filter>
     </ClCompile>
-    <ClCompile Include="Canvas\CanvasCommands\MoveShapeCommand.cpp">
-      <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
-    </ClCompile>
-    <ClCompile Include="Canvas\CanvasCommands\ScaleShapeCommand.cpp">
-      <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
-    </ClCompile>
     <ClCompile Include="Canvas\D2DObjectRenderer.cpp">
       <Filter>Файлы исходного кода\Canvas</Filter>
     </ClCompile>
@@ -196,6 +187,9 @@
     </ClCompile>
     <ClCompile Include="Canvas\Picture\D2DImageFactory.cpp">
       <Filter>Файлы исходного кода\Canvas\Picture</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas\CanvasCommands\ChangeShapeRectCommand.cpp">
+      <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

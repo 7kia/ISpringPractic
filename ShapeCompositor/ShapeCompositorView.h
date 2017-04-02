@@ -53,7 +53,7 @@ public:
 	void					Undo();
 	void					Redo();
 
-	void					ChangeCursor(const CPoint mousePos);
+	void					ChangeCursor(const CPoint & mousePos);
 
 	// For document
 	void					ClearHistory();
@@ -64,7 +64,7 @@ public:
 
 private:
 	void					CreateCommandForSelectedShape();
-	void					ChangeSelectedShape(const Vec2f mousePos);
+	void					ChangeSelectedShape(const Vec2f & mousePos);
 
 	void					LoadTexture(const std::string & name);
 

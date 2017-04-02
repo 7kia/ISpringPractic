@@ -1,8 +1,8 @@
 #include "stdafx.h"
-#include "ScaleShapeCommand.h"
+#include "ChangeShapeRectCommand.h"
 #include "../SelectedShape.h"
 
-CScaleShapeCanvasCommand::CScaleShapeCanvasCommand(
+CChangeShapeRectCanvasCommand::CChangeShapeRectCanvasCommand(
 	CShapePtr pShape
 	, const CFrame & oldData
 	, const CFrame & newData
@@ -15,7 +15,7 @@ CScaleShapeCanvasCommand::CScaleShapeCanvasCommand(
 {
 }
 
-void CScaleShapeCanvasCommand::Execute()
+void CChangeShapeRectCanvasCommand::Execute()
 {
 	m_pShape->SetFrameData(m_newData);
 
@@ -26,7 +26,7 @@ void CScaleShapeCanvasCommand::Execute()
 	}
 }
 
-void CScaleShapeCanvasCommand::Cancel()
+void CChangeShapeRectCanvasCommand::Cancel()
 {
 	m_pShape->SetFrameData(m_oldFrame);
 

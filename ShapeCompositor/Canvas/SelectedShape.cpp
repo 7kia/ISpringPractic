@@ -152,11 +152,12 @@ void CSelectedShape::HandleMoveMouse(const Vec2f point)
 				m_startMove = point;
 				m_start = point;
 			}
+
 			m_current = point;
 
 			SetFrameData(GetCurrentFrameData());
 			m_start = m_current;
-
+			
 		}
 		break;
 	default:
@@ -214,7 +215,7 @@ SSize CSelectedShape::GetSize() const
 
 D2D1_RECT_F CSelectedShape::GetOwnRect() const
 {
-	return ::GetFrameRect(*m_selectedShape);
+	return GetFrameRect(*m_selectedShape);
 }
 
 CFrame CSelectedShape::GetFrameData() const
@@ -299,6 +300,16 @@ void CSelectedShape::SetOldFrameData(CFrame const & data)
 	m_oldFrame = data;
 }
 
+bool CSelectedShape::CheckBoundingRect(const D2D1_RECT_F & rect) const
+{
+	bool leftCorrect = IsBetween(rect.left, m_boundingRect.left, m_boundingRect.right);
+	bool rightCorrect = IsBetween(rect.right, m_boundingRect.left, m_boundingRect.right);
+	bool topCorrect = IsBetween(rect.top, m_boundingRect.top, m_boundingRect.bottom);
+	bool bottomCorrect = IsBetween(rect.bottom, m_boundingRect.top, m_boundingRect.bottom);
+
+	return leftCorrect && rightCorrect && topCorrect && bottomCorrect;
+}
+
 void CSelectedShape::SetViewPosition()
 {
 	SetMoveView();
@@ -364,9 +375,12 @@ CFrame CSelectedShape::GetNewFrameData(const Vec2f shift) const
 	default:
 		break;
 	}
-	
+	if (CheckBoundingRect(GetFrameRect(info)))
+	{
+		return info;
+	}
 
-	return info;
+	return m_frameFrame;
 }
 
 SSize CSelectedShape::GetCorrectSize(const SSize size) const
@@ -430,5 +444,10 @@ Vec2f CSelectedShape::GetCorrectPositionShift(
 CSelectedShape::ArrayShapes CSelectedShape::GetShapes() const
 {
 	return m_resizeShapes;
+}
+
+void CSelectedShape::SetBoundingRect(const D2D1_RECT_F & rect)
+{
+	m_boundingRect = rect;
 }
 

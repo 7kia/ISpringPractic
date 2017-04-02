@@ -4,10 +4,10 @@
 #include "Canvas\Shapes\AllShapes.h"
 
 class CSelectedShape;
-class CScaleShapeCanvasCommand : public IMyCommand
+class CChangeShapeRectCanvasCommand : public IMyCommand
 {
 public:
-	CScaleShapeCanvasCommand(
+	CChangeShapeRectCanvasCommand(
 		CShapePtr pShape
 		, const CFrame & oldData
 		, const CFrame & newData

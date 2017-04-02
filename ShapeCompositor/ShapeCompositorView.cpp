@@ -57,7 +57,16 @@ END_MESSAGE_MAP()
 CShapeCompositorView::CShapeCompositorView()
 	: m_shapeFactory()// TODO : see can rewrite
 	, m_selectedShape(m_shapeFactory)
+	, m_canvas(SSize(640.f, 480.f))
 {
+	const SSize canvasSize = m_canvas.GetSize();
+	D2D1_RECT_F rect;
+	rect.left = 0.f;
+	rect.right = canvasSize.width;
+	rect.top = 0.f;
+	rect.bottom = canvasSize.height;
+
+	m_selectedShape.SetBoundingRect(rect);
 }
 
 CShapeCompositorView::~CShapeCompositorView()
@@ -443,7 +452,7 @@ BOOL CShapeCompositorView::OnEraseBkgnd(CDC* pDC)
 	return TRUE;//CScrollView::OnEraseBkgnd(pDC);
 }
 
-void CShapeCompositorView::ChangeCursor(const CPoint mousePos)
+void CShapeCompositorView::ChangeCursor(const CPoint & mousePos)
 {
 	const Vec2f position = Vec2f(float(mousePos.x), float(mousePos.y));
 	//const auto pSelectShape = m_canvas.GetSelectShape();
@@ -525,7 +534,7 @@ void CShapeCompositorView::CreateCommandForSelectedShape()
 	case CSelectedShape::UpdateType::MarkerRightTop:
 	{
 		m_selectedShape.ReturnToOldState();
-		m_canvas.AddAndExecuteCommand(std::make_shared<CScaleShapeCanvasCommand>(
+		m_canvas.AddAndExecuteCommand(std::make_shared<CChangeShapeRectCanvasCommand>(
 			m_selectedShape.GetShape(),
 			m_selectedShape.GetOldFrameData(),// TODO : see can delete other arguments
 			m_selectedShape.GetFinalFrameData(),
@@ -541,7 +550,7 @@ void CShapeCompositorView::CreateCommandForSelectedShape()
 
 }
 
-void CShapeCompositorView::ChangeSelectedShape(const Vec2f mousePos)
+void CShapeCompositorView::ChangeSelectedShape(const Vec2f & mousePos)
 {
 	auto selectShape = m_canvas.GetShape(mousePos);
 

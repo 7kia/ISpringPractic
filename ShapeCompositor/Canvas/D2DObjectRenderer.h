@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Canvas\ObjectRenderer.h"
-#include "Canvas\Buildings\Building.h"
 #include "Canvas\Picture\Picture.h"
 
 class CShapeCompositorView;

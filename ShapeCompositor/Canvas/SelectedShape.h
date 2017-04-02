@@ -67,7 +67,7 @@ public:
 	// For draw
 	ArrayShapes				GetShapes() const;
 
-
+	void					SetBoundingRect(const D2D1_RECT_F & rect);
 	//--------------------------------------------
 	// IFrame
 
@@ -90,12 +90,13 @@ public:
 	// For drag and drop
 	Vec2f	GetFinalShift() const;
 	void	MoveFrame(const Vec2f shift);
-	CFrame GetFinalFrameData() const;
+	CFrame	GetFinalFrameData() const;
 	CFrame	GetOldFrameData();
 	CFrame	GetCurrentFrameData();
-	SSize GetDirectionResize() const;
-	void ReturnToOldState();
-	void SetOldFrameData(CFrame const & data);
+	SSize	GetDirectionResize() const;
+	void	ReturnToOldState();
+	void	SetOldFrameData(CFrame const & data);
+	bool	CheckBoundingRect(const D2D1_RECT_F & rect) const;
 
 private:
 	void					SetViewPosition();
@@ -103,7 +104,7 @@ private:
 	void					SetResizeView();
 
 	bool					CheckSize(const SSize size) const;
-	CFrame				GetNewFrameData(const Vec2f shift) const;
+	CFrame					GetNewFrameData(const Vec2f shift) const;
 	SSize					GetCorrectSize(const SSize size) const;
 	Vec2f					GetCorrectPosition(
 												const SSize newSize
@@ -125,7 +126,7 @@ private:
 	CShapePtr						m_selectedShape;
 
 	ArrayShapes						m_resizeShapes;
-
+	D2D1_RECT_F						m_boundingRect;
 	// For drag and drop
 	boost::optional<Vec2f>				m_startMove;
 	Vec2f								m_start;
