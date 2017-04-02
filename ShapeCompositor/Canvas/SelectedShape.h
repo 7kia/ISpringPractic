@@ -39,7 +39,7 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
-	void					SetShape(CShapePtr shape);
+	void					SetShape(const CShapePtr & shape);
 	CShapePtr				GetShape() const;
 	void					ResetSelectShapePtr();
 	void					ResetUpdateParameters();

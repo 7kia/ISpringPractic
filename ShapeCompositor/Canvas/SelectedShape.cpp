@@ -22,7 +22,7 @@ CSelectedShape::CSelectedShape(const CShapeFactory & shapeFactory)
 	m_resizeShapes[size_t(ShapeIndex::Frame)] = shapeFactory.CreateShape(rectangleData);
 }
 
-void CSelectedShape::SetShape(CShapePtr shape)
+void CSelectedShape::SetShape(const CShapePtr & shape)
 {
 	m_selectedShape = shape;
 	m_currentFrame = shape->GetFrameData();
