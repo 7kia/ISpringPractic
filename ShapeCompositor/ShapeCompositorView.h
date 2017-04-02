@@ -72,6 +72,7 @@ private:
 	void					LoadTextures();
 	void					LoadTexture(const std::string & name);
 	void					CreateBuildingTypes();
+	void					CreateMap();
 // Переопределение
 public:
 	virtual void OnDraw(CDC* pDC);  // переопределено для отрисовки этого представления

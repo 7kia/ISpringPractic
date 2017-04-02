@@ -245,18 +245,8 @@ int CShapeCompositorView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		m_imageFactory.SetRenderTarget(m_pRenderTarget);
 
 		LoadTextures();
-
-		const SSize MAP_SIZE = SSize(3531.f, 2503.f);
-		const Vec2f MAP_POSITION = Vec2f(MAP_SIZE.width / 2.f, MAP_SIZE.height / 2.f);
-		m_pictureMap = CPicture(
-			m_textureStorage[size_t(Texture::Id::Map)]
-			, MAP_POSITION
-			, MAP_SIZE
-			, BUILDING_FILL_COLOR
-			, BUILDING_OUTLINE_COLOR
-		);
-
 		CreateBuildingTypes();
+		CreateMap();
 	}
 	catch (...)
 	{
@@ -627,4 +617,18 @@ void CShapeCompositorView::CreateBuildingTypes()
 	m_buildingTypes[size_t(CBuildingType::Type::House)].SetTexture(m_textureStorage[size_t(Texture::Id::House)]);
 
 	m_buildingCounters[size_t(CBuildingType::Type::House)] = CBuildingCounter(CBuildingType::Type::House, 3);
+}
+
+void CShapeCompositorView::CreateMap()
+{
+	const SSize MAP_SIZE = SSize(3531.f, 2503.f);
+	const Vec2f MAP_POSITION = Vec2f(MAP_SIZE.width / 2.f, MAP_SIZE.height / 2.f);
+	m_pictureMap = CPicture(
+		m_textureStorage[size_t(Texture::Id::Map)]
+		, MAP_POSITION
+		, MAP_SIZE
+		, BUILDING_FILL_COLOR
+		, BUILDING_OUTLINE_COLOR
+	);
+
 }
