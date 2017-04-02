@@ -45,9 +45,9 @@ bool PointIsInsideTriangle(Vec2f p0, Vec2f p1, Vec2f p2, Vec2f p)
 
 bool CTriangle::IsPointIntersection(const Vec2f point) const
 {
-	auto verteces = GetVertices();
+	auto vertices = GetVertices();
 
-	return PointIsInsideTriangle(verteces[2], verteces[1], verteces[0], point);
+	return PointIsInsideTriangle(vertices[2], vertices[1], vertices[0], point);
 }
 
 ListVertices CTriangle::GetVertices() const

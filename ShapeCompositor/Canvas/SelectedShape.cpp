@@ -25,8 +25,8 @@ CSelectedShape::CSelectedShape(const CShapeFactory & shapeFactory)
 void CSelectedShape::SetShape(CShapePtr shape)
 {
 	m_selectedShape = shape;
-	m_frameData = shape->GetFrameData();
-	m_oldData = m_frameData;
+	m_frameFrame = shape->GetFrameData();
+	m_oldFrame = m_frameFrame;
 
 	SetViewPosition();
 }
@@ -41,7 +41,7 @@ void CSelectedShape::ResetSelectShapePtr()
 	m_selectedShape = nullptr;
 	m_isUpdate = false;
 
-	m_oldData = CFrame();
+	m_oldFrame = CFrame();
 }
 
 void CSelectedShape::ResetUpdateParameters()
@@ -52,7 +52,7 @@ void CSelectedShape::ResetUpdateParameters()
 	m_isUpdate = false;
 	m_updateType = UpdateType::None;
 
-	m_oldData = m_frameData;
+	m_oldFrame = m_frameFrame;
 }
 
 void CSelectedShape::SetUpdateState(bool state)
@@ -172,7 +172,7 @@ void CSelectedShape::SetPosition(Vec2f position)
 		m_selectedShape->SetPosition(position);
 	}
 
-	m_frameData.SetPosition(position);
+	m_frameFrame.SetPosition(position);
 
 	SetViewPosition();
 }
@@ -198,7 +198,7 @@ void CSelectedShape::SetSize(SSize size)
 	{
 		m_selectedShape->SetSize(size);
 	}
-	m_frameData.SetSize(size);
+	m_frameFrame.SetSize(size);
 
 	for (auto & shape : m_resizeShapes)
 	{
@@ -219,7 +219,7 @@ D2D1_RECT_F CSelectedShape::GetOwnRect() const
 
 CFrame CSelectedShape::GetFrameData() const
 {
-	return m_frameData;
+	return m_frameFrame;
 }
 
 void CSelectedShape::SetFrameData(CFrame const & data)
@@ -229,7 +229,7 @@ void CSelectedShape::SetFrameData(CFrame const & data)
 		m_selectedShape->SetFrameData(data);
 	}
 
-	m_frameData = data;
+	m_frameFrame = data;
 	SetViewPosition();
 }
 
@@ -245,7 +245,7 @@ Vec2f CSelectedShape::GetFinalShift() const
 
 void CSelectedShape::MoveFrame(const Vec2f shift)
 {
-	m_frameData.SetPosition(m_frameData.GetPosition() + shift);
+	m_frameFrame.SetPosition(m_frameFrame.GetPosition() + shift);
 	SetViewPosition();
 }
 
@@ -257,7 +257,7 @@ CFrame CSelectedShape::GetFinalFrameData() const
 
 CFrame CSelectedShape::GetOldFrameData()
 {
-	return m_oldData;
+	return m_oldFrame;
 }
 
 CFrame CSelectedShape::GetCurrentFrameData()
@@ -296,7 +296,7 @@ void CSelectedShape::ReturnToOldState()
 
 void CSelectedShape::SetOldFrameData(CFrame const & data)
 {
-	m_oldData = data;
+	m_oldFrame = data;
 }
 
 void CSelectedShape::SetViewPosition()
@@ -312,7 +312,7 @@ void CSelectedShape::SetMoveView()
 
 void CSelectedShape::SetResizeView()
 {
-	auto vertices = m_frameData.GetFrameVertices();// m_selectedShape->
+	auto vertices = m_frameFrame.GetFrameVertices();// m_selectedShape->
 	size_t indexEllipse = 0;
 	for (const auto & vertex : vertices)
 	{
@@ -340,8 +340,8 @@ CFrame CSelectedShape::GetNewFrameData(const Vec2f shift) const
 	{
 	case UpdateType::Move:
 		{
-			info.SetPosition(m_frameData.GetPosition() + shift);
-			info.SetSize(m_frameData.GetSize());
+			info.SetPosition(m_frameFrame.GetPosition() + shift);
+			info.SetSize(m_frameFrame.GetSize());
 		}
 		break;
 	case UpdateType::MarkerLeftTop:
@@ -351,8 +351,8 @@ CFrame CSelectedShape::GetNewFrameData(const Vec2f shift) const
 		{
 			SSize directionResize = GetDirectionResize();
 
-			const Vec2f framePosition = m_frameData.GetPosition();
-			const SSize frameSize = m_frameData.GetSize();
+			const Vec2f framePosition = m_frameFrame.GetPosition();
+			const SSize frameSize = m_frameFrame.GetSize();
 			info.SetSize(GetCorrectSize(frameSize + SSize(shift.x * directionResize.width, shift.y * directionResize.height)));
 			const SSize newSize = info.GetSize();
 			const Vec2f differentSizes = Vec2f(newSize.width - frameSize.width, newSize.height - frameSize.height);

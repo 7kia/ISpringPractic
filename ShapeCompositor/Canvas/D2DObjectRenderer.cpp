@@ -169,16 +169,6 @@ void CD2DObjectRenderer::Visit(const CTriangle & shape)
 	m_geometrySink.Release();
 }
 
-void CD2DObjectRenderer::Visit(const CBuilding & shape)
-{
-	const SSize size = shape.GetSize();
-	const Vec2f position = shape.GetPosition();
-	auto shapeType = shape.GetBuildingType();
-
-	auto rectangle = GetFrameRect(shape);
-	m_pRenderTarget->DrawBitmap(shapeType->GetTexture(), rectangle);
-}
-
 void CD2DObjectRenderer::Visit(const CPicture & shape)
 {
 	const SSize size = shape.GetSize();

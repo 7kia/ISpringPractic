@@ -27,6 +27,6 @@ public:
 private:
 	CShapePtr	m_pShape;
 	CSelectedShape * m_pSelectedShape = nullptr;
-	CFrame		m_oldData;
+	CFrame		m_oldFrame;
 	CFrame		m_newData;
 };

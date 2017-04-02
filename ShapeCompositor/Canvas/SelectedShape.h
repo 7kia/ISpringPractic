@@ -120,8 +120,8 @@ private:
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
-	CFrame						m_frameData;
-	CFrame						m_oldData;
+	CFrame							m_frameFrame;
+	CFrame							m_oldFrame;
 	CShapePtr						m_selectedShape;
 
 	ArrayShapes						m_resizeShapes;

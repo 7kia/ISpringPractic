@@ -9,7 +9,7 @@ CScaleShapeCanvasCommand::CScaleShapeCanvasCommand(
 	, CSelectedShape & selectedShape
 )
 	: m_pShape(pShape)
-	, m_oldData(oldData)
+	, m_oldFrame(oldData)
 	, m_newData(newData)
 	, m_pSelectedShape(&selectedShape)
 {
@@ -28,12 +28,12 @@ void CScaleShapeCanvasCommand::Execute()
 
 void CScaleShapeCanvasCommand::Cancel()
 {
-	m_pShape->SetFrameData(m_oldData);
+	m_pShape->SetFrameData(m_oldFrame);
 
 	if (m_pSelectedShape->GetShape() == m_pShape)
 	{
-		m_pSelectedShape->SetFrameData(m_oldData);
-		m_pSelectedShape->SetOldFrameData(m_oldData);
+		m_pSelectedShape->SetFrameData(m_oldFrame);
+		m_pSelectedShape->SetOldFrameData(m_oldFrame);
 	}
 }
 
