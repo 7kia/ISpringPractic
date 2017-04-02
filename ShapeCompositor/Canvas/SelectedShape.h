@@ -104,7 +104,7 @@ private:
 	void					SetResizeView();
 
 	bool					CheckSize(const SSize size) const;
-	CFrame					GetNewFrameData(const Vec2f shift) const;
+	CFrame					GetNewFrameData(const Vec2f shift, const CFrame & oldFrame) const;
 	SSize					GetCorrectSize(const SSize size) const;
 	Vec2f					GetCorrectPosition(
 												const SSize newSize
@@ -121,7 +121,7 @@ private:
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
-	CFrame							m_frameFrame;
+	CFrame							m_currentFrame;
 	CFrame							m_oldFrame;
 	CShapePtr						m_selectedShape;
 

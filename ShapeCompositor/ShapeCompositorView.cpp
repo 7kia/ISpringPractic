@@ -533,11 +533,13 @@ void CShapeCompositorView::CreateCommandForSelectedShape()
 	case CSelectedShape::UpdateType::MarkerRightBottom:
 	case CSelectedShape::UpdateType::MarkerRightTop:
 	{
+		const auto finalFrame = m_selectedShape.GetCurrentFrameData();
 		m_selectedShape.ReturnToOldState();
+
 		m_canvas.AddAndExecuteCommand(std::make_shared<CChangeShapeRectCanvasCommand>(
-			m_selectedShape.GetShape(),
+			&m_canvas,
 			m_selectedShape.GetOldFrameData(),// TODO : see can delete other arguments
-			m_selectedShape.GetFinalFrameData(),
+			finalFrame,
 			m_selectedShape
 			));
 	}
