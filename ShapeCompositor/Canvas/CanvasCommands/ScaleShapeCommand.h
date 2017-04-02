@@ -9,8 +9,8 @@ class CScaleShapeCanvasCommand : public IMyCommand
 public:
 	CScaleShapeCanvasCommand(
 		CShapePtr pShape
-		, CFrame oldData
-		, CFrame newData
+		, const CFrame & oldData
+		, const CFrame & newData
 		, CSelectedShape & selectedShape
 	);
 	//////////////////////////////////////////////////////////////////////

@@ -7,11 +7,7 @@ class CSelectedShape;
 class CMoveShapeCanvasCommand : public IMyCommand
 {
 public:
-	CMoveShapeCanvasCommand(
-		CShapePtr pShape
-		, Vec2f shift
-		, CSelectedShape & selectedShape
-	);
+	CMoveShapeCanvasCommand(CShapePtr pShape, const Vec2f & shift, CSelectedShape & selectedShape);
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:

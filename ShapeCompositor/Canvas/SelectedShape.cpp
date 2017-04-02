@@ -294,6 +294,11 @@ void CSelectedShape::ReturnToOldState()
 	SetFrameData(GetOldFrameData());
 }
 
+void CSelectedShape::SetOldFrameData(CFrame const & data)
+{
+	m_oldData = data;
+}
+
 void CSelectedShape::SetViewPosition()
 {
 	SetMoveView();

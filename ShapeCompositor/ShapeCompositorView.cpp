@@ -550,15 +550,6 @@ void CShapeCompositorView::CreateCommandForSelectedShape()
 	switch (m_selectedShape.GetUpdateType())
 	{
 	case CSelectedShape::UpdateType::Move:
-	{
-		m_selectedShape.ReturnToOldState();
-		m_canvas.AddAndExecuteCommand(std::make_shared<CMoveShapeCanvasCommand>(
-			m_selectedShape.GetShape(),
-			m_selectedShape.GetFinalShift(),
-			m_selectedShape
-			));
-	}
-	break;
 	case CSelectedShape::UpdateType::MarkerLeftTop:
 	case CSelectedShape::UpdateType::MarkerLeftBottom:
 	case CSelectedShape::UpdateType::MarkerRightBottom:

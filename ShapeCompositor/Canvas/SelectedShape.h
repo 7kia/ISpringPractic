@@ -95,6 +95,7 @@ public:
 	CFrame	GetCurrentFrameData();
 	SSize GetDirectionResize() const;
 	void ReturnToOldState();
+	void SetOldFrameData(CFrame const & data);
 
 private:
 	void					SetViewPosition();
