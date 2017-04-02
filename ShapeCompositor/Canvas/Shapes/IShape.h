@@ -55,6 +55,6 @@ public:
 	virtual ShapeType GetType() const = 0;
 
 	// For draw
-	virtual void Accept(IShapeVisitor & renderer) const = 0;
+	virtual void Accept(IShapeVisitor & visitor) const = 0;
 
 };

@@ -19,7 +19,7 @@ public:
 	//--------------------------------------------
 	// IShape(for draw
 
-	void Accept(IShapeVisitor & renderer) const override;
+	void Accept(IShapeVisitor & visitor) const override;
 
 	//--------------------------------------------
 	// IIsPointIntersection

@@ -37,7 +37,7 @@ ListVertices CRectangle::GetVertices() const
 	return GetFrameVertices();
 }
 
-void CRectangle::Accept(IShapeVisitor & renderer) const
+void CRectangle::Accept(IShapeVisitor & visitor) const
 {
-	renderer.Visit(*this);
+	visitor.Visit(*this);
 }

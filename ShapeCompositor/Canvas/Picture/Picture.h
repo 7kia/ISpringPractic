@@ -20,7 +20,7 @@ public:
 	//--------------------------------------------
 	// IDrawable
 
-	void Accept(IShapeVisitor & renderer) const override;
+	void Accept(IShapeVisitor & visitor) const override;
 	//--------------------------------------------
 
 	ID2D1Bitmap * GetTexture() const;

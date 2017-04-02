@@ -45,6 +45,7 @@
 #define ID_UNDO                         32780
 #define ID_BUTTON2                      32783
 #define ID_ADD_HOUSE                    32783
+#define ID_ADD_PICTURE                  32783
 
 // Next default values for new objects
 // 

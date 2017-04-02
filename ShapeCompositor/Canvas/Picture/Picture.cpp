@@ -19,9 +19,9 @@ CPicture::CPicture(
 {
 }
 
-void CPicture::Accept(IShapeVisitor & renderer) const
+void CPicture::Accept(IShapeVisitor & visitor) const
 {
-	renderer.Visit(*this);
+	visitor.Visit(*this);
 }
 
 ID2D1Bitmap * CPicture::GetTexture() const

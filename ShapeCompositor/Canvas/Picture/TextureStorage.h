@@ -6,37 +6,28 @@
 #include <atlbase.h>
 
 
-namespace Texture
-{
-	enum class Id
-	{
-		House = 0
-		, Map
-	};
-
-	using TextureStorage = std::vector<CComPtr<ID2D1Bitmap>>;
+using TextureStorage = std::vector<CComPtr<ID2D1Bitmap>>;
 
 	
-	//class CStorageCell : public IClass
-	//{
-	//public:
-	//	CClass();
-	//	//////////////////////////////////////////////////////////////////////
-	//	// Methods
-	//public:
-	//	//--------------------------------------------
-	//	// NameInterface
+class CStorageCell
+{
+public:
+	CStorageCell() = default;
+	//////////////////////////////////////////////////////////////////////
+	// Methods
+public:
+	//--------------------------------------------
+	// NameInterface
 
-	//	/*
-	//	there place  something inheritance methods from NameInterface
-	//	*/
+	/*
+	there place  something inheritance methods from NameInterface
+	*/
 
-	//	//--------------------------------------------
+	//--------------------------------------------
 
-	//	void			Set();
-	//	void			Get();
-	//	//////////////////////////////////////////////////////////////////////
-	//	// Data
-	//private:
-	//};
-}
+	//void			Set();
+	//void			Get();
+	//////////////////////////////////////////////////////////////////////
+	// Data
+private:
+};

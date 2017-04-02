@@ -71,7 +71,7 @@ ListVertices CTriangle::GetVertices() const
 	return { first, second, third };
 }
 
-void CTriangle::Accept(IShapeVisitor & renderer) const
+void CTriangle::Accept(IShapeVisitor & visitor) const
 {
-	renderer.Visit(*this);
+	visitor.Visit(*this);
 }

@@ -184,10 +184,6 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Canvas\Buildings\Building.h" />
-    <ClInclude Include="Canvas\Buildings\BuildingCounter.h" />
-    <ClInclude Include="Canvas\Buildings\BuildingFactory.h" />
-    <ClInclude Include="Canvas\Buildings\BuildingType.h" />
     <ClInclude Include="Canvas\Canvas.h" />
     <ClInclude Include="Canvas\CanvasCommands\AddShapeCommand.h" />
     <ClInclude Include="Canvas\CanvasCommands\CanvasCommand.h" />
@@ -223,10 +219,6 @@
     <ClInclude Include="XMLReader\XMLReader.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Canvas\Buildings\Building.cpp" />
-    <ClCompile Include="Canvas\Buildings\BuildingCounter.cpp" />
-    <ClCompile Include="Canvas\Buildings\BuildingFactory.cpp" />
-    <ClCompile Include="Canvas\Buildings\BuildingType.cpp" />
     <ClCompile Include="Canvas\Canvas.cpp" />
     <ClCompile Include="Canvas\CanvasCommands\AddShapeCommand.cpp" />
     <ClCompile Include="Canvas\CanvasCommands\DeleteShapeCommand.cpp" />

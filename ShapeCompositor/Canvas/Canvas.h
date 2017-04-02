@@ -63,7 +63,7 @@ public:
 	void					SetSaveState(bool value);
 
 private:
-	void					CheckShapeIndex(size_t index, bool isInsert = false) const;
+	void					CheckShapeIndex(size_t index, size_t max) const;
 	size_t					GetIShapeIndex(CShapePtr pShape) const;
 	//////////////////////////////////////////////////////////////////////
 	// Data

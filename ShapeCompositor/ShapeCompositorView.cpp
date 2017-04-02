@@ -38,7 +38,6 @@ BEGIN_MESSAGE_MAP(CShapeCompositorView, CScrollView)
 	ON_COMMAND(ID_ADD_TRIANGLE, CShapeCompositorView::CreateTriangle)
 	ON_COMMAND(ID_ADD_RECTANGLE, CShapeCompositorView::CreateRectangle)
 	ON_COMMAND(ID_ADD_ELLIPSE, CShapeCompositorView::CreateEllipse)
-	ON_COMMAND(ID_ADD_HOUSE, CShapeCompositorView::CreateHouse)
 	ON_COMMAND(ID_UNDO, CShapeCompositorView::Undo)
 	ON_COMMAND(ID_REDO, CShapeCompositorView::Redo)
 	ON_COMMAND(ID_FILE_SAVE_AS, &CShapeCompositorView::OnFileSaveAs)
@@ -78,8 +77,6 @@ HRESULT CShapeCompositorView::Draw()
 	m_pRenderTarget->BeginDraw();
 	m_pRenderTarget->SetTransform(matrix);
 	m_pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
-
-	m_objectRenderer.Draw(m_pictureMap);
 
 	for (const auto & shape : m_canvas.GetShapes())
 	{
@@ -149,19 +146,6 @@ void CShapeCompositorView::CreateEllipse()
 		, m_selectedShape
 		)
 	);
-	RedrawWindow();
-}
-
-void CShapeCompositorView::CreateHouse()
-{
-	if (m_buildingCounters[size_t(CBuildingType::Type::House)].Increment())
-	{
-		m_canvas.PushBackShape(
-			m_buildingFactory.CreateBuilding(
-				&m_buildingTypes[size_t(CBuildingType::Type::House)], Vec2f(250.f, 250.f)
-			)
-		);
-	}
 	RedrawWindow();
 }
 
@@ -243,10 +227,6 @@ int CShapeCompositorView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		
 		// TODO : rewrite Normal
 		m_imageFactory.SetRenderTarget(m_pRenderTarget);
-
-		LoadTextures();
-		CreateBuildingTypes();
-		CreateMap();
 	}
 	catch (...)
 	{
@@ -356,25 +336,14 @@ BOOL CShapeCompositorView::PreTranslateMessage(MSG* pMsg)
 				{
 					if (m_selectedShape.HaveSelectedShape())
 					{
-						// TODO : fix
-						if (m_buildingCounters[size_t(CBuildingType::Type::House)].Decrement())
-						{
-							const size_t index = m_canvas.GetShapeIndex(m_selectedShape.GetShape());
-							if (m_canvas.IsSelectShape(index, m_selectedShape.GetShape()))
-							{
-								m_selectedShape.ResetSelectShapePtr();
-							}
-							m_canvas.DeleteShape(index);
-						}
-
-						/*
 						m_canvas.AddAndExecuteCommand(
 							std::make_shared<CDeleteShapeCanvasCommand>(
 								m_canvas
 								, m_selectedShape
 								, m_shapeFactory
 								)
-						);*/
+						);
+						
 						RedrawWindow();
 					}			
 				}
@@ -589,37 +558,8 @@ void CShapeCompositorView::ChangeSelectedShape(const Vec2f mousePos)
 	}
 }
 
-void CShapeCompositorView::LoadTextures()
-{
-	LoadTexture("House.png");
-	LoadTexture("Map.png");
-
-}
-
 void CShapeCompositorView::LoadTexture(const std::string & name)
 {
 	m_textureStorage.push_back(m_imageFactory.CreateTexture("res/" + name));
 }
 
-void CShapeCompositorView::CreateBuildingTypes()
-{
-	m_buildingTypes[size_t(CBuildingType::Type::House)].SetName("House");
-	m_buildingTypes[size_t(CBuildingType::Type::House)].SetSize(SSize(50.f, 50.f));
-	m_buildingTypes[size_t(CBuildingType::Type::House)].SetTexture(m_textureStorage[size_t(Texture::Id::House)]);
-
-	m_buildingCounters[size_t(CBuildingType::Type::House)] = CBuildingCounter(CBuildingType::Type::House, 3);
-}
-
-void CShapeCompositorView::CreateMap()
-{
-	const SSize MAP_SIZE = SSize(3531.f, 2503.f);
-	const Vec2f MAP_POSITION = Vec2f(MAP_SIZE.width / 2.f, MAP_SIZE.height / 2.f);
-	m_pictureMap = CPicture(
-		m_textureStorage[size_t(Texture::Id::Map)]
-		, MAP_POSITION
-		, MAP_SIZE
-		, BUILDING_FILL_COLOR
-		, BUILDING_OUTLINE_COLOR
-	);
-
-}

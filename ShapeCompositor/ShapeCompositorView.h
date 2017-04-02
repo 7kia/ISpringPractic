@@ -18,8 +18,6 @@
 #include "Canvas\Canvas.h"
 #include "Canvas\History.h"
 #include "Canvas\D2DObjectRenderer.h"
-#include "Canvas\Buildings\BuildingFactory.h"
-#include "Canvas\Buildings\BuildingCounter.h"
 #include "Canvas\Picture\Picture.h"
 #include "Canvas\Picture\D2DImageFactory.h"
 #include "Canvas\Picture\TextureStorage.h"
@@ -51,7 +49,6 @@ public:
 	void					CreateTriangle();
 	void					CreateRectangle();
 	void					CreateEllipse();
-	void					CreateHouse();
 
 	void					Undo();
 	void					Redo();
@@ -69,10 +66,8 @@ private:
 	void					CreateCommandForSelectedShape();
 	void					ChangeSelectedShape(const Vec2f mousePos);
 
-	void					LoadTextures();
 	void					LoadTexture(const std::string & name);
-	void					CreateBuildingTypes();
-	void					CreateMap();
+
 // Переопределение
 public:
 	virtual void OnDraw(CDC* pDC);  // переопределено для отрисовки этого представления
@@ -82,18 +77,10 @@ public:
 protected:
 	CCanvas m_canvas;
 
-	// Fromn canvas TODO
 	CSelectedShape m_selectedShape;
 	CShapeFactory m_shapeFactory;
-	CBuildingFactory m_buildingFactory;
 
-	//
-	std::array<CBuildingType, size_t(CBuildingType::Type::Amount)> m_buildingTypes;
-	std::array<CBuildingCounter, size_t(CBuildingType::Type::Amount)> m_buildingCounters;
-	CPicture m_pictureMap;
-
-	Texture::TextureStorage m_textureStorage;
-	//
+	TextureStorage m_textureStorage;
 
 	ID2D1HwndRenderTarget * m_pRenderTarget = nullptr;
 	CD2DObjectRenderer		m_objectRenderer;// TODO : transfer to CShapeCompositiorView, fix Draw
