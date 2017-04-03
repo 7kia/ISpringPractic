@@ -66,7 +66,7 @@ BOOL CShapeCompositorDoc::OnNewDocument()
 
 void CShapeCompositorDoc::Serialize(CArchive& ar)
 {
-	
+
 	if (ar.IsStoring())
 	{
 		// TODO: добавьте код сохранения
@@ -88,7 +88,7 @@ void CShapeCompositorDoc::OnDrawThumbnail(CDC& dc, LPRECT lprcBounds)
 	CString strText = _T("TODO: implement thumbnail drawing here");
 	LOGFONT lf;
 
-	CFont* pDefaultGUIFont = CFont::FromHandle((HFONT) GetStockObject(DEFAULT_GUI_FONT));
+	CFont* pDefaultGUIFont = CFont::FromHandle((HFONT)GetStockObject(DEFAULT_GUI_FONT));
 	pDefaultGUIFont->GetLogFont(&lf);
 	lf.lfHeight = 36;
 
@@ -148,81 +148,37 @@ void CShapeCompositorDoc::Dump(CDumpContext& dc) const
 
 // команды CShapeCompositorDoc
 
-CString CShapeCompositorDoc::OpenSaveDialog()
-{
-	CString fileName;
-
-	CFileDialog fileDlg(
-		FALSE
-		, _T("")
-		, _T("*.xml")
-		, OFN_HIDEREADONLY
-		, L"XML Files\0"    L"*.xml\0"
-	);
-	if (fileDlg.DoModal() == IDOK)
-	{
-		CString pathName = fileDlg.GetPathName();
-
-		fileName = pathName;
-	}
-
-	return fileName;
-}
-
-CString CShapeCompositorDoc::OpenLoadDialog()
-{
-	CString fileName;
-
-	CFileDialog fileDlg(
-		TRUE
-		, NULL
-		, _T("*.xml")
-		, OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST
-		, L"XML Files\0"    L"*.xml\0"
-	);
-	if (fileDlg.DoModal() == IDOK)
-	{
-		CString pathName = fileDlg.GetPathName();
-
-		fileName = pathName;
-	}
-
-	return fileName;
-}
-
-
 void CShapeCompositorDoc::OnFileSaveAs(std::vector<CShapePtr> const & shapes)
 {
-	CString fileName = OpenSaveDialog();
+	CString fileName = m_fileManager.OpenSaveDialog();
 	if (fileName.GetLength() != 0)
 	{
-		m_fileToSave = fileName.GetString();
-		m_xmlReader.Save(m_fileToSave, shapes);
+		m_xmlReader.Save(fileName.GetString(), shapes);
 	}
 }
 
 
 void CShapeCompositorDoc::OnFileOpen(CShapeCompositorView * view)
 {
-	CString fileName = OpenLoadDialog();
+	CString fileName = m_fileManager.OpenLoadDialog();
 	if (fileName.GetLength() != 0)
 	{
 		view->ClearHistory();
 		view->ResetSelectedShape();
 
-		m_fileToSave = fileName.GetString();
-		m_xmlReader.Open(m_fileToSave, view->GetCanvas(), view->GetShapeFactory());
+		m_fileManager.SetFileName(fileName.GetString());
+		m_xmlReader.Open(m_fileManager.GetFileName(), view->GetCanvas(), view->GetShapeFactory());
 	}
 }
 
 void CShapeCompositorDoc::OnFileSave(std::vector<CShapePtr> const & shapes)
 {
-	if (m_fileToSave.empty())
+	if (m_fileManager.FileDefine())
 	{
-		OnFileSaveAs(shapes);
+		m_xmlReader.Save(m_fileManager.GetFileName(), shapes);
 	}
 	else
 	{
-		m_xmlReader.Save(m_fileToSave, shapes);
+		OnFileSaveAs(shapes);
 	}
 }

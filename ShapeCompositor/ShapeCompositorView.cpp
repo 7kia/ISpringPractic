@@ -391,7 +391,7 @@ void CShapeCompositorView::OnLButtonDown(UINT nFlags, CPoint point)
 			isResize = true;
 		}
 	}
-
+	
 	if (!isResize)
 	{
 		ChangeSelectedShape(mousePos);

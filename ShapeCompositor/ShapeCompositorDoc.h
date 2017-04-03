@@ -20,6 +20,7 @@
 #include "Canvas\Canvas.h"
 #include "Canvas\History.h"
 #include "XMLReader\XMLReader.h"
+#include "FileManager.h"
 
 class CShapeCompositorView;
 class CShapeCompositorDoc : public CDocument
@@ -56,14 +57,10 @@ public:
 
 protected:
 	CXMLReader m_xmlReader;
-	
-	std::wstring m_fileToSave;
+	CFileManager m_fileManager;
 // Созданные функции схемы сообщений
 protected:
 	DECLARE_MESSAGE_MAP()
-
-	CString OpenSaveDialog();
-	CString OpenLoadDialog();
 
 #ifdef SHARED_HANDLERS
 	// Вспомогательная функция, задающая содержимое поиска для обработчика поиска

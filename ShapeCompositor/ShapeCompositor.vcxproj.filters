@@ -126,6 +126,9 @@
     <ClInclude Include="Canvas\CanvasCommands\ChangeShapeRectCommand.h">
       <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
     </ClInclude>
+    <ClInclude Include="FileManager.h">
+      <Filter>Файлы исходного кода</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ShapeCompositor.cpp">
@@ -190,6 +193,9 @@
     </ClCompile>
     <ClCompile Include="Canvas\CanvasCommands\ChangeShapeRectCommand.cpp">
       <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
+    </ClCompile>
+    <ClCompile Include="FileManager.cpp">
+      <Filter>Файлы исходного кода</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
