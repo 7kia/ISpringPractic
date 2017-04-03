@@ -53,7 +53,7 @@ public:
 	void					Undo();
 	void					Redo();
 
-	void					ChangeCursor(const CPoint & mousePos);
+	void					ChangeCursor(const Vec2f &  mousePos);
 
 	// For document
 	void					ClearHistory();
@@ -67,7 +67,7 @@ private:
 	void					ChangeSelectedShape(const Vec2f & mousePos);
 
 	void					LoadTexture(const std::string & name);
-
+	Vec2f					GetScreenPosition(const CPoint & point);
 // Переопределение
 public:
 	virtual void OnDraw(CDC* pDC);  // переопределено для отрисовки этого представления

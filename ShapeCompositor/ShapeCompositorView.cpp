@@ -378,10 +378,10 @@ void CShapeCompositorView::OnLButtonDown(UINT nFlags, CPoint point)
 
 	CScrollView::OnLButtonDown(nFlags, point);
 
-	ChangeCursor(point);
-	//m_canvas.HandleLButtHandleDown(Vec2f(float(point.x), float(point.y)));
+	const Vec2f mousePos = GetScreenPosition(point);
 
-	const Vec2f mousePos = Vec2f(float(point.x), float(point.y));
+	ChangeCursor(mousePos);
+
 	bool isResize = false;
 	if (m_selectedShape.HaveSelectedShape())
 	{
@@ -413,11 +413,13 @@ void CShapeCompositorView::OnMouseMove(UINT nFlags, CPoint point)
 {
 	// TODO: добавьте свой код обработчика сообщений или вызов стандартного
 	CView::OnMouseMove(nFlags, point);
-	ChangeCursor(point);
+
+	const Vec2f mousePosition = GetScreenPosition(point);
+	ChangeCursor(mousePosition);
 
 	if (m_selectedShape.HaveSelectedShape() && m_selectedShape.IsUpdate())
 	{
-		m_selectedShape.HandleMoveMouse(Vec2f(float(point.x), float(point.y)));
+		m_selectedShape.HandleMoveMouse(mousePosition);
 		RedrawWindow();
 	}
 
@@ -434,7 +436,7 @@ void CShapeCompositorView::OnLButtonUp(UINT nFlags, CPoint point)
 		m_selectedShape.SetUpdateState(false);
 	}
 
-	ChangeCursor(point);
+	ChangeCursor(GetScreenPosition(point));
 
 	if (m_selectedShape.DoneUpdate())
 	{
@@ -452,9 +454,8 @@ BOOL CShapeCompositorView::OnEraseBkgnd(CDC* pDC)
 	return TRUE;//CScrollView::OnEraseBkgnd(pDC);
 }
 
-void CShapeCompositorView::ChangeCursor(const CPoint & mousePos)
+void CShapeCompositorView::ChangeCursor(const Vec2f & position)
 {
-	const Vec2f position = Vec2f(float(mousePos.x), float(mousePos.y));
 	//const auto pSelectShape = m_canvas.GetSelectShape();
 	//const auto pFrameSelectShape = m_canvas.GetFrameSelectedShape();
 	if (m_selectedShape.GetShape())
@@ -572,5 +573,16 @@ void CShapeCompositorView::ChangeSelectedShape(const Vec2f & mousePos)
 void CShapeCompositorView::LoadTexture(const std::string & name)
 {
 	m_textureStorage.push_back(m_imageFactory.CreateTexture("res/" + name));
+}
+
+Vec2f CShapeCompositorView::GetScreenPosition(const CPoint & point)
+{
+	POINT windowPos;
+	GetCursorPos(&windowPos);
+	ScreenToClient(&windowPos);
+
+	const CPoint scrollPosition = GetDeviceScrollPosition();
+
+	return Vec2f(float(windowPos.x + scrollPosition.x), float(windowPos.y + scrollPosition.y));
 }
 
