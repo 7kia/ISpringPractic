@@ -148,17 +148,29 @@ void CShapeCompositorDoc::Dump(CDumpContext& dc) const
 
 // команды CShapeCompositorDoc
 
-void CShapeCompositorDoc::OnFileSaveAs(std::vector<CShapePtr> const & shapes)
+bool CShapeCompositorDoc::IsNewDocument() const
+{
+	return m_fileManager.IsNewDocument();
+}
+
+void CShapeCompositorDoc::ResetCurrentFolder()
+{
+	m_fileManager.ResetCurrentFolder();
+	m_fileManager.RecreateTempFolder();
+}
+
+bool CShapeCompositorDoc::OnFileSaveAs(std::vector<CShapePtr> const & shapes)
 {
 	CString fileName = m_fileManager.OpenSaveDialog();
 	if (fileName.GetLength() != 0)
 	{
-		m_xmlReader.Save(fileName.GetString(), shapes);
+		return m_xmlReader.Save(fileName.GetString(), shapes);
 	}
+	return false;
 }
 
 
-void CShapeCompositorDoc::OnFileOpen(CShapeCompositorView * view)
+bool CShapeCompositorDoc::OnFileOpen(CShapeCompositorView * view)
 {
 	CString fileName = m_fileManager.OpenLoadDialog();
 	if (fileName.GetLength() != 0)
@@ -167,18 +179,19 @@ void CShapeCompositorDoc::OnFileOpen(CShapeCompositorView * view)
 		view->ResetSelectedShape();
 
 		m_fileManager.SetFileName(fileName.GetString());
-		m_xmlReader.Open(m_fileManager.GetFileName(), view->GetCanvas(), view->GetShapeFactory());
+		return m_xmlReader.Open(m_fileManager.GetFileName(), view->GetCanvas(), view->GetShapeFactory());
 	}
+	return false;
 }
 
-void CShapeCompositorDoc::OnFileSave(std::vector<CShapePtr> const & shapes)
+bool CShapeCompositorDoc::OnFileSave(std::vector<CShapePtr> const & shapes)
 {
-	if (m_fileManager.FileDefine())
+	if (m_fileManager.IsNewDocument())
 	{
-		m_xmlReader.Save(m_fileManager.GetFileName(), shapes);
+		return OnFileSaveAs(shapes);
 	}
 	else
 	{
-		OnFileSaveAs(shapes);
+		return m_xmlReader.Save(m_fileManager.GetFileName(), shapes);
 	}
 }

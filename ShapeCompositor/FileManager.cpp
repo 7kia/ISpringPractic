@@ -22,6 +22,7 @@ CFileManager::CFileManager()
 		}
 		create_directory(m_tempFolderPath);
 	}
+
 }
 
 CFileManager::~CFileManager()
@@ -31,7 +32,10 @@ CFileManager::~CFileManager()
 
 void CFileManager::SetFileName(const CString & name)
 {
-	m_fileToSave = name;
+	if (name != m_tempFolderPath)
+	{
+		m_fileToSave = name;
+	}
 }
 
 std::wstring CFileManager::GetFileName() const
@@ -39,9 +43,9 @@ std::wstring CFileManager::GetFileName() const
 	return m_fileToSave;
 }
 
-bool CFileManager::FileDefine() const
+bool CFileManager::IsNewDocument() const
 {
-	return !m_fileToSave.empty();
+	return m_fileToSave.empty();
 }
 
 CString CFileManager::OpenSaveDialog()
@@ -107,5 +111,16 @@ BOOL CFileManager::DirectoryExists(const std::wstring & dirName)
 		return false;
 	}
 	return (attribs & FILE_ATTRIBUTE_DIRECTORY);
+}
+
+void CFileManager::ResetCurrentFolder()
+{
+	m_filePath.clear();
+}
+
+void CFileManager::RecreateTempFolder()
+{
+	remove_all(m_tempFolderPath);
+	create_directory(m_tempFolderPath);
 }
 

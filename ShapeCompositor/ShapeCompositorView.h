@@ -58,6 +58,7 @@ public:
 	// For document
 	void					ClearHistory();
 	void					ClearCanvas();
+	void					ResetApplication();
 	void					ResetSelectedShape();
 	CCanvas &				GetCanvas();
 	const CShapeFactory &	GetShapeFactory() const;
@@ -68,6 +69,9 @@ private:
 
 	void					LoadTexture(const std::string & name);
 	Vec2f					GetScreenPosition(const CPoint & point);
+
+	void					CheckSaveDocument();
+	bool					OpenDialogWindow();
 // Переопределение
 public:
 	virtual void OnDraw(CDC* pDC);  // переопределено для отрисовки этого представления
@@ -76,6 +80,7 @@ public:
 
 protected:
 	CCanvas m_canvas;
+	CHistory m_history;
 
 	CSelectedShape m_selectedShape;
 	CShapeFactory m_shapeFactory;
@@ -123,6 +128,7 @@ public:
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
+	afx_msg void OnClose();
 };
 
 #ifndef _DEBUG  // отладочная версия в ShapeCompositorView.cpp

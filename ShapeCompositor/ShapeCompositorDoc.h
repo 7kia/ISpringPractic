@@ -33,9 +33,11 @@ protected: // создать только из сериализации
 public:
 // Операции
 public:
-	afx_msg void OnFileSaveAs(std::vector<CShapePtr> const & shapes);
-	afx_msg void OnFileOpen(CShapeCompositorView * view);
-	afx_msg void OnFileSave(std::vector<CShapePtr> const & shapes);
+	bool IsNewDocument() const;
+	void ResetCurrentFolder();
+	afx_msg bool OnFileSaveAs(std::vector<CShapePtr> const & shapes);
+	afx_msg bool OnFileOpen(CShapeCompositorView * view);
+	afx_msg bool OnFileSave(std::vector<CShapePtr> const & shapes);
 // Переопределение
 public:
 	virtual BOOL OnNewDocument();

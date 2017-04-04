@@ -60,13 +60,6 @@ public:
 public:
 
 	//--------------------------------------------
-	void AddAndExecuteCommand(const CanvasCommandPtr & command);
-
-	void UndoCommand();
-	void RedoCommand();
-
-	void ClearHistory();
-	//--------------------------------------------
 	// IAddAndDeleteShape
 	void					DeleteShape(size_t index) override;
 	void					DeleteShape(const CShapePtr & pShape) override;
@@ -96,21 +89,14 @@ public:
 	void					SetSize(const SSize & size);
 	SSize					GetSize() const;
 
-	// For save to document
-	bool					IsSave() const;
-	void					SetSaveState(bool value);
-
 private:
 	void					CheckShapeIndex(size_t index, size_t max) const;
 	//////////////////////////////////////////////////////////////////////
 	// Data
 public:
 private:
-	CHistory m_history;
 	// TODO : see might require do private
 	std::vector<CShapePtr>	m_shapes;
 
 	SSize m_size;
-
-	bool m_isSave = false;
 };

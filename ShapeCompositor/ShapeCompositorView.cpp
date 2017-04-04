@@ -44,12 +44,15 @@ BEGIN_MESSAGE_MAP(CShapeCompositorView, CScrollView)
 	ON_COMMAND(ID_FILE_OPEN, &CShapeCompositorView::OnFileOpen)
 	ON_COMMAND(ID_FILE_SAVE, &CShapeCompositorView::OnFileSave)
 	ON_COMMAND(ID_FILE_NEW, &CShapeCompositorView::OnFileNew)
+	ON_COMMAND(ID_APP_EXIT, &CShapeCompositorView::OnClose)
 	ON_WM_SIZE()
 	ON_WM_PAINT()
 	ON_WM_ERASEBKGND()
 	ON_WM_MOUSEMOVE()
 	ON_WM_LBUTTONDOWN()
 	ON_WM_LBUTTONUP()
+	ON_WM_CLOSE()
+	ON_WM_CLOSE()
 END_MESSAGE_MAP()
 
 // создание/уничтожение CShapeCompositorView
@@ -122,7 +125,7 @@ ID2D1HwndRenderTarget * CShapeCompositorView::GetRenderTarget()
 
 void CShapeCompositorView::CreateTriangle()
 {
-	m_canvas.AddAndExecuteCommand(
+	m_history.AddAndExecuteCommand(
 		std::make_shared<CAddShapeCanvasCommand>(
 			&m_canvas
 			, ShapeType::Triangle
@@ -135,7 +138,7 @@ void CShapeCompositorView::CreateTriangle()
 
 void CShapeCompositorView::CreateRectangle()
 {
-	m_canvas.AddAndExecuteCommand(
+	m_history.AddAndExecuteCommand(
 		std::make_shared<CAddShapeCanvasCommand>(
 			&m_canvas
 			, ShapeType::Rectangle
@@ -148,7 +151,7 @@ void CShapeCompositorView::CreateRectangle()
 
 void CShapeCompositorView::CreateEllipse()
 {
-	m_canvas.AddAndExecuteCommand(std::make_shared<CAddShapeCanvasCommand>(
+	m_history.AddAndExecuteCommand(std::make_shared<CAddShapeCanvasCommand>(
 		&m_canvas
 		, ShapeType::Ellipse
 		, m_shapeFactory
@@ -160,13 +163,13 @@ void CShapeCompositorView::CreateEllipse()
 
 void CShapeCompositorView::Undo()
 {
-	m_canvas.UndoCommand();
+	m_history.Undo();
 	RedrawWindow();
 }
 
 void CShapeCompositorView::Redo()
 {
-	m_canvas.RedoCommand();
+	m_history.Redo();
 	RedrawWindow();
 }
 
@@ -281,29 +284,39 @@ void CShapeCompositorView::OnSize(UINT nType, int cx, int cy)
 
 void CShapeCompositorView::OnFileSaveAs()
 {
-	GetDocument()->OnFileSaveAs(m_canvas.GetShapes());
-	RedrawWindow();
+	if (GetDocument()->OnFileSaveAs(m_canvas.GetShapes()))
+	{
+		m_history.SetSaveState(true);
+		RedrawWindow();
+	}
 }
 
 void CShapeCompositorView::OnFileOpen()
 {
-	GetDocument()->OnFileOpen(this);
-	RedrawWindow();
+	if (GetDocument()->OnFileOpen(this))
+	{
+		RedrawWindow();
+	}
 }
 
 void CShapeCompositorView::OnFileSave()
 {
-	GetDocument()->OnFileSave(m_canvas.GetShapes());
-	RedrawWindow();
+	if (GetDocument()->OnFileSave(m_canvas.GetShapes()))
+	{
+		m_history.SetSaveState(true);
+		RedrawWindow();
+	}
 }
 
 void CShapeCompositorView::OnFileNew()
 {
-
-	if (!m_canvas.IsSave())
+	CheckSaveDocument();
+	if (!(m_history.IsSave() && GetDocument()->IsNewDocument()))
 	{
-		OnFileSaveAs();
-		m_canvas.SetSaveState(true);
+		m_history.SetSaveState(false);
+		ResetApplication();
+		GetDocument()->ResetCurrentFolder();
+		RedrawWindow();
 	}
 }
 
@@ -345,7 +358,7 @@ BOOL CShapeCompositorView::PreTranslateMessage(MSG* pMsg)
 				{
 					if (m_selectedShape.HaveSelectedShape())
 					{
-						m_canvas.AddAndExecuteCommand(
+						m_history.AddAndExecuteCommand(
 							std::make_shared<CDeleteShapeCanvasCommand>(
 								&m_canvas
 								, m_selectedShape
@@ -361,6 +374,13 @@ BOOL CShapeCompositorView::PreTranslateMessage(MSG* pMsg)
 				break;
 			}
 		}
+		break;
+	case WM_DESTROY:
+	{
+		CheckSaveDocument();
+
+		PostQuitMessage(0);
+	}
 		break;
 	default:
 		break;
@@ -501,11 +521,21 @@ void CShapeCompositorView::ChangeCursor(const Vec2f & position)
 
 void CShapeCompositorView::ClearHistory()
 {
-	m_canvas.ClearHistory();
+	m_history.Clear();
 }
 
 void CShapeCompositorView::ClearCanvas()
 {
+	m_canvas.Clear();
+}
+
+void CShapeCompositorView::ResetApplication()
+{
+	m_history.Clear();
+
+	m_selectedShape.ResetUpdateParameters();
+	m_selectedShape.ResetSelectShapePtr();
+
 	m_canvas.Clear();
 }
 
@@ -537,7 +567,7 @@ void CShapeCompositorView::CreateCommandForSelectedShape()
 		const auto finalFrame = m_selectedShape.GetCurrentFrameData();
 		m_selectedShape.ReturnToOldState();
 
-		m_canvas.AddAndExecuteCommand(std::make_shared<CChangeShapeRectCanvasCommand>(
+		m_history.AddAndExecuteCommand(std::make_shared<CChangeShapeRectCanvasCommand>(
 			&m_canvas,
 			m_selectedShape.GetOldFrameData(),
 			finalFrame,
@@ -586,3 +616,39 @@ Vec2f CShapeCompositorView::GetScreenPosition(const CPoint & point)
 	return Vec2f(float(windowPos.x + scrollPosition.x), float(windowPos.y + scrollPosition.y));
 }
 
+void CShapeCompositorView::CheckSaveDocument()
+{
+	if (!m_history.IsSave())
+	{
+		if (GetDocument()->IsNewDocument())
+		{
+			if (OpenDialogWindow())
+			{
+				GetDocument()->OnFileSaveAs(m_canvas.GetShapes());
+			}
+		}
+		else
+		{
+			if (OpenDialogWindow())
+			{
+				GetDocument()->OnFileSave(m_canvas.GetShapes());
+			}
+		}
+	}
+}
+
+bool CShapeCompositorView::OpenDialogWindow()
+{
+	auto answer = AfxMessageBox(L"Сохранить изменения?", MB_YESNOCANCEL);
+
+	return answer == IDYES;
+}
+
+void CShapeCompositorView::OnClose()
+{
+	// TODO: добавьте свой код обработчика сообщений или вызов стандартного
+	CheckSaveDocument();
+
+	CScrollView::OnClose();
+
+}

@@ -18,17 +18,20 @@ public:
 
 	void SetFileName(const CString & name);
 	std::wstring GetFileName() const;
-	bool FileDefine() const;
+	bool IsNewDocument() const;
 
 	CString OpenSaveDialog();
 	CString OpenLoadDialog();
 	void CreateTemporaryDirectory();
 	BOOL DirectoryExists(const std::wstring & dirName);
 
+	void ResetCurrentFolder();
+	void RecreateTempFolder();
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
 	std::wstring m_fileToSave;
 
+	boost::filesystem::path m_filePath;
 	boost::filesystem::path m_tempFolderPath;
 };

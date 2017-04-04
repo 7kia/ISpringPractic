@@ -18,6 +18,8 @@ void CHistory::AddAndExecuteCommand(const CanvasCommandPtr & command)
 	m_currentCommand = m_history.rbegin();
 
 	m_currentCommand->get()->Execute();
+
+	m_isSave = false;
 }
 
 
@@ -28,6 +30,7 @@ void CHistory::Undo()
 		m_currentCommand->get()->Cancel();
 		++m_currentCommand;
 	}
+	m_isSave = false;
 }
 
 void CHistory::Redo()
@@ -37,10 +40,22 @@ void CHistory::Redo()
 		--m_currentCommand;
 		m_currentCommand->get()->Execute();
 	}
+	m_isSave = false;
 }
 
 void CHistory::Clear()
 {
 	m_history.clear();
 	m_currentCommand = m_history.rbegin();
+}
+
+
+bool CHistory::IsSave() const
+{
+	return m_isSave;
+}
+
+void CHistory::SetSaveState(bool value)
+{
+	m_isSave = value;
 }

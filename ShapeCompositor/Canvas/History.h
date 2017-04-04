@@ -33,10 +33,16 @@ public:
 	void Redo() override;
 
 	void Clear() override;
+
+	// For save to document
+	bool					IsSave() const;
+	void					SetSaveState(bool value);
 private:
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
 	std::deque<CanvasCommandPtr>						m_history;
 	std::deque<CanvasCommandPtr>::reverse_iterator		m_currentCommand = m_history.rbegin();
+
+	bool m_isSave = true;
 };
