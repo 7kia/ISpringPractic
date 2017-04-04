@@ -44,13 +44,13 @@ BEGIN_MESSAGE_MAP(CShapeCompositorView, CScrollView)
 	ON_COMMAND(ID_FILE_OPEN, &CShapeCompositorView::OnFileOpen)
 	ON_COMMAND(ID_FILE_SAVE, &CShapeCompositorView::OnFileSave)
 	ON_COMMAND(ID_FILE_NEW, &CShapeCompositorView::OnFileNew)
-	ON_COMMAND(ID_APP_EXIT, &CShapeCompositorView::OnClose)
 	ON_WM_SIZE()
 	ON_WM_PAINT()
 	ON_WM_ERASEBKGND()
 	ON_WM_MOUSEMOVE()
 	ON_WM_LBUTTONDOWN()
 	ON_WM_LBUTTONUP()
+	ON_WM_CLOSE()
 	ON_WM_CLOSE()
 	ON_WM_CLOSE()
 END_MESSAGE_MAP()
@@ -239,6 +239,8 @@ int CShapeCompositorView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		
 		// TODO : rewrite Normal
 		m_imageFactory.SetRenderTarget(m_pRenderTarget);
+
+		GetDocument()->SetParentWndForFileManager(this);
 	}
 	catch (...)
 	{
@@ -254,13 +256,13 @@ BOOL CShapeCompositorView::PreCreateWindow(CREATESTRUCT& cs)
 	cs.cy = VIEW_HEIGHT; // height
 	cs.y = 0; // top position
 	cs.x = 0; // left position
-	if (!CScrollView::PreCreateWindow(cs))
-		return FALSE;
-
 	cs.dwExStyle |= WS_EX_CLIENTEDGE;
 	cs.style &= ~WS_BORDER;
 	cs.lpszClass = AfxRegisterWndClass(CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS,
 		::LoadCursor(NULL, IDC_ARROW), reinterpret_cast<HBRUSH>(COLOR_WINDOW + 1), NULL);
+
+	if (!CScrollView::PreCreateWindow(cs))
+		return FALSE;
 
 
 	return TRUE;
@@ -644,11 +646,11 @@ bool CShapeCompositorView::OpenDialogWindow()
 	return answer == IDYES;
 }
 
+
 void CShapeCompositorView::OnClose()
 {
 	// TODO: добавьте свой код обработчика сообщений или вызов стандартного
 	CheckSaveDocument();
 
 	CScrollView::OnClose();
-
 }

@@ -29,8 +29,8 @@ void CHistory::Undo()
 	{
 		m_currentCommand->get()->Cancel();
 		++m_currentCommand;
+		m_isSave = false;
 	}
-	m_isSave = false;
 }
 
 void CHistory::Redo()
@@ -39,8 +39,8 @@ void CHistory::Redo()
 	{
 		--m_currentCommand;
 		m_currentCommand->get()->Execute();
+		m_isSave = false;
 	}
-	m_isSave = false;
 }
 
 void CHistory::Clear()

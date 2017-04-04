@@ -159,11 +159,17 @@ void CShapeCompositorDoc::ResetCurrentFolder()
 	m_fileManager.RecreateTempFolder();
 }
 
+void CShapeCompositorDoc::SetParentWndForFileManager(CWnd * pParentWnd)
+{
+	m_fileManager.SetParentWnd(pParentWnd);
+}
+
 bool CShapeCompositorDoc::OnFileSaveAs(std::vector<CShapePtr> const & shapes)
 {
 	CString fileName = m_fileManager.OpenSaveDialog();
 	if (fileName.GetLength() != 0)
 	{
+		m_fileManager.SetFileName(fileName.GetString());
 		return m_xmlReader.Save(fileName.GetString(), shapes);
 	}
 	return false;

@@ -35,6 +35,8 @@ public:
 public:
 	bool IsNewDocument() const;
 	void ResetCurrentFolder();
+	void SetParentWndForFileManager(CWnd * pParentWnd);// For CDialog need parent wnd
+
 	afx_msg bool OnFileSaveAs(std::vector<CShapePtr> const & shapes);
 	afx_msg bool OnFileOpen(CShapeCompositorView * view);
 	afx_msg bool OnFileSave(std::vector<CShapePtr> const & shapes);

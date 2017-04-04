@@ -22,16 +22,16 @@ public:
 
 	CString OpenSaveDialog();
 	CString OpenLoadDialog();
-	void CreateTemporaryDirectory();
 	BOOL DirectoryExists(const std::wstring & dirName);
 
 	void ResetCurrentFolder();
 	void RecreateTempFolder();
+
+	void SetParentWnd(CWnd * pParentWnd);
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
-	std::wstring m_fileToSave;
-
+	CWnd * m_pParentWnd = nullptr;
 	boost::filesystem::path m_filePath;
 	boost::filesystem::path m_tempFolderPath;
 };
