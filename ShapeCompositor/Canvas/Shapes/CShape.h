@@ -9,7 +9,6 @@
 // Mixin for avoid dublicate
 class CShape 
 	: public IShape
-	, public IIsPointIntersection
 	, public CFrame
 {
 public:
@@ -42,7 +41,10 @@ public:
 	SShapeData GetShapeData() const override;
 	void SetShapeData(SShapeData const & data) override;
 	//--------------------------------------------
-	
+	virtual bool IsPointIntersection(const Vec2f point) const {
+		return false;
+	};
+
 
 
 //////////////////////////////////////////////////////////////////////

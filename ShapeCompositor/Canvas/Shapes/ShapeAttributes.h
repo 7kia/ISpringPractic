@@ -62,16 +62,6 @@ static const Color DEFAULT_FILL_COLOR = Color(0.45f, 0.75f, 0.55f);
 /////////////////////////////////////////////////////////////
 // Mixin
 
-class IIsPointIntersection
-{
-public:
-	virtual ~IIsPointIntersection() = default;
-
-	virtual bool IsPointIntersection(const Vec2f point) const {
-		return false;
-	};
-};
-
 class IFrame
 {
 public:
