@@ -24,7 +24,7 @@ bool CEllipse::IsPointIntersection(const Vec2f point) const
 	const float x = powf((point.x - m_position.x), 2.f);
 	const float y = powf((point.y - m_position.y), 2.f);
 
-	return ((b * x) + (a * y)) <= (a * b);
+	return (x / a) + (y / b) <= 1.f;//((b * x) + (a * y)) <= (a * b);
 }
 
 void CEllipse::Accept(IShapeVisitor & visitor) const

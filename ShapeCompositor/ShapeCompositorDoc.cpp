@@ -166,10 +166,11 @@ void CShapeCompositorDoc::SetParentWndForFileManager(CWnd * pParentWnd)
 
 bool CShapeCompositorDoc::OnFileSaveAs(std::vector<CShapePtr> const & shapes)
 {
-	CString fileName = m_fileManager.OpenSaveDialog();
+	CString fileName = OpenSaveDialog();
 	if (fileName.GetLength() != 0)
 	{
-		m_fileManager.SetFileName(fileName.GetString());
+		m_fileManager.SetFilePath(fileName.GetString());
+		m_fileManager.CreateFolder(fileName.GetString());
 		return m_xmlReader.Save(fileName.GetString(), shapes);
 	}
 	return false;
@@ -178,14 +179,14 @@ bool CShapeCompositorDoc::OnFileSaveAs(std::vector<CShapePtr> const & shapes)
 
 bool CShapeCompositorDoc::OnFileOpen(CShapeCompositorView * view)
 {
-	CString fileName = m_fileManager.OpenLoadDialog();
+	CString fileName = OpenLoadDialog();
 	if (fileName.GetLength() != 0)
 	{
 		view->ClearHistory();
 		view->ResetSelectedShape();
 
-		m_fileManager.SetFileName(fileName.GetString());
-		return m_xmlReader.Open(m_fileManager.GetFileName(), view->GetCanvas(), view->GetShapeFactory());
+		m_fileManager.SetFilePath(fileName.GetString());
+		return m_xmlReader.Open(m_fileManager.GetFilePath(), view->GetCanvas(), view->GetShapeFactory());
 	}
 	return false;
 }
@@ -198,6 +199,52 @@ bool CShapeCompositorDoc::OnFileSave(std::vector<CShapePtr> const & shapes)
 	}
 	else
 	{
-		return m_xmlReader.Save(m_fileManager.GetFileName(), shapes);
+		return m_xmlReader.Save(m_fileManager.GetFilePath(), shapes);
 	}
+}
+
+CString CShapeCompositorDoc::OpenSaveDialog()
+{
+	CString fileName;
+
+	CFileDialog fileDlg(
+		FALSE
+		, _T("")
+		, _T("*.xml")
+		, OFN_HIDEREADONLY
+		, L"XML Files\0"    L"*.xml\0"
+	);
+	if (fileDlg.DoModal() == IDOK)
+	{
+		CString pathName = fileDlg.GetPathName();
+
+		fileName = pathName;
+	}
+
+	return fileName;
+}
+
+CString CShapeCompositorDoc::OpenLoadDialog()
+{
+	CString fileName;
+
+	CFileDialog fileDlg(
+		TRUE
+		, NULL
+		, _T("*.xml")
+		, OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST
+		, L"XML Files\0"    L"*.xml\0"
+	);
+	if (fileDlg.DoModal() == IDOK)
+	{
+		CString pathName = fileDlg.GetPathName();
+
+		fileName = pathName;
+	}
+	return fileName;
+}
+
+CString CShapeCompositorDoc::GetFileName()
+{
+	return CString(m_fileManager.GetFileName().data());
 }

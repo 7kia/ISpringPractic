@@ -38,6 +38,7 @@ BEGIN_MESSAGE_MAP(CShapeCompositorView, CScrollView)
 	ON_COMMAND(ID_ADD_TRIANGLE, CShapeCompositorView::CreateTriangle)
 	ON_COMMAND(ID_ADD_RECTANGLE, CShapeCompositorView::CreateRectangle)
 	ON_COMMAND(ID_ADD_ELLIPSE, CShapeCompositorView::CreateEllipse)
+	ON_COMMAND(ID_ADD_PICTURE, CShapeCompositorView::CreatePicture)
 	ON_COMMAND(ID_UNDO, CShapeCompositorView::Undo)
 	ON_COMMAND(ID_REDO, CShapeCompositorView::Redo)
 	ON_COMMAND(ID_FILE_SAVE_AS, &CShapeCompositorView::OnFileSaveAs)
@@ -50,8 +51,6 @@ BEGIN_MESSAGE_MAP(CShapeCompositorView, CScrollView)
 	ON_WM_MOUSEMOVE()
 	ON_WM_LBUTTONDOWN()
 	ON_WM_LBUTTONUP()
-	ON_WM_CLOSE()
-	ON_WM_CLOSE()
 	ON_WM_CLOSE()
 END_MESSAGE_MAP()
 
@@ -161,6 +160,10 @@ void CShapeCompositorView::CreateEllipse()
 	RedrawWindow();
 }
 
+void CShapeCompositorView::CreatePicture()
+{
+}
+
 void CShapeCompositorView::Undo()
 {
 	m_history.Undo();
@@ -230,6 +233,9 @@ int CShapeCompositorView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	try
 	{
+		// TODO : not work set title
+		SetWindowText(CString("Безымянный"));
+
 		// Enable D2D support for this window:  
 
 		CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
@@ -288,16 +294,20 @@ void CShapeCompositorView::OnFileSaveAs()
 {
 	if (GetDocument()->OnFileSaveAs(m_canvas.GetShapes()))
 	{
-		m_history.SetSaveState(true);
+		m_history.DoSave();
 		RedrawWindow();
 	}
 }
 
 void CShapeCompositorView::OnFileOpen()
 {
-	if (GetDocument()->OnFileOpen(this))
+	if (CheckSaveDocument() != IDCANCEL)
 	{
-		RedrawWindow();
+		if (GetDocument()->OnFileOpen(this))
+		{
+			SetWindowText(GetDocument()->GetFileName());
+			RedrawWindow();
+		}
 	}
 }
 
@@ -305,20 +315,23 @@ void CShapeCompositorView::OnFileSave()
 {
 	if (GetDocument()->OnFileSave(m_canvas.GetShapes()))
 	{
-		m_history.SetSaveState(true);
+		m_history.DoSave();
+		SetWindowText(GetDocument()->GetFileName());
 		RedrawWindow();
 	}
 }
 
 void CShapeCompositorView::OnFileNew()
 {
-	CheckSaveDocument();
-	if (!(m_history.IsSave() && GetDocument()->IsNewDocument()))
+	if (CheckSaveDocument() != IDCANCEL)
 	{
-		m_history.SetSaveState(false);
-		ResetApplication();
-		GetDocument()->ResetCurrentFolder();
-		RedrawWindow();
+		if (!(m_history.IsSave() && GetDocument()->IsNewDocument()))
+		{
+			ResetApplication();
+			GetDocument()->ResetCurrentFolder();
+			SetWindowText(CString("Безымянный"));
+			RedrawWindow();
+		}
 	}
 }
 
@@ -352,6 +365,14 @@ BOOL CShapeCompositorView::PreTranslateMessage(MSG* pMsg)
 
 	switch (pMsg->message)
 	{
+		case WM_CLOSE:
+		{
+			CheckSaveDocument();
+
+			//PostQuitMessage(0);
+		}
+		break;
+
 	case WM_KEYDOWN:
 		{
 			switch (pMsg->wParam)
@@ -377,13 +398,7 @@ BOOL CShapeCompositorView::PreTranslateMessage(MSG* pMsg)
 			}
 		}
 		break;
-	case WM_DESTROY:
-	{
-		CheckSaveDocument();
-
-		PostQuitMessage(0);
-	}
-		break;
+	
 	default:
 		break;
 	}
@@ -613,39 +628,42 @@ Vec2f CShapeCompositorView::GetScreenPosition(const CPoint & point)
 	GetCursorPos(&windowPos);
 	ScreenToClient(&windowPos);
 
-	const CPoint scrollPosition = GetDeviceScrollPosition();
+	const CPoint scrollPosition = GetDeviceScrollPosition();//GetDeviceScrollPosition();
 
 	return Vec2f(float(windowPos.x + scrollPosition.x), float(windowPos.y + scrollPosition.y));
 }
 
-void CShapeCompositorView::CheckSaveDocument()
+int CShapeCompositorView::CheckSaveDocument()
 {
+	int result = IDNO;
 	if (!m_history.IsSave())
 	{
+		result = AfxMessageBox(L"Сохранить изменения?", MB_YESNOCANCEL);
+
 		if (GetDocument()->IsNewDocument())
 		{
-			if (OpenDialogWindow())
+			if(result == IDYES)
 			{
-				GetDocument()->OnFileSaveAs(m_canvas.GetShapes());
-			}
+				if (GetDocument()->OnFileSaveAs(m_canvas.GetShapes()))
+				{
+					m_history.DoSave();
+				}
+			}					
 		}
 		else
 		{
-			if (OpenDialogWindow())
+			if (result == IDYES)
 			{
-				GetDocument()->OnFileSave(m_canvas.GetShapes());
+				if (GetDocument()->OnFileSave(m_canvas.GetShapes()))
+				{
+					m_history.DoSave();
+				}
 			}
 		}
 	}
+
+	return result;
 }
-
-bool CShapeCompositorView::OpenDialogWindow()
-{
-	auto answer = AfxMessageBox(L"Сохранить изменения?", MB_YESNOCANCEL);
-
-	return answer == IDYES;
-}
-
 
 void CShapeCompositorView::OnClose()
 {

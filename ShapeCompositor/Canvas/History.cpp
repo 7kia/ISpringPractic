@@ -12,14 +12,18 @@ void CHistory::AddAndExecuteCommand(const CanvasCommandPtr & command)
 	// TODO : insert to middle queue
 	if (!m_history.empty() && (m_currentCommand != m_history.rbegin()))
 	{
+		if (std::find(m_currentCommand.base(), m_history.end(), m_saveLastCommand) != m_history.end())
+		{
+			m_saveLastCommand.reset();
+		}
 		m_history.erase(m_currentCommand.base(), m_history.end());
 	}
+
+
 	m_history.push_back(command);
 	m_currentCommand = m_history.rbegin();
 
 	m_currentCommand->get()->Execute();
-
-	m_isSave = false;
 }
 
 
@@ -29,7 +33,6 @@ void CHistory::Undo()
 	{
 		m_currentCommand->get()->Cancel();
 		++m_currentCommand;
-		m_isSave = false;
 	}
 }
 
@@ -39,7 +42,6 @@ void CHistory::Redo()
 	{
 		--m_currentCommand;
 		m_currentCommand->get()->Execute();
-		m_isSave = false;
 	}
 }
 
@@ -47,15 +49,34 @@ void CHistory::Clear()
 {
 	m_history.clear();
 	m_currentCommand = m_history.rbegin();
+	m_saveLastCommand.reset();
 }
 
 
 bool CHistory::IsSave() const
 {
-	return m_isSave;
+	// foc new document
+	
+	// for erase part history, never will be empty history 
+	// as erase was for add command instead other
+	const bool noSaveLastCommand = !m_saveLastCommand;
+	if (noSaveLastCommand && m_history.empty())
+	{
+		return true;
+	}
+	// not save return to start
+	if (noSaveLastCommand && (m_currentCommand == m_history.rend()))
+	{
+		return true;
+	}
+
+	return 	m_saveLastCommand == *m_currentCommand;
 }
 
-void CHistory::SetSaveState(bool value)
+void CHistory::DoSave()
 {
-	m_isSave = value;
+	if (m_currentCommand != m_history.rend())
+	{
+		m_saveLastCommand = *m_currentCommand;
+	}
 }

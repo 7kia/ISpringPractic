@@ -30,7 +30,7 @@ CFileManager::~CFileManager()
 	remove_all(m_tempFolderPath);
 }
 
-void CFileManager::SetFileName(const CString & name)
+void CFileManager::SetFilePath(const CString & name)
 {
 	if (name != m_tempFolderPath)
 	{
@@ -43,52 +43,24 @@ std::wstring CFileManager::GetFileName() const
 	return m_filePath.filename().generic_wstring();
 }
 
+std::wstring CFileManager::GetFilePath() const
+{
+	return m_filePath.generic_wstring();
+}
+
+void CFileManager::CreateFolder(const CString & name)
+{
+	if (!exists(path(name)))
+	{
+		create_directory(path(name));
+	}
+}
+
 bool CFileManager::IsNewDocument() const
 {
 	return m_filePath.empty();
 }
 
-CString CFileManager::OpenSaveDialog()
-{
-	CString fileName;
-
-	CFileDialog fileDlg(
-		FALSE
-		, _T("")
-		, _T("*.xml")
-		, OFN_HIDEREADONLY
-		, L"XML Files\0"    L"*.xml\0"
-	);
-	if (fileDlg.DoModal() == IDOK)
-	{
-		CString pathName = fileDlg.GetPathName();
-
-		fileName = pathName;
-	}
-
-	return fileName;
-}
-
-CString CFileManager::OpenLoadDialog()
-{
-	CString fileName;
-
-	CFileDialog fileDlg(
-		TRUE
-		, NULL
-		, _T("*.xml")
-		, OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST
-		, L"XML Files\0"    L"*.xml\0"
-	);
-	if (fileDlg.DoModal() == IDOK)
-	{
-		CString pathName = fileDlg.GetPathName();
-
-		fileName = pathName;
-	}
-
-	return fileName;
-}
 
 BOOL CFileManager::DirectoryExists(const std::wstring & dirName)
 {

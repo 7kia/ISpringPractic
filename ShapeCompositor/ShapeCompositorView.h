@@ -49,6 +49,7 @@ public:
 	void					CreateTriangle();
 	void					CreateRectangle();
 	void					CreateEllipse();
+	void					CreatePicture();
 
 	void					Undo();
 	void					Redo();
@@ -70,8 +71,7 @@ private:
 	void					LoadTexture(const std::string & name);
 	Vec2f					GetScreenPosition(const CPoint & point);
 
-	void					CheckSaveDocument();
-	bool					OpenDialogWindow();
+	int						CheckSaveDocument();
 // Переопределение
 public:
 	virtual void OnDraw(CDC* pDC);  // переопределено для отрисовки этого представления

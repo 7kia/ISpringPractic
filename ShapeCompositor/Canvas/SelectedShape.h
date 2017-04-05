@@ -128,9 +128,9 @@ private:
 	ArrayShapes						m_resizeShapes;
 	D2D1_RECT_F						m_boundingRect;
 	// For drag and drop
-	boost::optional<Vec2f>				m_startMove;
-	Vec2f								m_start;
-	Vec2f								m_current;
-	bool								m_isUpdate = false;
-	UpdateType							m_updateType = UpdateType::None;
+	boost::optional<Vec2f>			m_startMove;
+	Vec2f							m_start;
+	Vec2f							m_current;
+	bool							m_isUpdate = false;
+	UpdateType						m_updateType = UpdateType::None;
 };

@@ -16,12 +16,13 @@ public:
 public:
 	const std::wstring DEFAULT_TEMP_DIRECTORY = L"temp";
 
-	void SetFileName(const CString & name);
+	void SetFilePath(const CString & name);
 	std::wstring GetFileName() const;
+	std::wstring GetFilePath() const;
+	void CreateFolder(const CString & name);
+
 	bool IsNewDocument() const;
 
-	CString OpenSaveDialog();
-	CString OpenLoadDialog();
 	BOOL DirectoryExists(const std::wstring & dirName);
 
 	void ResetCurrentFolder();
