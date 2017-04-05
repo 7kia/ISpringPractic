@@ -42,24 +42,6 @@
     <ClInclude Include="..\ShapeCompositor\Canvas\Canvas.h">
       <Filter>Файлы исходного кода\TestClasses\Canvas</Filter>
     </ClInclude>
-    <ClInclude Include="..\ShapeCompositor\Canvas\CanvasCommands\AddShapeCommand.h">
-      <Filter>Файлы исходного кода\TestClasses\Canvas\CanvasCommand</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ShapeCompositor\Canvas\CanvasCommands\CanvasCommand.h">
-      <Filter>Файлы исходного кода\TestClasses\Canvas\CanvasCommand</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ShapeCompositor\Canvas\CanvasCommands\AllCanvasCommand.h">
-      <Filter>Файлы исходного кода\TestClasses\Canvas\CanvasCommand</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ShapeCompositor\Canvas\CanvasCommands\DeleteShapeCommand.h">
-      <Filter>Файлы исходного кода\TestClasses\Canvas\CanvasCommand</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ShapeCompositor\Canvas\CanvasCommands\MoveShapeCommand.h">
-      <Filter>Файлы исходного кода\TestClasses\Canvas\CanvasCommand</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ShapeCompositor\Canvas\CanvasCommands\ScaleShapeCommand.h">
-      <Filter>Файлы исходного кода\TestClasses\Canvas\CanvasCommand</Filter>
-    </ClInclude>
     <ClInclude Include="..\ShapeCompositor\Canvas\Shapes\AllShapes.h">
       <Filter>Файлы исходного кода\TestClasses\Canvas\Shapes</Filter>
     </ClInclude>
@@ -99,6 +81,21 @@
     <ClInclude Include="..\ShapeCompositor\Canvas\SelectedShape.h">
       <Filter>Файлы исходного кода\TestClasses\Canvas</Filter>
     </ClInclude>
+    <ClInclude Include="..\ShapeCompositor\Canvas\CanvasCommands\AddShapeCommand.h">
+      <Filter>Файлы исходного кода\TestClasses\Canvas\CanvasCommand</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ShapeCompositor\Canvas\CanvasCommands\AllCanvasCommand.h">
+      <Filter>Файлы исходного кода\TestClasses\Canvas\CanvasCommand</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ShapeCompositor\Canvas\CanvasCommands\CanvasCommand.h">
+      <Filter>Файлы исходного кода\TestClasses\Canvas\CanvasCommand</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ShapeCompositor\Canvas\CanvasCommands\ChangeShapeRectCommand.h">
+      <Filter>Файлы исходного кода\TestClasses\Canvas\CanvasCommand</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ShapeCompositor\Canvas\CanvasCommands\DeleteShapeCommand.h">
+      <Filter>Файлы исходного кода\TestClasses\Canvas\CanvasCommand</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -112,18 +109,6 @@
     </ClCompile>
     <ClCompile Include="..\ShapeCompositor\Canvas\Canvas.cpp">
       <Filter>Файлы исходного кода\TestClasses\Canvas</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ShapeCompositor\Canvas\CanvasCommands\AddShapeCommand.cpp">
-      <Filter>Файлы исходного кода\TestClasses\Canvas\CanvasCommand</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ShapeCompositor\Canvas\CanvasCommands\DeleteShapeCommand.cpp">
-      <Filter>Файлы исходного кода\TestClasses\Canvas\CanvasCommand</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ShapeCompositor\Canvas\CanvasCommands\MoveShapeCommand.cpp">
-      <Filter>Файлы исходного кода\TestClasses\Canvas\CanvasCommand</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ShapeCompositor\Canvas\CanvasCommands\ScaleShapeCommand.cpp">
-      <Filter>Файлы исходного кода\TestClasses\Canvas\CanvasCommand</Filter>
     </ClCompile>
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\CShape.cpp">
       <Filter>Файлы исходного кода\TestClasses\Canvas\Shapes</Filter>
@@ -157,6 +142,15 @@
     </ClCompile>
     <ClCompile Include="..\ShapeCompositor\Canvas\SelectedShape.cpp">
       <Filter>Файлы исходного кода\TestClasses\Canvas</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ShapeCompositor\Canvas\CanvasCommands\AddShapeCommand.cpp">
+      <Filter>Файлы исходного кода\TestClasses\Canvas\CanvasCommand</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ShapeCompositor\Canvas\CanvasCommands\ChangeShapeRectCommand.cpp">
+      <Filter>Файлы исходного кода\TestClasses\Canvas\CanvasCommand</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ShapeCompositor\Canvas\CanvasCommands\DeleteShapeCommand.cpp">
+      <Filter>Файлы исходного кода\TestClasses\Canvas\CanvasCommand</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -53,7 +53,7 @@ Vec2f const operator -(Vec2f const &first, Vec2f const &second);
 Vec2f const operator *(Vec2f const &first, Vec2f const &second);
 Vec2f const operator -(Vec2f const &first);
 
-using ListVertices = std::vector<Vec2f>;
+using VertexList = std::vector<Vec2f>;
 
 static const SSize DEFAULT_SIZE = SSize(50.f, 50.f);
 static const Color DEFAULT_OUTLINE_COLOR = Color(0.f, 0.f, 0.f);
@@ -108,8 +108,8 @@ public:
 	SSize GetSize() const override;
 
 	// Get shape data
-	CFrame GetFrameData() const;
-	void SetFrameData(CFrame const & data);
+	CFrame GetFrame() const;
+	void SetFrame(CFrame const & data);
 
 	std::vector<Vec2f> GetFrameVertices() const;
 

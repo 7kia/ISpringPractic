@@ -19,6 +19,7 @@ public:
 		, const SSize size = DEFAULT_SIZE
 		, const Color fillColor = DEFAULT_FILL_COLOR
 		, const Color outlineColor = DEFAULT_OUTLINE_COLOR
+		, float outlineThikness = 1.f
 	);
 	//////////////////////////////////////////////////////////////////////
 	// Methods
@@ -32,6 +33,9 @@ public:
 	// Outer Color
 	void SetOutlineColor(Color color) override;
 	Color GetOutlineColor() const override;
+	// Thikness outline
+	void SetOutlineThickness(float thickness) override;
+	float GetOutlineThickness() const override;
 	// Type
 	ShapeType GetType() const override;
 
@@ -47,6 +51,8 @@ protected:
 	Color m_fillColor;
 	Color m_outlineColor;
 	ShapeType m_type;
+	float m_outlineThikness = 1.f;
+
 };
 
 using CShapePtr = std::shared_ptr<CShape>;

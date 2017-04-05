@@ -75,7 +75,7 @@ void CD2DObjectRenderer::Draw(const IShape & shape)
 void CD2DObjectRenderer::Visit(const CRectangle & shape)
 {
 	auto vertices = shape.GetVertices();
-
+	
 	Color fillColor = shape.GetFillColor();
 	m_pRenderTarget->CreateSolidColorBrush(
 		D2D1::ColorF(D2D1::ColorF(fillColor.r, fillColor.g, fillColor.b, fillColor.a)),
@@ -97,8 +97,10 @@ void CD2DObjectRenderer::Visit(const CRectangle & shape)
 	}
 	m_geometrySink->EndFigure(D2D1_FIGURE_END_CLOSED);
 	m_geometrySink->Close();
+
+	const float outlineThikness = shape.GetOutlineThickness();
 	m_pRenderTarget->FillGeometry(m_pathGeometry, m_fillBrush);
-	m_pRenderTarget->DrawGeometry(m_pathGeometry, m_outlineBrush);
+	m_pRenderTarget->DrawGeometry(m_pathGeometry, m_outlineBrush, outlineThikness);
 
 	m_fillBrush.Release();
 	m_outlineBrush.Release();
@@ -128,8 +130,9 @@ void CD2DObjectRenderer::Visit(const CEllipse & shape)
 		, size.width / 2.f
 		, size.height / 2.f
 	);
+	const float outlineThikness = shape.GetOutlineThickness();
 	m_pRenderTarget->FillEllipse(ellipse, m_fillBrush);
-	m_pRenderTarget->DrawEllipse(ellipse, m_outlineBrush);
+	m_pRenderTarget->DrawEllipse(ellipse, m_outlineBrush, outlineThikness);
 
 	m_fillBrush.Release();
 	m_outlineBrush.Release();
@@ -160,8 +163,10 @@ void CD2DObjectRenderer::Visit(const CTriangle & shape)
 	}
 	m_geometrySink->EndFigure(D2D1_FIGURE_END_CLOSED);
 	m_geometrySink->Close();
+
+	const float outlineThikness = shape.GetOutlineThickness();
 	m_pRenderTarget->FillGeometry(m_pathGeometry, m_fillBrush);
-	m_pRenderTarget->DrawGeometry(m_pathGeometry, m_outlineBrush);
+	m_pRenderTarget->DrawGeometry(m_pathGeometry, m_outlineBrush, outlineThikness);
 
 	m_fillBrush.Release();
 	m_outlineBrush.Release();

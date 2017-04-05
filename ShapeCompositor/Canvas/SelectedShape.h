@@ -7,6 +7,7 @@
 #include "ObjectRenderer.h"
 #include "Shapes\ShapeFactory.h"
 #include <boost\optional.hpp>
+
 static const SSize SELECTED_ELLIPSE_SIZE = SSize(10.f, 10.f);
 static const SSize MIN_SHAPE_SIZE = SSize(50.f, 50.f);
 
@@ -79,23 +80,19 @@ public:
 	void SetSize(SSize size) override;
 	SSize GetSize() const override;
 
-	D2D1_RECT_F GetOwnRect() const;
-
 	// Get shape data
-	CFrame GetFrameData() const;// TODO : see need it
-	void SetFrameData(CFrame const & data);
+	CFrame GetFrame() const;// TODO : see need it
+	void SetFrame(CFrame const & data);
 	//--------------------------------------------
 
 
 	// For drag and drop
 	Vec2f	GetFinalShift() const;
-	void	MoveFrame(const Vec2f shift);
-	CFrame	GetFinalFrameData() const;
-	CFrame	GetOldFrameData();
-	CFrame	GetCurrentFrameData();
+	CFrame	GetOldFrame();
+	CFrame	GetCurrentFrame();
 	SSize	GetDirectionResize() const;
 	void	ReturnToOldState();
-	void	SetOldFrameData(CFrame const & data);
+	void	SetOldFrame(CFrame const & data);
 	bool	CheckBoundingRect(const D2D1_RECT_F & rect) const;
 
 private:
@@ -104,19 +101,14 @@ private:
 	void					SetResizeView();
 
 	bool					CheckSize(const SSize size) const;
-	CFrame					GetNewFrameData(const Vec2f shift, const CFrame & oldFrame) const;
-	SSize					GetCorrectSize(const SSize size) const;
+	CFrame					GetNewFrame(const Vec2f shift, const CFrame & oldFrame) const;
+	static SSize			GetCorrectSize(const SSize size);
 	Vec2f					GetCorrectPosition(
 												const SSize newSize
 												, const Vec2f shift
 												, const Vec2f startPosition
 												) const;
 
-	Vec2f					GetCorrectPositionShift(
-								const Vec2f shift
-								, bool conditionForX
-								, bool conditionForY
-							) const;
 
 	//////////////////////////////////////////////////////////////////////
 	// Data

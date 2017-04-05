@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "Canvas.h"
 
-CCanvas::CCanvas(const SSize & size)
+CCanvas::CCanvas(const SSize & size, const CShapePtr & view)
 	: m_size(size)
+	, m_view(view)
 {
 }
 
@@ -35,6 +36,11 @@ void CCanvas::SetSize(const SSize & size)
 SSize CCanvas::GetSize() const
 {
 	return m_size;
+}
+
+CShapePtr CCanvas::GetView() const
+{
+	return m_view;
 }
 
 std::vector<CShapePtr> CCanvas::GetShapes() const
@@ -106,7 +112,7 @@ bool CCanvas::IsSelectShape(size_t index, const CShapePtr & selectedShape) const
 	return selectedShape == m_shapes[index];
 }
 
-void CCanvas::CheckShapeIndex(size_t index, size_t max) const
+void CCanvas::CheckShapeIndex(size_t index, size_t max)
 {
 	if (index > max)
 	{

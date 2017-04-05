@@ -6,6 +6,7 @@ CTriangle::CTriangle(
 	, const SSize m_size
 	, const Color fillColor
 	, const Color outlineColor
+	, float outlineThikness
 )
 	: CShape(
 		ShapeType::Triangle
@@ -13,6 +14,7 @@ CTriangle::CTriangle(
 		, m_size
 		, fillColor
 		, outlineColor
+		, outlineThikness
 	)
 {
 }
@@ -50,7 +52,7 @@ bool CTriangle::IsPointIntersection(const Vec2f point) const
 	return PointIsInsideTriangle(vertices[2], vertices[1], vertices[0], point);
 }
 
-ListVertices CTriangle::GetVertices() const
+VertexList CTriangle::GetVertices() const
 {
 	Vec2f first = Vec2f(m_position.x - m_size.width / 2.f, m_position.y + m_size.height / 2.f);
 	Vec2f second = Vec2f(m_position.x + m_size.width / 2.f, m_position.y + m_size.height / 2.f);

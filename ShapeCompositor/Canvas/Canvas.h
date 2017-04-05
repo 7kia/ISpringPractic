@@ -54,7 +54,7 @@ class CCanvas
 	: public IAddAndDeleteShape
 {
 public:
-	CCanvas(const SSize & size = SSize());
+	CCanvas(const SSize & size, const CShapePtr & view);
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
@@ -89,8 +89,11 @@ public:
 	void					SetSize(const SSize & size);
 	SSize					GetSize() const;
 
+	// For draw borders
+	CShapePtr				GetView() const;
+
 private:
-	void					CheckShapeIndex(size_t index, size_t max) const;
+	static void				CheckShapeIndex(size_t index, size_t max);
 	//////////////////////////////////////////////////////////////////////
 	// Data
 public:
@@ -98,5 +101,6 @@ private:
 	// TODO : see might require do private
 	std::vector<CShapePtr>	m_shapes;
 
-	SSize m_size;
+	CShapePtr				m_view;
+	SSize					m_size;
 };

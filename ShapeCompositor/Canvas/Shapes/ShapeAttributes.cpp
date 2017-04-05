@@ -168,12 +168,12 @@ SSize CFrame::GetSize() const
 	return m_size;
 }
 
-CFrame CFrame::GetFrameData() const
+CFrame CFrame::GetFrame() const
 {
 	return CFrame(m_position, m_size);
 }
 
-void CFrame::SetFrameData(CFrame const & data)
+void CFrame::SetFrame(CFrame const & data)
 {
 	m_position = data.GetPosition();
 	m_size = data.GetSize();

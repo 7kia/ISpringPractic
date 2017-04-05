@@ -55,11 +55,26 @@ BEGIN_MESSAGE_MAP(CShapeCompositorView, CScrollView)
 END_MESSAGE_MAP()
 
 // создание/уничтожение CShapeCompositorView
-
+namespace
+{
+	const SSize CANVAS_SIZE = SSize(640.f, 480.f);
+}
 CShapeCompositorView::CShapeCompositorView()
-	: m_shapeFactory()// TODO : see can rewrite
+	: m_shapeFactory()
 	, m_selectedShape(m_shapeFactory)
-	, m_canvas(SSize(640.f, 480.f))
+	, m_canvas(
+		CANVAS_SIZE,
+		m_shapeFactory.CreateShape(// TODO : see can rewrite astyle
+			SShapeData(
+				ShapeType::Rectangle,
+				Vec2f(CANVAS_SIZE.width / 2.f, CANVAS_SIZE.height / 2.f),
+				CANVAS_SIZE,
+				NOT_COLOR,
+				BLACK_COLOR,
+				3.f
+			)
+		)
+	)
 {
 	const SSize canvasSize = m_canvas.GetSize();
 	D2D1_RECT_F rect;
@@ -68,7 +83,10 @@ CShapeCompositorView::CShapeCompositorView()
 	rect.top = 0.f;
 	rect.bottom = canvasSize.height;
 
+	// TODO : if canvas resize, m_selectedShape will have incorrect BoundingRect
 	m_selectedShape.SetBoundingRect(rect);
+
+
 }
 
 CShapeCompositorView::~CShapeCompositorView()
@@ -88,6 +106,8 @@ HRESULT CShapeCompositorView::Draw()
 	m_pRenderTarget->BeginDraw();
 	m_pRenderTarget->SetTransform(matrix);
 	m_pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
+
+	m_objectRenderer.Draw(*m_canvas.GetView());
 
 	for (const auto & shape : m_canvas.GetShapes())
 	{
@@ -581,12 +601,12 @@ void CShapeCompositorView::CreateCommandForSelectedShape()
 	case CSelectedShape::UpdateType::MarkerRightBottom:
 	case CSelectedShape::UpdateType::MarkerRightTop:
 	{
-		const auto finalFrame = m_selectedShape.GetCurrentFrameData();
+		const auto finalFrame = m_selectedShape.GetCurrentFrame();
 		m_selectedShape.ReturnToOldState();
 
 		m_history.AddAndExecuteCommand(std::make_shared<CChangeShapeRectCanvasCommand>(
 			&m_canvas,
-			m_selectedShape.GetOldFrameData(),
+			m_selectedShape.GetOldFrame(),
 			finalFrame,
 			m_selectedShape
 			));

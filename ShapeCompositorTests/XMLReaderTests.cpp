@@ -8,16 +8,20 @@ struct XMLReaderFixture
 {
 	CXMLReader xmlReader;
 	
-	CCanvas emptyCanvas;
-	CCanvas fullCanvas;
 	CShapeFactory factory;
 
 	CShapePtr ellipse;
 	CShapePtr rectangle;
 	CShapePtr triangle;
 
+	CCanvas emptyCanvas;
+	CCanvas fullCanvas;
+
+
 	XMLReaderFixture()
-		: ellipse(factory.CreateShape(SShapeData(ShapeType::Ellipse)))
+		: emptyCanvas(SSize(), rectangle)
+		, fullCanvas(SSize(), rectangle)
+		, ellipse(factory.CreateShape(SShapeData(ShapeType::Ellipse)))
 		, rectangle(factory.CreateShape(SShapeData(ShapeType::Rectangle)))
 		, triangle(factory.CreateShape(SShapeData(ShapeType::Triangle)))
 	{

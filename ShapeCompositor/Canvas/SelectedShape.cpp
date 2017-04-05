@@ -25,7 +25,7 @@ CSelectedShape::CSelectedShape(const CShapeFactory & shapeFactory)
 void CSelectedShape::SetShape(const CShapePtr & shape)
 {
 	m_selectedShape = shape;
-	m_currentFrame = shape->GetFrameData();
+	m_currentFrame = shape->GetFrame();
 	m_oldFrame = m_currentFrame;
 
 	SetViewPosition();
@@ -155,7 +155,7 @@ void CSelectedShape::HandleMoveMouse(const Vec2f point)
 
 			m_current = point;
 
-			SetFrameData(GetCurrentFrameData());
+			SetFrame(GetCurrentFrame());
 			m_start = m_current;
 			
 		}
@@ -212,22 +212,16 @@ SSize CSelectedShape::GetSize() const
 	return m_selectedShape->GetSize();
 }
 
-
-D2D1_RECT_F CSelectedShape::GetOwnRect() const
-{
-	return GetFrameRect(*m_selectedShape);
-}
-
-CFrame CSelectedShape::GetFrameData() const
+CFrame CSelectedShape::GetFrame() const
 {
 	return m_currentFrame;
 }
 
-void CSelectedShape::SetFrameData(CFrame const & data)
+void CSelectedShape::SetFrame(CFrame const & data)
 {
 	if (HaveSelectedShape())
 	{
-		m_selectedShape->SetFrameData(data);
+		m_selectedShape->SetFrame(data);
 	}
 
 	m_currentFrame = data;
@@ -241,29 +235,19 @@ Vec2f CSelectedShape::GetFinalShift() const
 	{
 		return m_current - *m_startMove;
 	}
-	return m_current;
-}
-
-void CSelectedShape::MoveFrame(const Vec2f shift)
-{
-	m_currentFrame.SetPosition(m_currentFrame.GetPosition() + shift);
-	SetViewPosition();
+	return Vec2f();
 }
 
 
-CFrame CSelectedShape::GetFinalFrameData() const
-{
-	return GetNewFrameData(GetFinalShift(), m_currentFrame);
-}
 
-CFrame CSelectedShape::GetOldFrameData()
+CFrame CSelectedShape::GetOldFrame()
 {
 	return m_oldFrame;
 }
 
-CFrame CSelectedShape::GetCurrentFrameData()
+CFrame CSelectedShape::GetCurrentFrame()
 {
-	return GetNewFrameData(m_current - m_start, m_currentFrame);
+	return GetNewFrame(m_current - m_start, m_currentFrame);
 }
 
 SSize CSelectedShape::GetDirectionResize() const
@@ -292,10 +276,10 @@ SSize CSelectedShape::GetDirectionResize() const
 
 void CSelectedShape::ReturnToOldState()
 {
-	SetFrameData(GetOldFrameData());
+	SetFrame(GetOldFrame());
 }
 
-void CSelectedShape::SetOldFrameData(CFrame const & data)
+void CSelectedShape::SetOldFrame(CFrame const & data)
 {
 	m_oldFrame = data;
 }
@@ -318,7 +302,7 @@ void CSelectedShape::SetViewPosition()
 
 void CSelectedShape::SetMoveView()
 {
-	m_resizeShapes[size_t(ShapeIndex::Frame)]->SetFrameData(GetFrameData());
+	m_resizeShapes[size_t(ShapeIndex::Frame)]->SetFrame(GetFrame());
 }
 
 void CSelectedShape::SetResizeView()
@@ -342,7 +326,7 @@ bool CSelectedShape::CheckSize(const SSize size) const
 	return (size.width >= MIN_SHAPE_SIZE.width) && (size.height >= MIN_SHAPE_SIZE.height);
 }
 
-CFrame CSelectedShape::GetNewFrameData(const Vec2f shift, const CFrame & oldFrame) const
+CFrame CSelectedShape::GetNewFrame(const Vec2f shift, const CFrame & oldFrame) const
 {
 	CFrame info;
 
@@ -383,7 +367,7 @@ CFrame CSelectedShape::GetNewFrameData(const Vec2f shift, const CFrame & oldFram
 	return oldFrame;
 }
 
-SSize CSelectedShape::GetCorrectSize(const SSize size) const
+SSize CSelectedShape::GetCorrectSize(const SSize size)
 {
 	SSize result = size;
 	if (result.width < MIN_SHAPE_SIZE.width)
@@ -423,23 +407,6 @@ Vec2f CSelectedShape::GetCorrectPosition(
 	return startPosition;
 }
 
-Vec2f CSelectedShape::GetCorrectPositionShift(
-	const Vec2f shift
-	, bool conditionForX
-	, bool conditionForY
-) const
-{
-	Vec2f correctShift = shift;
-	if (conditionForX)
-	{
-		correctShift.x = 0.f;
-	}
-	if (conditionForY)
-	{
-		correctShift.y = 0.f;
-	}
-	return correctShift;
-}
 
 CSelectedShape::ArrayShapes CSelectedShape::GetShapes() const
 {

@@ -76,18 +76,28 @@ BOOST_FIXTURE_TEST_SUITE(Shape, Shape_)
 
 		BOOST_CHECK(shape.GetSize() == size);
 	}
-	BOOST_AUTO_TEST_CASE(Can_change_frame_data)
+	BOOST_AUTO_TEST_CASE(Have_outline_thikness)
+	{
+		const float thikness = 2.f;
+
+		BOOST_CHECK_EQUAL(shape.GetOutlineThickness(), 1.f);
+
+		shape.SetOutlineThickness(thikness);
+
+		BOOST_CHECK_EQUAL(shape.GetOutlineThickness(), 2.f);
+	}
+	BOOST_AUTO_TEST_CASE(Can_change_frame)
 	{
 		SSize size(1.2f, 99.f);
 		Vec2f pos(4.5f, -9.4f);
 
 		CFrame setData(pos, size);
 
-		shape.SetFrameData(setData);
+		shape.SetFrame(setData);
 
-		BOOST_CHECK(shape.GetFrameData() == setData);
+		BOOST_CHECK(shape.GetFrame() == setData);
 	}
-	BOOST_AUTO_TEST_CASE(Can_change_shape_data)
+	BOOST_AUTO_TEST_CASE(Can_change_shape)
 	{
 		SShapeData setData(ShapeType::Ellipse
 			, Vec2f(4.6f, -19.4f)

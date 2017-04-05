@@ -20,24 +20,24 @@ CChangeShapeRectCanvasCommand::CChangeShapeRectCanvasCommand(
 void CChangeShapeRectCanvasCommand::Execute()
 {
 	CShapePtr shape = m_pCanvas->GetShape(m_index);
-	shape->SetFrameData(m_newData);
+	shape->SetFrame(m_newData);
 
 	if (m_pSelectedShape->GetShape() == shape)
 	{
-		m_pSelectedShape->SetFrameData(m_newData);
-		m_pSelectedShape->SetOldFrameData(m_newData);
+		m_pSelectedShape->SetFrame(m_newData);
+		m_pSelectedShape->SetOldFrame(m_newData);
 	}
 }
 
 void CChangeShapeRectCanvasCommand::Cancel()
 {
 	CShapePtr shape = m_pCanvas->GetShape(m_index);
-	shape->SetFrameData(m_oldFrame);
+	shape->SetFrame(m_oldFrame);
 
 	if (m_pSelectedShape->GetShape() == shape)
 	{
-		m_pSelectedShape->SetFrameData(m_oldFrame);
-		m_pSelectedShape->SetOldFrameData(m_oldFrame);
+		m_pSelectedShape->SetFrame(m_oldFrame);
+		m_pSelectedShape->SetOldFrame(m_oldFrame);
 	}
 }
 

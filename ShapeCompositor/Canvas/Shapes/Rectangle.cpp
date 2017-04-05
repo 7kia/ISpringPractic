@@ -6,6 +6,7 @@ CRectangle::CRectangle(
 	, const SSize size
 	, const Color fillColor
 	, const Color outlineColor
+	, float outlineThikness
 )
 	: CShape(
 		ShapeType::Rectangle
@@ -13,6 +14,7 @@ CRectangle::CRectangle(
 		, size
 		, fillColor
 		, outlineColor
+		, outlineThikness
 	) 
 {
 }
@@ -32,7 +34,7 @@ bool CRectangle::IsPointIntersection(const Vec2f point) const
 		&& IsBetween(point.y, float(ownRect.top), float(ownRect.bottom));
 }
 
-ListVertices CRectangle::GetVertices() const
+VertexList CRectangle::GetVertices() const
 {
 	return GetFrameVertices();
 }

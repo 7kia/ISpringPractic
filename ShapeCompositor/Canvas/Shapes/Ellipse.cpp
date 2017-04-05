@@ -6,6 +6,7 @@ CEllipse::CEllipse(
 	, const SSize size
 	, const Color fillColor
 	, const Color outlineColor
+	, float outlineThikness
 )
 	: CShape(
 		ShapeType::Ellipse
@@ -13,6 +14,7 @@ CEllipse::CEllipse(
 		, size
 		, fillColor
 		, outlineColor
+		, outlineThikness
 	)
 {
 }

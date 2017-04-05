@@ -15,6 +15,7 @@ CShapePtr CShapeFactory::CreateShape(const SShapeData & data) const
 			, data.size
 			, data.fillColor
 			, data.outlineColor
+			, data.outlineThikness
 			);
 	case ShapeType::Rectangle:
 		return std::make_shared<CRectangle>(
@@ -22,6 +23,7 @@ CShapePtr CShapeFactory::CreateShape(const SShapeData & data) const
 			, data.size
 			, data.fillColor
 			, data.outlineColor
+			, data.outlineThikness
 			);
 	case ShapeType::Ellipse:
 		return std::make_shared<CEllipse>(
@@ -29,6 +31,7 @@ CShapePtr CShapeFactory::CreateShape(const SShapeData & data) const
 			, data.size
 			, data.fillColor
 			, data.outlineColor
+			, data.outlineThikness
 			);
 	default:
 		throw std::runtime_error("The shape type not exist");

@@ -20,6 +20,7 @@ struct SShapeData
 		, const SSize size = DEFAULT_SIZE
 		, const Color fillColor = DEFAULT_FILL_COLOR
 		, const Color outlineColor = DEFAULT_OUTLINE_COLOR
+		, float outlineThikness = 1.f
 	);
 
 	bool operator==(const SShapeData & shapeData) const;
@@ -29,6 +30,7 @@ struct SShapeData
 	ShapeType type;
 	Color fillColor;
 	Color outlineColor;
+	float outlineThikness = 1.f;
 };
 
 
@@ -47,6 +49,9 @@ public:
 	// Outer Color
 	virtual void SetOutlineColor(Color color) = 0;
 	virtual Color GetOutlineColor() const = 0;
+	// Thikness outline
+	virtual void SetOutlineThickness(float thickness) = 0;
+	virtual float GetOutlineThickness() const = 0;
 	// Get shape data
 	virtual SShapeData GetShapeData() const = 0;
 	virtual void SetShapeData(SShapeData const & data) = 0;

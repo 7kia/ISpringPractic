@@ -6,16 +6,19 @@ BOOST_AUTO_TEST_SUITE(CCanvas_suite)
 
 struct CanvasFixture
 {
-	CCanvas emptyCanvas;
-	CCanvas fullCanvas;
 	CShapeFactory factory;
 
 	CShapePtr ellipse;
 	CShapePtr rectangle;
 	CShapePtr triangle;
 
+	CCanvas emptyCanvas;
+	CCanvas fullCanvas;
+
 	CanvasFixture()
-		: ellipse(factory.CreateShape(SShapeData(ShapeType::Ellipse)))
+		: emptyCanvas(SSize(), rectangle)
+		, fullCanvas(SSize(), rectangle)
+		, ellipse(factory.CreateShape(SShapeData(ShapeType::Ellipse)))
 		, rectangle(factory.CreateShape(SShapeData(ShapeType::Rectangle)))
 		, triangle(factory.CreateShape(SShapeData(ShapeType::Triangle)))
 	{
@@ -175,15 +178,16 @@ BOOST_FIXTURE_TEST_SUITE(Canvas, CanvasFixture)
 			const SSize size = SSize(1.f, 1.f);
 
 			CShapeFactory factory;
-			CCanvas canvas;
 
 			CShapePtr ellipse;
 			CShapePtr rectangle;
 			CShapePtr triangle;
 
+			CCanvas canvas;
 
 			GetShapeByMousePositionFixture()
-				: ellipse(factory.CreateShape(SShapeData(ShapeType::Ellipse, firstPos, size)))
+				: canvas(SSize(), rectangle)
+				, ellipse(factory.CreateShape(SShapeData(ShapeType::Ellipse, firstPos, size)))
 				, triangle(factory.CreateShape(SShapeData(ShapeType::Triangle, secondPos, size)))
 				, rectangle(factory.CreateShape(SShapeData(ShapeType::Rectangle, thirdPos, size)))
 			{

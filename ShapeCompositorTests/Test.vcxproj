@@ -88,6 +88,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../ShapeCompositor;$(MSBuildProjectDirectory);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -154,9 +155,8 @@
     <ClInclude Include="..\ShapeCompositor\Canvas\CanvasCommands\AddShapeCommand.h" />
     <ClInclude Include="..\ShapeCompositor\Canvas\CanvasCommands\AllCanvasCommand.h" />
     <ClInclude Include="..\ShapeCompositor\Canvas\CanvasCommands\CanvasCommand.h" />
+    <ClInclude Include="..\ShapeCompositor\Canvas\CanvasCommands\ChangeShapeRectCommand.h" />
     <ClInclude Include="..\ShapeCompositor\Canvas\CanvasCommands\DeleteShapeCommand.h" />
-    <ClInclude Include="..\ShapeCompositor\Canvas\CanvasCommands\MoveShapeCommand.h" />
-    <ClInclude Include="..\ShapeCompositor\Canvas\CanvasCommands\ScaleShapeCommand.h" />
     <ClInclude Include="..\ShapeCompositor\Canvas\History.h" />
     <ClInclude Include="..\ShapeCompositor\Canvas\ObjectRenderer.h" />
     <ClInclude Include="..\ShapeCompositor\Canvas\SelectedShape.h" />
@@ -176,9 +176,8 @@
   <ItemGroup>
     <ClCompile Include="..\ShapeCompositor\Canvas\Canvas.cpp" />
     <ClCompile Include="..\ShapeCompositor\Canvas\CanvasCommands\AddShapeCommand.cpp" />
+    <ClCompile Include="..\ShapeCompositor\Canvas\CanvasCommands\ChangeShapeRectCommand.cpp" />
     <ClCompile Include="..\ShapeCompositor\Canvas\CanvasCommands\DeleteShapeCommand.cpp" />
-    <ClCompile Include="..\ShapeCompositor\Canvas\CanvasCommands\MoveShapeCommand.cpp" />
-    <ClCompile Include="..\ShapeCompositor\Canvas\CanvasCommands\ScaleShapeCommand.cpp" />
     <ClCompile Include="..\ShapeCompositor\Canvas\History.cpp" />
     <ClCompile Include="..\ShapeCompositor\Canvas\SelectedShape.cpp" />
     <ClCompile Include="..\ShapeCompositor\Canvas\Shapes\CShape.cpp" />
