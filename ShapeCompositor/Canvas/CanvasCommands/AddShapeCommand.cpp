@@ -3,7 +3,7 @@
 #include "../Canvas.h"
 
 CAddShapeCanvasCommand::CAddShapeCanvasCommand(
-	IAddAndDeleteShape * pCanvas
+	IShapeCollection & pCanvas
 	, ShapeType type
 	, const CShapeFactory & factory
 	, CSelectedShape & seletedShape
@@ -17,7 +17,7 @@ CAddShapeCanvasCommand::CAddShapeCanvasCommand(
 
 void CAddShapeCanvasCommand::Execute()
 {
-	m_pCanvas->PushBackShape(
+	m_pCanvas.PushBackShape(
 		m_pFactory->CreateShape(
 			SShapeData(
 				m_type
@@ -29,9 +29,9 @@ void CAddShapeCanvasCommand::Execute()
 
 void CAddShapeCanvasCommand::Cancel()
 {
-	if (m_pCanvas->IsSelectShape(m_pCanvas->GetAmountShapes() - 1, m_pSelectShape->GetShape()))
+	if (m_pCanvas.IsSelectShape(m_pCanvas.GetAmountShapes() - 1, m_pSelectShape->GetShape()))
 	{
 		m_pSelectShape->ResetSelectShapePtr();
 	}
-	m_pCanvas->DeleteLastShape();
+	DeleteLastElement(m_pCanvas.GetShapes());
 }

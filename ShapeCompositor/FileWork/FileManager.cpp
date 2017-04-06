@@ -30,7 +30,7 @@ CFileManager::~CFileManager()
 	remove_all(m_tempFolderPath);
 }
 
-void CFileManager::SetFilePath(const CString & name)
+void CFileManager::SetFilePath(const std::wstring & name)
 {
 	if (name != m_tempFolderPath)
 	{
@@ -48,7 +48,7 @@ std::wstring CFileManager::GetFilePath() const
 	return m_filePath.generic_wstring();
 }
 
-void CFileManager::CreateFolder(const CString & name)
+void CFileManager::CreateFolder(const std::wstring & name)
 {
 	if (!exists(path(name)))
 	{
@@ -83,9 +83,3 @@ void CFileManager::RecreateTempFolder()
 	remove_all(m_tempFolderPath);
 	create_directory(m_tempFolderPath);
 }
-
-void CFileManager::SetParentWnd(CWnd * pParentWnd)
-{
-	m_pParentWnd = pParentWnd;
-}
-

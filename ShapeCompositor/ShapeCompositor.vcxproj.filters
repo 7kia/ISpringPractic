@@ -22,11 +22,11 @@
     <Filter Include="Файлы исходного кода\Canvas\CanvasCommand">
       <UniqueIdentifier>{9b10ba3d-3a3d-4c44-bd81-9a5303ad472e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Файлы исходного кода\XMLReader">
-      <UniqueIdentifier>{7d5d682d-2cc7-4771-b6c9-a675bd07671c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Файлы исходного кода\Canvas\Picture">
       <UniqueIdentifier>{278e3f10-3c4d-4175-8b1a-d9a70015119a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы исходного кода\FileWork">
+      <UniqueIdentifier>{dcc0b42e-e4e1-471a-bee3-856a525fa5cf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -108,9 +108,6 @@
     <ClInclude Include="Canvas\D2DObjectRenderer.h">
       <Filter>Файлы исходного кода\Canvas</Filter>
     </ClInclude>
-    <ClInclude Include="XMLReader\XMLReader.h">
-      <Filter>Файлы исходного кода\XMLReader</Filter>
-    </ClInclude>
     <ClInclude Include="Canvas\SelectedShape.h">
       <Filter>Файлы исходного кода\Canvas</Filter>
     </ClInclude>
@@ -126,8 +123,14 @@
     <ClInclude Include="Canvas\CanvasCommands\ChangeShapeRectCommand.h">
       <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
     </ClInclude>
-    <ClInclude Include="FileManager.h">
-      <Filter>Файлы исходного кода</Filter>
+    <ClInclude Include="FileWork\FileManager.h">
+      <Filter>Файлы исходного кода\FileWork</Filter>
+    </ClInclude>
+    <ClInclude Include="FileWork\XMLReader.h">
+      <Filter>Файлы исходного кода\FileWork</Filter>
+    </ClInclude>
+    <ClInclude Include="FileWork\MyDocument.h">
+      <Filter>Файлы исходного кода\FileWork</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -179,9 +182,6 @@
     <ClCompile Include="Canvas\D2DObjectRenderer.cpp">
       <Filter>Файлы исходного кода\Canvas</Filter>
     </ClCompile>
-    <ClCompile Include="XMLReader\XMLReader.cpp">
-      <Filter>Файлы исходного кода\XMLReader</Filter>
-    </ClCompile>
     <ClCompile Include="Canvas\SelectedShape.cpp">
       <Filter>Файлы исходного кода\Canvas</Filter>
     </ClCompile>
@@ -194,8 +194,14 @@
     <ClCompile Include="Canvas\CanvasCommands\ChangeShapeRectCommand.cpp">
       <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
     </ClCompile>
-    <ClCompile Include="FileManager.cpp">
-      <Filter>Файлы исходного кода</Filter>
+    <ClCompile Include="FileWork\FileManager.cpp">
+      <Filter>Файлы исходного кода\FileWork</Filter>
+    </ClCompile>
+    <ClCompile Include="FileWork\XMLReader.cpp">
+      <Filter>Файлы исходного кода\FileWork</Filter>
+    </ClCompile>
+    <ClCompile Include="FileWork\MyDocument.cpp">
+      <Filter>Файлы исходного кода\FileWork</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

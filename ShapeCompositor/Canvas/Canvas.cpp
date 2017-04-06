@@ -43,7 +43,7 @@ CShapePtr CCanvas::GetView() const
 	return m_view;
 }
 
-std::vector<CShapePtr> CCanvas::GetShapes() const
+std::vector<CShapePtr>& CCanvas::GetShapes()
 {
 	return m_shapes;
 }
@@ -51,6 +51,16 @@ std::vector<CShapePtr> CCanvas::GetShapes() const
 void CCanvas::SetShapes(const std::vector<CShapePtr> & shapes)
 {
 	m_shapes = shapes;
+}
+
+IShapeCollection & CCanvas::GetShapeCollection()
+{
+	return *this;
+}
+
+IShapeProvider & CCanvas::GetShapeProvider()
+{
+	return *this;
 }
 
 void CCanvas::DeleteShape(size_t index)
@@ -70,15 +80,6 @@ void CCanvas::DeleteShape(const CShapePtr & pShape)
 	{
 		DeleteShape(index);
 	}
-}
-
-void CCanvas::DeleteLastShape()
-{
-	if (m_shapes.size() == 0)
-	{
-		throw std::runtime_error("Index out range");
-	}
-	DeleteShape(m_shapes.size() - 1);
 }
 
 void CCanvas::Clear()

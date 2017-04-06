@@ -4,6 +4,7 @@
 #include <sstream>
 #include <fstream>
 #include <atlstr.h> 
+
 #include <boost/filesystem.hpp>
 #include <boost/system/config.hpp>
 class CFileManager
@@ -16,10 +17,10 @@ public:
 public:
 	const std::wstring DEFAULT_TEMP_DIRECTORY = L"temp";
 
-	void SetFilePath(const CString & name);
+	void SetFilePath(const std::wstring & name);
 	std::wstring GetFileName() const;
 	std::wstring GetFilePath() const;
-	void CreateFolder(const CString & name);
+	void CreateFolder(const std::wstring & name);
 
 	bool IsNewDocument() const;
 
@@ -27,12 +28,9 @@ public:
 
 	void ResetCurrentFolder();
 	void RecreateTempFolder();
-
-	void SetParentWnd(CWnd * pParentWnd);
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
-	CWnd * m_pParentWnd = nullptr;
 	boost::filesystem::path m_filePath;
 	boost::filesystem::path m_tempFolderPath;
 };

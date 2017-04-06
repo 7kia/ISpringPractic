@@ -208,7 +208,9 @@
     <ClInclude Include="Canvas\Shapes\ShapeAttributes.h" />
     <ClInclude Include="Canvas\Shapes\ShapeFactory.h" />
     <ClInclude Include="Canvas\Shapes\Triangle.h" />
-    <ClInclude Include="FileManager.h" />
+    <ClInclude Include="FileWork\FileManager.h" />
+    <ClInclude Include="FileWork\MyDocument.h" />
+    <ClInclude Include="FileWork\XMLReader.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="ShapeVisitor.h" />
@@ -218,7 +220,6 @@
     <ClInclude Include="ShapeCompositorView.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="XMLReader\XMLReader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Canvas\Canvas.cpp" />
@@ -236,7 +237,9 @@
     <ClCompile Include="Canvas\Shapes\ShapeAttributes.cpp" />
     <ClCompile Include="Canvas\Shapes\ShapeFactory.cpp" />
     <ClCompile Include="Canvas\Shapes\Triangle.cpp" />
-    <ClCompile Include="FileManager.cpp" />
+    <ClCompile Include="FileWork\FileManager.cpp" />
+    <ClCompile Include="FileWork\MyDocument.cpp" />
+    <ClCompile Include="FileWork\XMLReader.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="ShapeCompositor.cpp" />
     <ClCompile Include="ShapeCompositorDoc.cpp" />
@@ -247,7 +250,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="XMLReader\XMLReader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\ribbon.mfcribbon-ms" />

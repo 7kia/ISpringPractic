@@ -5,12 +5,12 @@
 #include "Canvas\SelectedShape.h"
 #include "Canvas\Shapes\ShapeFactory.h"
 
-class IAddAndDeleteShape;
+class IShapeCollection;
 class CAddShapeCanvasCommand : public IMyCommand
 {
 public:
 	CAddShapeCanvasCommand(
-		IAddAndDeleteShape * pCanvas
+		IShapeCollection & pCanvas
 		, ShapeType type
 		, const CShapeFactory & factory
 		, CSelectedShape & seletedShape
@@ -28,7 +28,7 @@ public:
 	// Data
 private:
 	ShapeType m_type = ShapeType::Rectangle;
-	IAddAndDeleteShape * m_pCanvas = nullptr;
+	IShapeCollection & m_pCanvas;
 	const CShapeFactory * m_pFactory = nullptr;
 	CSelectedShape * m_pSelectShape = nullptr;
 };

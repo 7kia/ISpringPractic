@@ -19,8 +19,8 @@
 
 #include "Canvas\Canvas.h"
 #include "Canvas\History.h"
-#include "XMLReader\XMLReader.h"
-#include "FileManager.h"
+#include "FileWork\XMLReader.h"
+#include "FileWork\FileManager.h"
 
 class CShapeCompositorView;
 class CShapeCompositorDoc : public CDocument
@@ -35,16 +35,15 @@ public:
 public:
 	bool IsNewDocument() const;
 	void ResetCurrentFolder();
-	void SetParentWndForFileManager(CWnd * pParentWnd);// For CDialog need parent wnd
 
 	CString OpenSaveDialog();
 	CString OpenLoadDialog();
 	
 	CString GetFileName();
 
-	afx_msg bool OnFileSaveAs(std::vector<CShapePtr> const & shapes);
-	afx_msg bool OnFileOpen(CShapeCompositorView * view);
-	afx_msg bool OnFileSave(std::vector<CShapePtr> const & shapes);
+	bool OnFileSaveAs(std::vector<CShapePtr> const & shapes);
+	bool OnFileOpen(CShapeCompositorView * view);
+	bool OnFileSave(std::vector<CShapePtr> const & shapes);
 // Переопределение
 public:
 	virtual BOOL OnNewDocument();

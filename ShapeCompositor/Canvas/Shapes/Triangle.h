@@ -27,9 +27,7 @@ public:
 	bool IsPointIntersection(const Vec2f point) const override;
 	//--------------------------------------------
 
-
 	VertexList GetVertices() const;
-
 private:
 
 	//////////////////////////////////////////////////////////////////////

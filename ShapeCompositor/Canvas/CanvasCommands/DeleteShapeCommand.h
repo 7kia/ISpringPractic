@@ -4,12 +4,12 @@
 #include "Canvas\Shapes\AllShapes.h"
 #include "Canvas\SelectedShape.h"
 
-class IAddAndDeleteShape;
+class IShapeCollection;
 class CDeleteShapeCanvasCommand : public IMyCommand
 {
 public:
 	CDeleteShapeCanvasCommand(
-		IAddAndDeleteShape * pCanvas
+		IShapeCollection & pCanvas
 		, CSelectedShape & seletedShape
 		, const CShapeFactory & factory
 	);
@@ -28,7 +28,7 @@ private:
 	ShapeType m_type = ShapeType::Rectangle;
 	SShapeData m_data;
 	size_t m_index = 0;
-	IAddAndDeleteShape * m_pCanvas = nullptr;
+	IShapeCollection & m_pCanvas;
 	CSelectedShape * m_pSelectShape = nullptr;
 	const CShapeFactory * m_pFactory = nullptr;
 };

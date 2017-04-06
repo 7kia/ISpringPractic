@@ -146,7 +146,7 @@ void CShapeCompositorView::CreateTriangle()
 {
 	m_history.AddAndExecuteCommand(
 		std::make_shared<CAddShapeCanvasCommand>(
-			&m_canvas
+			m_canvas.GetShapeCollection()
 			, ShapeType::Triangle
 			, m_shapeFactory
 			, m_selectedShape
@@ -159,7 +159,7 @@ void CShapeCompositorView::CreateRectangle()
 {
 	m_history.AddAndExecuteCommand(
 		std::make_shared<CAddShapeCanvasCommand>(
-			&m_canvas
+			m_canvas.GetShapeCollection()
 			, ShapeType::Rectangle
 			, m_shapeFactory
 			, m_selectedShape
@@ -171,7 +171,7 @@ void CShapeCompositorView::CreateRectangle()
 void CShapeCompositorView::CreateEllipse()
 {
 	m_history.AddAndExecuteCommand(std::make_shared<CAddShapeCanvasCommand>(
-		&m_canvas
+		m_canvas.GetShapeCollection()
 		, ShapeType::Ellipse
 		, m_shapeFactory
 		, m_selectedShape
@@ -201,10 +201,10 @@ void CShapeCompositorView::Redo()
 
 void CShapeCompositorView::OnDraw(CDC* /*pDC*/)
 {
-	CShapeCompositorDoc* pDoc = GetDocument();
-	ASSERT_VALID(pDoc);
-	if (!pDoc)
-		return;
+	//CShapeCompositorDoc* pDoc = GetDocument();
+	//ASSERT_VALID(pDoc);
+	//if (!pDoc)
+	//	return;
 
 	// TODO: добавьте здесь код отрисовки дл€ собственных данных
 }
@@ -235,12 +235,12 @@ void CShapeCompositorView::Dump(CDumpContext& dc) const
 {
 	CView::Dump(dc);
 }
-
-CShapeCompositorDoc* CShapeCompositorView::GetDocument() const // встроена неотлаженна€ верси€
-{
-	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CShapeCompositorDoc)));
-	return (CShapeCompositorDoc*)m_pDocument;
-}
+//
+//CShapeCompositorDoc* CShapeCompositorView::GetDocument() const // встроена неотлаженна€ верси€
+//{
+//	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CShapeCompositorDoc)));
+//	return (CShapeCompositorDoc*)m_pDocument;
+//}
 #endif //_DEBUG
 
 
@@ -265,8 +265,6 @@ int CShapeCompositorView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		
 		// TODO : rewrite Normal
 		m_imageFactory.SetRenderTarget(m_pRenderTarget);
-
-		GetDocument()->SetParentWndForFileManager(this);
 	}
 	catch (...)
 	{
@@ -312,7 +310,7 @@ void CShapeCompositorView::OnSize(UINT nType, int cx, int cy)
 
 void CShapeCompositorView::OnFileSaveAs()
 {
-	if (GetDocument()->OnFileSaveAs(m_canvas.GetShapes()))
+	if (m_document.OnFileSaveAs(m_canvas.GetShapes()))
 	{
 		m_history.DoSave();
 		RedrawWindow();
@@ -323,9 +321,9 @@ void CShapeCompositorView::OnFileOpen()
 {
 	if (CheckSaveDocument() != IDCANCEL)
 	{
-		if (GetDocument()->OnFileOpen(this))
+		if (m_document.OnFileOpen(CMyDocument::DataForAlteration(m_canvas, m_shapeFactory, m_history, m_selectedShape)))
 		{
-			SetWindowText(GetDocument()->GetFileName());
+			SetWindowText(m_document.GetFileName());
 			RedrawWindow();
 		}
 	}
@@ -333,10 +331,10 @@ void CShapeCompositorView::OnFileOpen()
 
 void CShapeCompositorView::OnFileSave()
 {
-	if (GetDocument()->OnFileSave(m_canvas.GetShapes()))
+	if (m_document.OnFileSave(m_canvas.GetShapes()))
 	{
 		m_history.DoSave();
-		SetWindowText(GetDocument()->GetFileName());
+		SetWindowText(m_document.GetFileName());
 		RedrawWindow();
 	}
 }
@@ -345,10 +343,10 @@ void CShapeCompositorView::OnFileNew()
 {
 	if (CheckSaveDocument() != IDCANCEL)
 	{
-		if (!(m_history.IsSave() && GetDocument()->IsNewDocument()))
+		if (!(m_history.IsSave() && m_document.IsNewDocument()))
 		{
 			ResetApplication();
-			GetDocument()->ResetCurrentFolder();
+			m_document.ResetCurrentFolder();
 			SetWindowText(CString("Ѕезым€нный"));
 			RedrawWindow();
 		}
@@ -403,7 +401,7 @@ BOOL CShapeCompositorView::PreTranslateMessage(MSG* pMsg)
 					{
 						m_history.AddAndExecuteCommand(
 							std::make_shared<CDeleteShapeCanvasCommand>(
-								&m_canvas
+								m_canvas.GetShapeCollection()
 								, m_selectedShape
 								, m_shapeFactory
 								)
@@ -605,7 +603,7 @@ void CShapeCompositorView::CreateCommandForSelectedShape()
 		m_selectedShape.ReturnToOldState();
 
 		m_history.AddAndExecuteCommand(std::make_shared<CChangeShapeRectCanvasCommand>(
-			&m_canvas,
+			m_canvas.GetShapeProvider(),
 			m_selectedShape.GetOldFrame(),
 			finalFrame,
 			m_selectedShape
@@ -660,11 +658,11 @@ int CShapeCompositorView::CheckSaveDocument()
 	{
 		result = AfxMessageBox(L"—охранить изменени€?", MB_YESNOCANCEL);
 
-		if (GetDocument()->IsNewDocument())
+		if (m_document.IsNewDocument())
 		{
 			if(result == IDYES)
 			{
-				if (GetDocument()->OnFileSaveAs(m_canvas.GetShapes()))
+				if (m_document.OnFileSaveAs(m_canvas.GetShapes()))
 				{
 					m_history.DoSave();
 				}
@@ -674,7 +672,7 @@ int CShapeCompositorView::CheckSaveDocument()
 		{
 			if (result == IDYES)
 			{
-				if (GetDocument()->OnFileSave(m_canvas.GetShapes()))
+				if (m_document.OnFileSave(m_canvas.GetShapes()))
 				{
 					m_history.DoSave();
 				}

@@ -15,8 +15,7 @@
 #pragma once
 
 #include "ShapeCompositorDoc.h"
-#include "Canvas\Canvas.h"
-#include "Canvas\History.h"
+#include "FileWork\MyDocument.h"
 #include "Canvas\D2DObjectRenderer.h"
 #include "Canvas\Picture\Picture.h"
 #include "Canvas\Picture\D2DImageFactory.h"
@@ -35,7 +34,7 @@ protected: // создать только из сериализации
 
 // Атрибуты
 public:
-	CShapeCompositorDoc* GetDocument() const;
+	//CShapeCompositorDoc* GetDocument() const;
 
 
 // Операции
@@ -81,6 +80,7 @@ public:
 protected:
 	CCanvas m_canvas;
 	CHistory m_history;
+	CMyDocument m_document;
 
 	CSelectedShape m_selectedShape;
 	CShapeFactory m_shapeFactory;
