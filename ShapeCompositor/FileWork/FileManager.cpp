@@ -56,6 +56,23 @@ void CFileManager::CreateFolder(const std::wstring & name)
 	}
 }
 
+void CFileManager::CopyFiles(
+	const std::vector<std::wstring> & files,
+	const std::wstring & from,
+	const std::wstring & to
+) const
+{
+	for (const auto & file : files)
+	{
+		BOOL isLoad = CopyFile((from + L"/" + file).data(), (to + L"/" + file).data(), FALSE);
+		if (isLoad == 0)
+		{
+			throw std::runtime_error("Picture not copy");
+		}
+	}
+
+}
+
 bool CFileManager::IsNewDocument() const
 {
 	return m_filePath.empty();

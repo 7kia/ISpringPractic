@@ -15,14 +15,28 @@ void CMyDocument::ResetCurrentFolder()
 	m_fileManager.RecreateTempFolder();
 }
 
-bool CMyDocument::OnFileSaveAs(std::vector<CShapePtr> const & shapes)
+bool CMyDocument::OnFileSaveAs(std::vector<CShapePtr> const & shapes, const CTextureStorage & textureStorage)
 {
 	CString fileName = OpenSaveDialog();
 	if (fileName.GetLength() != 0)
 	{
+		const auto oldFolder = m_fileManager.GetCurrentFolder();
 		m_fileManager.SetFilePath(fileName.GetString());
-		m_fileManager.CreateFolder(fileName.GetString());
-		return m_xmlReader.Save(fileName.GetString(), shapes);
+
+		if (textureStorage.GetCount())
+		{
+			auto newPath = path(fileName);
+			auto nameNewFolder = newPath.stem().generic_wstring();
+			auto p1 = newPath.root_path().generic_wstring();
+			m_fileManager.CreateFolder(newPath.stem().generic_wstring());
+			m_fileManager.CopyFiles(
+				textureStorage.GetNames(),
+				oldFolder,
+				nameNewFolder
+			);
+		}
+
+		return m_xmlReader.Save(fileName.GetString(), shapes, textureStorage);
 	}
 	return false;
 }
@@ -36,20 +50,26 @@ bool CMyDocument::OnFileOpen(DataForAlteration & data)
 		data.selectedShape.ResetSelectShapePtr();
 
 		m_fileManager.SetFilePath(fileName.GetString());
-		return m_xmlReader.Open(m_fileManager.GetFilePath(), data.canvas, data.factory);
+		return m_xmlReader.Open(
+			m_fileManager.GetFilePath(),
+			data.canvas,
+			data.factory,
+			data.textureStorage,
+			data.imageFactory
+		);
 	}
 	return false;
 }
 
-bool CMyDocument::OnFileSave(std::vector<CShapePtr> const & shapes)
+bool CMyDocument::OnFileSave(std::vector<CShapePtr> const & shapes, const CTextureStorage & textureStorage)
 {
 	if (m_fileManager.IsNewDocument())
 	{
-		return OnFileSaveAs(shapes);
+		return OnFileSaveAs(shapes, textureStorage);
 	}
 	else
 	{
-		return m_xmlReader.Save(m_fileManager.GetFilePath(), shapes);
+		return m_xmlReader.Save(m_fileManager.GetFilePath(), shapes, textureStorage);
 	}
 }
 
@@ -64,10 +84,10 @@ boost::filesystem::path CMyDocument::LoadTexture()
 	}
 
 	auto pictureName = path(picturePath).filename().generic_wstring();
-	BOOL isLoad = CopyFile(CString((currentFolder + L"/"+ pictureName).data()), picturePath, FALSE);
+	BOOL isLoad = CopyFile(picturePath, CString((currentFolder + L"/"+ pictureName).data()),  FALSE);
 	if (isLoad == 0)
 	{
-		throw std::runtime_error("Picture not load");
+		throw std::runtime_error("Picture not copy");
 	}
 
 	return path(picturePath);
@@ -148,11 +168,16 @@ CMyDocument::DataForAlteration::DataForAlteration(
 	CCanvas & canvas,
 	const CShapeFactory & factory,
 	CHistory & history,
-	CSelectedShape & selectedShape
+	CSelectedShape & selectedShape,
+	CTextureStorage & textureStorage,
+	CD2DImageFactory & imageFactory
 )
 	: canvas(canvas)
 	, factory(factory)
 	, history(history)
 	, selectedShape(selectedShape)
+	, textureStorage(textureStorage)
+	, imageFactory(imageFactory)
+
 {
 }

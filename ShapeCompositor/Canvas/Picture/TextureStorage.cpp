@@ -42,6 +42,29 @@ SSize CTextureStorage::GetCorrectSize(const std::wstring & name) const
 	return resultSize;
 }
 
+std::wstring CTextureStorage::GetNameTexture(ID2D1Bitmap * texture) const
+{
+	for (auto & cell : m_storage)
+	{
+		if (cell.second.GetTexture() == texture)
+		{
+			return cell.first;
+		}
+	}
+	return std::wstring();
+}
+
+std::vector<std::wstring> CTextureStorage::GetNames() const
+{
+	std::vector<std::wstring> names;
+	for (const auto & cell : m_storage)
+	{
+		names.push_back(cell.first);
+	}
+
+	return names;
+}
+
 void CTextureStorage::SetDelete(const std::wstring & name, bool value)
 {
 	m_storage.at(name).SetDelete(value);
@@ -84,6 +107,11 @@ CStorageCell::CStorageCell(const CComPtr<ID2D1Bitmap>& pTexture)
 }
 
 ID2D1Bitmap * CStorageCell::GetTexture()
+{
+	return m_texture.p;
+}
+
+const ID2D1Bitmap * CStorageCell::GetTexture() const
 {
 	return m_texture.p;
 }

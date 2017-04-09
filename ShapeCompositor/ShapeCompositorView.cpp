@@ -327,7 +327,7 @@ void CShapeCompositorView::OnSize(UINT nType, int cx, int cy)
 
 void CShapeCompositorView::OnFileSaveAs()
 {
-	if (m_document.OnFileSaveAs(m_canvas.GetShapes()))
+	if (m_document.OnFileSaveAs(m_canvas.GetShapes(), m_textureStorage))
 	{
 		m_history.DoSave();
 		RedrawWindow();
@@ -338,7 +338,17 @@ void CShapeCompositorView::OnFileOpen()
 {
 	if (CheckSaveDocument() != IDCANCEL)
 	{
-		if (m_document.OnFileOpen(CMyDocument::DataForAlteration(m_canvas, m_shapeFactory, m_history, m_selectedShape)))
+		if (m_document.OnFileOpen(
+			CMyDocument::DataForAlteration
+			(
+				m_canvas, 
+				m_shapeFactory,
+				m_history,
+				m_selectedShape,
+				m_textureStorage,
+				m_imageFactory
+			))
+			)
 		{
 			SetWindowText(m_document.GetFileName());
 			RedrawWindow();
@@ -348,7 +358,7 @@ void CShapeCompositorView::OnFileOpen()
 
 void CShapeCompositorView::OnFileSave()
 {
-	if (m_document.OnFileSave(m_canvas.GetShapes()))
+	if (m_document.OnFileSave(m_canvas.GetShapes(), m_textureStorage))
 	{
 		m_history.DoSave();
 		SetWindowText(m_document.GetFileName());
@@ -677,7 +687,7 @@ int CShapeCompositorView::CheckSaveDocument()
 		{
 			if(result == IDYES)
 			{
-				if (m_document.OnFileSaveAs(m_canvas.GetShapes()))
+				if (m_document.OnFileSaveAs(m_canvas.GetShapes(), m_textureStorage))
 				{
 					m_history.DoSave();
 				}
@@ -687,7 +697,7 @@ int CShapeCompositorView::CheckSaveDocument()
 		{
 			if (result == IDYES)
 			{
-				if (m_document.OnFileSave(m_canvas.GetShapes()))
+				if (m_document.OnFileSave(m_canvas.GetShapes(), m_textureStorage))
 				{
 					m_history.DoSave();
 				}

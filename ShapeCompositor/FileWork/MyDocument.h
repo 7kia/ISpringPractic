@@ -10,6 +10,8 @@
 #include "Canvas\History.h"
 #include "FileWork\XMLReader.h"
 #include "FileWork\FileManager.h"
+#include "Canvas\Picture\TextureStorage.h"
+#include "Canvas\Picture\D2DImageFactory.h"
 
 class CMyDocument
 {
@@ -27,13 +29,17 @@ public:
 			CCanvas & canvas,
 			const CShapeFactory & factory,
 			CHistory & history,
-			CSelectedShape & selectedShape
+			CSelectedShape & selectedShape,
+			CTextureStorage & textureStorage,
+			CD2DImageFactory & imageFactory
 		);
 
 		CCanvas & canvas;
 		const CShapeFactory & factory;
 		CHistory & history;
 		CSelectedShape & selectedShape;
+		CTextureStorage & textureStorage;
+		CD2DImageFactory & imageFactory;
 	};
 
 
@@ -50,9 +56,9 @@ public:
 
 	CString GetFileName();
 
-	bool OnFileSaveAs(std::vector<CShapePtr> const & shapes);
+	bool OnFileSaveAs(std::vector<CShapePtr> const & shapes, const CTextureStorage & textureStorage);
 	bool OnFileOpen(DataForAlteration & data);
-	bool OnFileSave(std::vector<CShapePtr> const & shapes);
+	bool OnFileSave(std::vector<CShapePtr> const & shapes, const CTextureStorage & textureStorage);
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:

@@ -9,6 +9,7 @@ enum class ShapeType
 	Triangle
 	, Rectangle
 	, Ellipse
+	, Picture
 };
 
 // TODO  : see need it

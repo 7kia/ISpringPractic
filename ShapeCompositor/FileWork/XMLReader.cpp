@@ -1,6 +1,12 @@
 #include "stdafx.h"
 #include "XMLReader.h"
 
+using namespace boost::filesystem;
+
+namespace fs = boost::filesystem;
+using fs::path;
+
+
 namespace
 {
 	std::string GetShapeName(ShapeType type)
@@ -13,6 +19,8 @@ namespace
 			return "Rectangle";
 		case ShapeType::Ellipse:
 			return "Ellipse";
+		case ShapeType::Picture:
+			return "Picture";
 		default:
 			throw std::runtime_error("Incorrect shape type");
 			break;
@@ -34,11 +42,25 @@ namespace
 		{
 			return ShapeType::Ellipse;
 		}
+		else if (typeStr == "Picture")
+		{
+			return ShapeType::Picture;
+		}
 		else
 		{
 			throw std::runtime_error("Incorrect shape type");
 		}
 	}
+
+	std::string ToString(const std::wstring& str)
+	{
+		return std::string(str.begin(), str.end());
+	}
+	std::wstring ToWString(const std::string& str)
+	{
+		return std::wstring(str.begin(), str.end());
+	}
+
 }
 
 
@@ -46,7 +68,11 @@ CXMLReader::CXMLReader()
 {
 }
 
-bool CXMLReader::Save(const std::wstring path, std::vector<CShapePtr> const & shapes)
+bool CXMLReader::Save(
+	const std::wstring path,
+	std::vector<CShapePtr> const & shapes,
+	const CTextureStorage & textureStorage
+)
 {
 	if (path.empty())
 	{
@@ -68,6 +94,14 @@ bool CXMLReader::Save(const std::wstring path, std::vector<CShapePtr> const & sh
 			child.add("Y", std::to_string(shape->GetPosition().y));
 			child.add("Width", std::to_string(shape->GetSize().width));
 			child.add("Height", std::to_string(shape->GetSize().height));
+
+			if (shape->GetType() == ShapeType::Picture)
+			{
+				// not wstring because not << overload for wstring
+				const auto picture = dynamic_cast<CPicture*>(shape.get());
+				child.add("Texture", ToString(textureStorage.GetNameTexture(picture->GetTexture())) );
+			}
+
 			propertyTree.add_child("Shapes.Shape", child);
 		}
 		std::stringstream stream;
@@ -92,9 +126,11 @@ bool CXMLReader::Save(const std::wstring path, std::vector<CShapePtr> const & sh
 }
 
 bool CXMLReader::Open(
-	const std::wstring path
-	, CCanvas & canvas
-	, const CShapeFactory & factory
+	const std::wstring path,
+	CCanvas & canvas,
+	const CShapeFactory & factory,
+	CTextureStorage & textureStorage,
+	CD2DImageFactory & imageFactory
 )
 {
 	if (path.empty())
@@ -104,6 +140,13 @@ bool CXMLReader::Open(
 	try
 	{
 		std::ifstream stream(path);
+		auto folder = fs::path(path).stem().generic_string();
+
+		if (!exists(folder) && textureStorage.GetCount())
+		{
+			throw std::runtime_error("Not directory for open file");
+		}
+
 		boost::property_tree::ptree propertyTree;
 		boost::property_tree::read_xml(stream, propertyTree);
 
@@ -123,7 +166,16 @@ bool CXMLReader::Open(
 				data.position = Vec2f(x, y);
 				data.size = SSize(width, height);
 
-				shapesData.push_back(factory.CreateShape(data));
+				if (type == "Picture")
+				{
+					std::string texture = shape.second.get<std::string>("Texture");
+					textureStorage.AddTexture(ToWString(texture), imageFactory.CreateTexture(ToWString(folder + "/" + texture)));
+					shapesData.push_back(std::make_shared<CPicture>(textureStorage.GetTexture(ToWString(texture)), data.position, data.size));
+				}
+				else
+				{
+					shapesData.push_back(factory.CreateShape(data));
+				}
 			}
 		}
 

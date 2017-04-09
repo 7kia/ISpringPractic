@@ -12,6 +12,7 @@ CPicture::CPicture(
 		size
 	)
 {
+	m_type = ShapeType::Picture;
 }
 
 void CPicture::Accept(IShapeVisitor & visitor) const

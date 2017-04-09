@@ -19,6 +19,8 @@ public:
 public:
 	ID2D1Bitmap * GetTexture();
 
+	const ID2D1Bitmap * GetTexture() const;
+
 	void SetDelete(bool value);
 	bool IsDelete() const;
 
@@ -44,6 +46,8 @@ public:
 	void					AddTexture(const std::wstring & name, const CComPtr<ID2D1Bitmap> & pTexture);
 	ID2D1Bitmap *			GetTexture(const std::wstring & name);
 	SSize					GetCorrectSize(const std::wstring & name) const;
+	std::wstring			GetNameTexture(ID2D1Bitmap * texture) const;
+	std::vector<std::wstring> GetNames() const;
 
 	void					SetDelete(const std::wstring & name, bool value);
 	bool					IsDelete(const std::wstring & name) const;
