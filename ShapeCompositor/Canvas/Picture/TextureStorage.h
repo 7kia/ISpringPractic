@@ -49,8 +49,8 @@ public:
 	bool					IsDelete(const std::wstring & name) const;
 	size_t					GetCount() const;
 
-	void					Clear();
-	void					DeleteDeletable();
+	void						Clear();
+	std::vector<std::wstring>	GetDeletable() const;
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:

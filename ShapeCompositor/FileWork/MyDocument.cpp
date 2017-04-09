@@ -64,13 +64,21 @@ boost::filesystem::path CMyDocument::LoadTexture()
 	}
 
 	auto pictureName = path(picturePath).filename().generic_wstring();
-	BOOL isLoad = CopyFile(picturePath, CString((currentFolder + L"/"+ pictureName).data()), FALSE);
-	if (!isLoad)
+	BOOL isLoad = CopyFile(CString((currentFolder + L"/"+ pictureName).data()), picturePath, FALSE);
+	if (isLoad == 0)
 	{
 		throw std::runtime_error("Picture not load");
 	}
 
 	return path(picturePath);
+}
+
+void CMyDocument::DeletePictures(const std::vector<std::wstring> & names) const
+{
+	for (const auto & name : names)
+	{
+		DeleteFile((m_fileManager.GetCurrentFolder() + L"/" + name).data());
+	}
 }
 
 CString CMyDocument::OpenSaveDialog()

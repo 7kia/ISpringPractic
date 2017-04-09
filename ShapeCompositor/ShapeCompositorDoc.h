@@ -33,17 +33,6 @@ protected: // создать только из сериализации
 public:
 // Операции
 public:
-	bool IsNewDocument() const;
-	void ResetCurrentFolder();
-
-	CString OpenSaveDialog();
-	CString OpenLoadDialog();
-	
-	CString GetFileName();
-
-	bool OnFileSaveAs(std::vector<CShapePtr> const & shapes);
-	bool OnFileOpen(CShapeCompositorView * view);
-	bool OnFileSave(std::vector<CShapePtr> const & shapes);
 // Переопределение
 public:
 	virtual BOOL OnNewDocument();
@@ -64,8 +53,6 @@ public:
 #endif
 
 protected:
-	CXMLReader m_xmlReader;
-	CFileManager m_fileManager;
 // Созданные функции схемы сообщений
 protected:
 	DECLARE_MESSAGE_MAP()

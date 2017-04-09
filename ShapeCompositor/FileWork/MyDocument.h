@@ -44,6 +44,7 @@ public:
 	void ResetCurrentFolder();
 
 	boost::filesystem::path LoadTexture();
+	void DeletePictures(const std::vector<std::wstring> & names) const;
 	CString OpenSaveDialog();
 	CString OpenLoadDialog(const FileType fileType);
 

@@ -583,6 +583,7 @@ void CShapeCompositorView::ClearCanvas()
 
 void CShapeCompositorView::ResetApplication()
 {
+	m_document.DeletePictures(m_textureStorage.GetDeletable());
 	m_textureStorage.Clear();
 
 	m_history.Clear();
