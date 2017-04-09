@@ -203,6 +203,9 @@
     <ClCompile Include="FileWork\MyDocument.cpp">
       <Filter>Файлы исходного кода\FileWork</Filter>
     </ClCompile>
+    <ClCompile Include="Canvas\Picture\TextureStorage.cpp">
+      <Filter>Файлы исходного кода\Canvas\Picture</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\ribbon.mfcribbon-ms">

@@ -5,6 +5,7 @@
 #include <d2d1.h>
 #include <atlbase.h>
 #include <iostream> 
+#include <atlstr.h> 
 
 class CD2DImageFactory
 {
@@ -16,7 +17,7 @@ public:
 
 	void			SetRenderTarget(ID2D1HwndRenderTarget * pRenderTarget);
 	//void			Get();
-	CComPtr<ID2D1Bitmap>	CreateTexture(const std::string & name);
+	CComPtr<ID2D1Bitmap>	CreateTexture(const std::wstring & name);
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:

@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "MyDocument.h"
 
+namespace fs = boost::filesystem;
+using fs::path;
 
 bool CMyDocument::IsNewDocument() const
 {
@@ -27,7 +29,7 @@ bool CMyDocument::OnFileSaveAs(std::vector<CShapePtr> const & shapes)
 
 bool CMyDocument::OnFileOpen(DataForAlteration & data)
 {
-	CString fileName = OpenLoadDialog();
+	CString fileName = OpenLoadDialog(FileType::Shapes);
 	if (fileName.GetLength() != 0)
 	{
 		data.history.Clear();
@@ -51,6 +53,26 @@ bool CMyDocument::OnFileSave(std::vector<CShapePtr> const & shapes)
 	}
 }
 
+boost::filesystem::path CMyDocument::LoadTexture()
+{
+	auto picturePath = OpenLoadDialog(CMyDocument::FileType::Pictures);
+	auto currentFolder = m_fileManager.GetCurrentFolder();
+
+	if (!boost::filesystem::exists(currentFolder))
+	{
+		boost::filesystem::create_directory(currentFolder);
+	}
+
+	auto pictureName = path(picturePath).filename().generic_wstring();
+	BOOL isLoad = CopyFile(picturePath, CString((currentFolder + L"/"+ pictureName).data()), FALSE);
+	if (!isLoad)
+	{
+		throw std::runtime_error("Picture not load");
+	}
+
+	return path(picturePath);
+}
+
 CString CMyDocument::OpenSaveDialog()
 {
 	CString fileName;
@@ -72,16 +94,33 @@ CString CMyDocument::OpenSaveDialog()
 	return fileName;
 }
 
-CString CMyDocument::OpenLoadDialog()
+CString CMyDocument::OpenLoadDialog(const FileType fileType)
 {
 	CString fileName;
+
+	std::wstring type;
+	std::wstring expression;
+
+	switch (fileType)
+	{
+	case FileType::Pictures:
+		type = L"*.png";
+		expression = L"Picture (*.png) | *.png;|";
+		break;
+	case FileType::Shapes:
+		type = L"*.xml";
+		expression = L"XML Files\0 *.xml\0";
+		break;
+	default:
+		break;
+	}
 
 	CFileDialog fileDlg(
 		TRUE
 		, NULL
-		, _T("*.xml")
+		, type.data()
 		, OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST
-		, L"XML Files\0"    L"*.xml\0"
+		, expression.data()
 	);
 	if (fileDlg.DoModal() == IDOK)
 	{

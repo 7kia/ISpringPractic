@@ -109,7 +109,6 @@ public:
 	CShapePtr				GetView() const;
 
 private:
-	static void				CheckShapeIndex(size_t index, size_t max);
 	//////////////////////////////////////////////////////////////////////
 	// Data
 public:
@@ -121,12 +120,3 @@ private:
 	SSize					m_size;
 };
 
-template<typename T>
-inline void DeleteLastElement(std::vector<T>& vector)
-{
-	if (vector.size() == 0)
-	{
-		throw std::runtime_error("Index out range");
-	}
-	vector.erase(vector.begin() + vector.size() - 1);
-}

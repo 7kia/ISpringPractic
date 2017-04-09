@@ -16,6 +16,11 @@ class CMyDocument
 public:
 	CMyDocument() = default;
 
+	enum class FileType
+	{
+		Shapes,
+		Pictures
+	};
 	struct DataForAlteration
 	{
 		DataForAlteration(
@@ -38,8 +43,9 @@ public:
 	bool IsNewDocument() const;
 	void ResetCurrentFolder();
 
+	boost::filesystem::path LoadTexture();
 	CString OpenSaveDialog();
-	CString OpenLoadDialog();
+	CString OpenLoadDialog(const FileType fileType);
 
 	CString GetFileName();
 
@@ -51,5 +57,5 @@ public:
 private:
 	CXMLReader m_xmlReader;
 	CFileManager m_fileManager;
-
+	bool m_folderExist = false;
 };

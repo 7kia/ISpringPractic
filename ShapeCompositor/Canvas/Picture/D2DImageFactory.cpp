@@ -25,7 +25,7 @@ void CD2DImageFactory::SetRenderTarget(ID2D1HwndRenderTarget * pRenderTarget)
 	m_pRenderTarget = pRenderTarget;
 }
 
-CComPtr<ID2D1Bitmap> CD2DImageFactory::CreateTexture(const std::string & name)
+CComPtr<ID2D1Bitmap> CD2DImageFactory::CreateTexture(const std::wstring & name)
 {
 	CComPtr<ID2D1Bitmap> texture;
 

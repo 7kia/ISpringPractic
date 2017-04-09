@@ -15,16 +15,15 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
-	const std::wstring DEFAULT_TEMP_DIRECTORY = L"temp";
-
 	void SetFilePath(const std::wstring & name);
 	std::wstring GetFileName() const;
 	std::wstring GetFilePath() const;
 	void CreateFolder(const std::wstring & name);
 
 	bool IsNewDocument() const;
-
+	std::wstring GetCurrentFolder() const;
 	BOOL DirectoryExists(const std::wstring & dirName);
+
 
 	void ResetCurrentFolder();
 	void RecreateTempFolder();

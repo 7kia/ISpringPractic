@@ -67,7 +67,6 @@ private:
 	void					CreateCommandForSelectedShape();
 	void					ChangeSelectedShape(const Vec2f & mousePos);
 
-	void					LoadTexture(const std::string & name);
 	Vec2f					GetScreenPosition(const CPoint & point);
 
 	int						CheckSaveDocument();
@@ -85,7 +84,7 @@ protected:
 	CSelectedShape m_selectedShape;
 	CShapeFactory m_shapeFactory;
 
-	TextureStorage m_textureStorage;
+	CTextureStorage m_textureStorage;
 
 	ID2D1HwndRenderTarget * m_pRenderTarget = nullptr;
 	CD2DObjectRenderer		m_objectRenderer;// TODO : transfer to CShapeCompositiorView, fix Draw

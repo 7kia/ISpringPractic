@@ -61,6 +61,15 @@ bool CFileManager::IsNewDocument() const
 	return m_filePath.empty();
 }
 
+std::wstring CFileManager::GetCurrentFolder() const
+{
+	if (IsNewDocument())
+	{
+		return m_tempFolderPath.generic_wstring();
+	}
+	return m_filePath.parent_path().generic_wstring();
+}
+
 
 BOOL CFileManager::DirectoryExists(const std::wstring & dirName)
 {

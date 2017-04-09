@@ -15,7 +15,7 @@ void CCanvas::PushBackShape(const CShapePtr & shape)
 
 void CCanvas::InsertShape(size_t insertIndex, const CShapePtr & shape)
 {
-	CheckShapeIndex(insertIndex, m_shapes.size());
+	CheckIndex(insertIndex, m_shapes.size());
 
 	m_shapes.insert(
 		m_shapes.begin() + insertIndex
@@ -69,7 +69,7 @@ void CCanvas::DeleteShape(size_t index)
 	{
 		throw std::runtime_error("Index out range");
 	}
-	CheckShapeIndex(index, m_shapes.size() - 1);
+	CheckIndex(index, m_shapes.size() - 1);
 	m_shapes.erase(m_shapes.begin() + index);
 }
 
@@ -89,7 +89,7 @@ void CCanvas::Clear()
 
 CShapePtr CCanvas::GetShape(size_t index)
 {
-	CheckShapeIndex(index, m_shapes.size() - 1);
+	CheckIndex(index, m_shapes.size() - 1);
 
 	return m_shapes[index];
 }
@@ -113,13 +113,6 @@ bool CCanvas::IsSelectShape(size_t index, const CShapePtr & selectedShape) const
 	return selectedShape == m_shapes[index];
 }
 
-void CCanvas::CheckShapeIndex(size_t index, size_t max)
-{
-	if (index > max)
-	{
-		throw std::runtime_error("Index out range");
-	}
-}
 
 size_t CCanvas::GetShapeIndex(const CShapePtr &  pShape) const
 {

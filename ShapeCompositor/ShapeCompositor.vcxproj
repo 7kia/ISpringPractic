@@ -229,6 +229,7 @@
     <ClCompile Include="Canvas\History.cpp" />
     <ClCompile Include="Canvas\Picture\D2DImageFactory.cpp" />
     <ClCompile Include="Canvas\Picture\Picture.cpp" />
+    <ClCompile Include="Canvas\Picture\TextureStorage.cpp" />
     <ClCompile Include="Canvas\SelectedShape.cpp" />
     <ClCompile Include="Canvas\D2DObjectRenderer.cpp" />
     <ClCompile Include="Canvas\Shapes\CShape.cpp" />

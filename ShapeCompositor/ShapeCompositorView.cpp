@@ -26,7 +26,6 @@
 #define new DEBUG_NEW
 #endif
 
-
 // CShapeCompositorView
 
 IMPLEMENT_DYNCREATE(CShapeCompositorView, CScrollView)
@@ -58,10 +57,13 @@ END_MESSAGE_MAP()
 namespace
 {
 	const SSize CANVAS_SIZE = SSize(640.f, 480.f);
+	const float SCALE_FACTOR = 0.8f;
+	const SSize MAX_SIZE = SSize(CANVAS_SIZE.width * SCALE_FACTOR, CANVAS_SIZE.height * SCALE_FACTOR);
 }
 CShapeCompositorView::CShapeCompositorView()
 	: m_shapeFactory()
 	, m_selectedShape(m_shapeFactory)
+	, m_textureStorage(MAX_SIZE)
 	, m_canvas(
 		CANVAS_SIZE,
 		m_shapeFactory.CreateShape(// TODO : see can rewrite astyle
@@ -85,7 +87,6 @@ CShapeCompositorView::CShapeCompositorView()
 
 	// TODO : if canvas resize, m_selectedShape will have incorrect BoundingRect
 	m_selectedShape.SetBoundingRect(rect);
-
 
 }
 
@@ -182,6 +183,22 @@ void CShapeCompositorView::CreateEllipse()
 
 void CShapeCompositorView::CreatePicture()
 {
+	auto picturePath = m_document.LoadTexture();
+	const auto pictureName = picturePath.filename().generic_wstring();
+	m_textureStorage.AddTexture(
+		pictureName,
+		m_imageFactory.CreateTexture(picturePath.generic_wstring())
+	);
+
+	m_canvas.PushBackShape(
+		std::make_shared<CPicture>(
+			m_textureStorage.GetTexture(pictureName),
+			Vec2f(float(VIEW_WIDTH) / 2.f, float(VIEW_HEIGHT) / 2.f),
+			m_textureStorage.GetCorrectSize(pictureName)
+		)
+	);
+
+	RedrawWindow();
 }
 
 void CShapeCompositorView::Undo()
@@ -259,12 +276,12 @@ int CShapeCompositorView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		// Enable D2D support for this window:  
 
 		CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
-
 		// Create a Direct2D factory.
 		ATLENSURE_SUCCEEDED(m_objectRenderer.CreateRecources(this));// TODO : delete dependment to this
 		
 		// TODO : rewrite Normal
 		m_imageFactory.SetRenderTarget(m_pRenderTarget);
+
 	}
 	catch (...)
 	{
@@ -566,6 +583,8 @@ void CShapeCompositorView::ClearCanvas()
 
 void CShapeCompositorView::ResetApplication()
 {
+	m_textureStorage.Clear();
+
 	m_history.Clear();
 
 	m_selectedShape.ResetUpdateParameters();
@@ -633,11 +652,6 @@ void CShapeCompositorView::ChangeSelectedShape(const Vec2f & mousePos)
 	{
 		m_selectedShape.ResetSelectShapePtr();
 	}
-}
-
-void CShapeCompositorView::LoadTexture(const std::string & name)
-{
-	m_textureStorage.push_back(m_imageFactory.CreateTexture("res/" + name));
 }
 
 Vec2f CShapeCompositorView::GetScreenPosition(const CPoint & point)
