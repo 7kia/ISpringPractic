@@ -51,6 +51,7 @@ BEGIN_MESSAGE_MAP(CShapeCompositorView, CScrollView)
 	ON_WM_LBUTTONDOWN()
 	ON_WM_LBUTTONUP()
 	ON_WM_CLOSE()
+	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
 // создание/уничтожение CShapeCompositorView
@@ -737,4 +738,17 @@ void CShapeCompositorView::OnClose()
 	CheckSaveDocument();
 
 	CScrollView::OnClose();
+}
+
+
+void CShapeCompositorView::OnDestroy()
+{
+	//m_document.DeletePictures(m_textureStorage.GetDeletable());
+	if (CheckSaveDocument() != IDCANCEL)
+	{
+		CScrollView::OnDestroy();
+	}
+
+
+	// TODO: добавьте свой код обработчика сообщений
 }

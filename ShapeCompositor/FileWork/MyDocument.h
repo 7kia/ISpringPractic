@@ -17,6 +17,7 @@ class CMyDocument
 {
 public:
 	CMyDocument() = default;
+	~CMyDocument();
 
 	enum class FileType
 	{

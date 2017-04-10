@@ -4,6 +4,10 @@
 namespace fs = boost::filesystem;
 using fs::path;
 
+CMyDocument::~CMyDocument()
+{
+}
+
 bool CMyDocument::IsNewDocument() const
 {
 	return m_fileManager.IsNewDocument();
@@ -28,7 +32,11 @@ bool CMyDocument::OnFileSaveAs(std::vector<CShapePtr> const & shapes, const CTex
 			auto newPath = path(fileName);
 			auto nameNewFolder = newPath.stem().generic_wstring();
 			m_fileManager.CreateFolder(newPath.stem().generic_wstring());
-			DeletePictures(textureStorage.GetDeletable());
+
+			if (fileName.GetString() == oldFolder)
+			{
+				DeletePictures(textureStorage.GetDeletable());
+			}
 			m_fileManager.CopyFiles(
 				textureStorage.GetNeedfullNames(),
 				oldFolder,
@@ -46,7 +54,10 @@ bool CMyDocument::OnFileOpen(DataForAlteration & data)
 	CString fileName = OpenLoadDialog(FileType::Shapes);
 	if (fileName.GetLength() != 0)
 	{
-		DeletePictures(data.textureStorage.GetDeletable());
+		if (data.history.IsSave())
+		{
+			DeletePictures(data.textureStorage.GetDeletable());
+		}
 		data.textureStorage.Clear();
 		data.history.Clear();
 		data.selectedShape.ResetSelectShapePtr();
@@ -71,7 +82,7 @@ bool CMyDocument::OnFileSave(std::vector<CShapePtr> const & shapes, const CTextu
 	}
 	else
 	{
-		DeletePictures(textureStorage.GetDeletable());
+		//DeletePictures(textureStorage.GetDeletable());
 		m_fileManager.SetFilePath(m_fileManager.GetFilePath());
 		return m_xmlReader.Save(m_fileManager.GetFilePath(), shapes, textureStorage);
 	}
