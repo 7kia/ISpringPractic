@@ -47,7 +47,7 @@ public:
 	ID2D1Bitmap *			GetTexture(const std::wstring & name);
 	SSize					GetCorrectSize(const std::wstring & name) const;
 	std::wstring			GetNameTexture(ID2D1Bitmap * texture) const;
-	std::vector<std::wstring> GetNames() const;
+	std::vector<std::wstring> GetNeedfullNames() const;
 
 	void					SetDelete(const std::wstring & name, bool value);
 	bool					IsDelete(const std::wstring & name) const;

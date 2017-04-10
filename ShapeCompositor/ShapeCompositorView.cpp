@@ -190,13 +190,16 @@ void CShapeCompositorView::CreatePicture()
 		m_imageFactory.CreateTexture(picturePath.generic_wstring())
 	);
 
-	m_canvas.PushBackShape(
-		std::make_shared<CPicture>(
-			m_textureStorage.GetTexture(pictureName),
-			Vec2f(float(VIEW_WIDTH) / 2.f, float(VIEW_HEIGHT) / 2.f),
-			m_textureStorage.GetCorrectSize(pictureName)
+	m_history.AddAndExecuteCommand(std::make_shared<CAddPictureCommand>(
+		m_canvas.GetShapeCollection(),
+		m_textureStorage.GetTexture(pictureName),
+		Vec2f(float(VIEW_WIDTH) / 2.f, float(VIEW_HEIGHT) / 2.f),
+		m_textureStorage.GetCorrectSize(pictureName),
+		m_textureStorage,
+		m_selectedShape
 		)
 	);
+	
 
 	RedrawWindow();
 }

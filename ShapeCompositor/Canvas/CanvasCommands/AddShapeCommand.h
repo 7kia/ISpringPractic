@@ -28,7 +28,7 @@ public:
 	// Data
 private:
 	ShapeType m_type = ShapeType::Rectangle;
-	IShapeCollection & m_pCanvas;
-	const CShapeFactory * m_pFactory = nullptr;
-	CSelectedShape * m_pSelectShape = nullptr;
+	IShapeCollection & m_canvas;
+	const CShapeFactory & m_factory;
+	CSelectedShape & m_selectShape;
 };

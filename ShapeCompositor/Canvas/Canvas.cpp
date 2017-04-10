@@ -48,6 +48,22 @@ std::vector<CShapePtr>& CCanvas::GetShapes()
 	return m_shapes;
 }
 
+bool CCanvas::HavePictureWithTexture(ID2D1Bitmap * pTexture) const
+{
+	for (const auto & shape : m_shapes)
+	{
+		if (shape->GetType() == ShapeType::Picture)
+		{
+			auto pPicture = dynamic_cast<CPicture*>(shape.get());
+			if (pPicture->GetTexture() == pTexture)
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
 void CCanvas::SetShapes(const std::vector<CShapePtr> & shapes)
 {
 	m_shapes = shapes;

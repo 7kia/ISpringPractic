@@ -8,17 +8,17 @@ CAddShapeCanvasCommand::CAddShapeCanvasCommand(
 	, const CShapeFactory & factory
 	, CSelectedShape & seletedShape
 )
-	: m_pCanvas(pCanvas)
+	: m_canvas(pCanvas)
 	, m_type(type)
-	, m_pFactory(&factory)
-	, m_pSelectShape(&seletedShape)
+	, m_factory(factory)
+	, m_selectShape(seletedShape)
 {
 }
 
 void CAddShapeCanvasCommand::Execute()
 {
-	m_pCanvas.PushBackShape(
-		m_pFactory->CreateShape(
+	m_canvas.PushBackShape(
+		m_factory.CreateShape(
 			SShapeData(
 				m_type
 				, Vec2f(float(VIEW_WIDTH) / 2.f, float(VIEW_HEIGHT) / 2.f)
@@ -29,9 +29,9 @@ void CAddShapeCanvasCommand::Execute()
 
 void CAddShapeCanvasCommand::Cancel()
 {
-	if (m_pCanvas.IsSelectShape(m_pCanvas.GetAmountShapes() - 1, m_pSelectShape->GetShape()))
+	if (m_canvas.IsSelectShape(m_canvas.GetAmountShapes() - 1, m_selectShape.GetShape()))
 	{
-		m_pSelectShape->ResetSelectShapePtr();
+		m_selectShape.ResetSelectShapePtr();
 	}
-	DeleteLastElement(m_pCanvas.GetShapes());
+	DeleteLastElement(m_canvas.GetShapes());
 }

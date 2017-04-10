@@ -7,9 +7,9 @@ CDeleteShapeCanvasCommand::CDeleteShapeCanvasCommand(
 	, CSelectedShape & selectedShape
 	, const CShapeFactory & factory
 )
-	: m_pCanvas(canvas)
-	, m_pSelectShape(&selectedShape)
-	, m_pFactory(&factory)
+	: m_canvas(canvas)
+	, m_selectShape(selectedShape)
+	, m_factory(factory)
 	, m_data(selectedShape.GetShape()->GetShapeData())
 	, m_index(canvas.GetShapeIndex(selectedShape.GetShape()))
 {
@@ -17,14 +17,14 @@ CDeleteShapeCanvasCommand::CDeleteShapeCanvasCommand(
 
 void CDeleteShapeCanvasCommand::Execute()
 {
-	if (m_pCanvas.IsSelectShape(m_index, m_pSelectShape->GetShape()))
+	if (m_canvas.IsSelectShape(m_index, m_selectShape.GetShape()))
 	{
-		m_pSelectShape->ResetSelectShapePtr();
+		m_selectShape.ResetSelectShapePtr();
 	}
-	m_pCanvas.DeleteShape(m_index);
+	m_canvas.DeleteShape(m_index);
 }
 
 void CDeleteShapeCanvasCommand::Cancel()
 {
-	m_pCanvas.InsertShape(m_index, m_pFactory->CreateShape(m_data));
+	m_canvas.InsertShape(m_index, m_factory.CreateShape(m_data));
 }

@@ -132,6 +132,9 @@
     <ClInclude Include="FileWork\MyDocument.h">
       <Filter>Файлы исходного кода\FileWork</Filter>
     </ClInclude>
+    <ClInclude Include="Canvas\CanvasCommands\AddPictureCommand.h">
+      <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ShapeCompositor.cpp">
@@ -205,6 +208,9 @@
     </ClCompile>
     <ClCompile Include="Canvas\Picture\TextureStorage.cpp">
       <Filter>Файлы исходного кода\Canvas\Picture</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas\CanvasCommands\AddPictureCommand.cpp">
+      <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

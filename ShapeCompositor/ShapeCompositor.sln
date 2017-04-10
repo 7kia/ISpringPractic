@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ShapeCompositor", "ShapeCompositor\ShapeCompositor.vcxproj", "{2DFB2FFF-C32B-44E3-9CD2-B61786E8FFD8}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ShapeCompositor", "ShapeCompositor.vcxproj", "{2DFB2FFF-C32B-44E3-9CD2-B61786E8FFD8}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test", "ShapeCompositorTests\Test.vcxproj", "{5637F0C5-2C33-4E71-903C-42AF77E22545}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test", "..\ShapeCompositorTests\Test.vcxproj", "{5637F0C5-2C33-4E71-903C-42AF77E22545}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

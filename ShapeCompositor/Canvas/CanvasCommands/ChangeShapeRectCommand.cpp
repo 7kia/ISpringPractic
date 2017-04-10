@@ -9,7 +9,7 @@ CChangeShapeRectCanvasCommand::CChangeShapeRectCanvasCommand(
 	, const CFrame & newData
 	, CSelectedShape & selectedShape
 )
-	: m_pCanvas(pShapeStorage)
+	: m_canvas(pShapeStorage)
 	, m_index(pShapeStorage.GetShapeIndex(selectedShape.GetShape()))
 	, m_oldFrame(oldData)
 	, m_newData(newData)
@@ -19,7 +19,7 @@ CChangeShapeRectCanvasCommand::CChangeShapeRectCanvasCommand(
 
 void CChangeShapeRectCanvasCommand::Execute()
 {
-	CShapePtr shape = m_pCanvas.GetShape(m_index);
+	CShapePtr shape = m_canvas.GetShape(m_index);
 	shape->SetFrame(m_newData);
 
 	if (m_pSelectedShape->GetShape() == shape)
@@ -31,7 +31,7 @@ void CChangeShapeRectCanvasCommand::Execute()
 
 void CChangeShapeRectCanvasCommand::Cancel()
 {
-	CShapePtr shape = m_pCanvas.GetShape(m_index);
+	CShapePtr shape = m_canvas.GetShape(m_index);
 	shape->SetFrame(m_oldFrame);
 
 	if (m_pSelectedShape->GetShape() == shape)

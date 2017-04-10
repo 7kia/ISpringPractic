@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "Shapes\ShapeFactory.h"
+#include "Picture\Picture.h"
 #include "ObjectRenderer.h"
 #include "CanvasCommands\AllCanvasCommand.h"
 #include "MouseEventHandler.h"
@@ -30,6 +31,7 @@ public:
 	virtual std::vector<CShapePtr>&	GetShapes() = 0;
 	virtual size_t GetAmountShapes() const = 0;
 	virtual size_t GetShapeIndex(const CShapePtr & pShape) const = 0;
+	virtual bool HavePictureWithTexture(ID2D1Bitmap * pTexture) const = 0;
 };
 
 class IShapeCollection : public IShapeProvider
@@ -93,7 +95,7 @@ public:
 	size_t					GetShapeIndex(const CShapePtr & pShape) const override;
 
 	std::vector<CShapePtr>&	GetShapes() override;
-
+	bool					HavePictureWithTexture(ID2D1Bitmap * pTexture) const override;
 	//--------------------------------------------
 	void					SetShapes(const std::vector<CShapePtr> & shapes);
 	//--------------------------------------------
