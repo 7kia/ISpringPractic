@@ -135,6 +135,9 @@
     <ClInclude Include="Canvas\CanvasCommands\AddPictureCommand.h">
       <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
     </ClInclude>
+    <ClInclude Include="Canvas\CanvasCommands\DeletePictureCommand.h">
+      <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ShapeCompositor.cpp">
@@ -210,6 +213,9 @@
       <Filter>Файлы исходного кода\Canvas\Picture</Filter>
     </ClCompile>
     <ClCompile Include="Canvas\CanvasCommands\AddPictureCommand.cpp">
+      <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas\CanvasCommands\DeletePictureCommand.cpp">
       <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
     </ClCompile>
   </ItemGroup>

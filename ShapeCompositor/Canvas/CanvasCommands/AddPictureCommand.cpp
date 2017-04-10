@@ -4,16 +4,12 @@
 
 CAddPictureCommand::CAddPictureCommand(
 	IShapeCollection & pCanvas,
-	ID2D1Bitmap * pTexture,
-	const Vec2f position,
-	const SSize size,
+	const SPictureData & pictureData,
 	CTextureStorage & textureStorage,
 	CSelectedShape & seletedShape
 )
 	: m_canvas(pCanvas)
-	, m_pTexture(pTexture)
-	, m_position(position)
-	, m_size(size)
+	, m_pictureData(pictureData)
 	, m_textureStorage(textureStorage)
 	, m_selectShape(seletedShape)
 {
@@ -24,13 +20,13 @@ void CAddPictureCommand::Execute()
 {
 	m_canvas.PushBackShape(
 		std::make_shared<CPicture>(
-			m_pTexture,
-			m_position,
-			m_size
+			m_pictureData.pTexture,
+			m_pictureData.position,
+			m_pictureData.size
 		)
 	);
 
-	m_textureStorage.SetDelete(m_textureStorage.GetNameTexture(m_pTexture), false);
+	m_textureStorage.SetDelete(m_textureStorage.GetNameTexture(m_pictureData.pTexture), false);
 }
 
 void CAddPictureCommand::Cancel()
@@ -41,5 +37,8 @@ void CAddPictureCommand::Cancel()
 	}
 	DeleteLastElement(m_canvas.GetShapes());
 
-	m_textureStorage.SetDelete(m_textureStorage.GetNameTexture(m_pTexture), !m_canvas.HavePictureWithTexture(m_pTexture));
+	m_textureStorage.SetDelete(
+		m_textureStorage.GetNameTexture(m_pictureData.pTexture),
+		!m_canvas.HavePictureWithTexture(m_pictureData.pTexture)
+	);
 }

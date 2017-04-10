@@ -184,23 +184,27 @@ void CShapeCompositorView::CreateEllipse()
 void CShapeCompositorView::CreatePicture()
 {
 	auto picturePath = m_document.LoadTexture();
-	const auto pictureName = picturePath.filename().generic_wstring();
-	m_textureStorage.AddTexture(
-		pictureName,
-		m_imageFactory.CreateTexture(picturePath.generic_wstring())
-	);
+	if (picturePath.size())
+	{
+		const auto pictureName = picturePath.filename().generic_wstring();
+		m_textureStorage.AddTexture(
+			pictureName,
+			m_imageFactory.CreateTexture(picturePath.generic_wstring())
+		);
 
-	m_history.AddAndExecuteCommand(std::make_shared<CAddPictureCommand>(
-		m_canvas.GetShapeCollection(),
-		m_textureStorage.GetTexture(pictureName),
-		Vec2f(float(VIEW_WIDTH) / 2.f, float(VIEW_HEIGHT) / 2.f),
-		m_textureStorage.GetCorrectSize(pictureName),
-		m_textureStorage,
-		m_selectedShape
-		)
-	);
+		m_history.AddAndExecuteCommand(std::make_shared<CAddPictureCommand>(
+			m_canvas.GetShapeCollection(),
+			SPictureData(
+				m_textureStorage.GetTexture(pictureName),
+				Vec2f(float(VIEW_WIDTH) / 2.f, float(VIEW_HEIGHT) / 2.f),
+				m_textureStorage.GetCorrectSize(pictureName)
+			),
+			m_textureStorage,
+			m_selectedShape
+			)
+		);
+	}
 	
-
 	RedrawWindow();
 }
 
@@ -429,14 +433,30 @@ BOOL CShapeCompositorView::PreTranslateMessage(MSG* pMsg)
 				{
 					if (m_selectedShape.HaveSelectedShape())
 					{
-						m_history.AddAndExecuteCommand(
-							std::make_shared<CDeleteShapeCanvasCommand>(
-								m_canvas.GetShapeCollection()
-								, m_selectedShape
-								, m_shapeFactory
+						if (m_selectedShape.GetShape()->GetType() == ShapeType::Picture)
+						{
+							auto pPicture = dynamic_cast<CPicture*>(m_selectedShape.GetShape().get());
+
+							m_history.AddAndExecuteCommand(
+								std::make_shared<CDeletePictureCommand>(
+									m_canvas.GetShapeCollection(),
+									m_selectedShape,
+									m_textureStorage,
+									pPicture->GetPictureData()
 								)
-						);
-						
+							);
+						}
+						else
+						{
+							m_history.AddAndExecuteCommand(
+								std::make_shared<CDeleteShapeCanvasCommand>(
+									m_canvas.GetShapeCollection()
+									, m_selectedShape
+									, m_shapeFactory
+									)
+							);
+						}
+					
 						RedrawWindow();
 					}			
 				}

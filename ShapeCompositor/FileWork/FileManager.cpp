@@ -84,7 +84,7 @@ std::wstring CFileManager::GetCurrentFolder() const
 	{
 		return m_tempFolderPath.generic_wstring();
 	}
-	return m_filePath.parent_path().generic_wstring();
+	return m_filePath.parent_path().generic_wstring() + L"/"+ m_filePath.stem().generic_wstring();
 }
 
 

@@ -3,6 +3,19 @@
 #include "Canvas\Shapes\Rectangle.h"
 #include <d2d1.h>
 
+struct SPictureData
+{
+	SPictureData(
+		ID2D1Bitmap * pTexture 
+		, const Vec2f position
+		, const SSize size
+	);
+
+	ID2D1Bitmap * pTexture;
+	Vec2f position;
+	SSize size;
+};
+
 class CPicture : public CRectangle
 {
 public:
@@ -22,6 +35,8 @@ public:
 	//--------------------------------------------
 
 	ID2D1Bitmap * GetTexture() const;
+
+	SPictureData GetPictureData() const;
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:

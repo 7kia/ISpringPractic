@@ -1,24 +1,25 @@
 #pragma once
 
+#pragma once
+
 #include "CanvasCommand.h"
 #include "Canvas\Shapes\AllShapes.h"
 #include "Canvas\SelectedShape.h"
 #include "Canvas\Picture\Picture.h"
 #include "Canvas\Picture\TextureStorage.h"
 
-
 class IShapeCollection;
-class CAddPictureCommand : public IMyCommand
+class CDeletePictureCommand : public IMyCommand
 {
 public:
-	CAddPictureCommand(
+	CDeletePictureCommand(
 		IShapeCollection & pCanvas,
-		const SPictureData & pictureData,
+		CSelectedShape & seletedShape,
 		CTextureStorage & textureStorage,
-		CSelectedShape & seletedShape
-	);//ShapeType
-	  //////////////////////////////////////////////////////////////////////
-	  // Methods
+		const SPictureData & pictureData
+	);
+	//////////////////////////////////////////////////////////////////////
+	// Methods
 public:
 	//--------------------------------------------
 	// IMyCommand
@@ -29,8 +30,9 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
-	IShapeCollection & m_canvas;
 	const SPictureData m_pictureData;
-	CTextureStorage & m_textureStorage;
+	size_t m_index = 0;
+	IShapeCollection & m_canvas;
 	CSelectedShape & m_selectShape;
+	CTextureStorage & m_textureStorage;
 };
