@@ -95,24 +95,9 @@ bool CSelectedShape::IsResize(const Vec2f point)
 	return false;
 }
 
-bool CSelectedShape::InLeftTopMarker(const Vec2f point)
+bool CSelectedShape::InMarker(const Vec2f point, const ShapeIndex markerIndex)
 {
-	return m_resizeShapes[size_t(ShapeIndex::MarkerLeftTop)]->IsPointIntersection(point);
-}
-
-bool CSelectedShape::InLeftBottomMarker(const Vec2f point)
-{
-	return m_resizeShapes[size_t(ShapeIndex::MarkerLeftBottom)]->IsPointIntersection(point);
-}
-
-bool CSelectedShape::InRightTopMarker(const Vec2f point)
-{
-	return m_resizeShapes[size_t(ShapeIndex::MarkerRightTop)]->IsPointIntersection(point);
-}
-
-bool CSelectedShape::InRightBottomMarker(const Vec2f point)
-{
-	return m_resizeShapes[size_t(ShapeIndex::MarkerRightBottom)]->IsPointIntersection(point);
+	return m_resizeShapes[size_t(markerIndex)]->IsPointIntersection(point);
 }
 
 bool CSelectedShape::DoneUpdate() const

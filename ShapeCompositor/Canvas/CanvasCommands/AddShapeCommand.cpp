@@ -35,3 +35,7 @@ void CAddShapeCanvasCommand::Cancel()
 	}
 	DeleteLastElement(m_canvas.GetShapes());
 }
+
+void CAddShapeCanvasCommand::Destroy()
+{
+}

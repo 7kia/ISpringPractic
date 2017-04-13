@@ -140,7 +140,7 @@ bool CXMLReader::Open(
 	try
 	{
 		std::ifstream stream(path);
-		auto folder = fs::path(path).stem().generic_string();
+		auto folder = fs::path(path).parent_path().generic_string() + "/" + fs::path(path).stem().generic_string();
 
 		if (!exists(folder) && textureStorage.GetCount())
 		{

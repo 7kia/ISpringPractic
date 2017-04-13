@@ -52,12 +52,8 @@ public:
 	void					SetUpdateType(UpdateType type);
 	UpdateType				GetUpdateType() const;
 
-	//
 	bool					IsResize(const Vec2f point);
-	bool					InLeftTopMarker(const Vec2f point);
-	bool					InLeftBottomMarker(const Vec2f point);
-	bool					InRightTopMarker(const Vec2f point);
-	bool					InRightBottomMarker(const Vec2f point);
+	bool					InMarker(const Vec2f point, const ShapeIndex markerIndex);
 
 	bool					DoneUpdate() const;
 
@@ -87,15 +83,19 @@ public:
 
 
 	// For drag and drop
-	Vec2f	GetFinalShift() const;
 	CFrame	GetOldFrame();
 	CFrame	GetCurrentFrame();
-	SSize	GetDirectionResize() const;
 	void	ReturnToOldState();
 	void	SetOldFrame(CFrame const & data);
-	bool	CheckBoundingRect(const D2D1_RECT_F & rect) const;
 
 private:
+	// For drag and drop
+	Vec2f	GetFinalShift() const;
+	SSize	GetDirectionResize() const;
+	bool	CheckBoundingRect(const D2D1_RECT_F & rect) const;
+
+	//
+
 	void					SetViewPosition();
 	void					SetMoveView();
 	void					SetResizeView();

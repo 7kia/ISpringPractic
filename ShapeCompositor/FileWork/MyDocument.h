@@ -48,14 +48,15 @@ public:
 	// Methods
 public:
 	bool IsNewDocument() const;
-	void ResetCurrentFolder();
+	void RecreateTempFolder();
 
 	boost::filesystem::path LoadTexture();
 	void DeletePictures(const std::vector<std::wstring> & names) const;
-	CString OpenSaveDialog();
-	CString OpenLoadDialog(const FileType fileType);
 
-	CString GetFileName();
+	static CString OpenSaveDialog();
+	static CString OpenLoadDialog(const FileType fileType);
+
+	CString GetFileName() const;
 
 	bool OnFileSaveAs(std::vector<CShapePtr> const & shapes, const CTextureStorage & textureStorage);
 	bool OnFileOpen(DataForAlteration & data);
@@ -65,5 +66,4 @@ public:
 private:
 	CXMLReader m_xmlReader;
 	CFileManager m_fileManager;
-	bool m_folderExist = false;
 };

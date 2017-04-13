@@ -23,12 +23,6 @@ void CDeletePictureCommand::Execute()
 		m_selectShape.ResetSelectShapePtr();
 	}
 	m_canvas.DeleteShape(m_index);
-
-	m_textureStorage.SetDelete(
-		m_textureStorage.GetNameTexture(m_pictureData.pTexture),
-		!m_canvas.HavePictureWithTexture(m_pictureData.pTexture)
-	);
-
 }
 
 void CDeletePictureCommand::Cancel()
@@ -43,4 +37,12 @@ void CDeletePictureCommand::Cancel()
 	);
 
 	m_textureStorage.SetDelete(m_textureStorage.GetNameTexture(m_pictureData.pTexture), false);
+}
+
+void CDeletePictureCommand::Destroy()
+{
+	m_textureStorage.SetDelete(
+		m_textureStorage.GetNameTexture(m_pictureData.pTexture),
+		false
+	);
 }

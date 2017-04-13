@@ -50,7 +50,6 @@ BEGIN_MESSAGE_MAP(CShapeCompositorView, CScrollView)
 	ON_WM_MOUSEMOVE()
 	ON_WM_LBUTTONDOWN()
 	ON_WM_LBUTTONUP()
-	ON_WM_CLOSE()
 	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
@@ -185,7 +184,7 @@ void CShapeCompositorView::CreateEllipse()
 void CShapeCompositorView::CreatePicture()
 {
 	auto picturePath = m_document.LoadTexture();
-	if (picturePath.size())
+	if (picturePath != L"no")
 	{
 		const auto pictureName = picturePath.filename().generic_wstring();
 		m_textureStorage.AddTexture(
@@ -381,7 +380,7 @@ void CShapeCompositorView::OnFileNew()
 		if (!(m_history.IsSave() && m_document.IsNewDocument()))
 		{
 			ResetApplication();
-			m_document.ResetCurrentFolder();
+			m_document.RecreateTempFolder();
 			SetWindowText(CString("Безымянный"));
 			RedrawWindow();
 		}
@@ -418,7 +417,7 @@ BOOL CShapeCompositorView::PreTranslateMessage(MSG* pMsg)
 
 	switch (pMsg->message)
 	{
-		case WM_CLOSE:
+		case WM_DESTROY:
 		{
 			CheckSaveDocument();
 
@@ -562,19 +561,17 @@ BOOL CShapeCompositorView::OnEraseBkgnd(CDC* pDC)
 
 void CShapeCompositorView::ChangeCursor(const Vec2f & position)
 {
-	//const auto pSelectShape = m_canvas.GetSelectShape();
-	//const auto pFrameSelectShape = m_canvas.GetFrameSelectedShape();
 	if (m_selectedShape.GetShape())
 	{
 		CSelectedShape::UpdateType updateType = m_selectedShape.GetUpdateType();
 		bool needChangeToNW = (updateType == CSelectedShape::UpdateType::MarkerLeftTop)
 			|| (updateType == CSelectedShape::UpdateType::MarkerRightBottom)
-			|| m_selectedShape.InLeftTopMarker(position)
-			|| m_selectedShape.InRightBottomMarker(position);
+			|| m_selectedShape.InMarker(position, CSelectedShape::ShapeIndex::MarkerLeftTop)
+			|| m_selectedShape.InMarker(position, CSelectedShape::ShapeIndex::MarkerRightBottom);
 		bool needChangeToNE = (updateType == CSelectedShape::UpdateType::MarkerRightTop) 
 			|| (updateType == CSelectedShape::UpdateType::MarkerLeftBottom)
-			|| m_selectedShape.InRightTopMarker(position)
-			|| m_selectedShape.InLeftBottomMarker(position);
+			|| m_selectedShape.InMarker(position, CSelectedShape::ShapeIndex::MarkerRightTop)
+			|| m_selectedShape.InMarker(position, CSelectedShape::ShapeIndex::MarkerLeftBottom);
 
 		if (needChangeToNW)
 		{
@@ -730,14 +727,6 @@ int CShapeCompositorView::CheckSaveDocument()
 	}
 
 	return result;
-}
-
-void CShapeCompositorView::OnClose()
-{
-	// TODO: добавьте свой код обработчика сообщений или вызов стандартного
-	CheckSaveDocument();
-
-	CScrollView::OnClose();
 }
 
 

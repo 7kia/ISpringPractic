@@ -28,3 +28,7 @@ void CDeleteShapeCanvasCommand::Cancel()
 {
 	m_canvas.InsertShape(m_index, m_factory.CreateShape(m_data));
 }
+
+void CDeleteShapeCanvasCommand::Destroy()
+{
+}

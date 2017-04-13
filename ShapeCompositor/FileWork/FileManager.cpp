@@ -60,7 +60,7 @@ void CFileManager::CopyFiles(
 	const std::vector<std::wstring> & files,
 	const std::wstring & from,
 	const std::wstring & to
-) const
+)
 {
 	for (const auto & file : files)
 	{
@@ -106,6 +106,6 @@ void CFileManager::ResetCurrentFolder()
 
 void CFileManager::RecreateTempFolder()
 {
-	remove_all(m_tempFolderPath);
+	remove_all(m_tempFolderPath);// ^^^
 	create_directory(m_tempFolderPath);
 }

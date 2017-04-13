@@ -25,6 +25,7 @@ public:
 	// IMyCommand
 	void Execute() override;
 	void Cancel() override;
+	void Destroy() override;
 
 	//--------------------------------------------
 	//////////////////////////////////////////////////////////////////////

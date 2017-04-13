@@ -19,11 +19,11 @@ public:
 	std::wstring GetFileName() const;
 	std::wstring GetFilePath() const;
 	void CreateFolder(const std::wstring & name);
-	void CopyFiles(
+	static void CopyFiles(
 		const std::vector<std::wstring> & files,
 		const std::wstring & from,
 		const std::wstring & to
-	) const;
+	);
 
 	bool IsNewDocument() const;
 	std::wstring GetCurrentFolder() const;

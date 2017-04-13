@@ -41,3 +41,7 @@ void CChangeShapeRectCanvasCommand::Cancel()
 	}
 }
 
+void CChangeShapeRectCanvasCommand::Destroy()
+{
+}
+

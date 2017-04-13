@@ -36,9 +36,15 @@ void CAddPictureCommand::Cancel()
 		m_selectShape.ResetSelectShapePtr();
 	}
 	DeleteLastElement(m_canvas.GetShapes());
+}
+
+void CAddPictureCommand::Destroy()
+{
+	auto listShapesAfterDestroy = m_canvas.GetShapes();
+	listShapesAfterDestroy.pop_back();
 
 	m_textureStorage.SetDelete(
 		m_textureStorage.GetNameTexture(m_pictureData.pTexture),
-		!m_canvas.HavePictureWithTexture(m_pictureData.pTexture)
+		!HavePictureWithTexture(m_pictureData.pTexture, listShapesAfterDestroy)
 	);
 }

@@ -12,6 +12,12 @@ void CHistory::AddAndExecuteCommand(const CanvasCommandPtr & command)
 	// TODO : insert to middle queue
 	if (!m_history.empty() && (m_currentCommand != m_history.rbegin()))
 	{
+		std::for_each(m_currentCommand.base(), m_history.end(),
+			[&](auto & iter)
+		{
+			iter->Destroy();
+		}
+		);
 		if (std::find(m_currentCommand.base(), m_history.end(), m_saveLastCommand) != m_history.end())
 		{
 			m_saveLastCommand.reset();
@@ -60,15 +66,15 @@ bool CHistory::IsSave() const
 	// for erase part history, never will be empty history 
 	// as erase was for add command instead other
 	const bool noSaveLastCommand = !m_saveLastCommand;
-	if (noSaveLastCommand && m_history.empty())
+	if (noSaveLastCommand && (m_history.empty() || (m_currentCommand == m_history.rend())) )
 	{
 		return true;
 	}
 	// not save return to start
-	if (noSaveLastCommand && (m_currentCommand == m_history.rend()))
+	/*if (noSaveLastCommand && (m_currentCommand == m_history.rend()))
 	{
 		return true;
-	}
+	}*/
 
 	return 	m_saveLastCommand == *m_currentCommand;
 }

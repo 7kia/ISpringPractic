@@ -13,7 +13,7 @@ bool CMyDocument::IsNewDocument() const
 	return m_fileManager.IsNewDocument();
 }
 
-void CMyDocument::ResetCurrentFolder()
+void CMyDocument::RecreateTempFolder()
 {
 	m_fileManager.ResetCurrentFolder();
 	m_fileManager.RecreateTempFolder();
@@ -30,17 +30,17 @@ bool CMyDocument::OnFileSaveAs(std::vector<CShapePtr> const & shapes, const CTex
 		if (textureStorage.GetCount())
 		{
 			auto newPath = path(fileName);
-			auto nameNewFolder = newPath.stem().generic_wstring();
-			m_fileManager.CreateFolder(newPath.stem().generic_wstring());
+			auto newFolder = newPath.parent_path().generic_wstring() + L"/" + newPath.stem().generic_wstring();
+			m_fileManager.CreateFolder(newFolder);
 
-			if (fileName.GetString() == oldFolder)
-			{
+			//if (fileName.GetString() == oldFolder)
+			//{
 				DeletePictures(textureStorage.GetDeletable());
-			}
+			//}
 			m_fileManager.CopyFiles(
 				textureStorage.GetNeedfullNames(),
 				oldFolder,
-				nameNewFolder
+				newFolder
 			);
 		}
 
@@ -90,21 +90,31 @@ bool CMyDocument::OnFileSave(std::vector<CShapePtr> const & shapes, const CTextu
 
 boost::filesystem::path CMyDocument::LoadTexture()
 {
-	auto picturePath = OpenLoadDialog(CMyDocument::FileType::Pictures);
-	auto currentFolder = m_fileManager.GetCurrentFolder();
-
-	if (!boost::filesystem::exists(currentFolder))
+	const auto picturePath = OpenLoadDialog(CMyDocument::FileType::Pictures);
+	if (picturePath.GetLength())
 	{
-		boost::filesystem::create_directory(currentFolder);
-	}
+		const auto currentFolder = m_fileManager.GetCurrentFolder();
 
-	auto pictureName = path(picturePath).filename().generic_wstring();
-	BOOL isLoad = CopyFile(picturePath, CString((currentFolder + L"/"+ pictureName).data()),  FALSE);
-	if (isLoad == 0)
+		if (!boost::filesystem::exists(currentFolder))
+		{
+			boost::filesystem::create_directory(currentFolder);
+		}
+
+		const auto pictureName = path(picturePath).filename().generic_wstring();
+		const auto currentPath = currentFolder + L"/" + pictureName;
+		if (currentPath.data() != path(picturePath))
+		{
+			BOOL isLoad = CopyFile(picturePath, currentPath.data(), FALSE);
+			if (isLoad == 0)
+			{
+				throw std::runtime_error("Picture not copy");
+			}
+		}
+	}
+	else
 	{
-		throw std::runtime_error("Picture not copy");
+		return path(L"no");
 	}
-
 	return path(picturePath);
 }
 
@@ -112,7 +122,9 @@ void CMyDocument::DeletePictures(const std::vector<std::wstring> & names) const
 {
 	for (const auto & name : names)
 	{
-		const auto path = (m_fileManager.GetCurrentFolder() + L"/" + name);
+		auto path = (m_fileManager.GetCurrentFolder() + L"/" + name);
+		
+
 		if (PathFileExists(path.data()))
 		{
 			DeleteFile(path.data());
@@ -143,7 +155,7 @@ CString CMyDocument::OpenSaveDialog()
 
 CString CMyDocument::OpenLoadDialog(const FileType fileType)
 {
-	CString fileName;
+	CString fileName(L"\0");
 
 	std::wstring type;
 	std::wstring expression;
@@ -178,7 +190,7 @@ CString CMyDocument::OpenLoadDialog(const FileType fileType)
 	return fileName;
 }
 
-CString CMyDocument::GetFileName()
+CString CMyDocument::GetFileName() const
 {
 	return CString(m_fileManager.GetFileName().data());
 }

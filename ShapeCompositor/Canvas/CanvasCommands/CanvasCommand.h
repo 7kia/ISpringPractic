@@ -11,5 +11,6 @@ public:
 public:
 	virtual void Execute() = 0;
 	virtual void Cancel() = 0;
+	virtual void Destroy() = 0;
 };
 

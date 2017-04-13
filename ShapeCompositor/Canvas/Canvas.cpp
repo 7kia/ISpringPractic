@@ -48,9 +48,9 @@ std::vector<CShapePtr>& CCanvas::GetShapes()
 	return m_shapes;
 }
 
-bool CCanvas::HavePictureWithTexture(ID2D1Bitmap * pTexture) const
+bool HavePictureWithTexture(ID2D1Bitmap * pTexture, const std::vector<CShapePtr> & shapes)
 {
-	for (const auto & shape : m_shapes)
+	for (const auto & shape : shapes)
 	{
 		if (shape->GetType() == ShapeType::Picture)
 		{
