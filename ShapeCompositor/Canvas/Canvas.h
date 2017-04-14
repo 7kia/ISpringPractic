@@ -20,6 +20,7 @@ class CShapeCompositorView;
 class CShapeCompositorDoc;
 class CCanvasController;
 
+CShapePtr GetShape(const Vec2f mousePosition, const std::vector<CShapePtr> & vector);
 
 class IShapeProvider
 {
@@ -27,7 +28,6 @@ public:
 	virtual ~IShapeProvider() = default;
 
 	virtual CShapePtr GetShape(size_t index) = 0;
-	virtual CShapePtr GetShape(const Vec2f mousePosition) = 0;
 	virtual std::vector<CShapePtr>&	GetShapes() = 0;
 	virtual size_t GetAmountShapes() const = 0;
 	virtual size_t GetShapeIndex(const CShapePtr & pShape) const = 0;
@@ -65,7 +65,7 @@ void DeleteLastElement(std::vector<T> & vector);
 bool HavePictureWithTexture(ID2D1Bitmap * pTexture, const std::vector<CShapePtr> & shapes);
 
 class CCanvas
-	: public IShapeCollection
+	: private IShapeCollection
 	, public ICanvas
 {
 public:
@@ -92,7 +92,6 @@ public:
 	//--------------------------------------------
 	// IShapeProvider
 	CShapePtr				GetShape(size_t index) override;
-	CShapePtr				GetShape(const Vec2f mousePosition) override;
 	size_t					GetShapeIndex(const CShapePtr & pShape) const override;
 
 	std::vector<CShapePtr>&	GetShapes() override;

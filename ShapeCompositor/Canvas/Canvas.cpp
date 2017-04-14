@@ -110,10 +110,10 @@ CShapePtr CCanvas::GetShape(size_t index)
 	return m_shapes[index];
 }
 
-CShapePtr CCanvas::GetShape(const Vec2f mousePosition)
+CShapePtr GetShape(const Vec2f mousePosition, const std::vector<CShapePtr> & vector)
 {
 	CShapePtr foundShape;
-	for (auto iter = m_shapes.rbegin(); iter != m_shapes.rend(); ++iter)
+	for (auto iter = vector.rbegin(); iter != vector.rend(); ++iter)
 	{
 		if ((*iter)->IsPointIntersection(mousePosition))
 		{

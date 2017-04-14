@@ -583,14 +583,14 @@ void CShapeCompositorView::ChangeCursor(const Vec2f & position)
 			SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZENESW));
 			return;
 		}
-		else if (m_canvas.GetShape(position) != nullptr)
+		else if (GetShape(position, m_canvas.GetShapes()) != nullptr)
 		{
 			SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZEALL));
 		}
 	}
 	else
 	{
-		if (m_canvas.GetShape(position) != nullptr)
+		if (GetShape(position, m_canvas.GetShapes()) != nullptr)
 		{
 			SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZEALL));
 		}
@@ -671,7 +671,7 @@ void CShapeCompositorView::CreateCommandForSelectedShape()
 
 void CShapeCompositorView::ChangeSelectedShape(const Vec2f & mousePos)
 {
-	auto selectShape = m_canvas.GetShape(mousePos);
+	auto selectShape = GetShape(mousePos, m_canvas.GetShapes());
 
 	if (selectShape.get() != nullptr)
 	{

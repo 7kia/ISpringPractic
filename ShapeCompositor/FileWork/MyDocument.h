@@ -24,6 +24,11 @@ public:
 		Shapes,
 		Pictures
 	};
+	enum class DialogType
+	{
+		Save,
+		Open
+	};
 	struct DataForAlteration
 	{
 		DataForAlteration(
@@ -53,8 +58,7 @@ public:
 	boost::filesystem::path LoadTexture();
 	void DeletePictures(const std::vector<std::wstring> & names) const;
 
-	static CString OpenSaveDialog();
-	static CString OpenLoadDialog(const FileType fileType);
+	static CString OpenDialog(const DialogType dialogType, const FileType fileType);
 
 	CString GetFileName() const;
 

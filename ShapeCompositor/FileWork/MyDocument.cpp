@@ -21,7 +21,7 @@ void CMyDocument::RecreateTempFolder()
 
 bool CMyDocument::OnFileSaveAs(std::vector<CShapePtr> const & shapes, const CTextureStorage & textureStorage)
 {
-	CString fileName = OpenSaveDialog();
+	CString fileName = OpenDialog(CMyDocument::DialogType::Save, CMyDocument::FileType::Shapes);
 	if (fileName.GetLength() != 0)
 	{
 		const auto oldFolder = m_fileManager.GetCurrentFolder();
@@ -51,13 +51,13 @@ bool CMyDocument::OnFileSaveAs(std::vector<CShapePtr> const & shapes, const CTex
 
 bool CMyDocument::OnFileOpen(DataForAlteration & data)
 {
-	CString fileName = OpenLoadDialog(FileType::Shapes);
+	CString fileName = OpenDialog(CMyDocument::DialogType::Open, CMyDocument::FileType::Shapes);
 	if (fileName.GetLength() != 0)
 	{
-		if (data.history.IsSave())
-		{
+		//if (data.history.IsSave())
+		//{
 			DeletePictures(data.textureStorage.GetDeletable());
-		}
+		//}
 		data.textureStorage.Clear();
 		data.history.Clear();
 		data.selectedShape.ResetSelectShapePtr();
@@ -90,7 +90,7 @@ bool CMyDocument::OnFileSave(std::vector<CShapePtr> const & shapes, const CTextu
 
 boost::filesystem::path CMyDocument::LoadTexture()
 {
-	const auto picturePath = OpenLoadDialog(CMyDocument::FileType::Pictures);
+	const auto picturePath = OpenDialog(CMyDocument::DialogType::Open ,CMyDocument::FileType::Pictures);
 	if (picturePath.GetLength())
 	{
 		const auto currentFolder = m_fileManager.GetCurrentFolder();
@@ -124,7 +124,6 @@ void CMyDocument::DeletePictures(const std::vector<std::wstring> & names) const
 	{
 		auto path = (m_fileManager.GetCurrentFolder() + L"/" + name);
 		
-
 		if (PathFileExists(path.data()))
 		{
 			DeleteFile(path.data());
@@ -132,30 +131,10 @@ void CMyDocument::DeletePictures(const std::vector<std::wstring> & names) const
 	}
 }
 
-CString CMyDocument::OpenSaveDialog()
+
+CString CMyDocument::OpenDialog(const DialogType dialogType, const FileType fileType)
 {
 	CString fileName;
-
-	CFileDialog fileDlg(
-		FALSE
-		, _T("")
-		, _T("*.xml")
-		, OFN_HIDEREADONLY
-		, L"XML Files\0"    L"*.xml\0"
-	);
-	if (fileDlg.DoModal() == IDOK)
-	{
-		CString pathName = fileDlg.GetPathName();
-
-		fileName = pathName;
-	}
-
-	return fileName;
-}
-
-CString CMyDocument::OpenLoadDialog(const FileType fileType)
-{
-	CString fileName(L"\0");
 
 	std::wstring type;
 	std::wstring expression;
@@ -164,29 +143,36 @@ CString CMyDocument::OpenLoadDialog(const FileType fileType)
 	{
 	case FileType::Pictures:
 		type = L"*.png";
-		expression = L"Picture (*.png) | *.png;|";
+		expression = L"Picture (*.png)|*.png|";
 		break;
 	case FileType::Shapes:
 		type = L"*.xml";
-		expression = L"XML Files\0 *.xml\0";
+		expression = L"XML Files (*.xml)| *.xml|";
 		break;
 	default:
 		break;
 	}
 
 	CFileDialog fileDlg(
-		TRUE
+		(dialogType == DialogType::Open) ? TRUE : FALSE
 		, NULL
 		, type.data()
-		, OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST
+		, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT
 		, expression.data()
 	);
+	const int maxFiles = 1;
+	const int bufferSize = (maxFiles * (MAX_PATH + 1)) + 1;
+	fileDlg.GetOFN().lpstrFile = fileName.GetBuffer(bufferSize);
+	fileDlg.GetOFN().nMaxFile = maxFiles;
+
 	if (fileDlg.DoModal() == IDOK)
 	{
 		CString pathName = fileDlg.GetPathName();
 
 		fileName = pathName;
 	}
+	fileName.ReleaseBuffer();
+
 	return fileName;
 }
 
