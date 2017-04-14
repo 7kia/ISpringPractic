@@ -27,9 +27,9 @@ class IShapeProvider
 public:
 	virtual ~IShapeProvider() = default;
 
-	virtual CShapePtr GetShape(size_t index) = 0;
+	virtual CShapePtr GetShape(const size_t index) = 0;
 	virtual std::vector<CShapePtr>&	GetShapes() = 0;
-	virtual size_t GetAmountShapes() const = 0;
+	virtual size_t GetShapeCount() const = 0;
 	virtual size_t GetShapeIndex(const CShapePtr & pShape) const = 0;
 };
 
@@ -38,14 +38,14 @@ class IShapeCollection : public IShapeProvider
 public:
 	virtual ~IShapeCollection() = default;
 
-	virtual void DeleteShape(size_t index) = 0;
+	virtual void DeleteShape(const size_t index) = 0;
 	virtual void DeleteShape(const CShapePtr &  pShape) = 0;
 
 	virtual void PushBackShape(const CShapePtr & shape) = 0;
-	virtual void InsertShape(size_t insertIndex, const CShapePtr & shape) = 0;
+	virtual void InsertShape(const size_t insertIndex, const CShapePtr & shape) = 0;
 
 
-	virtual bool IsSelectShape(size_t index, const CShapePtr & selectedShape) const = 0;
+	virtual bool IsSelectShape(const size_t index, const CShapePtr & selectedShape) const = 0;
 
 };
 
@@ -55,7 +55,7 @@ public:
 	virtual ~ICanvas() = default;
 	virtual IShapeCollection& GetShapeCollection() = 0;
 	virtual IShapeProvider& GetShapeProvider() = 0;
-	virtual void	SetSize(const SSize & size) = 0;
+	virtual void	SetSize(const SSize size) = 0;
 	virtual SSize	GetSize() const = 0;
 };
 
@@ -69,29 +69,29 @@ class CCanvas
 	, public ICanvas
 {
 public:
-	CCanvas(const SSize & size, const CShapePtr & view);
+	CCanvas(const SSize size, const CShapePtr & view);
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
 
 	//--------------------------------------------
 	// IShapeCollection
-	void					DeleteShape(size_t index) override;
+	void					DeleteShape(const size_t index) override;
 	void					DeleteShape(const CShapePtr & pShape) override;
 
 	void					PushBackShape(const CShapePtr & shape) override;
-	void					InsertShape(size_t insertIndex, const CShapePtr & shape) override;
+	void					InsertShape(const size_t insertIndex, const CShapePtr & shape) override;
 
-	size_t					GetAmountShapes() const override;
+	size_t					GetShapeCount() const override;
 
 	// For drag and drop
-	bool					IsSelectShape(size_t index, const CShapePtr & selectedShape) const override;
+	bool					IsSelectShape(const size_t index, const CShapePtr & selectedShape) const override;
 	//--------------------------------------------
 	void					Clear();
 
 	//--------------------------------------------
 	// IShapeProvider
-	CShapePtr				GetShape(size_t index) override;
+	CShapePtr				GetShape(const size_t index) override;
 	size_t					GetShapeIndex(const CShapePtr & pShape) const override;
 
 	std::vector<CShapePtr>&	GetShapes() override;
@@ -102,7 +102,7 @@ public:
 	IShapeCollection&		GetShapeCollection() override;
 	IShapeProvider&			GetShapeProvider() override;
 	// Size
-	void					SetSize(const SSize & size) override;
+	void					SetSize(const SSize size) override;
 	SSize					GetSize() const override;
 
 	//--------------------------------------------
@@ -112,9 +112,7 @@ public:
 private:
 	//////////////////////////////////////////////////////////////////////
 	// Data
-public:
 private:
-	// TODO : see might require do private
 	std::vector<CShapePtr>	m_shapes;
 
 	CShapePtr				m_view;

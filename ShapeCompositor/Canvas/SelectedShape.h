@@ -45,7 +45,7 @@ public:
 	void					ResetSelectShapePtr();
 	void					ResetUpdateParameters();
 
-	void					SetUpdateState(bool state);
+	void					SetUpdateState(const bool state);
 	bool					IsUpdate() const;
 	bool					HaveSelectedShape() const;
 
@@ -69,11 +69,11 @@ public:
 	// IFrame
 
 	// Position
-	void SetPosition(Vec2f position) override;
+	void SetPosition(const Vec2f position) override;
 	Vec2f GetPosition() const override;
 	void Move(const Vec2f shift) override;
 	// Size
-	void SetSize(SSize size) override;
+	void SetSize(const SSize size) override;
 	SSize GetSize() const override;
 
 	// Get shape data

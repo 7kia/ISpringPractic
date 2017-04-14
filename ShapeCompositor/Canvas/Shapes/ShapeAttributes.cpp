@@ -2,7 +2,7 @@
 #include "ShapeAttributes.h"
 
 
-SSize::SSize(float width, float height)
+SSize::SSize(const float width, const float height)
 	: width(width)
 	, height(height)
 {
@@ -22,10 +22,10 @@ SSize & SSize::operator=(const SSize & right)
 	// TODO: вставьте здесь оператор return
 }
 
-Color::Color(float r
-			, float g
-			, float b
-			, float a)
+Color::Color(const float r
+			, const float g
+			, const float b
+			, const float a)
 	: r(r)
 	, g(g)
 	, b(b)
@@ -51,7 +51,7 @@ Color & Color::operator=(const Color & right)
 	return *this;
 }
 
-Vec2f::Vec2f(float x, float y)
+Vec2f::Vec2f(const float x, const float y)
 	: x(x)
 	, y(y)
 {
@@ -134,8 +134,8 @@ bool CFrame::operator==(const CFrame & frame) const
 }
 
 CFrame::CFrame(
-	const Vec2f & position
-	, const SSize & size
+	const Vec2f position
+	, const SSize size
 )
 	: m_position(position)
 	, m_size(size)
@@ -143,7 +143,7 @@ CFrame::CFrame(
 }
 
 
-void CFrame::SetPosition(Vec2f position)
+void CFrame::SetPosition(const Vec2f position)
 {
 	m_position = position;
 }
@@ -158,7 +158,7 @@ void CFrame::Move(const Vec2f shift)
 	SetPosition(GetPosition() + shift);
 }
 
-void CFrame::SetSize(SSize size)
+void CFrame::SetSize(const SSize size)
 {
 	m_size = size;
 }

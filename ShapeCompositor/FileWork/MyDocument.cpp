@@ -82,7 +82,7 @@ bool CMyDocument::OnFileSave(std::vector<CShapePtr> const & shapes, const CTextu
 	}
 	else
 	{
-		//DeletePictures(textureStorage.GetDeletable());
+		DeletePictures(textureStorage.GetDeletable());
 		m_fileManager.SetFilePath(m_fileManager.GetFilePath());
 		return m_xmlReader.Save(m_fileManager.GetFilePath(), shapes, textureStorage);
 	}
@@ -134,8 +134,6 @@ void CMyDocument::DeletePictures(const std::vector<std::wstring> & names) const
 
 CString CMyDocument::OpenDialog(const DialogType dialogType, const FileType fileType)
 {
-	CString fileName;
-
 	std::wstring type;
 	std::wstring expression;
 
@@ -160,18 +158,16 @@ CString CMyDocument::OpenDialog(const DialogType dialogType, const FileType file
 		, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT
 		, expression.data()
 	);
-	const int maxFiles = 1;
-	const int bufferSize = (maxFiles * (MAX_PATH + 1)) + 1;
-	fileDlg.GetOFN().lpstrFile = fileName.GetBuffer(bufferSize);
-	fileDlg.GetOFN().nMaxFile = maxFiles;
-
+	CString fileName;
+	//const int maxFiles = 1;
+	//const int bufferSize = (maxFiles * (MAX_PATH + 1)) + 1;
+	//fileDlg.GetOFN().lpstrFile = fileName.GetBuffer(bufferSize);
+	//fileDlg.GetOFN().nMaxFile = maxFiles;
 	if (fileDlg.DoModal() == IDOK)
 	{
-		CString pathName = fileDlg.GetPathName();
-
-		fileName = pathName;
+		fileName = fileDlg.GetPathName();
 	}
-	fileName.ReleaseBuffer();
+	//fileName.ReleaseBuffer();
 
 	return fileName;
 }

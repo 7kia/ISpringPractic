@@ -5,9 +5,9 @@ SShapeData::SShapeData(
 	const ShapeType type
 	, const Vec2f position
 	, const SSize size
-	, const Color fillColor
-	, const Color outlineColor
-	, float outlineThikness
+	, const Color & fillColor
+	, const Color & outlineColor
+	, const float outlineThikness
 )
 	: type(type)
 	, position(position)
@@ -31,8 +31,8 @@ CShape::CShape(
 	const ShapeType type
 	, const Vec2f position
 	, const SSize size
-	, const Color fillColor
-	, const Color outlineColor
+	, const Color & fillColor
+	, const Color & outlineColor
 	, float outlineThikness
 )
 	: CFrame(position, size)
@@ -45,7 +45,7 @@ CShape::CShape(
 
 
 
-void CShape::SetFillColor(Color color)
+void CShape::SetFillColor(const Color & color)
 {
 	m_fillColor = color;
 }
@@ -55,7 +55,7 @@ Color CShape::GetFillColor() const
 	return m_fillColor;
 }
 
-void CShape::SetOutlineColor(Color color)
+void CShape::SetOutlineColor(const Color &  color)
 {
 	m_outlineColor = color;
 }
@@ -65,7 +65,7 @@ Color CShape::GetOutlineColor() const
 	return m_outlineColor;
 }
 
-void CShape::SetOutlineThickness(float thickness)
+void CShape::SetOutlineThickness(const float thickness)
 {
 	m_outlineThikness = thickness;
 }

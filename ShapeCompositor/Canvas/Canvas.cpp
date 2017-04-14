@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Canvas.h"
 
-CCanvas::CCanvas(const SSize & size, const CShapePtr & view)
+CCanvas::CCanvas(const SSize size, const CShapePtr & view)
 	: m_size(size)
 	, m_view(view)
 {
@@ -13,7 +13,7 @@ void CCanvas::PushBackShape(const CShapePtr & shape)
 	m_shapes.push_back(shape);
 }
 
-void CCanvas::InsertShape(size_t insertIndex, const CShapePtr & shape)
+void CCanvas::InsertShape(const size_t insertIndex, const CShapePtr & shape)
 {
 	CheckIndex(insertIndex, m_shapes.size());
 
@@ -23,12 +23,12 @@ void CCanvas::InsertShape(size_t insertIndex, const CShapePtr & shape)
 	);
 }
 
-size_t CCanvas::GetAmountShapes() const
+size_t CCanvas::GetShapeCount() const
 {
 	return m_shapes.size();
 }
 
-void CCanvas::SetSize(const SSize & size)
+void CCanvas::SetSize(const SSize size)
 {
 	m_size = size;
 }
@@ -79,7 +79,7 @@ IShapeProvider & CCanvas::GetShapeProvider()
 	return *this;
 }
 
-void CCanvas::DeleteShape(size_t index)
+void CCanvas::DeleteShape(const size_t index)
 {
 	if (m_shapes.size() == 0)
 	{
@@ -103,7 +103,7 @@ void CCanvas::Clear()
 	m_shapes.clear();
 }
 
-CShapePtr CCanvas::GetShape(size_t index)
+CShapePtr CCanvas::GetShape(const size_t index)
 {
 	CheckIndex(index, m_shapes.size() - 1);
 
@@ -124,7 +124,7 @@ CShapePtr GetShape(const Vec2f mousePosition, const std::vector<CShapePtr> & vec
 	return foundShape;
 }
 
-bool CCanvas::IsSelectShape(size_t index, const CShapePtr & selectedShape) const
+bool CCanvas::IsSelectShape(const size_t index, const CShapePtr & selectedShape) const
 {
 	return selectedShape == m_shapes[index];
 }

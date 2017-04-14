@@ -31,7 +31,7 @@ void CAddPictureCommand::Execute()
 
 void CAddPictureCommand::Cancel()
 {
-	if (m_canvas.IsSelectShape(m_canvas.GetAmountShapes() - 1, m_selectShape.GetShape()))
+	if (m_canvas.IsSelectShape(m_canvas.GetShapeCount() - 1, m_selectShape.GetShape()))
 	{
 		m_selectShape.ResetSelectShapePtr();
 	}

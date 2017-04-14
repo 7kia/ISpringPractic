@@ -55,7 +55,7 @@ void CSelectedShape::ResetUpdateParameters()
 	m_oldFrame = m_currentFrame;
 }
 
-void CSelectedShape::SetUpdateState(bool state)
+void CSelectedShape::SetUpdateState(const bool state)
 {
 	m_isUpdate = state;
 }

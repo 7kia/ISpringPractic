@@ -4,8 +4,8 @@
 CRectangle::CRectangle(
 	const Vec2f position
 	, const SSize size
-	, const Color fillColor
-	, const Color outlineColor
+	, const Color & fillColor
+	, const Color & outlineColor
 	, float outlineThikness
 )
 	: CShape(

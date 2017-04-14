@@ -20,13 +20,13 @@
 class CXMLReader
 {
 public:
-	CXMLReader();
+	CXMLReader() = default;
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
 	static bool Save(
 		const std::wstring path,
-		std::vector<CShapePtr> const & shapes,
+		const std::vector<CShapePtr>  & shapes,
 		const CTextureStorage & textureStorage
 	);
 	static bool Open(

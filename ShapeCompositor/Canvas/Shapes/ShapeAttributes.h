@@ -7,10 +7,10 @@
 struct SSize
 {
 	SSize() = default;
-	SSize(float width, float height);
+	SSize(const float width, const float height);
 
-	bool operator==(SSize const& size) const;
-	SSize& operator=(const SSize& right);
+	bool operator==(const SSize & size) const;
+	SSize& operator=(const SSize & right);
 
 	float width = 0.f;
 	float height = 0.f;
@@ -20,12 +20,14 @@ SSize const operator +(SSize const &first, SSize const &second);
 struct Color
 {
 	Color() = default;
-	Color(float r
-		, float g
-		, float b
-		, float a = 1.f);
+	Color(
+		const float r,
+		const float g,
+		const float b,
+		const float a = 1.f
+	);
 
-	bool operator==(Color const& other) const;
+	bool operator==(const Color & other) const;
 	Color& operator=(const Color& right);
 
 	float r = 0.f;
@@ -39,11 +41,11 @@ static const Color BLACK_COLOR = Color(0.f, 0.f, 0.f, 1.f);
 struct Vec2f
 {
 	Vec2f() = default;
-	Vec2f(float x, float y);
+	Vec2f(const float x, const float y);
 
-	bool operator==(Vec2f const& vec) const;
-	bool operator!=(Vec2f const& vec) const;
-	Vec2f& operator=(const Vec2f& right);
+	bool operator==(const Vec2f & vec) const;
+	bool operator!=(const Vec2f & vec) const;
+	Vec2f& operator=(const Vec2f & right);
 
 	float x = 0.f;
 	float y = 0.f;
@@ -68,12 +70,12 @@ public:
 	virtual ~IFrame() = default;
 
 	// Position
-	virtual void SetPosition(Vec2f position) = 0;
+	virtual void SetPosition(const Vec2f position) = 0;
 	virtual Vec2f GetPosition() const = 0;
 
 	virtual void Move(const Vec2f shift) = 0;
 	// Size
-	virtual void SetSize(SSize size) = 0;
+	virtual void SetSize(const SSize size) = 0;
 	virtual SSize GetSize() const = 0;
 };
 
@@ -82,24 +84,24 @@ class CFrame
 {
 public:
 	CFrame(
-		const Vec2f & position = Vec2f()
-		, const SSize & size = DEFAULT_SIZE
+		const Vec2f position = Vec2f()
+		, const SSize size = DEFAULT_SIZE
 	);
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
 
 	// Position
-	void SetPosition(Vec2f position) override;
+	void SetPosition(const Vec2f position) override;
 	Vec2f GetPosition() const override;
 	void Move(const Vec2f shift) override;
 	// Size
-	void SetSize(SSize size) override;
+	void SetSize(const SSize size) override;
 	SSize GetSize() const override;
 
 	// Get shape data
 	CFrame GetFrame() const;
-	void SetFrame(CFrame const & data);
+	void SetFrame(const CFrame & data);
 
 	std::vector<Vec2f> GetFrameVertices() const;
 

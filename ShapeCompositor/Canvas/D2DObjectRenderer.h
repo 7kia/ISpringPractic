@@ -7,11 +7,6 @@ class CShapeCompositorView;
 class CCanvas;
 class CSelectedShape;
 
-void CreateRenderTarget(
-	CComPtr<ID2D1Factory> pDirect2dFactory,
-	CComPtr<ID2D1HwndRenderTarget> pRenderTarget,
-	CWnd * window
-);
 
 class CD2DObjectRenderer
 	: public IShapeVisitor

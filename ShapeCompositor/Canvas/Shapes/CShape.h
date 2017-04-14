@@ -16,9 +16,9 @@ public:
 		const ShapeType type
 		, const Vec2f position = Vec2f()
 		, const SSize size = DEFAULT_SIZE
-		, const Color fillColor = DEFAULT_FILL_COLOR
-		, const Color outlineColor = DEFAULT_OUTLINE_COLOR
-		, float outlineThikness = 1.f
+		, const Color & fillColor = DEFAULT_FILL_COLOR
+		, const Color & outlineColor = DEFAULT_OUTLINE_COLOR
+		, const float outlineThikness = 1.f
 	);
 	//////////////////////////////////////////////////////////////////////
 	// Methods
@@ -27,19 +27,19 @@ public:
 	// IShape
 
 	// Inner Color
-	void SetFillColor(Color color) override;
+	void SetFillColor(const Color &  color) override;
 	Color GetFillColor() const override;
 	// Outer Color
-	void SetOutlineColor(Color color) override;
+	void SetOutlineColor(const Color &  color) override;
 	Color GetOutlineColor() const override;
 	// Thikness outline
-	void SetOutlineThickness(float thickness) override;
+	void SetOutlineThickness(const float thickness) override;
 	float GetOutlineThickness() const override;
 	// Type
 	ShapeType GetType() const override;
 
 	SShapeData GetShapeData() const override;
-	void SetShapeData(SShapeData const & data) override;
+	void SetShapeData(const SShapeData & data) override;
 	//--------------------------------------------
 	virtual bool IsPointIntersection(const Vec2f point) const {
 		return false;

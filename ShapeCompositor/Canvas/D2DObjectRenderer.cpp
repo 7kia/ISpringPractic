@@ -182,29 +182,3 @@ void CD2DObjectRenderer::Visit(const CPicture & shape)
 
 	m_pRenderTarget->DrawBitmap(shape.GetTexture(), rectangle);
 }
-
-void CreateRenderTarget(
-	CComPtr<ID2D1Factory> pDirect2dFactory,
-	CComPtr<ID2D1HwndRenderTarget> pRenderTarget,
-	CWnd * window
-)
-{
-	RECT rc;
-	window->GetClientRect(&rc);// TODO : see can it rewrite
-
-	D2D1_SIZE_U size = D2D1::SizeU(
-		rc.right - rc.left,
-		rc.bottom - rc.top
-	);
-
-	// Create a Direct2D render target.
-	pDirect2dFactory->CreateHwndRenderTarget(
-		D2D1::RenderTargetProperties(),
-		D2D1::HwndRenderTargetProperties(window->m_hWnd, size),
-		&pRenderTarget
-	);
-}
-
-void CreateRenderTarget(CComPtr<ID2D1Factory> factory)
-{
-}
