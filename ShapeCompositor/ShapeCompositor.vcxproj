@@ -213,6 +213,7 @@
     <ClInclude Include="FileWork\FileManager.h" />
     <ClInclude Include="FileWork\MyDocument.h" />
     <ClInclude Include="FileWork\XMLReader.h" />
+    <ClInclude Include="GlobalFunctions.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="ShapeVisitor.h" />

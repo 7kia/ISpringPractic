@@ -64,19 +64,7 @@ CShapeCompositorView::CShapeCompositorView()
 	: m_shapeFactory()
 	, m_selectedShape(m_shapeFactory)
 	, m_textureStorage(MAX_SIZE)
-	, m_canvas(
-		CANVAS_SIZE,
-		m_shapeFactory.CreateShape(// TODO : see can rewrite astyle
-			SShapeData(
-				ShapeType::Rectangle,
-				Vec2f(CANVAS_SIZE.width / 2.f, CANVAS_SIZE.height / 2.f),
-				CANVAS_SIZE,
-				NOT_COLOR,
-				BLACK_COLOR,
-				3.f
-			)
-		)
-	)
+	, m_canvas(CANVAS_SIZE)
 {
 	const SSize canvasSize = m_canvas.GetSize();
 	D2D1_RECT_F rect;
@@ -108,7 +96,17 @@ HRESULT CShapeCompositorView::Draw()
 	m_pRenderTarget->SetTransform(matrix);
 	m_pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
 
-	m_objectRenderer.Draw(*m_canvas.GetView());
+	const SSize canvasSize = m_canvas.GetSize();
+	m_objectRenderer.Draw(*m_shapeFactory.CreateShape(// TODO : see where must place canvas view
+		SShapeData(
+			ShapeType::Rectangle,
+			Vec2f(canvasSize.width / 2.f, canvasSize.height / 2.f),
+			canvasSize,
+			NOT_COLOR,
+			BLACK_COLOR,
+			3.f
+		)
+	));
 
 	for (const auto & shape : m_canvas.GetShapes())
 	{
@@ -284,8 +282,8 @@ int CShapeCompositorView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 		CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
 		// Create a Direct2D factory.
-		ATLENSURE_SUCCEEDED(m_objectRenderer.CreateRecources(this));// TODO : delete dependment to this
-		
+		SetRenderTarget(m_objectRenderer.CreateRenderTarget(this));
+		ATLENSURE_SUCCEEDED(m_objectRenderer.CreateRecources());// TODO : delete dependment to this
 		// TODO : rewrite Normal
 		m_imageFactory.SetRenderTarget(m_pRenderTarget);
 
@@ -733,10 +731,11 @@ int CShapeCompositorView::CheckSaveDocument()
 void CShapeCompositorView::OnDestroy()
 {
 	//m_document.DeletePictures(m_textureStorage.GetDeletable());
-	if (CheckSaveDocument() != IDCANCEL)
-	{
-		CScrollView::OnDestroy();
-	}
+	//if (CheckSaveDocument() != IDCANCEL)
+	//{
+	//}
+	
+	CScrollView::OnDestroy();
 
 
 	// TODO: добавьте свой код обработчика сообщений

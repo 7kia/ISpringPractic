@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "GlobalFunctions.h"
 #include "SelectedShape.h"
 
 CSelectedShape::CSelectedShape(const CShapeFactory & shapeFactory)

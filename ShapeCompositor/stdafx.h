@@ -42,48 +42,6 @@
 
 #include <afxcontrolbars.h>     // поддержка MFC для лент и панелей управления
 
-#include <exception>
-#include <vector>
-// TODO : transfer to other place
-template <typename T>
-bool IsBetween(const T& value, const T& lowerBound, const T& upperBound)
-{
-	return (value >= lowerBound) && (value <= upperBound);
-}
-
-template<class Interface>
-inline void SafeRelease(
-	Interface **ppInterfaceToRelease
-)
-{
-	if (*ppInterfaceToRelease != NULL)
-	{
-		(*ppInterfaceToRelease)->Release();
-
-		(*ppInterfaceToRelease) = NULL;
-	}
-}
-
-
-
-inline void CheckIndex(size_t index, size_t max)
-{
-	if (index > max)
-	{
-		throw std::runtime_error("Index out range");
-	}
-};
-
-template<typename T>
-inline void DeleteLastElement(std::vector<T>& vector)
-{
-	if (vector.size() == 0)
-	{
-		throw std::runtime_error("Index out range");
-	}
-	vector.erase(vector.begin() + vector.size() - 1);
-}
-
 
 #ifdef _UNICODE
 #if defined _M_IX86

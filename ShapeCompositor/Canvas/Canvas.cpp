@@ -1,9 +1,9 @@
 #include "stdafx.h"
+#include "GlobalFunctions.h"
 #include "Canvas.h"
 
-CCanvas::CCanvas(const SSize size, const CShapePtr & view)
+CCanvas::CCanvas(const SSize size)
 	: m_size(size)
-	, m_view(view)
 {
 }
 
@@ -36,11 +36,6 @@ void CCanvas::SetSize(const SSize size)
 SSize CCanvas::GetSize() const
 {
 	return m_size;
-}
-
-CShapePtr CCanvas::GetView() const
-{
-	return m_view;
 }
 
 std::vector<CShapePtr>& CCanvas::GetShapes()

@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "GlobalFunctions.h"
 #include "Rectangle.h"
 
 CRectangle::CRectangle(

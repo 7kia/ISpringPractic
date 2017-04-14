@@ -138,6 +138,9 @@
     <ClInclude Include="Canvas\CanvasCommands\DeletePictureCommand.h">
       <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
     </ClInclude>
+    <ClInclude Include="GlobalFunctions.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ShapeCompositor.cpp">

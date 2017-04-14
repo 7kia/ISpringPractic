@@ -86,7 +86,7 @@ protected:
 
 	CTextureStorage m_textureStorage;
 
-	ID2D1HwndRenderTarget * m_pRenderTarget = nullptr;
+	CComPtr<ID2D1HwndRenderTarget> m_pRenderTarget;
 	CD2DObjectRenderer		m_objectRenderer;// TODO : transfer to CShapeCompositiorView, fix Draw
 	CD2DImageFactory		m_imageFactory;
 // Реализация

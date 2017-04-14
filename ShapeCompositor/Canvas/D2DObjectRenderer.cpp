@@ -4,40 +4,54 @@
 #include "Canvas.h"
 #include "SelectedShape.h"
 
+namespace
+{
+	template<class Interface>
+	inline void SafeRelease(
+		Interface **ppInterfaceToRelease
+	)
+	{
+		if (*ppInterfaceToRelease != NULL)
+		{
+			(*ppInterfaceToRelease)->Release();
+
+			(*ppInterfaceToRelease) = NULL;
+		}
+	}
+}
+
 CD2DObjectRenderer::CD2DObjectRenderer()
 	: IShapeVisitor()
 	, IShapeRenderer()
 {
-}
-
-HRESULT CD2DObjectRenderer::CreateRecources(CShapeCompositorView * window)
-{
 	ATLENSURE_SUCCEEDED(D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &m_pDirect2dFactory));
 
-	m_window = window;
-	m_pRenderTarget = window->GetRenderTarget();
+}
+
+ID2D1HwndRenderTarget * CD2DObjectRenderer::CreateRenderTarget(CWnd * window)
+{
+	RECT rc;
+	window->GetClientRect(&rc);// TODO : see can it rewrite
+
+	D2D1_SIZE_U size = D2D1::SizeU(
+		rc.right - rc.left,
+		rc.bottom - rc.top
+	);
+
+	// Create a Direct2D render target.
+	m_pDirect2dFactory->CreateHwndRenderTarget(
+		D2D1::RenderTargetProperties(),
+		D2D1::HwndRenderTargetProperties(window->m_hWnd, size),
+		&m_pRenderTarget
+	);
+
+	return m_pRenderTarget;
+}
+
+HRESULT CD2DObjectRenderer::CreateRecources()
+{
 
 	HRESULT hr = S_OK;
-
-	if (!m_pRenderTarget)
-	{
-		RECT rc;
-		window->GetClientRect(&rc);// TODO : see can it rewrite
-
-		D2D1_SIZE_U size = D2D1::SizeU(
-			rc.right - rc.left,
-			rc.bottom - rc.top
-		);
-
-		// Create a Direct2D render target.
-		m_pDirect2dFactory->CreateHwndRenderTarget(
-			D2D1::RenderTargetProperties(),
-			D2D1::HwndRenderTargetProperties(window->m_hWnd, size),
-			&m_pRenderTarget
-		);
-	}
-
-	window->SetRenderTarget(m_pRenderTarget);
 
 	// Create a gray brush.
 	hr = m_pRenderTarget->CreateSolidColorBrush(

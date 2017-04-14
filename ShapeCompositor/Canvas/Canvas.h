@@ -59,8 +59,6 @@ public:
 	virtual SSize	GetSize() const = 0;
 };
 
-template<typename T>
-void DeleteLastElement(std::vector<T> & vector);
 
 bool HavePictureWithTexture(ID2D1Bitmap * pTexture, const std::vector<CShapePtr> & shapes);
 
@@ -69,7 +67,7 @@ class CCanvas
 	, public ICanvas
 {
 public:
-	CCanvas(const SSize size, const CShapePtr & view);
+	CCanvas(const SSize size);
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
@@ -106,16 +104,12 @@ public:
 	SSize					GetSize() const override;
 
 	//--------------------------------------------
-	// For draw borders
-	CShapePtr				GetView() const;
 
 private:
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
 	std::vector<CShapePtr>	m_shapes;
-
-	CShapePtr				m_view;
 	SSize					m_size;
 };
 

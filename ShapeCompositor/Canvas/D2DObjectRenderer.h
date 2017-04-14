@@ -17,7 +17,8 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
-	HRESULT CreateRecources(CShapeCompositorView * window);
+	ID2D1HwndRenderTarget *	CreateRenderTarget(CWnd * window);
+	HRESULT CreateRecources();
 	void	ClearRecources();
 
 	HRESULT	EndDraw();
@@ -40,10 +41,8 @@ private:
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
-	CShapeCompositorView *						m_window = nullptr;
-
 	CComPtr<ID2D1Factory>						m_pDirect2dFactory;
-	CComPtr<ID2D1HwndRenderTarget>				m_pRenderTarget;
+	ID2D1HwndRenderTarget *						m_pRenderTarget;
 
 	CComPtr<ID2D1SolidColorBrush>				m_fillBrush;;
 	CComPtr<ID2D1SolidColorBrush>				m_outlineBrush;

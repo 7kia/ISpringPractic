@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "AddShapeCommand.h"
 #include "../Canvas.h"
+#include "GlobalFunctions.h"
 
 CAddShapeCanvasCommand::CAddShapeCanvasCommand(
 	IShapeCollection & pCanvas
