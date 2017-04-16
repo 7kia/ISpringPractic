@@ -61,9 +61,7 @@ namespace
 	const SSize MAX_SIZE = SSize(CANVAS_SIZE.width * SCALE_FACTOR, CANVAS_SIZE.height * SCALE_FACTOR);
 }
 CShapeCompositorView::CShapeCompositorView()
-	: m_shapeFactory()
-	, m_selectedShape(m_shapeFactory)
-	, m_textureStorage(MAX_SIZE)
+	: m_textureStorage(MAX_SIZE)
 	, m_canvas(CANVAS_SIZE)
 {
 	const SSize canvasSize = m_canvas.GetSize();
@@ -115,7 +113,17 @@ HRESULT CShapeCompositorView::Draw()
 
 	if (m_selectedShape.HaveSelectedShape())
 	{
-		for (const auto & shape : m_selectedShape.GetShapes())
+		m_objectRenderer.Draw(*m_shapeFactory.CreateShape(// TODO : see where must place canvas view
+			SShapeData(
+				ShapeType::Rectangle,
+				m_selectedShape.GetPosition(),
+				m_selectedShape.GetSize(),
+				NOT_COLOR,
+				BLACK_COLOR,
+				2.f
+			))
+		);
+		for (const auto & shape : m_selectedShape.GetDragPoints())
 		{
 			m_objectRenderer.Draw(*shape);
 		}
@@ -492,6 +500,7 @@ void CShapeCompositorView::OnLButtonDown(UINT nFlags, CPoint point)
 		{
 			m_selectedShape.SetUpdateState(true);
 			isResize = true;
+			m_oldFrame = m_selectedShape.GetShape()->GetFrame();
 		}
 	}
 	
@@ -504,6 +513,7 @@ void CShapeCompositorView::OnLButtonDown(UINT nFlags, CPoint point)
 			if (m_selectedShape.IsMove(mousePos))
 			{
 				m_selectedShape.SetUpdateState(true);
+				m_oldFrame = m_selectedShape.GetShape()->GetFrame();
 			}
 		}
 	}
@@ -648,13 +658,10 @@ void CShapeCompositorView::CreateCommandForSelectedShape()
 	case CSelectedShape::UpdateType::MarkerRightBottom:
 	case CSelectedShape::UpdateType::MarkerRightTop:
 	{
-		const auto finalFrame = m_selectedShape.GetCurrentFrame();
-		m_selectedShape.ReturnToOldState();
-
 		m_history.AddAndExecuteCommand(std::make_shared<CChangeShapeRectCanvasCommand>(
 			m_canvas.GetShapeProvider(),
-			m_selectedShape.GetOldFrame(),
-			finalFrame,
+			m_oldFrame,
+			m_selectedShape.GetFrame(),
 			m_selectedShape
 			));
 	}

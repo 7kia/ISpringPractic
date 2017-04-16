@@ -82,6 +82,8 @@ protected:
 	CMyDocument m_document;
 
 	CSelectedShape m_selectedShape;
+	// TODO : create Presenter
+	CFrame m_oldFrame;
 	CShapeFactory m_shapeFactory;
 
 	CTextureStorage m_textureStorage;

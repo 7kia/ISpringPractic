@@ -2,34 +2,24 @@
 #include "GlobalFunctions.h"
 #include "SelectedShape.h"
 
-CSelectedShape::CSelectedShape(const CShapeFactory & shapeFactory)
-	: IFrame()
+CSelectedShape::CSelectedShape()
 {	
-	SShapeData ellipseData;
-	ellipseData.type = ShapeType::Ellipse;
-	ellipseData.outlineColor = BLACK_COLOR;
-	ellipseData.fillColor = BLACK_COLOR;
-
 	for (size_t index = size_t(ShapeIndex::MarkerLeftBottom); index <= size_t(ShapeIndex::MarkerLeftTop); ++index)
 	{
-		m_resizeShapes[index] = shapeFactory.CreateShape(ellipseData);
+		m_dragPoints[index] = std::make_shared<CEllipse>(
+			Vec2f(),
+			SELECTED_ELLIPSE_SIZE,
+			BLACK_COLOR,
+			BLACK_COLOR
+		);
 	}
-
-	SShapeData rectangleData;
-	rectangleData.type = ShapeType::Rectangle;
-	rectangleData.outlineColor = BLACK_COLOR;
-	rectangleData.fillColor = NOT_COLOR;
-
-	m_resizeShapes[size_t(ShapeIndex::Frame)] = shapeFactory.CreateShape(rectangleData);
 }
 
 void CSelectedShape::SetShape(const CShapePtr & shape)
 {
 	m_selectedShape = shape;
-	m_currentFrame = shape->GetFrame();
-	m_oldFrame = m_currentFrame;
 
-	SetViewPosition();
+	SetDragPointPositions();
 }
 
 CShapePtr CSelectedShape::GetShape() const
@@ -42,7 +32,6 @@ void CSelectedShape::ResetSelectShapePtr()
 	m_selectedShape = nullptr;
 	m_isUpdate = false;
 
-	m_oldFrame = CFrame();
 }
 
 void CSelectedShape::ResetUpdateParameters()
@@ -53,7 +42,6 @@ void CSelectedShape::ResetUpdateParameters()
 	m_isUpdate = false;
 	m_updateType = UpdateType::None;
 
-	m_oldFrame = m_currentFrame;
 }
 
 void CSelectedShape::SetUpdateState(const bool state)
@@ -85,7 +73,7 @@ bool CSelectedShape::IsResize(const Vec2f point)
 {
 	for(size_t index = size_t(ShapeIndex::MarkerLeftBottom); index <= size_t(ShapeIndex::MarkerLeftTop); ++index)
 	{
-		if (m_resizeShapes[index]->IsPointIntersection(point))
+		if (m_dragPoints[index]->IsPointIntersection(point))
 		{
 			SetUpdateType(UpdateType(index));
 			return true;
@@ -98,7 +86,7 @@ bool CSelectedShape::IsResize(const Vec2f point)
 
 bool CSelectedShape::InMarker(const Vec2f point, const ShapeIndex markerIndex)
 {
-	return m_resizeShapes[size_t(markerIndex)]->IsPointIntersection(point);
+	return m_dragPoints[size_t(markerIndex)]->IsPointIntersection(point);
 }
 
 bool CSelectedShape::DoneUpdate() const
@@ -141,7 +129,7 @@ void CSelectedShape::HandleMoveMouse(const Vec2f point)
 
 			m_current = point;
 
-			SetFrame(GetCurrentFrame());
+			SetFrame(GetNewFrame(m_current - m_start, m_selectedShape->GetFrame()));
 			m_start = m_current;
 			
 		}
@@ -157,11 +145,9 @@ void CSelectedShape::SetPosition(Vec2f position)
 	if (HaveSelectedShape())
 	{
 		m_selectedShape->SetPosition(position);
+
+		SetDragPointPositions();
 	}
-
-	m_currentFrame.SetPosition(position);
-
-	SetViewPosition();
 }
 
 Vec2f CSelectedShape::GetPosition() const
@@ -185,9 +171,8 @@ void CSelectedShape::SetSize(SSize size)
 	{
 		m_selectedShape->SetSize(size);
 	}
-	m_currentFrame.SetSize(size);
 
-	for (auto & shape : m_resizeShapes)
+	for (auto & shape : m_dragPoints)
 	{
 		shape->SetSize(size);
 	}
@@ -200,7 +185,11 @@ SSize CSelectedShape::GetSize() const
 
 CFrame CSelectedShape::GetFrame() const
 {
-	return m_currentFrame;
+	if (HaveSelectedShape())
+	{
+		return m_selectedShape->GetFrame();
+	}
+	return CFrame();
 }
 
 void CSelectedShape::SetFrame(CFrame const & data)
@@ -208,10 +197,8 @@ void CSelectedShape::SetFrame(CFrame const & data)
 	if (HaveSelectedShape())
 	{
 		m_selectedShape->SetFrame(data);
+		SetDragPointPositions();
 	}
-
-	m_currentFrame = data;
-	SetViewPosition();
 }
 
 
@@ -224,17 +211,6 @@ Vec2f CSelectedShape::GetFinalShift() const
 	return Vec2f();
 }
 
-
-
-CFrame CSelectedShape::GetOldFrame()
-{
-	return m_oldFrame;
-}
-
-CFrame CSelectedShape::GetCurrentFrame()
-{
-	return GetNewFrame(m_current - m_start, m_currentFrame);
-}
 
 SSize CSelectedShape::GetDirectionResize() const
 {
@@ -260,15 +236,7 @@ SSize CSelectedShape::GetDirectionResize() const
 	return SSize();
 }
 
-void CSelectedShape::ReturnToOldState()
-{
-	SetFrame(GetOldFrame());
-}
 
-void CSelectedShape::SetOldFrame(CFrame const & data)
-{
-	m_oldFrame = data;
-}
 
 bool CSelectedShape::CheckBoundingRect(const D2D1_RECT_F & rect) const
 {
@@ -280,30 +248,12 @@ bool CSelectedShape::CheckBoundingRect(const D2D1_RECT_F & rect) const
 	return leftCorrect && rightCorrect && topCorrect && bottomCorrect;
 }
 
-void CSelectedShape::SetViewPosition()
+void CSelectedShape::SetDragPointPositions()
 {
-	SetMoveView();
-	SetResizeView();
-}
-
-void CSelectedShape::SetMoveView()
-{
-	m_resizeShapes[size_t(ShapeIndex::Frame)]->SetFrame(GetFrame());
-}
-
-void CSelectedShape::SetResizeView()
-{
-	auto vertices = m_currentFrame.GetFrameVertices();// m_selectedShape->
-	size_t indexEllipse = 0;
-	for (const auto & vertex : vertices)
+	const auto vertices = m_selectedShape->GetFrameVertices();
+	for (size_t index = size_t(ShapeIndex::MarkerLeftBottom); index <= size_t(ShapeIndex::MarkerLeftTop); ++index)
 	{
-		SShapeData ellipseData;
-		ellipseData.position = vertex;
-		ellipseData.size = SELECTED_ELLIPSE_SIZE;
-		ellipseData.outlineColor = BLACK_COLOR;
-		ellipseData.fillColor = BLACK_COLOR;
-
-		m_resizeShapes[indexEllipse++]->SetShapeData(ellipseData);
+		m_dragPoints[index]->SetPosition(vertices[index]);
 	}
 }
 
@@ -394,9 +344,9 @@ Vec2f CSelectedShape::GetCorrectPosition(
 }
 
 
-CSelectedShape::ArrayShapes CSelectedShape::GetShapes() const
+CSelectedShape::DragPointsArray CSelectedShape::GetDragPoints() const
 {
-	return m_resizeShapes;
+	return m_dragPoints;
 }
 
 void CSelectedShape::SetBoundingRect(const D2D1_RECT_F & rect)

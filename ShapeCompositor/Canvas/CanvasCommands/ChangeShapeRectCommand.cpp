@@ -25,7 +25,6 @@ void CChangeShapeRectCanvasCommand::Execute()
 	if (m_pSelectedShape->GetShape() == shape)
 	{
 		m_pSelectedShape->SetFrame(m_newData);
-		m_pSelectedShape->SetOldFrame(m_newData);
 	}
 }
 
@@ -37,7 +36,6 @@ void CChangeShapeRectCanvasCommand::Cancel()
 	if (m_pSelectedShape->GetShape() == shape)
 	{
 		m_pSelectedShape->SetFrame(m_oldFrame);
-		m_pSelectedShape->SetOldFrame(m_oldFrame);
 	}
 }
 

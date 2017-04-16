@@ -1,0 +1,20 @@
+#pragma once
+
+#include "Shapes/Ellipse.h"
+
+class CDragPoint
+	: public CEllipse
+{
+public:
+	CDragPoint(const Vec2f position = Vec2f());
+	//////////////////////////////////////////////////////////////////////
+	// Methods
+public:
+
+private:
+
+	//////////////////////////////////////////////////////////////////////
+	// Data
+private:
+
+};

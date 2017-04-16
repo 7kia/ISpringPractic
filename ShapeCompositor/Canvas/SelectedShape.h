@@ -15,7 +15,7 @@ class CSelectedShape
 	: public IFrame
 {
 public:
-	CSelectedShape(const CShapeFactory & shapeFactory);
+	CSelectedShape();
 
 	enum class ShapeIndex
 	{
@@ -23,11 +23,10 @@ public:
 		, MarkerRightBottom
 		, MarkerRightTop
 		, MarkerLeftTop
-		, Frame
 		, Amount
 	};
 
-	using ArrayShapes = std::array<CShapePtr, size_t(ShapeIndex::Amount)>;
+	using DragPointsArray = std::array<CShapePtr, size_t(ShapeIndex::Amount)>;
 	enum class UpdateType
 	{
 		None = -1,
@@ -62,7 +61,7 @@ public:
 	//--------------------------------------------
 
 	// For draw
-	ArrayShapes				GetShapes() const;
+	DragPointsArray			GetDragPoints() const;
 
 	void					SetBoundingRect(const D2D1_RECT_F & rect);
 	//--------------------------------------------
@@ -82,11 +81,6 @@ public:
 	//--------------------------------------------
 
 
-	// For drag and drop
-	CFrame	GetOldFrame();
-	CFrame	GetCurrentFrame();
-	void	ReturnToOldState();
-	void	SetOldFrame(CFrame const & data);
 
 private:
 	// For drag and drop
@@ -96,9 +90,7 @@ private:
 
 	//
 
-	void					SetViewPosition();
-	void					SetMoveView();
-	void					SetResizeView();
+	void					SetDragPointPositions();
 
 	bool					CheckSize(const SSize size) const;
 	CFrame					GetNewFrame(const Vec2f shift, const CFrame & oldFrame) const;
@@ -113,11 +105,9 @@ private:
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
-	CFrame							m_currentFrame;
-	CFrame							m_oldFrame;
 	CShapePtr						m_selectedShape;
 
-	ArrayShapes						m_resizeShapes;
+	DragPointsArray					m_dragPoints;
 	D2D1_RECT_F						m_boundingRect;
 	// For drag and drop
 	boost::optional<Vec2f>			m_startMove;
