@@ -1,11 +1,7 @@
 #include "stdafx.h"
 #include "ShapeFactory.h"
 
-CShapeFactory::CShapeFactory()
-{
-}
-
-CShapePtr CShapeFactory::CreateShape(const SShapeData & data) const
+CShapePtr CShapeFactory::CreateShape(const SShapeData & data)
 {
 	switch (data.type)
 	{

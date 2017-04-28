@@ -26,3 +26,4 @@ inline void DeleteLastElement(std::vector<T>& vector)
 	}
 	vector.erase(vector.begin() + vector.size() - 1);
 }
+

@@ -57,6 +57,7 @@ public:
 	virtual IShapeProvider& GetShapeProvider() = 0;
 	virtual void	SetSize(const SSize size) = 0;
 	virtual SSize	GetSize() const = 0;
+	virtual D2D1_RECT_F GetRect() const = 0;
 };
 
 
@@ -103,6 +104,7 @@ public:
 	void					SetSize(const SSize size) override;
 	SSize					GetSize() const override;
 
+	D2D1_RECT_F				GetRect() const;
 	//--------------------------------------------
 
 private:

@@ -20,6 +20,17 @@ public:
 	virtual void Clear() = 0;
 };
 
+struct IHistoryManipulator
+{
+	virtual ~IHistoryManipulator() = default;
+
+	virtual void UndoCommand() = 0;
+	virtual void RedoCommand() = 0;
+	virtual void ClearHistory() = 0;
+	virtual bool IsSave() const = 0;
+	virtual void DoSave() = 0;
+};
+
 class CHistory : public IHistory
 {
 public:

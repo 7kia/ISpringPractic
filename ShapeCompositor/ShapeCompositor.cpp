@@ -20,6 +20,7 @@
 
 #include "ShapeCompositorDoc.h"
 #include "ShapeCompositorView.h"
+#include "ShapeCompositorController.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -78,7 +79,6 @@ BOOL CShapeCompositorApp::InitInstance()
 
 	CWinAppEx::InitInstance();
 
-
 	// Инициализация библиотек OLE
 	if (!AfxOleInit())
 	{
@@ -112,6 +112,7 @@ BOOL CShapeCompositorApp::InitInstance()
 	theApp.GetTooltipManager()->SetTooltipParams(AFX_TOOLTIP_TYPE_ALL,
 		RUNTIME_CLASS(CMFCToolTipCtrl), &ttParams);
 
+
 	// Зарегистрируйте шаблоны документов приложения.  Шаблоны документов
 	//  выступают в роли посредника между документами, окнами рамок и представлениями
 	CSingleDocTemplate* pDocTemplate;
@@ -119,11 +120,11 @@ BOOL CShapeCompositorApp::InitInstance()
 		IDR_MAINFRAME,
 		RUNTIME_CLASS(CShapeCompositorDoc),
 		RUNTIME_CLASS(CMainFrame),       // основное окно рамки SDI
-		RUNTIME_CLASS(CShapeCompositorView));
+		RUNTIME_CLASS(CShapeCompositorView)
+		);
 	if (!pDocTemplate)
 		return FALSE;
 	AddDocTemplate(pDocTemplate);
-
 
 	// Разрешить использование расширенных символов в горячих клавишах меню
 	CMFCToolBar::m_bExtCharTranslation = TRUE;
@@ -149,6 +150,10 @@ BOOL CShapeCompositorApp::InitInstance()
 	//  В приложении SDI это должно произойти после ProcessShellCommand
 	// Включить открытие перетаскивания
 	m_pMainWnd->DragAcceptFiles();
+
+	CShapeCompositorModel model;
+	CShapeCompositorController controller(*static_cast<CShapeCompositorView*>(m_pMainWnd), model);
+
 	return TRUE;
 }
 

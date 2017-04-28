@@ -13,6 +13,15 @@ CSelectedShape::CSelectedShape()
 			BLACK_COLOR
 		);
 	}
+
+	m_frame = std::make_shared<CRectangle>(
+		ShapeType::Rectangle,
+		Vec2f(),
+		SSize(),
+		NOT_COLOR,
+		BLACK_COLOR,
+		2.f
+	);
 }
 
 void CSelectedShape::SetShape(const CShapePtr & shape)
@@ -147,6 +156,7 @@ void CSelectedShape::SetPosition(Vec2f position)
 		m_selectedShape->SetPosition(position);
 
 		SetDragPointPositions();
+		m_frame->SetPosition(position);
 	}
 }
 
@@ -198,6 +208,7 @@ void CSelectedShape::SetFrame(CFrame const & data)
 	{
 		m_selectedShape->SetFrame(data);
 		SetDragPointPositions();
+		m_frame->SetFrame(data);
 	}
 }
 
@@ -282,13 +293,14 @@ CFrame CSelectedShape::GetNewFrame(const Vec2f shift, const CFrame & oldFrame) c
 		{
 			SSize directionResize = GetDirectionResize();
 
-			const Vec2f framePosition = oldFrame.GetPosition();
 			const SSize frameSize = oldFrame.GetSize();
 			info.SetSize(GetCorrectSize(frameSize + SSize(shift.x * directionResize.width, shift.y * directionResize.height)));
+
 			const SSize newSize = info.GetSize();
 			const Vec2f differentSizes = Vec2f(newSize.width - frameSize.width, newSize.height - frameSize.height);
 			const Vec2f positionShift = Vec2f(differentSizes.x  * directionResize.width / 2.f
 												, differentSizes.y * directionResize.height / 2.f);
+			const Vec2f framePosition = oldFrame.GetPosition();
 			info.SetPosition(GetCorrectPosition(newSize, positionShift, framePosition));
 		}
 		break;
@@ -347,6 +359,11 @@ Vec2f CSelectedShape::GetCorrectPosition(
 CSelectedShape::DragPointsArray CSelectedShape::GetDragPoints() const
 {
 	return m_dragPoints;
+}
+
+CShapePtr CSelectedShape::GetFrameShape() const
+{
+	return m_frame;// TODO : check work m_frame
 }
 
 void CSelectedShape::SetBoundingRect(const D2D1_RECT_F & rect)

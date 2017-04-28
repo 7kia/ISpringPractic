@@ -54,32 +54,20 @@ BEGIN_MESSAGE_MAP(CShapeCompositorView, CScrollView)
 END_MESSAGE_MAP()
 
 // создание/уничтожение CShapeCompositorView
-namespace
-{
-	const SSize CANVAS_SIZE = SSize(640.f, 480.f);
-	const float SCALE_FACTOR = 0.8f;
-	const SSize MAX_SIZE = SSize(CANVAS_SIZE.width * SCALE_FACTOR, CANVAS_SIZE.height * SCALE_FACTOR);
-}
+
 CShapeCompositorView::CShapeCompositorView()
-	: m_textureStorage(MAX_SIZE)
-	, m_canvas(CANVAS_SIZE)
 {
-	const SSize canvasSize = m_canvas.GetSize();
-	D2D1_RECT_F rect;
-	rect.left = 0.f;
-	rect.right = canvasSize.width;
-	rect.top = 0.f;
-	rect.bottom = canvasSize.height;
-
-	// TODO : if canvas resize, m_selectedShape will have incorrect BoundingRect
-	m_selectedShape.SetBoundingRect(rect);
-
 }
 
 CShapeCompositorView::~CShapeCompositorView()
 {
 }
 
+
+void CShapeCompositorView::SetBoundingRect(const D2D1_RECT_F & rect)
+{
+	m_selectedShape.SetBoundingRect(rect);
+}
 
 // This method discards device-specific
 // resources if the Direct3D device dissapears during execution and
@@ -94,35 +82,16 @@ HRESULT CShapeCompositorView::Draw()
 	m_pRenderTarget->SetTransform(matrix);
 	m_pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
 
-	const SSize canvasSize = m_canvas.GetSize();
-	m_objectRenderer.Draw(*m_shapeFactory.CreateShape(// TODO : see where must place canvas view
-		SShapeData(
-			ShapeType::Rectangle,
-			Vec2f(canvasSize.width / 2.f, canvasSize.height / 2.f),
-			canvasSize,
-			NOT_COLOR,
-			BLACK_COLOR,
-			3.f
-		)
-	));
+	m_objectRenderer.Draw(*m_getCanvasView().get());
 
-	for (const auto & shape : m_canvas.GetShapes())
+	for (const auto & shape : m_getCanvasShapes().get())
 	{
 		m_objectRenderer.Draw(*shape);
 	}
 
 	if (m_selectedShape.HaveSelectedShape())
 	{
-		m_objectRenderer.Draw(*m_shapeFactory.CreateShape(// TODO : see where must place canvas view
-			SShapeData(
-				ShapeType::Rectangle,
-				m_selectedShape.GetPosition(),
-				m_selectedShape.GetSize(),
-				NOT_COLOR,
-				BLACK_COLOR,
-				2.f
-			))
-		);
+		m_objectRenderer.Draw(*m_selectedShape.GetFrameShape());
 		for (const auto & shape : m_selectedShape.GetDragPoints())
 		{
 			m_objectRenderer.Draw(*shape);
@@ -151,78 +120,37 @@ ID2D1HwndRenderTarget * CShapeCompositorView::GetRenderTarget()
 
 void CShapeCompositorView::CreateTriangle()
 {
-	m_history.AddAndExecuteCommand(
-		std::make_shared<CAddShapeCanvasCommand>(
-			m_canvas.GetShapeCollection()
-			, ShapeType::Triangle
-			, m_shapeFactory
-			, m_selectedShape
-		)
-	);
+	m_createShapeCommand(ShapeType::Triangle, m_selectedShape);
 	RedrawWindow();
 }
 
 void CShapeCompositorView::CreateRectangle()
 {
-	m_history.AddAndExecuteCommand(
-		std::make_shared<CAddShapeCanvasCommand>(
-			m_canvas.GetShapeCollection()
-			, ShapeType::Rectangle
-			, m_shapeFactory
-			, m_selectedShape
-		)
-	);
+	m_createShapeCommand(ShapeType::Rectangle, m_selectedShape);
 	RedrawWindow();
 }
 
 void CShapeCompositorView::CreateEllipse()
 {
-	m_history.AddAndExecuteCommand(std::make_shared<CAddShapeCanvasCommand>(
-		m_canvas.GetShapeCollection()
-		, ShapeType::Ellipse
-		, m_shapeFactory
-		, m_selectedShape
-		)
-	);
+	m_createShapeCommand(ShapeType::Ellipse, m_selectedShape);
 	RedrawWindow();
 }
 
 void CShapeCompositorView::CreatePicture()
 {
-	auto picturePath = m_document.LoadTexture();
-	if (picturePath != L"no")
-	{
-		const auto pictureName = picturePath.filename().generic_wstring();
-		m_textureStorage.AddTexture(
-			pictureName,
-			m_imageFactory.CreateTexture(picturePath.generic_wstring())
-		);
-
-		m_history.AddAndExecuteCommand(std::make_shared<CAddPictureCommand>(
-			m_canvas.GetShapeCollection(),
-			SPictureData(
-				m_textureStorage.GetTexture(pictureName),
-				Vec2f(float(VIEW_WIDTH) / 2.f, float(VIEW_HEIGHT) / 2.f),
-				m_textureStorage.GetCorrectSize(pictureName)
-			),
-			m_textureStorage,
-			m_selectedShape
-			)
-		);
-	}
-	
+	m_createPicture();
 	RedrawWindow();
 }
 
 void CShapeCompositorView::Undo()
 {
-	m_history.Undo();
+	m_undoCommand();
 	RedrawWindow();
 }
 
 void CShapeCompositorView::Redo()
 {
-	m_history.Redo();
+	m_redoCommand();
 	RedrawWindow();
 }
 
@@ -265,12 +193,12 @@ void CShapeCompositorView::Dump(CDumpContext& dc) const
 {
 	CView::Dump(dc);
 }
-//
-//CShapeCompositorDoc* CShapeCompositorView::GetDocument() const // встроена неотлаженная версия
-//{
-//	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CShapeCompositorDoc)));
-//	return (CShapeCompositorDoc*)m_pDocument;
-//}
+
+CShapeCompositorDoc* CShapeCompositorView::GetDocument() const // встроена неотлаженная версия
+{
+	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CShapeCompositorDoc)));
+	return (CShapeCompositorDoc*)m_pDocument;
+}
 #endif //_DEBUG
 
 
@@ -293,7 +221,7 @@ int CShapeCompositorView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		SetRenderTarget(m_objectRenderer.CreateRenderTarget(this));
 		ATLENSURE_SUCCEEDED(m_objectRenderer.CreateRecources());// TODO : delete dependment to this
 		// TODO : rewrite Normal
-		m_imageFactory.SetRenderTarget(m_pRenderTarget);
+		m_setRenderTargetForImageFactory(m_pRenderTarget);
 
 	}
 	catch (...)
@@ -321,6 +249,7 @@ BOOL CShapeCompositorView::PreCreateWindow(CREATESTRUCT& cs)
 
 	return TRUE;
 }
+
 
 void CShapeCompositorView::OnSize(UINT nType, int cx, int cy)
 {
@@ -702,37 +631,6 @@ Vec2f CShapeCompositorView::GetScreenPosition(const CPoint & point)
 	return Vec2f(float(windowPos.x + scrollPosition.x), float(windowPos.y + scrollPosition.y));
 }
 
-int CShapeCompositorView::CheckSaveDocument()
-{
-	int result = IDNO;
-	if (!m_history.IsSave())
-	{
-		result = AfxMessageBox(L"Сохранить изменения?", MB_YESNOCANCEL);
-
-		if (m_document.IsNewDocument())
-		{
-			if(result == IDYES)
-			{
-				if (m_document.OnFileSaveAs(m_canvas.GetShapes(), m_textureStorage))
-				{
-					m_history.DoSave();
-				}
-			}					
-		}
-		else
-		{
-			if (result == IDYES)
-			{
-				if (m_document.OnFileSave(m_canvas.GetShapes(), m_textureStorage))
-				{
-					m_history.DoSave();
-				}
-			}
-		}
-	}
-
-	return result;
-}
 
 
 void CShapeCompositorView::OnDestroy()

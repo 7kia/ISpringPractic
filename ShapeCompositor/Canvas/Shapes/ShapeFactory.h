@@ -7,11 +7,10 @@
 class CShapeFactory
 {
 public:
-	CShapeFactory();
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
-	CShapePtr CreateShape(const SShapeData & data) const;
+	static CShapePtr CreateShape(const SShapeData & data);
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:

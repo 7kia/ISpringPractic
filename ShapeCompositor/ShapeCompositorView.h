@@ -15,11 +15,8 @@
 #pragma once
 
 #include "ShapeCompositorDoc.h"
-#include "FileWork\MyDocument.h"
 #include "Canvas\D2DObjectRenderer.h"
-#include "Canvas\Picture\Picture.h"
-#include "Canvas\Picture\D2DImageFactory.h"
-#include "Canvas\Picture\TextureStorage.h"
+#include "Signal.h"
 
 #pragma comment(lib, "d2d1")
 
@@ -28,14 +25,17 @@ static const FLOAT DEFAULT_DPI = 96.f;
 
 class CShapeCompositorView : public CScrollView
 {
-protected: // создать только из сериализации
+public:
 	CShapeCompositorView();
+
+protected: // создать только из сериализации
 	DECLARE_DYNCREATE(CShapeCompositorView)
 
 // Атрибуты
 public:
 	//CShapeCompositorDoc* GetDocument() const;
 
+	void SetBoundingRect(const D2D1_RECT_F & rect);
 
 // Операции
 public:
@@ -69,31 +69,54 @@ private:
 
 	Vec2f					GetScreenPosition(const CPoint & point);
 
-	int						CheckSaveDocument();
 // Переопределение
 public:
 	virtual void OnDraw(CDC* pDC);  // переопределено для отрисовки этого представления
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 
+	/////////////////////////////////////////////////
+	// Signals
+public:
+	signal::Connection DoOnGetCanvasView(std::function<CShapePtr()> const & action);
+	signal::Connection DoOnGetCanvasShapes(std::function<std::vector<CShapePtr>()> const & action);
+	signal::Connection DoOnCreatePicture(std::function<void()> const & action);
+
+	signal::Connection DoOnUndoCommand(std::function<void()> const & action);
+	signal::Connection DoOnRedoCommand(std::function<void()> const & action);
+
+	signal::Connection DoOnCreateShapeCommand(std::function<void(ShapeType, CSelectedShape)> const & action);
+	signal::Connection DoOnSetRenderTargetForImageFactory(std::function<void(ID2D1HwndRenderTarget *)> const & action);
+
 
 protected:
-	CCanvas m_canvas;
-	CHistory m_history;
-	CMyDocument m_document;
+	signal::Signal<CShapePtr()> m_getCanvasView;
+	signal::Signal<std::vector<CShapePtr>()> m_getCanvasShapes;
+	signal::Signal<void()> m_createPicture;
+
+	signal::Signal<void()> m_undoCommand;
+	signal::Signal<void()> m_redoCommand;
+
+	signal::Signal<void(ShapeType, CSelectedShape)> m_createShapeCommand;
+
+	signal::Signal<void(ID2D1HwndRenderTarget *)> m_setRenderTargetForImageFactory;
+	/////////////////////////////////////////////////
+protected:
+
+
 
 	CSelectedShape m_selectedShape;
 	// TODO : create Presenter
 	CFrame m_oldFrame;
-	CShapeFactory m_shapeFactory;
 
-	CTextureStorage m_textureStorage;
 
 	CComPtr<ID2D1HwndRenderTarget> m_pRenderTarget;
 	CD2DObjectRenderer		m_objectRenderer;// TODO : transfer to CShapeCompositiorView, fix Draw
-	CD2DImageFactory		m_imageFactory;
+
 // Реализация
 public:
 	virtual ~CShapeCompositorView();
+	CShapeCompositorDoc * GetDocument() const;
+
 #ifdef _DEBUG
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;

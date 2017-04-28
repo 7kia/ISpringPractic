@@ -141,6 +141,18 @@
     <ClInclude Include="GlobalFunctions.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
+    <ClInclude Include="ShapeCompositorController.h">
+      <Filter>Файлы исходного кода</Filter>
+    </ClInclude>
+    <ClInclude Include="ShapeCompositorModel.h">
+      <Filter>Файлы исходного кода</Filter>
+    </ClInclude>
+    <ClInclude Include="Signal.h">
+      <Filter>Файлы исходного кода</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectionsStorage.h">
+      <Filter>Файлы исходного кода</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ShapeCompositor.cpp">
@@ -220,6 +232,18 @@
     </ClCompile>
     <ClCompile Include="Canvas\CanvasCommands\DeletePictureCommand.cpp">
       <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
+    </ClCompile>
+    <ClCompile Include="ShapeCompositorController.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="ShapeCompositorModel.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalFunctions.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="ShapeCompositorViewCommands.cpp">
+      <Filter>Файлы исходного кода</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

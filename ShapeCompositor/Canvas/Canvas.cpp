@@ -38,6 +38,16 @@ SSize CCanvas::GetSize() const
 	return m_size;
 }
 
+D2D1_RECT_F CCanvas::GetRect() const
+{
+	D2D1_RECT_F rect;
+	rect.left = 0.f;
+	rect.right = m_size.width;
+	rect.top = 0.f;
+	rect.bottom = m_size.height;
+	return rect;
+}
+
 std::vector<CShapePtr>& CCanvas::GetShapes()
 {
 	return m_shapes;
