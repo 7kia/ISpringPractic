@@ -57,20 +57,19 @@ bool CMyDocument::OnFileOpen(DataForAlteration & data)
 	{
 		//if (data.history.IsSave())
 		//{
-		auto & textureStorage = data.pDataForSave->GetTextureStorage();
-		DeletePictures(textureStorage.GetDeletable());
+		DeletePictures(data.textureStorage.GetDeletable());
 		//}
-		textureStorage.Clear();
-		data.pHistoryManipulator->ClearHistory();
+		data.textureStorage.Clear();
+		data.pHistory->Clear();
 		data.selectedShape.ResetSelectShapePtr();
 
 		m_fileManager.SetFilePath(fileName.GetString());
 		return m_xmlReader.Open(
 			m_fileManager.GetFilePath(),
-			data.pDataForSave->GetShapeCollection(),
-			data.pDataForOpen->GetShapeFactory(),
-			textureStorage,
-			data.pDataForOpen->GetImageFactory()
+			data.collection,
+			data.factory,
+			data.textureStorage,
+			data.imageFactory
 		);
 	}
 	return false;
@@ -180,14 +179,18 @@ CString CMyDocument::GetFileName() const
 }
 
 CMyDocument::DataForAlteration::DataForAlteration(
-	IDataForSave * pDataForSave,
-	IDataForOpen * pDataForOpen,
-	IHistoryManipulator * pHistoryManipulator,
-	CSelectedShape & selectedShape
+	IShapeCollection & collection,
+	const CShapeFactory & factory,
+	IHistory * pHistory,
+	CSelectedShape & selectedShape,
+	CTextureStorage & textureStorage,
+	CD2DImageFactory & imageFactory
 )
-	: pDataForSave(pDataForSave)
-	, pDataForOpen(pDataForOpen)
-	, pHistoryManipulator(pHistoryManipulator)
+	: collection(collection)
+	, factory(factory)
+	, pHistory(pHistory)
 	, selectedShape(selectedShape)
+	, textureStorage(textureStorage)
+	, imageFactory(imageFactory)
 {
 }

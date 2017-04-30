@@ -35,25 +35,102 @@ CShapePtr CShapeCompositorModel::GetCanvasBorder() const
 	return m_canvasBorder;
 }
 
-IShapeCollection& CShapeCompositorModel::GetShapeCollection()
+bool CShapeCompositorModel::SaveAsDocument()
 {
-	return m_canvas.GetShapeCollection();
+	bool isSave = m_document.OnFileSaveAs(
+		m_canvas.GetShapes(),
+		m_textureStorage
+	);
+	if (isSave)
+	{
+		m_history.DoSave();
+	}
+	return isSave;
 }
 
-CTextureStorage & CShapeCompositorModel::GetTextureStorage()
+bool CShapeCompositorModel::SaveDocument()
 {
-	return m_textureStorage;
+	bool isSave = m_document.OnFileSave(
+		m_canvas.GetShapes(),
+		m_textureStorage
+	);
+	if (isSave)
+	{
+		m_history.DoSave();
+	}
+	return isSave;
 }
 
-CShapeFactory & CShapeCompositorModel::GetShapeFactory()
+bool CShapeCompositorModel::OpenDocument(CSelectedShape & selectedShape)
 {
-	return m_shapeFactory;
+	if (SaveChangeDocument() != IDCANCEL)
+	{
+		return m_document.OnFileOpen(
+			CMyDocument::DataForAlteration
+			(
+				m_canvas.GetShapeCollection(),
+				m_shapeFactory,
+				&m_history,
+				selectedShape,
+				m_textureStorage,
+				m_imageFactory
+			)
+		);
+	}
+	return false;
 }
 
-CD2DImageFactory & CShapeCompositorModel::GetImageFactory()
+bool CShapeCompositorModel::NewDocument()
 {
-	return m_imageFactory;
+	if (SaveChangeDocument() != IDCANCEL)
+	{
+		if (!(m_history.IsSave() && m_document.IsNewDocument()))
+		{
+			ResetShapeCompositor();
+			m_document.RecreateTempFolder();
+		}
+	}
+	return false;
 }
+
+void CShapeCompositorModel::ResetShapeCompositor()
+{
+	m_document.DeletePictures(m_textureStorage.GetDeletable());
+	m_textureStorage.Clear();
+
+	m_history.Clear();
+
+	m_resetSelectedShape();
+
+	m_canvas.Clear();
+}
+
+int CShapeCompositorModel::SaveChangeDocument()
+{
+	int result = IDNO;
+	if (!m_history.IsSave())
+	{
+		result = AfxMessageBox(L"Сохранить изменения?", MB_YESNOCANCEL);
+
+		if (m_document.IsNewDocument())
+		{
+			if (result == IDYES)
+			{
+				SaveAsDocument();
+			}
+		}
+		else
+		{
+			if (result == IDYES)
+			{
+				SaveDocument();
+			}
+		}
+	}
+
+	return result;
+}
+
 
 void CShapeCompositorModel::LoadPicture(const boost::filesystem::path & path, CSelectedShape & selectedShape)
 {
@@ -78,9 +155,23 @@ void CShapeCompositorModel::LoadPicture(const boost::filesystem::path & path, CS
 	);
 }
 
+void CShapeCompositorModel::CreatePicture(CSelectedShape & selectedShape)
+{
+	auto picturePath = m_document.LoadTexture();
+	if (picturePath != L"no")
+	{
+		LoadPicture(picturePath, selectedShape);
+	}
+}
+
 void CShapeCompositorModel::SetRenderTargetForImageFactory(ID2D1HwndRenderTarget * pRenderTarget)
 {
 	m_imageFactory.SetRenderTarget(pRenderTarget);
+}
+
+signal::Connection CShapeCompositorModel::DoOnResetSelectedShape(std::function<void()> const & action)
+{
+	return m_resetSelectedShape.connect(action);
 }
 
 void CShapeCompositorModel::UndoCommand()
@@ -106,6 +197,11 @@ bool CShapeCompositorModel::IsSave() const
 void CShapeCompositorModel::DoSave()
 {
 	m_history.DoSave();
+}
+
+IShapeCollection & CShapeCompositorModel::GetShapeCollection()
+{
+	return m_canvas.GetShapeCollection();
 }
 
 void CShapeCompositorModel::DeleteShape(CSelectedShape & selectedShape)
@@ -141,20 +237,6 @@ void CShapeCompositorModel::CreateShape(ShapeType type, CSelectedShape & selecte
 			, m_shapeFactory
 			, selectedShape
 			)
-	);
-}
-
-void CShapeCompositorModel::CreatePicture(CSelectedShape & selectedShape)
-{
-	auto pPicture = dynamic_cast<CPicture*>(selectedShape.GetShape().get());
-
-	m_history.AddAndExecuteCommand(
-		std::make_shared<CAddPictureCommand>(
-			m_canvas.GetShapeCollection()
-			, pPicture->GetPictureData()
-			, m_textureStorage
-			, selectedShape
-		)
 	);
 }
 

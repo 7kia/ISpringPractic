@@ -13,9 +13,36 @@
 #include "Canvas\Picture\TextureStorage.h"
 #include "Canvas\Picture\D2DImageFactory.h"
 
-class IDataForSave;
-class IDataForOpen;
 
+class IDataForSave
+{
+public:
+	virtual ~IDataForSave() = default;
+
+
+	virtual IShapeCollection& GetShapeCollection() = 0;
+	virtual CTextureStorage & GetTextureStorage() = 0;
+};
+
+class IDataForOpen
+{
+public:
+	virtual ~IDataForOpen() = default;
+
+	virtual CShapeFactory & GetShapeFactory() = 0;
+	virtual CD2DImageFactory & GetImageFactory() = 0;
+};
+
+class IDocumentManipulator
+{
+public:
+	virtual ~IDocumentManipulator() = default;
+
+	virtual bool SaveAsDocument() = 0;
+	virtual bool SaveDocument() = 0;
+	virtual bool OpenDocument(CSelectedShape & selectedShape) = 0;
+	virtual bool NewDocument() = 0;
+};
 
 class CMyDocument
 {
@@ -36,16 +63,20 @@ public:
 	struct DataForAlteration
 	{
 		DataForAlteration(
-			IDataForSave * pDataForSave,
-			IDataForOpen * pDataForOpen,
-			IHistoryManipulator * pHistoryManipulator,
-			CSelectedShape & selectedShape
+			IShapeCollection & collection,
+			const CShapeFactory & factory,
+			IHistory * pHistory,
+			CSelectedShape & selectedShape,
+			CTextureStorage & textureStorage,
+			CD2DImageFactory & imageFactory
 		);
 
-		IDataForSave * pDataForSave;
-		IDataForOpen * pDataForOpen;
-		IHistoryManipulator *pHistoryManipulator;
+		IShapeCollection & collection;
+		const CShapeFactory & factory;
+		IHistory * pHistory = nullptr;
 		CSelectedShape & selectedShape;
+		CTextureStorage & textureStorage;
+		CD2DImageFactory & imageFactory;
 	};
 
 
