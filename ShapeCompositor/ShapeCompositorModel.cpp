@@ -24,6 +24,7 @@ CShapeCompositorModel::CShapeCompositorModel()
 	);
 }
 
+
 D2D1_RECT_F CShapeCompositorModel::GetCanvasRect() const
 {
 	return m_canvas.GetRect();

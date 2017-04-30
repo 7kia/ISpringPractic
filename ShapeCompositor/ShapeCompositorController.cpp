@@ -45,12 +45,13 @@ void CShapeCompositorController::CreateConnectionsForView()
 	
 	m_connections += m_view.DoOnGetCanvasView(boost::bind(&CShapeCompositorModel::GetCanvasBorder, &m_model));
 	m_connections += m_view.DoOnGetCanvasShapes(boost::bind(&IShapeCollection::GetShapes, &m_model.GetShapeCollection()));
-	m_connections += m_view.DoOnCreatePicture(boost::bind(&CShapeCompositorController::CreatePicture, *this, _1));
 
 
 	m_connections += m_view.DoOnSetRenderTargetForImageFactory(
 		boost::bind(&CShapeCompositorModel::SetRenderTargetForImageFactory, &m_model, _1)
 	);
+
+	m_connections += m_view.DoOnCreatePicture(boost::bind(&CShapeCompositorController::CreatePicture, *this, _1));
 	m_connections += m_view.DoOnDeleteShapeCommand(boost::bind(&CShapeCompositorModel::DeleteShape, &m_model, _1));
 	m_connections += m_view.DoOnChangeRectCommand(boost::bind(&CShapeCompositorModel::ChangeRect, &m_model, _1, _2));
 	m_connections += m_view.DoOnCreateShapeCommand(boost::bind(&CShapeCompositorModel::CreateShape, &m_model, _1, _2));

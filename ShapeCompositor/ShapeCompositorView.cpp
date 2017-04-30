@@ -88,7 +88,8 @@ HRESULT CShapeCompositorView::Draw()
 
 	m_objectRenderer.Draw(*m_getCanvasView().get());
 
-	for (const auto & shape : m_getCanvasShapes().get())
+	const auto canvasShapes = m_getCanvasShapes().get();
+	for (const auto & shape : canvasShapes)
 	{
 		m_objectRenderer.Draw(*shape);
 	}

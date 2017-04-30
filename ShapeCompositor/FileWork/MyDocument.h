@@ -16,6 +16,7 @@
 class IDataForSave;
 class IDataForOpen;
 
+
 class CMyDocument
 {
 public:
