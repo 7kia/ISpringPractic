@@ -18,10 +18,14 @@
 #include "Canvas\D2DObjectRenderer.h"
 #include "Signal.h"
 
+#include <vector>
+#include <memory>
 #pragma comment(lib, "d2d1")
 
 static const FLOAT DEFAULT_DPI = 96.f;
 
+class CShapeCompositorModel;
+class CShapeCompositorController;
 
 class CShapeCompositorView : public CScrollView
 {
@@ -56,12 +60,8 @@ public:
 	void					ChangeCursor(const Vec2f &  mousePos);
 
 	// For document
-	void					ClearHistory();
-	void					ClearCanvas();
-	void					ResetApplication();
+
 	void					ResetSelectedShape();
-	CCanvas &				GetCanvas();
-	const CShapeFactory &	GetShapeFactory() const;
 
 private:
 	void					CreateCommandForSelectedShape();
@@ -79,26 +79,43 @@ public:
 public:
 	signal::Connection DoOnGetCanvasView(std::function<CShapePtr()> const & action);
 	signal::Connection DoOnGetCanvasShapes(std::function<std::vector<CShapePtr>()> const & action);
-	signal::Connection DoOnCreatePicture(std::function<void()> const & action);
+	signal::Connection DoOnCreatePicture(std::function<void(CSelectedShape &)> const & action);
+
+	signal::Connection DoOnSaveAsDocument(std::function<bool()> const & action);
+	signal::Connection DoOnSaveDocument(std::function<bool()> const & action);
+	signal::Connection DoOnOpenDocument(std::function<bool(CSelectedShape &)> const & action);
+	signal::Connection DoOnNewDocument(std::function<bool()> const & action);
 
 	signal::Connection DoOnUndoCommand(std::function<void()> const & action);
 	signal::Connection DoOnRedoCommand(std::function<void()> const & action);
 
-	signal::Connection DoOnCreateShapeCommand(std::function<void(ShapeType, CSelectedShape)> const & action);
+
+	signal::Connection DoOnDeleteShapeCommand(std::function<void(CSelectedShape &)> const & action);
+	signal::Connection DoOnChangeRectCommand(std::function<void(const CFrame, CSelectedShape &)> const & action);
+	signal::Connection DoOnCreateShapeCommand(std::function<void(ShapeType, CSelectedShape &)> const & action);
 	signal::Connection DoOnSetRenderTargetForImageFactory(std::function<void(ID2D1HwndRenderTarget *)> const & action);
 
 
 protected:
 	signal::Signal<CShapePtr()> m_getCanvasView;
 	signal::Signal<std::vector<CShapePtr>()> m_getCanvasShapes;
-	signal::Signal<void()> m_createPicture;
+	signal::Signal<void(CSelectedShape &)> m_createPicture;
+
+	signal::Signal<bool()> m_saveAsDocument;
+	signal::Signal<bool()> m_saveDocument;
+	signal::Signal<bool()> m_newDocument;
+	signal::Signal<bool(CSelectedShape &)> m_openDocument;
 
 	signal::Signal<void()> m_undoCommand;
 	signal::Signal<void()> m_redoCommand;
 
-	signal::Signal<void(ShapeType, CSelectedShape)> m_createShapeCommand;
-
+	signal::Signal<void(CSelectedShape &)> m_deleteShapeCommand;
+	signal::Signal<void(const CFrame, CSelectedShape &)> m_createChangeRectCommand;
+	signal::Signal<void(ShapeType, CSelectedShape &)> m_createShapeCommand;
 	signal::Signal<void(ID2D1HwndRenderTarget *)> m_setRenderTargetForImageFactory;
+
+	std::unique_ptr<CShapeCompositorModel> m_model;
+	std::unique_ptr<CShapeCompositorController> m_controller;
 	/////////////////////////////////////////////////
 protected:
 

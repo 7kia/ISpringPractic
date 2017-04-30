@@ -13,6 +13,9 @@
 #include "Canvas\Picture\TextureStorage.h"
 #include "Canvas\Picture\D2DImageFactory.h"
 
+class IDataForSave;
+class IDataForOpen;
+
 class CMyDocument
 {
 public:
@@ -32,20 +35,16 @@ public:
 	struct DataForAlteration
 	{
 		DataForAlteration(
-			CCanvas & canvas,
-			const CShapeFactory & factory,
-			CHistory & history,
-			CSelectedShape & selectedShape,
-			CTextureStorage & textureStorage,
-			CD2DImageFactory & imageFactory
+			IDataForSave * pDataForSave,
+			IDataForOpen * pDataForOpen,
+			IHistoryManipulator * pHistoryManipulator,
+			CSelectedShape & selectedShape
 		);
 
-		CCanvas & canvas;
-		const CShapeFactory & factory;
-		CHistory & history;
+		IDataForSave * pDataForSave;
+		IDataForOpen * pDataForOpen;
+		IHistoryManipulator *pHistoryManipulator;
 		CSelectedShape & selectedShape;
-		CTextureStorage & textureStorage;
-		CD2DImageFactory & imageFactory;
 	};
 
 

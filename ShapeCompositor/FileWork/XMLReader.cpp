@@ -121,8 +121,8 @@ bool CXMLReader::Save(
 }
 
 bool CXMLReader::Open(
-	const std::wstring path,
-	CCanvas & canvas,
+	const std::wstring & path,
+	IShapeCollection & canvas,
 	const CShapeFactory & factory,
 	CTextureStorage & textureStorage,
 	CD2DImageFactory & imageFactory

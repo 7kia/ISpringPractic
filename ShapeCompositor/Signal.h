@@ -11,4 +11,5 @@ namespace signal
 	using ScopedConnection = boost::signals2::scoped_connection;
 
 	using EmptySignal = Signal<void()>;
+
 }

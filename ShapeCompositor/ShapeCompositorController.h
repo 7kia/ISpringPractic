@@ -4,8 +4,6 @@
 #include "ShapeCompositorModel.h"
 #include "ConnectionsStorage.h"
 
-class IHistoryManipulator;
-class IDataForSave;
 
 class CShapeCompositorController
 {
@@ -16,15 +14,22 @@ public:
 public:
 	void SetHistoryManipulator(IHistoryManipulator * pHystoryManipulator);
 	void SetDataForSave(IDataForSave * pDataForSave);
-
+	void SetDataForOpen(IDataForOpen * pDataForOpen);
 private:
 	void ConnectSignalsForHistory();
 
 	void CreateConnectionsForView();
 
+	void ResetShapeCompositor();
+	// TODO : see need interface
+	bool SaveAsDocument();
+	bool SaveDocument();
+	bool OpenDocument(CSelectedShape & selectedShape);
+	bool NewDocument();
+	//
 
 	void CreatePicture(CSelectedShape & selectedShape);
-	int	CheckSaveDocument();
+	int	SaveChangeDocument();
 	// TODO: rename
 	//////////////////////////////////////////////////////////////////////
 	// Data
@@ -34,6 +39,7 @@ private:
 
 	IHistoryManipulator * m_pHystoryManipulator = nullptr;
 	IDataForSave * m_pDataForSave = nullptr;
+	IDataForOpen * m_pDataForOpen = nullptr;
 	CShapeCompositorModel & m_model;
 	CMyDocument m_document;
 

@@ -4,9 +4,8 @@
 namespace
 {
 	static const SSize CANVAS_SIZE = SSize(640.f, 480.f);
-	static const SSize MAX_SIZE = SSize(CANVAS_SIZE.width * SCALE_FACTOR, CANVAS_SIZE.height * SCALE_FACTOR);
 	static const float SCALE_FACTOR = 0.8f;
-
+	static const SSize MAX_SIZE = SSize(CANVAS_SIZE.width * SCALE_FACTOR, CANVAS_SIZE.height * SCALE_FACTOR);
 }
 
 CShapeCompositorModel::CShapeCompositorModel()
@@ -35,14 +34,24 @@ CShapePtr CShapeCompositorModel::GetCanvasBorder() const
 	return m_canvasBorder;
 }
 
-std::vector<CShapePtr> CShapeCompositorModel::GetCanvasShapes()
+IShapeCollection& CShapeCompositorModel::GetShapeCollection()
 {
-	return m_canvas.GetShapes();
+	return m_canvas.GetShapeCollection();
 }
 
 CTextureStorage & CShapeCompositorModel::GetTextureStorage()
 {
 	return m_textureStorage;
+}
+
+CShapeFactory & CShapeCompositorModel::GetShapeFactory()
+{
+	return m_shapeFactory;
+}
+
+CD2DImageFactory & CShapeCompositorModel::GetImageFactory()
+{
+	return m_imageFactory;
 }
 
 void CShapeCompositorModel::LoadPicture(const boost::filesystem::path & path, CSelectedShape & selectedShape)
@@ -98,6 +107,30 @@ void CShapeCompositorModel::DoSave()
 	m_history.DoSave();
 }
 
+void CShapeCompositorModel::DeleteShape(CSelectedShape & selectedShape)
+{
+	if (selectedShape.GetShape()->GetType() == ShapeType::Picture)
+	{
+		m_history.AddAndExecuteCommand(
+			std::make_shared<CDeletePictureCommand>(
+				m_canvas.GetShapeCollection()
+				, selectedShape
+				, m_textureStorage
+				)
+		);
+	}
+	else
+	{
+		m_history.AddAndExecuteCommand(
+			std::make_shared<CDeleteShapeCanvasCommand>(
+				m_canvas.GetShapeCollection()
+				, selectedShape
+				, m_shapeFactory
+				)
+		);	
+	}	
+}
+
 void CShapeCompositorModel::CreateShape(ShapeType type, CSelectedShape & selectedShape)
 {
 	m_history.AddAndExecuteCommand(
@@ -107,5 +140,30 @@ void CShapeCompositorModel::CreateShape(ShapeType type, CSelectedShape & selecte
 			, m_shapeFactory
 			, selectedShape
 			)
+	);
+}
+
+void CShapeCompositorModel::CreatePicture(CSelectedShape & selectedShape)
+{
+	auto pPicture = dynamic_cast<CPicture*>(selectedShape.GetShape().get());
+
+	m_history.AddAndExecuteCommand(
+		std::make_shared<CAddPictureCommand>(
+			m_canvas.GetShapeCollection()
+			, pPicture->GetPictureData()
+			, m_textureStorage
+			, selectedShape
+		)
+	);
+}
+
+void CShapeCompositorModel::ChangeRect(const CFrame oldFrame, CSelectedShape & selectedShape)
+{
+	m_history.AddAndExecuteCommand(std::make_shared<CChangeShapeRectCanvasCommand>(
+		m_canvas.GetShapeProvider(),
+		oldFrame,
+		selectedShape.GetFrame(),
+		selectedShape
+		)
 	);
 }

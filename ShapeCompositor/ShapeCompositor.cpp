@@ -124,7 +124,11 @@ BOOL CShapeCompositorApp::InitInstance()
 		);
 	if (!pDocTemplate)
 		return FALSE;
+
+
 	AddDocTemplate(pDocTemplate);
+
+
 
 	// Разрешить использование расширенных символов в горячих клавишах меню
 	CMFCToolBar::m_bExtCharTranslation = TRUE;
@@ -151,8 +155,6 @@ BOOL CShapeCompositorApp::InitInstance()
 	// Включить открытие перетаскивания
 	m_pMainWnd->DragAcceptFiles();
 
-	CShapeCompositorModel model;
-	CShapeCompositorController controller(*static_cast<CShapeCompositorView*>(m_pMainWnd), model);
 
 	return TRUE;
 }

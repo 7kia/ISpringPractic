@@ -28,5 +28,5 @@ struct ScopedConnectionsStorage
 		return *this;
 	}
 private:
-	std::vector<signal::ScopedConnection> m_items;
+	std::vector<signal::Connection> m_items;
 };

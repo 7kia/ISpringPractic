@@ -15,7 +15,6 @@ CSelectedShape::CSelectedShape()
 	}
 
 	m_frame = std::make_shared<CRectangle>(
-		ShapeType::Rectangle,
 		Vec2f(),
 		SSize(),
 		NOT_COLOR,

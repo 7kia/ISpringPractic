@@ -15,8 +15,7 @@ public:
 	CDeletePictureCommand(
 		IShapeCollection & pCanvas,
 		CSelectedShape & seletedShape,
-		CTextureStorage & textureStorage,
-		const SPictureData & pictureData
+		CTextureStorage & textureStorage
 	);
 	//////////////////////////////////////////////////////////////////////
 	// Methods

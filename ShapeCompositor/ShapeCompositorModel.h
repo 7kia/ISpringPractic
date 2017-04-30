@@ -11,13 +11,24 @@ class IDataForSave
 public:
 	virtual ~IDataForSave() = default;
 
-	virtual std::vector<CShapePtr> GetCanvasShapes() = 0;
+
+	virtual IShapeCollection& GetShapeCollection() = 0;
 	virtual CTextureStorage & GetTextureStorage() = 0;
-}
+};
+
+class IDataForOpen
+{
+public:
+	virtual ~IDataForOpen() = default;
+
+	virtual CShapeFactory & GetShapeFactory() = 0;
+	virtual CD2DImageFactory & GetImageFactory() = 0;
+};
 
 class CShapeCompositorModel
 	: public IHistoryManipulator
 	, public IDataForSave
+	, public IDataForOpen
 {
 public:
 	CShapeCompositorModel();
@@ -37,11 +48,18 @@ public:
 	void DoSave() override;
 	//--------------------------------------------
 	// IDataForSave
-	std::vector<CShapePtr> GetCanvasShapes() override;
+	IShapeCollection & GetShapeCollection() override;
 	CTextureStorage & GetTextureStorage() override;
 	//--------------------------------------------
+	// IDataForOpen
+	CShapeFactory & GetShapeFactory() override;
+	CD2DImageFactory & GetImageFactory() override;
+	//--------------------------------------------
 
+	void DeleteShape(CSelectedShape & selectedShape);
 	void CreateShape(ShapeType type, CSelectedShape & selectedShape);
+	void CreatePicture(CSelectedShape & selectedShape);
+	void ChangeRect(const CFrame oldFrame, CSelectedShape & selectedShape);
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:

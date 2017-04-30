@@ -21,6 +21,8 @@
 
 #include "ShapeCompositorDoc.h"
 #include "ShapeCompositorView.h"
+#include "ShapeCompositorModel.h"
+#include "ShapeCompositorController.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -57,6 +59,8 @@ END_MESSAGE_MAP()
 
 CShapeCompositorView::CShapeCompositorView()
 {
+	m_model = std::make_unique<CShapeCompositorModel>();
+	m_controller = std::make_unique<CShapeCompositorController>(*static_cast<CShapeCompositorView*>(this), *m_model);
 }
 
 CShapeCompositorView::~CShapeCompositorView()
@@ -138,7 +142,7 @@ void CShapeCompositorView::CreateEllipse()
 
 void CShapeCompositorView::CreatePicture()
 {
-	m_createPicture();
+	m_createPicture(m_selectedShape);
 	RedrawWindow();
 }
 
@@ -269,56 +273,37 @@ void CShapeCompositorView::OnSize(UINT nType, int cx, int cy)
 
 void CShapeCompositorView::OnFileSaveAs()
 {
-	if (m_document.OnFileSaveAs(m_canvas.GetShapes(), m_textureStorage))
+	if (m_saveAsDocument())
 	{
-		m_history.DoSave();
 		RedrawWindow();
 	}
+
 }
 
 void CShapeCompositorView::OnFileOpen()
 {
-	if (CheckSaveDocument() != IDCANCEL)
+	if (m_openDocument(m_selectedShape))
 	{
-		if (m_document.OnFileOpen(
-			CMyDocument::DataForAlteration
-			(
-				m_canvas, 
-				m_shapeFactory,
-				m_history,
-				m_selectedShape,
-				m_textureStorage,
-				m_imageFactory
-			))
-			)
-		{
-			SetWindowText(m_document.GetFileName());
-			RedrawWindow();
-		}
-	}
+		//SetWindowText(m_document.GetFileName());
+		RedrawWindow();
+	}	
 }
 
 void CShapeCompositorView::OnFileSave()
 {
-	if (m_document.OnFileSave(m_canvas.GetShapes(), m_textureStorage))
+	if (m_saveDocument())
 	{
-		m_history.DoSave();
-		SetWindowText(m_document.GetFileName());
+		//SetWindowText(m_document.GetFileName());
 		RedrawWindow();
 	}
 }
 
 void CShapeCompositorView::OnFileNew()
 {
-	if (CheckSaveDocument() != IDCANCEL)
+	if(m_newDocument())
 	{
-		if (!(m_history.IsSave() && m_document.IsNewDocument()))
-		{
-			ResetApplication();
-			m_document.RecreateTempFolder();
-			SetWindowText(CString("Безымянный"));
-			RedrawWindow();
-		}
+		//SetWindowText(CString("Безымянный"));
+		RedrawWindow();
 	}
 }
 
@@ -352,14 +337,6 @@ BOOL CShapeCompositorView::PreTranslateMessage(MSG* pMsg)
 
 	switch (pMsg->message)
 	{
-		case WM_DESTROY:
-		{
-			CheckSaveDocument();
-
-			//PostQuitMessage(0);
-		}
-		break;
-
 	case WM_KEYDOWN:
 		{
 			switch (pMsg->wParam)
@@ -368,30 +345,7 @@ BOOL CShapeCompositorView::PreTranslateMessage(MSG* pMsg)
 				{
 					if (m_selectedShape.HaveSelectedShape())
 					{
-						if (m_selectedShape.GetShape()->GetType() == ShapeType::Picture)
-						{
-							auto pPicture = dynamic_cast<CPicture*>(m_selectedShape.GetShape().get());
-
-							m_history.AddAndExecuteCommand(
-								std::make_shared<CDeletePictureCommand>(
-									m_canvas.GetShapeCollection(),
-									m_selectedShape,
-									m_textureStorage,
-									pPicture->GetPictureData()
-								)
-							);
-						}
-						else
-						{
-							m_history.AddAndExecuteCommand(
-								std::make_shared<CDeleteShapeCanvasCommand>(
-									m_canvas.GetShapeCollection()
-									, m_selectedShape
-									, m_shapeFactory
-									)
-							);
-						}
-					
+						m_deleteShapeCommand(m_selectedShape);					
 						RedrawWindow();
 					}			
 				}
@@ -520,14 +474,14 @@ void CShapeCompositorView::ChangeCursor(const Vec2f & position)
 			SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZENESW));
 			return;
 		}
-		else if (GetShape(position, m_canvas.GetShapes()) != nullptr)
+		else if (GetShape(position, m_getCanvasShapes().get()) != nullptr)
 		{
 			SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZEALL));
 		}
 	}
 	else
 	{
-		if (GetShape(position, m_canvas.GetShapes()) != nullptr)
+		if (GetShape(position, m_getCanvasShapes().get()) != nullptr)
 		{
 			SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZEALL));
 		}
@@ -539,42 +493,11 @@ void CShapeCompositorView::ChangeCursor(const Vec2f & position)
 
 }
 
-void CShapeCompositorView::ClearHistory()
-{
-	m_history.Clear();
-}
 
-void CShapeCompositorView::ClearCanvas()
-{
-	m_canvas.Clear();
-}
-
-void CShapeCompositorView::ResetApplication()
-{
-	m_document.DeletePictures(m_textureStorage.GetDeletable());
-	m_textureStorage.Clear();
-
-	m_history.Clear();
-
-	m_selectedShape.ResetUpdateParameters();
-	m_selectedShape.ResetSelectShapePtr();
-
-	m_canvas.Clear();
-}
 
 void CShapeCompositorView::ResetSelectedShape()
 {
 	m_selectedShape.ResetSelectShapePtr();
-}
-
-CCanvas & CShapeCompositorView::GetCanvas()
-{
-	return m_canvas;
-}
-
-const CShapeFactory & CShapeCompositorView::GetShapeFactory() const
-{
-	return m_shapeFactory;
 }
 
 void CShapeCompositorView::CreateCommandForSelectedShape()
@@ -587,12 +510,7 @@ void CShapeCompositorView::CreateCommandForSelectedShape()
 	case CSelectedShape::UpdateType::MarkerRightBottom:
 	case CSelectedShape::UpdateType::MarkerRightTop:
 	{
-		m_history.AddAndExecuteCommand(std::make_shared<CChangeShapeRectCanvasCommand>(
-			m_canvas.GetShapeProvider(),
-			m_oldFrame,
-			m_selectedShape.GetFrame(),
-			m_selectedShape
-			));
+		m_createChangeRectCommand(m_oldFrame, m_selectedShape);
 	}
 	break;
 	case CSelectedShape::UpdateType::None:
@@ -605,7 +523,7 @@ void CShapeCompositorView::CreateCommandForSelectedShape()
 
 void CShapeCompositorView::ChangeSelectedShape(const Vec2f & mousePos)
 {
-	auto selectShape = GetShape(mousePos, m_canvas.GetShapes());
+	auto selectShape = GetShape(mousePos, m_getCanvasShapes().get());
 
 	if (selectShape.get() != nullptr)
 	{
@@ -636,7 +554,7 @@ Vec2f CShapeCompositorView::GetScreenPosition(const CPoint & point)
 void CShapeCompositorView::OnDestroy()
 {
 	//m_document.DeletePictures(m_textureStorage.GetDeletable());
-	//if (CheckSaveDocument() != IDCANCEL)
+	//if (SaveChangeDocument() != IDCANCEL)
 	//{
 	//}
 	

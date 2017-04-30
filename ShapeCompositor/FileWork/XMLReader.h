@@ -30,8 +30,8 @@ public:
 		const CTextureStorage & textureStorage
 	);
 	static bool Open(
-		const std::wstring path,
-		CCanvas & canvas,
+		const std::wstring & path,
+		IShapeCollection & canvas,
 		const CShapeFactory & factory,
 		CTextureStorage & textureStorage,
 		CD2DImageFactory & imageFactory// image require D2D draw

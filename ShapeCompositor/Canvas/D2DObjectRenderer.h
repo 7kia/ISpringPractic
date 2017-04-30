@@ -3,11 +3,6 @@
 #include "Canvas\ObjectRenderer.h"
 #include "Canvas\Picture\Picture.h"
 
-class CShapeCompositorView;
-class CCanvas;
-class CSelectedShape;
-
-
 class CD2DObjectRenderer
 	: public IShapeVisitor
 	, public IShapeRenderer

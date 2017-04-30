@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "MyDocument.h"
+#include "ShapeCompositorModel.h"
 
 namespace fs = boost::filesystem;
 using fs::path;
@@ -56,19 +57,20 @@ bool CMyDocument::OnFileOpen(DataForAlteration & data)
 	{
 		//if (data.history.IsSave())
 		//{
-			DeletePictures(data.textureStorage.GetDeletable());
+		auto & textureStorage = data.pDataForSave->GetTextureStorage();
+		DeletePictures(textureStorage.GetDeletable());
 		//}
-		data.textureStorage.Clear();
-		data.history.Clear();
+		textureStorage.Clear();
+		data.pHistoryManipulator->ClearHistory();
 		data.selectedShape.ResetSelectShapePtr();
 
 		m_fileManager.SetFilePath(fileName.GetString());
 		return m_xmlReader.Open(
 			m_fileManager.GetFilePath(),
-			data.canvas,
-			data.factory,
-			data.textureStorage,
-			data.imageFactory
+			data.pDataForSave->GetShapeCollection(),
+			data.pDataForOpen->GetShapeFactory(),
+			textureStorage,
+			data.pDataForOpen->GetImageFactory()
 		);
 	}
 	return false;
@@ -178,19 +180,14 @@ CString CMyDocument::GetFileName() const
 }
 
 CMyDocument::DataForAlteration::DataForAlteration(
-	CCanvas & canvas,
-	const CShapeFactory & factory,
-	CHistory & history,
-	CSelectedShape & selectedShape,
-	CTextureStorage & textureStorage,
-	CD2DImageFactory & imageFactory
+	IDataForSave * pDataForSave,
+	IDataForOpen * pDataForOpen,
+	IHistoryManipulator * pHistoryManipulator,
+	CSelectedShape & selectedShape
 )
-	: canvas(canvas)
-	, factory(factory)
-	, history(history)
+	: pDataForSave(pDataForSave)
+	, pDataForOpen(pDataForOpen)
+	, pHistoryManipulator(pHistoryManipulator)
 	, selectedShape(selectedShape)
-	, textureStorage(textureStorage)
-	, imageFactory(imageFactory)
-
 {
 }

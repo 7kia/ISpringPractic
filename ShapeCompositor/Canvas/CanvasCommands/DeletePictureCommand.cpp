@@ -5,14 +5,13 @@
 CDeletePictureCommand::CDeletePictureCommand(
 	IShapeCollection & pCanvas,
 	CSelectedShape & seletedShape,
-	CTextureStorage & textureStorage,
-	const SPictureData & pictureData
+	CTextureStorage & textureStorage
 )
 	: m_canvas(pCanvas)
 	, m_selectShape(seletedShape)
 	, m_index(pCanvas.GetShapeIndex(seletedShape.GetShape()))
 	, m_textureStorage(textureStorage)
-	, m_pictureData(pictureData)
+	, m_pictureData(dynamic_cast<CPicture*>(seletedShape.GetShape().get())->GetPictureData())
 {
 }
 
