@@ -63,10 +63,8 @@ CXMLReader::ReadData CMyDocument::OnFileOpen(
 	CString fileName = OpenDialog(CMyDocument::DialogType::Open, CMyDocument::FileType::Shapes);
 	if (fileName.GetLength() != 0)
 	{
-		//if (data.history.IsSave())
-		//{
 		DeletePictures(deleteTexture);
-		//}
+
 		reseter->ResetModel();
 
 		m_fileManager.SetFilePath(fileName.GetString());

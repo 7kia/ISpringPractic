@@ -64,7 +64,7 @@ namespace
 }
 
 bool CXMLReader::Save(
-	const std::wstring path,
+	const std::wstring & path,
 	const std::vector<CShapePtr> & shapes,
 	const CTextureStorage & textureStorage
 )

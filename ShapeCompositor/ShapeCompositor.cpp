@@ -20,7 +20,7 @@
 
 #include "ShapeCompositorDoc.h"
 #include "ShapeCompositorView.h"
-#include "ShapeCompositorController.h"
+#include "ShapeCompositorPresenter.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

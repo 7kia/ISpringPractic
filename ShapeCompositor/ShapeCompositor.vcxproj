@@ -121,6 +121,9 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <AdditionalIncludeDirectories>$(MSBuildProjectDirectory);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnableParallelCodeGeneration>false</EnableParallelCodeGeneration>
+      <UndefinePreprocessorDefinitions>
+      </UndefinePreprocessorDefinitions>
+      <DisableSpecificWarnings>4503;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -220,7 +223,7 @@
     <ClInclude Include="GlobalFunctions.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="Observer.h" />
-    <ClInclude Include="ShapeCompositorController.h" />
+    <ClInclude Include="ShapeCompositorPresenter.h" />
     <ClInclude Include="ShapeCompositorModel.h" />
     <ClInclude Include="ShapeVisitor.h" />
     <ClInclude Include="Resource.h" />
@@ -256,7 +259,7 @@
     <ClCompile Include="GlobalFunctions.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="ShapeCompositor.cpp" />
-    <ClCompile Include="ShapeCompositorController.cpp" />
+    <ClCompile Include="ShapeCompositorPresenter.cpp" />
     <ClCompile Include="ShapeCompositorDoc.cpp" />
     <ClCompile Include="ShapeCompositorModel.cpp" />
     <ClCompile Include="ShapeCompositorView.cpp" />

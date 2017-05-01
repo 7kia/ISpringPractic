@@ -21,15 +21,24 @@ CShapeCompositorModel::CShapeCompositorModel()
 	);
 }
 
-
 D2D1_RECT_F CShapeCompositorModel::GetCanvasRect() const
 {
 	return m_canvas.GetRect();
 }
 
+void CShapeCompositorModel::SetRenderTargetForModelComponents(ID2D1HwndRenderTarget * pRenderTarget)
+{
+	m_imageFactory.SetRenderTarget(pRenderTarget);
+}
+
 CShapePtr CShapeCompositorModel::GetCanvasBorder() const
 {
 	return m_canvasBorder;
+}
+
+std::vector<CShapePtr>& CShapeCompositorModel::GetCanvasShapes()
+{
+	return m_canvas.GetShapes();
 }
 
 bool CShapeCompositorModel::SaveAsDocument()
@@ -83,24 +92,13 @@ bool CShapeCompositorModel::NewDocument()
 	{
 		if (!(m_history.IsSave() && m_document.IsNewDocument()))
 		{
-			ResetShapeCompositor();
+			ResetModel();
 			m_document.RecreateTempFolder();
 		}
 	}
 	return false;
 }
 
-void CShapeCompositorModel::ResetShapeCompositor()
-{
-	m_document.DeletePictures(m_textureStorage.GetDeletable());
-	m_textureStorage.Clear();
-
-	m_history.Clear();
-
-	m_resetSelectedShape();
-
-	m_canvas.Clear();
-}
 
 int CShapeCompositorModel::SaveChangeDocument()
 {
@@ -139,24 +137,20 @@ void CShapeCompositorModel::LoadPicture(const boost::filesystem::path & path, CS
 	);
 
 	const auto canvasSize = m_canvas.GetSize();
-	m_history.AddAndExecuteCommand(std::make_shared<CAddPictureCommand>(
-		m_canvas.GetShapeCollection(),
-		SPictureData(
-			m_textureStorage.GetTexture(pictureName),
-			Vec2f(float(canvasSize.width) / 2.f, float(canvasSize.height) / 2.f),
-			m_textureStorage.GetCorrectSize(pictureName)
-		),
-		m_textureStorage,
-		selectedShape
+	m_history.AddAndExecuteCommand(
+		std::make_shared<CAddPictureCommand>(
+			m_canvas.GetShapeCollection(),
+			SPictureData(
+				m_textureStorage.GetTexture(pictureName),
+				Vec2f(float(canvasSize.width) / 2.f, float(canvasSize.height) / 2.f),
+				m_textureStorage.GetCorrectSize(pictureName)
+			),
+			m_textureStorage,
+			selectedShape
 		)
 	);
 }
 
-
-void CShapeCompositorModel::SetRenderTargetForImageFactory(ID2D1HwndRenderTarget * pRenderTarget)
-{
-	m_imageFactory.SetRenderTarget(pRenderTarget);
-}
 
 signal::Connection CShapeCompositorModel::DoOnResetSelectedShape(std::function<void()> const & action)
 {
@@ -190,9 +184,13 @@ void CShapeCompositorModel::DoSave()
 
 void CShapeCompositorModel::ResetModel()
 {
+	m_document.DeletePictures(m_textureStorage.GetDeletable());
 	m_textureStorage.Clear();
+
 	m_history.Clear();
+
 	m_resetSelectedShape();
+
 	m_canvas.Clear();
 }
 

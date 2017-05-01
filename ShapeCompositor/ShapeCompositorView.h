@@ -26,9 +26,19 @@
 static const FLOAT DEFAULT_DPI = 96.f;
 
 class CShapeCompositorModel;
-class CShapeCompositorController;
+class CShapeCompositorPresenter;
 
-class CShapeCompositorView : public CScrollView
+class IViewReseter
+{
+public:
+	virtual ~IViewReseter() = default;
+
+	virtual void ResetSelectedShape() = 0;
+};
+
+class CShapeCompositorView 
+	: public CScrollView
+	, public IViewReseter
 {
 public:
 	CShapeCompositorView();
@@ -59,11 +69,10 @@ public:
 	void					Redo();
 
 	void					ChangeCursor(const Vec2f &  mousePos);
-
-	// For document
-
-	void					ResetSelectedShape();
-
+	//--------------------------------------------
+	// IViewReseter
+	void					ResetSelectedShape() override;
+	//--------------------------------------------
 private:
 	void					CreateCommandForSelectedShape();
 	void					ChangeSelectedShape(const Vec2f & mousePos);
@@ -114,7 +123,7 @@ protected:
 	signal::Signal<void(ID2D1HwndRenderTarget *)> m_setRenderTargetForImageFactory;
 
 	std::unique_ptr<CShapeCompositorModel> m_model;
-	std::unique_ptr<CShapeCompositorController> m_controller;
+	std::unique_ptr<CShapeCompositorPresenter> m_controller;
 	/////////////////////////////////////////////////
 protected:
 

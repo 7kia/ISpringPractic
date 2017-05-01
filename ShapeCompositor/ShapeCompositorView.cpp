@@ -22,7 +22,7 @@
 #include "ShapeCompositorDoc.h"
 #include "ShapeCompositorView.h"
 #include "ShapeCompositorModel.h"
-#include "ShapeCompositorController.h"
+#include "ShapeCompositorPresenter.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -58,9 +58,18 @@ END_MESSAGE_MAP()
 // создание/уничтожение CShapeCompositorView
 
 CShapeCompositorView::CShapeCompositorView()
+	: m_model(std::make_unique<CShapeCompositorModel>())
 {
-	m_model = std::make_unique<CShapeCompositorModel>();
-	m_controller = std::make_unique<CShapeCompositorController>(*static_cast<CShapeCompositorView*>(this), *m_model);
+	m_controller = std::make_unique<CShapeCompositorPresenter>(this);
+
+	SetBoundingRect(m_model->GetCanvasRect());
+
+	m_controller->SetHistoryManipulator(m_model.get());
+	m_controller->SetDocumentManipulator(m_model.get());
+	m_controller->SetShapeManipulator(m_model.get());
+	m_controller->SetDataForDraw(m_model.get());
+	m_controller->SetHaveRenderTarget(m_model.get());
+	m_controller->SetReseters(m_model.get(), this);
 }
 
 CShapeCompositorView::~CShapeCompositorView()
