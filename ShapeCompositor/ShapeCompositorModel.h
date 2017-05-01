@@ -7,9 +7,18 @@
 #include "Signal.h"
 
 
+class IModelReseter
+{
+public:
+	virtual ~IModelReseter() = default;
+
+	virtual void ResetModel() = 0;
+};
+
 class CShapeCompositorModel
 	: public IHistoryManipulator
 	, public IDocumentManipulator
+	, public IModelReseter
 {
 public:
 	CShapeCompositorModel();
@@ -38,8 +47,9 @@ public:
 	bool OpenDocument(CSelectedShape & selectedShape) override;
 	bool NewDocument() override;
 	//--------------------------------------------
-
-
+	// IModelReseter
+	void ResetModel() override;
+	//--------------------------------------------
 	IShapeCollection & GetShapeCollection();
 
 	void DeleteShape(CSelectedShape & selectedShape);

@@ -1,22 +1,19 @@
 #include "stdafx.h"
 #include "ShapeCompositorModel.h"
 
-namespace
-{
-	static const SSize CANVAS_SIZE = SSize(640.f, 480.f);
-	static const float SCALE_FACTOR = 0.8f;
-	static const SSize MAX_SIZE = SSize(CANVAS_SIZE.width * SCALE_FACTOR, CANVAS_SIZE.height * SCALE_FACTOR);
-}
 
 CShapeCompositorModel::CShapeCompositorModel()
-	: m_textureStorage(MAX_SIZE)
-	, m_canvas(CANVAS_SIZE)
+	: m_textureStorage(CanvasNamespace::MAX_PICTURE_SIZE)
+	, m_canvas(CanvasNamespace::CANVAS_SIZE)
 {
 	m_canvasBorder = m_shapeFactory.CreateShape(
 		SShapeData(
 			ShapeType::Rectangle,
-			Vec2f(CANVAS_SIZE.width / 2.f, CANVAS_SIZE.height / 2.f),
-			CANVAS_SIZE,
+			Vec2f(
+				CanvasNamespace::CANVAS_SIZE.width / 2.f,
+				CanvasNamespace::CANVAS_SIZE.height / 2.f
+			),
+			CanvasNamespace::CANVAS_SIZE,
 			NOT_COLOR,
 			BLACK_COLOR,
 			3.f
@@ -65,17 +62,17 @@ bool CShapeCompositorModel::OpenDocument(CSelectedShape & selectedShape)
 {
 	if (SaveChangeDocument() != IDCANCEL)
 	{
-		return m_document.OnFileOpen(
-			CMyDocument::DataForAlteration
-			(
-				m_canvas.GetShapeCollection(),
+		auto readData = m_document.OnFileOpen(	
+			this,
+			m_textureStorage.GetDeletable(),
+			CXMLReader::DataForCreation(
 				m_shapeFactory,
-				&m_history,
-				selectedShape,
-				m_textureStorage,
 				m_imageFactory
 			)
 		);
+		m_canvas.SetShapes(readData.shapeData);
+		m_textureStorage = readData.textureStorage;
+		return true;
 	}
 	return false;
 }
@@ -197,6 +194,14 @@ bool CShapeCompositorModel::IsSave() const
 void CShapeCompositorModel::DoSave()
 {
 	m_history.DoSave();
+}
+
+void CShapeCompositorModel::ResetModel()
+{
+	m_textureStorage.Clear();
+	m_history.Clear();
+	m_resetSelectedShape();
+	m_canvas.Clear();
 }
 
 IShapeCollection & CShapeCompositorModel::GetShapeCollection()

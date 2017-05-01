@@ -17,6 +17,7 @@
 #include "ShapeCompositorDoc.h"
 #include "Canvas\D2DObjectRenderer.h"
 #include "Signal.h"
+#include "FileWork\XMLReader.h"
 
 #include <vector>
 #include <memory>

@@ -120,32 +120,25 @@ bool CXMLReader::Save(
 	return false;
 }
 
-bool CXMLReader::Open(
+CXMLReader::ReadData CXMLReader::Open(
 	const std::wstring & path,
-	IShapeCollection & canvas,
-	const CShapeFactory & factory,
-	CTextureStorage & textureStorage,
-	CD2DImageFactory & imageFactory
+	DataForCreation & dataForCreation
 )
 {
 	if (path.empty())
 	{
-		return false;
+		return ReadData();
 	}
 	try
 	{
+		ReadData readData;
 		std::ifstream stream(path);
 		auto folder = fs::path(path).parent_path().generic_string() + "/" + fs::path(path).stem().generic_string();
 
-		if (!exists(folder) && textureStorage.GetCount())
-		{
-			throw std::runtime_error("Not directory for open file");
-		}
 
 		boost::property_tree::ptree propertyTree;
 		boost::property_tree::read_xml(stream, propertyTree);
 
-		std::vector<CShapePtr> shapesData;
 		for (auto &shape : propertyTree.get_child("Shapes"))
 		{
 			if (shape.first == "Shape")
@@ -164,26 +157,62 @@ bool CXMLReader::Open(
 				if (type == "Picture")
 				{
 					std::string texture = shape.second.get<std::string>("Texture");
-					textureStorage.AddTexture(ToWString(texture), imageFactory.CreateTexture(ToWString(folder + "/" + texture)));
-					shapesData.push_back(std::make_shared<CPicture>(textureStorage.GetTexture(ToWString(texture)), data.position, data.size));
+					readData.textureStorage.AddTexture(
+						ToWString(texture),
+						dataForCreation.imageFactory.CreateTexture(ToWString(folder + "/" + texture))
+					);
+					readData.shapeData.push_back(
+						std::make_shared<CPicture>(
+							readData.textureStorage.GetTexture(ToWString(texture)),
+							data.position,
+							data.size
+						)
+					);
 				}
 				else
 				{
-					shapesData.push_back(factory.CreateShape(data));
+					readData.shapeData.push_back(dataForCreation.shapeFactory.CreateShape(data));
 				}
 			}
 		}
 
-		canvas.Clear();
-		canvas.SetShapes(shapesData);
+		if (!exists(folder) && readData.textureStorage.GetCount())
+		{
+			throw std::runtime_error("Not directory for open file");
+		}
 
 		stream.close();
-		return true;
+		return readData;
 	}
 	catch (boost::property_tree::xml_parser_error e)
 	{
 		std::cout << e.what() << std::endl;
 		throw;
 	}
-	return false;
+
+	return ReadData();
+}
+
+CXMLReader::ReadData::ReadData()
+	: textureStorage(CanvasNamespace::MAX_PICTURE_SIZE)
+{
+}
+
+CXMLReader::ReadData::ReadData(
+	std::vector<CShapePtr>& shapeData,
+	CTextureStorage & textureStorage
+)
+	: shapeData(shapeData)
+	, textureStorage(textureStorage)
+{
+}
+
+
+CXMLReader::DataForCreation::DataForCreation(
+	const CShapeFactory & shapeFactory,
+	CD2DImageFactory & imageFactory
+)
+	: shapeFactory(shapeFactory)
+	, imageFactory(imageFactory)
+{
 }

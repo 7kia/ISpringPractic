@@ -28,6 +28,7 @@ bool CMyDocument::OnFileSaveAs(std::vector<CShapePtr> const & shapes, const CTex
 		const auto oldFolder = m_fileManager.GetCurrentFolder();
 		m_fileManager.SetFilePath(fileName.GetString());
 
+		std::wstring folderForSave = oldFolder;
 		if (textureStorage.GetCount())
 		{
 			auto newPath = path(fileName);
@@ -43,6 +44,7 @@ bool CMyDocument::OnFileSaveAs(std::vector<CShapePtr> const & shapes, const CTex
 				oldFolder,
 				newFolder
 			);
+			folderForSave = newFolder;
 		}
 
 		return m_xmlReader.Save(fileName.GetString(), shapes, textureStorage);
@@ -50,29 +52,28 @@ bool CMyDocument::OnFileSaveAs(std::vector<CShapePtr> const & shapes, const CTex
 	return false;
 }
 
-bool CMyDocument::OnFileOpen(DataForAlteration & data)
+CXMLReader::ReadData CMyDocument::OnFileOpen(
+	IModelReseter * reseter,
+	std::vector<std::wstring> deleteTexture,
+	CXMLReader::DataForCreation & data
+)
 {
 	CString fileName = OpenDialog(CMyDocument::DialogType::Open, CMyDocument::FileType::Shapes);
 	if (fileName.GetLength() != 0)
 	{
 		//if (data.history.IsSave())
 		//{
-		DeletePictures(data.textureStorage.GetDeletable());
+		DeletePictures(deleteTexture);
 		//}
-		data.textureStorage.Clear();
-		data.pHistory->Clear();
-		data.selectedShape.ResetSelectShapePtr();
+		reseter->ResetModel();
 
 		m_fileManager.SetFilePath(fileName.GetString());
 		return m_xmlReader.Open(
 			m_fileManager.GetFilePath(),
-			data.collection,
-			data.factory,
-			data.textureStorage,
-			data.imageFactory
+			data
 		);
 	}
-	return false;
+	return CXMLReader::ReadData();
 }
 
 bool CMyDocument::OnFileSave(std::vector<CShapePtr> const & shapes, const CTextureStorage & textureStorage)
@@ -178,19 +179,3 @@ CString CMyDocument::GetFileName() const
 	return CString(m_fileManager.GetFileName().data());
 }
 
-CMyDocument::DataForAlteration::DataForAlteration(
-	IShapeCollection & collection,
-	const CShapeFactory & factory,
-	IHistory * pHistory,
-	CSelectedShape & selectedShape,
-	CTextureStorage & textureStorage,
-	CD2DImageFactory & imageFactory
-)
-	: collection(collection)
-	, factory(factory)
-	, pHistory(pHistory)
-	, selectedShape(selectedShape)
-	, textureStorage(textureStorage)
-	, imageFactory(imageFactory)
-{
-}

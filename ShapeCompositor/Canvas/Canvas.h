@@ -28,6 +28,7 @@ public:
 	virtual ~IShapeProvider() = default;
 
 	virtual CShapePtr GetShape(const size_t index) = 0;
+	virtual CShapePtr GetShape(const ID2D1Bitmap * pTexture) = 0;
 	virtual std::vector<CShapePtr>&	GetShapes() = 0;
 	virtual size_t GetShapeCount() const = 0;
 	virtual size_t GetShapeIndex(const CShapePtr & pShape) const = 0;
@@ -94,6 +95,7 @@ public:
 	//--------------------------------------------
 	// IShapeProvider
 	CShapePtr				GetShape(const size_t index) override;
+	CShapePtr				GetShape(const ID2D1Bitmap * pTexture) override;
 	size_t					GetShapeIndex(const CShapePtr & pShape) const override;
 
 	std::vector<CShapePtr>&	GetShapes() override;

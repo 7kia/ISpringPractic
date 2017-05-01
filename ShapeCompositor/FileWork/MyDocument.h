@@ -44,6 +44,8 @@ public:
 	virtual bool NewDocument() = 0;
 };
 
+class IModelReseter;
+
 class CMyDocument
 {
 public:
@@ -60,25 +62,7 @@ public:
 		Save,
 		Open
 	};
-	struct DataForAlteration
-	{
-		DataForAlteration(
-			IShapeCollection & collection,
-			const CShapeFactory & factory,
-			IHistory * pHistory,
-			CSelectedShape & selectedShape,
-			CTextureStorage & textureStorage,
-			CD2DImageFactory & imageFactory
-		);
-
-		IShapeCollection & collection;
-		const CShapeFactory & factory;
-		IHistory * pHistory = nullptr;
-		CSelectedShape & selectedShape;
-		CTextureStorage & textureStorage;
-		CD2DImageFactory & imageFactory;
-	};
-
+	
 
 	//////////////////////////////////////////////////////////////////////
 	// Methods
@@ -94,7 +78,11 @@ public:
 	CString GetFileName() const;
 
 	bool OnFileSaveAs(std::vector<CShapePtr> const & shapes, const CTextureStorage & textureStorage);
-	bool OnFileOpen(DataForAlteration & data);
+	CXMLReader::ReadData OnFileOpen(
+		IModelReseter * reseter,
+		std::vector<std::wstring> deleteTexture,
+		CXMLReader::DataForCreation & data
+	);
 	bool OnFileSave(std::vector<CShapePtr> const & shapes, const CTextureStorage & textureStorage);
 	//////////////////////////////////////////////////////////////////////
 	// Data

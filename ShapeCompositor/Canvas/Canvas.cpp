@@ -115,6 +115,22 @@ CShapePtr CCanvas::GetShape(const size_t index)
 	return m_shapes[index];
 }
 
+CShapePtr CCanvas::GetShape(const ID2D1Bitmap * pTexture)
+{
+	for (const auto shape : m_shapes)
+	{
+		if (shape->GetType() == ShapeType::Picture)
+		{
+			const auto pPicture = dynamic_cast<CPicture*>(shape.get());
+			if (pPicture->GetTexture() == pTexture)
+			{
+				return shape;
+			}
+		}
+	}
+	return CShapePtr();
+}
+
 CShapePtr GetShape(const Vec2f mousePosition, const std::vector<CShapePtr> & vector)
 {
 	CShapePtr foundShape;

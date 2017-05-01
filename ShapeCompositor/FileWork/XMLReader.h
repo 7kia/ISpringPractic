@@ -21,6 +21,27 @@ class CXMLReader
 {
 public:
 	CXMLReader() = default;
+
+	struct ReadData
+	{
+		ReadData();
+		ReadData(
+			std::vector<CShapePtr> & shapeData,
+			CTextureStorage & textureStorage
+		);
+		std::vector<CShapePtr> shapeData;
+		CTextureStorage textureStorage;
+	};
+
+	struct DataForCreation
+	{
+		DataForCreation(
+			const CShapeFactory & shapeFactory,
+			CD2DImageFactory & imageFactory
+		);
+		const CShapeFactory & shapeFactory;
+		CD2DImageFactory & imageFactory;
+	};
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
@@ -29,11 +50,8 @@ public:
 		const std::vector<CShapePtr>  & shapes,
 		const CTextureStorage & textureStorage
 	);
-	static bool Open(
+	static ReadData Open(
 		const std::wstring & path,
-		IShapeCollection & canvas,
-		const CShapeFactory & factory,
-		CTextureStorage & textureStorage,
-		CD2DImageFactory & imageFactory// image require D2D draw
+		DataForCreation & dataForCreation
 	);	
 };
