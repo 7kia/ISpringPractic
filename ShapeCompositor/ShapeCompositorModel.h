@@ -51,11 +51,13 @@ public:
 	void ResetModel() override;
 	//--------------------------------------------
 	IShapeCollection & GetShapeCollection();
+	//--------------------------------------------
+	// IChangeShapes
 
 	void DeleteShape(CSelectedShape & selectedShape);
 	void CreateShape(ShapeType type, CSelectedShape & selectedShape);
-	void CreatePicture(CSelectedShape & selectedShape);
 	void ChangeRect(const CFrame oldFrame, CSelectedShape & selectedShape);
+	//--------------------------------------------
 
 
 private:

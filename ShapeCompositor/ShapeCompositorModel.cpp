@@ -152,14 +152,6 @@ void CShapeCompositorModel::LoadPicture(const boost::filesystem::path & path, CS
 	);
 }
 
-void CShapeCompositorModel::CreatePicture(CSelectedShape & selectedShape)
-{
-	auto picturePath = m_document.LoadTexture();
-	if (picturePath != L"no")
-	{
-		LoadPicture(picturePath, selectedShape);
-	}
-}
 
 void CShapeCompositorModel::SetRenderTargetForImageFactory(ID2D1HwndRenderTarget * pRenderTarget)
 {
@@ -235,14 +227,25 @@ void CShapeCompositorModel::DeleteShape(CSelectedShape & selectedShape)
 
 void CShapeCompositorModel::CreateShape(ShapeType type, CSelectedShape & selectedShape)
 {
-	m_history.AddAndExecuteCommand(
-		std::make_shared<CAddShapeCanvasCommand>(
-			m_canvas.GetShapeCollection()
-			, type
-			, m_shapeFactory
-			, selectedShape
+	if(type != ShapeType::Picture)
+	{
+		m_history.AddAndExecuteCommand(
+			std::make_shared<CAddShapeCanvasCommand>(
+				m_canvas.GetShapeCollection(),
+				type,
+				m_shapeFactory,
+				selectedShape
 			)
-	);
+		);
+	}
+	else 
+	{
+		auto picturePath = m_document.LoadTexture();
+		if (!picturePath.empty())
+		{
+			LoadPicture(picturePath, selectedShape);
+		}
+	}
 }
 
 void CShapeCompositorModel::ChangeRect(const CFrame oldFrame, CSelectedShape & selectedShape)

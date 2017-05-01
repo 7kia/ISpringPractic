@@ -33,18 +33,20 @@ bool CMyDocument::OnFileSaveAs(std::vector<CShapePtr> const & shapes, const CTex
 		{
 			auto newPath = path(fileName);
 			auto newFolder = newPath.parent_path().generic_wstring() + L"/" + newPath.stem().generic_wstring();
-			m_fileManager.CreateFolder(newFolder);
+			
+			if (oldFolder != newFolder)
+			{
+				m_fileManager.CreateFolder(newFolder);
 
-			//if (fileName.GetString() == oldFolder)
-			//{
 				DeletePictures(textureStorage.GetDeletable());
-			//}
-			m_fileManager.CopyFiles(
-				textureStorage.GetNeedfullNames(),
-				oldFolder,
-				newFolder
-			);
-			folderForSave = newFolder;
+
+				m_fileManager.CopyFiles(
+					textureStorage.GetNeedfullNames(),
+					oldFolder,
+					newFolder
+				);
+				folderForSave = newFolder;
+			}
 		}
 
 		return m_xmlReader.Save(fileName.GetString(), shapes, textureStorage);
@@ -84,7 +86,7 @@ bool CMyDocument::OnFileSave(std::vector<CShapePtr> const & shapes, const CTextu
 	}
 	else
 	{
-		DeletePictures(textureStorage.GetDeletable());
+		//DeletePictures(textureStorage.GetDeletable());
 		m_fileManager.SetFilePath(m_fileManager.GetFilePath());
 		return m_xmlReader.Save(m_fileManager.GetFilePath(), shapes, textureStorage);
 	}
@@ -115,7 +117,7 @@ boost::filesystem::path CMyDocument::LoadTexture()
 	}
 	else
 	{
-		return path(L"no");
+		return path();
 	}
 	return path(picturePath);
 }
@@ -125,8 +127,7 @@ void CMyDocument::DeletePictures(const std::vector<std::wstring> & names) const
 	for (const auto & name : names)
 	{
 		auto path = (m_fileManager.GetCurrentFolder() + L"/" + name);
-		
-		if (PathFileExists(path.data()))
+		if(PathFileExists(path.data()))
 		{
 			DeleteFile(path.data());
 		}

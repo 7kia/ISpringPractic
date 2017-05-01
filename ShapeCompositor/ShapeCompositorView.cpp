@@ -143,7 +143,7 @@ void CShapeCompositorView::CreateEllipse()
 
 void CShapeCompositorView::CreatePicture()
 {
-	m_createPicture(m_selectedShape);
+	m_createShapeCommand(ShapeType::Picture, m_selectedShape);
 	RedrawWindow();
 }
 

@@ -80,7 +80,6 @@ public:
 public:
 	signal::Connection DoOnGetCanvasView(std::function<CShapePtr()> const & action);
 	signal::Connection DoOnGetCanvasShapes(std::function<std::vector<CShapePtr>()> const & action);
-	signal::Connection DoOnCreatePicture(std::function<void(CSelectedShape &)> const & action);
 
 	signal::Connection DoOnSaveAsDocument(std::function<bool()> const & action);
 	signal::Connection DoOnSaveDocument(std::function<bool()> const & action);
@@ -100,7 +99,6 @@ public:
 protected:
 	signal::Signal<CShapePtr()> m_getCanvasView;
 	signal::Signal<std::vector<CShapePtr>()> m_getCanvasShapes;
-	signal::Signal<void(CSelectedShape &)> m_createPicture;
 
 	signal::Signal<bool()> m_saveAsDocument;
 	signal::Signal<bool()> m_saveDocument;

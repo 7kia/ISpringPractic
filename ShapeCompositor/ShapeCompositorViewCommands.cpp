@@ -12,10 +12,6 @@ signal::Connection CShapeCompositorView::DoOnGetCanvasShapes(std::function<std::
 	return m_getCanvasShapes.connect(action);
 }
 
-signal::Connection CShapeCompositorView::DoOnCreatePicture(std::function<void(CSelectedShape &)> const & action)
-{
-	return m_createPicture.connect(action);
-}
 
 signal::Connection CShapeCompositorView::DoOnSaveAsDocument(std::function<bool()> const & action)
 {
