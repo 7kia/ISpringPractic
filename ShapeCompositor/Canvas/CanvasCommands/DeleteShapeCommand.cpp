@@ -4,14 +4,14 @@
 
 CDeleteShapeCanvasCommand::CDeleteShapeCanvasCommand(
 	IShapeCollection & pCanvas,
-	CSelectedShape & seletedShape,
+	CSelectedShape & selectedShape,
 	const CShapeFactory & factory
 )
-	: m_canvas(canvas)
+	: m_canvas(pCanvas)
 	, m_selectShape(selectedShape)
 	, m_factory(factory)
 	, m_data(selectedShape.GetShape()->GetShapeData())
-	, m_index(canvas.GetShapeIndex(selectedShape.GetShape()))
+	, m_index(pCanvas.GetShapeIndex(selectedShape.GetShape()))
 {
 }
 

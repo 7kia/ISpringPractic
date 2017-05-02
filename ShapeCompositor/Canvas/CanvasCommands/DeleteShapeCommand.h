@@ -10,7 +10,7 @@ class CDeleteShapeCanvasCommand : public IMyCommand
 public:
 	CDeleteShapeCanvasCommand(
 		IShapeCollection & pCanvas,
-		CSelectedShape & seletedShape,
+		CSelectedShape & selectedShape,
 		const CShapeFactory & factory
 	);
 //////////////////////////////////////////////////////////////////////

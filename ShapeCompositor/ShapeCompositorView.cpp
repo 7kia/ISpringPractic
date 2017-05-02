@@ -69,7 +69,7 @@ CShapeCompositorView::CShapeCompositorView()
 	m_controller->SetShapeManipulator(m_model.get());
 	m_controller->SetDataForDraw(m_model.get());
 	m_controller->SetHaveRenderTarget(m_model.get());
-	m_controller->SetModelReseter(m_model.get());
+	m_controller->SetModelReseter(m_model.get(), this);
 }
 
 CShapeCompositorView::~CShapeCompositorView()

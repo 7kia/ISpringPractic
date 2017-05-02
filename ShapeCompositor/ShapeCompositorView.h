@@ -25,11 +25,44 @@
 
 static const FLOAT DEFAULT_DPI = 96.f;
 
+class IViewReseter
+{
+public:
+	virtual ~IViewReseter() = default;
+
+	virtual void ResetSelectedShape() = 0;
+};
+
+class IViewSignaller
+{
+public:
+	virtual ~IViewSignaller() = default;
+
+	virtual signal::Connection DoOnGetCanvasView(std::function<CShapePtr()> const & action) = 0;
+	virtual signal::Connection DoOnGetCanvasShapes(std::function<std::vector<CShapePtr>()> const & action) = 0;
+
+	virtual signal::Connection DoOnSaveAsDocument(std::function<bool()> const & action) = 0;
+	virtual signal::Connection DoOnSaveDocument(std::function<bool()> const & action) = 0;
+	virtual signal::Connection DoOnOpenDocument(std::function<bool(CSelectedShape &)> const & action) = 0;
+	virtual signal::Connection DoOnNewDocument(std::function<bool()> const & action) = 0;
+
+	virtual signal::Connection DoOnUndoCommand(std::function<void()> const & action) = 0;
+	virtual signal::Connection DoOnRedoCommand(std::function<void()> const & action) = 0;
+
+
+	virtual signal::Connection DoOnDeleteShapeCommand(std::function<void(CSelectedShape &)> const & action) = 0;
+	virtual signal::Connection DoOnChangeRectCommand(std::function<void(const CFrame, CSelectedShape &)> const & action) = 0;
+	virtual signal::Connection DoOnCreateShapeCommand(std::function<void(ShapeType, CSelectedShape &)> const & action) = 0;
+	virtual signal::Connection DoOnSetRenderTargetForModel(std::function<void(ID2D1HwndRenderTarget *)> const & action) = 0;
+};
+
 class CShapeCompositorModel;
 class CShapeCompositorPresenter;
 
 class CShapeCompositorView 
 	: public CScrollView
+	, public IViewReseter
+	, public IViewSignaller
 {
 public:
 	CShapeCompositorView();
@@ -58,21 +91,11 @@ public:
 
 	void					ChangeCursor(const Vec2f &  mousePos);
 	
-	void					ResetSelectedShape();
-private:
-	void					CreateCommandForSelectedShape();
-	void					ChangeSelectedShape(const Vec2f & mousePos);
-
-	Vec2f					GetScreenPosition(const CPoint & point);
-
-// Переопределение
-public:
-	virtual void OnDraw(CDC* pDC);  // переопределено для отрисовки этого представления
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-
-	/////////////////////////////////////////////////
-	// Signals
-public:
+	//--------------------------------------------
+	// IViewReseter
+	void					ResetSelectedShape() override;
+	//--------------------------------------------
+	// IViewSignaller
 	signal::Connection DoOnGetCanvasView(std::function<CShapePtr()> const & action);
 	signal::Connection DoOnGetCanvasShapes(std::function<std::vector<CShapePtr>()> const & action);
 
@@ -89,8 +112,17 @@ public:
 	signal::Connection DoOnChangeRectCommand(std::function<void(const CFrame, CSelectedShape &)> const & action);
 	signal::Connection DoOnCreateShapeCommand(std::function<void(ShapeType, CSelectedShape &)> const & action);
 	signal::Connection DoOnSetRenderTargetForModel(std::function<void(ID2D1HwndRenderTarget *)> const & action);
+	//--------------------------------------------
+private:
+	void					CreateCommandForSelectedShape();
+	void					ChangeSelectedShape(const Vec2f & mousePos);
 
+	Vec2f					GetScreenPosition(const CPoint & point);
 
+// Переопределение
+public:
+	virtual void OnDraw(CDC* pDC);  // переопределено для отрисовки этого представления
+	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);	
 protected:
 	signal::Signal<CShapePtr()> m_getCanvasView;
 	signal::Signal<std::vector<CShapePtr>()> m_getCanvasShapes;

@@ -33,11 +33,11 @@ namespace
 }
 
 CTriangle::CTriangle(
-	const Vec2f position = Vec2f(),
-	const SSize size = DEFAULT_SIZE,
-	const Color & fillColor = DEFAULT_FILL_COLOR,
-	const Color & outlineColor = DEFAULT_OUTLINE_COLOR,
-	float outlineThikness = 1.f
+	const Vec2f position,
+	const SSize size,
+	const Color & fillColor,
+	const Color & outlineColor,
+	float outlineThikness
 )
 	: CShape(
 		ShapeType::Triangle,

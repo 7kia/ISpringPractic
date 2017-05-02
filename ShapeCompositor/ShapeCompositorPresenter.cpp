@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "ShapeCompositorPresenter.h"
 
-CShapeCompositorPresenter::CShapeCompositorPresenter(CShapeCompositorView * view)
-	: m_pView(view)
+CShapeCompositorPresenter::CShapeCompositorPresenter(IViewSignaller * pViewSignaller)
+	: m_pViewSignaller(pViewSignaller)
 {
 }
 
@@ -36,50 +36,49 @@ void CShapeCompositorPresenter::SetHaveRenderTarget(IHaveRenderTarget * pHaveRen
 	ConnectSignalsForHaveRenderTarget();
 }
 
-void CShapeCompositorPresenter::SetModelReseter(IModelReseter * pModelReseter)
+void CShapeCompositorPresenter::SetModelReseter(IModelReseter * pModelReseter, IViewReseter* pViewReseter)
 {
 	m_pModelReseter = pModelReseter;
-
+	m_pViewReseter = pViewReseter;
 	ConnectSignalsForModelReseter();
 }
 
 void CShapeCompositorPresenter::ConnectSignalsForHistory()
 {
-	m_connections += m_pView->DoOnUndoCommand(boost::bind(&IHistoryManipulator::UndoCommand, m_pHystoryManipulator));
-	m_connections += m_pView->DoOnRedoCommand(boost::bind(&IHistoryManipulator::RedoCommand, m_pHystoryManipulator));
+	m_connections += m_pViewSignaller->DoOnUndoCommand(boost::bind(&IHistoryManipulator::UndoCommand, m_pHystoryManipulator));
+	m_connections += m_pViewSignaller->DoOnRedoCommand(boost::bind(&IHistoryManipulator::RedoCommand, m_pHystoryManipulator));
 }
 
 void CShapeCompositorPresenter::ConnectSignalsForDocumentManipulator()
 {	
-	m_connections += m_pView->DoOnSaveAsDocument(boost::bind(&IDocumentManipulator::SaveAsDocument, m_pDocumentManipulator));
-	m_connections += m_pView->DoOnSaveDocument(boost::bind(&IDocumentManipulator::SaveDocument, m_pDocumentManipulator));
-	m_connections += m_pView->DoOnOpenDocument(boost::bind(&IDocumentManipulator::OpenDocument, m_pDocumentManipulator, _1));
-	m_connections += m_pView->DoOnNewDocument(boost::bind(&IDocumentManipulator::NewDocument, m_pDocumentManipulator));
+	m_connections += m_pViewSignaller->DoOnSaveAsDocument(boost::bind(&IDocumentManipulator::SaveAsDocument, m_pDocumentManipulator));
+	m_connections += m_pViewSignaller->DoOnSaveDocument(boost::bind(&IDocumentManipulator::SaveDocument, m_pDocumentManipulator));
+	m_connections += m_pViewSignaller->DoOnOpenDocument(boost::bind(&IDocumentManipulator::OpenDocument, m_pDocumentManipulator, _1));
+	m_connections += m_pViewSignaller->DoOnNewDocument(boost::bind(&IDocumentManipulator::NewDocument, m_pDocumentManipulator));
 }
 
 void CShapeCompositorPresenter::ConnectSignalsForShapeManipulator()
 {
-	m_connections += m_pView->DoOnDeleteShapeCommand(boost::bind(&IShapeManipulator::DeleteShape, m_pShapeManipulator, _1));
-	m_connections += m_pView->DoOnChangeRectCommand(boost::bind(&IShapeManipulator::ChangeRect, m_pShapeManipulator, _1, _2));
-	m_connections += m_pView->DoOnCreateShapeCommand(boost::bind(&IShapeManipulator::CreateShape, m_pShapeManipulator , _1, _2));
+	m_connections += m_pViewSignaller->DoOnDeleteShapeCommand(boost::bind(&IShapeManipulator::DeleteShape, m_pShapeManipulator, _1));
+	m_connections += m_pViewSignaller->DoOnChangeRectCommand(boost::bind(&IShapeManipulator::ChangeRect, m_pShapeManipulator, _1, _2));
+	m_connections += m_pViewSignaller->DoOnCreateShapeCommand(boost::bind(&IShapeManipulator::CreateShape, m_pShapeManipulator , _1, _2));
 }
 
 void CShapeCompositorPresenter::ConnectSignalsForDataForDraw()
 {	
 	// TODO : see need rewrite shape on MVC or MVP
-	m_connections += m_pView->DoOnGetCanvasView(boost::bind(&IDataForDraw::GetCanvasBorder, m_pDataForDraw));
-	m_connections += m_pView->DoOnGetCanvasShapes(boost::bind(&IDataForDraw::GetCanvasShapes, m_pDataForDraw));
+	m_connections += m_pViewSignaller->DoOnGetCanvasView(boost::bind(&IDataForDraw::GetCanvasBorder, m_pDataForDraw));
+	m_connections += m_pViewSignaller->DoOnGetCanvasShapes(boost::bind(&IDataForDraw::GetCanvasShapes, m_pDataForDraw));
 }
 
 void CShapeCompositorPresenter::ConnectSignalsForHaveRenderTarget()
 {
-	m_connections += m_pView->DoOnSetRenderTargetForModel(
+	m_connections += m_pViewSignaller->DoOnSetRenderTargetForModel(
 		boost::bind(&IHaveRenderTarget::SetRenderTargetForModelComponents, m_pHaveRenderTarget, _1)
 	);
 }
 
 void CShapeCompositorPresenter::ConnectSignalsForModelReseter()
 {
-	// TODO : think need interface for ResetSelectedShape()
-	m_connections += m_pModelReseter->DoOnResetSelectedShape(boost::bind(&CShapeCompositorView::ResetSelectedShape, m_pView));
+	m_connections += m_pModelReseter->DoOnResetSelectedShape(boost::bind(&IViewReseter::ResetSelectedShape, m_pViewReseter));
 }

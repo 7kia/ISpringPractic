@@ -8,7 +8,7 @@
 class CShapeCompositorPresenter
 {
 public:
-	CShapeCompositorPresenter(CShapeCompositorView * view);
+	CShapeCompositorPresenter(IViewSignaller * pViewSignaller);
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
@@ -17,7 +17,7 @@ public:
 	void SetDocumentManipulator(IDocumentManipulator * pDocumentManipulator);
 	void SetDataForDraw(IDataForDraw * pDataForDraw);
 	void SetHaveRenderTarget(IHaveRenderTarget * pHaveRenderTarget);
-	void SetModelReseter(IModelReseter * pModelReseter);
+	void SetModelReseter(IModelReseter * pModelReseter, IViewReseter * pViewReseter);
 private:
 	void ConnectSignalsForHistory();
 	void ConnectSignalsForDocumentManipulator();
@@ -30,8 +30,8 @@ private:
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
-	CShapeCompositorView * m_pView = nullptr;
-
+	IViewSignaller * m_pViewSignaller = nullptr;
+	IViewReseter * m_pViewReseter = nullptr;
 	IHistoryManipulator * m_pHystoryManipulator = nullptr;
 	IDocumentManipulator * m_pDocumentManipulator = nullptr;
 	IShapeManipulator * m_pShapeManipulator = nullptr;
