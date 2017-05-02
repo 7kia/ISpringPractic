@@ -4,22 +4,6 @@
 #include "Canvas.h"
 #include "SelectedShape.h"
 
-namespace
-{
-	template<class Interface>
-	inline void SafeRelease(
-		Interface **ppInterfaceToRelease
-	)
-	{
-		if (*ppInterfaceToRelease != NULL)
-		{
-			(*ppInterfaceToRelease)->Release();
-
-			(*ppInterfaceToRelease) = NULL;
-		}
-	}
-}
-
 CD2DObjectRenderer::CD2DObjectRenderer()
 	: IShapeVisitor()
 	, IShapeRenderer()
@@ -66,12 +50,6 @@ HRESULT CD2DObjectRenderer::CreateRecources()
 	);
 
 	return hr;
-}
-
-void CD2DObjectRenderer::ClearRecources()
-{
-	SafeRelease(&m_pRenderTarget);
-	SafeRelease(&m_pDirect2dFactory);
 }
 
 HRESULT CD2DObjectRenderer::EndDraw()

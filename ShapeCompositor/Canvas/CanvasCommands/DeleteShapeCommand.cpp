@@ -3,9 +3,9 @@
 #include "../Canvas.h"
 
 CDeleteShapeCanvasCommand::CDeleteShapeCanvasCommand(
-	IShapeCollection & canvas
-	, CSelectedShape & selectedShape
-	, const CShapeFactory & factory
+	IShapeCollection & pCanvas,
+	CSelectedShape & seletedShape,
+	const CShapeFactory & factory
 )
 	: m_canvas(canvas)
 	, m_selectShape(selectedShape)

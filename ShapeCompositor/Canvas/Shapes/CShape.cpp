@@ -2,12 +2,12 @@
 #include "CShape.h"
 
 SShapeData::SShapeData(
-	const ShapeType type
-	, const Vec2f position
-	, const SSize size
-	, const Color & fillColor
-	, const Color & outlineColor
-	, const float outlineThikness
+	const ShapeType type,
+	const Vec2f position = Vec2f(),
+	const SSize size = DEFAULT_SIZE,
+	const Color & fillColor = DEFAULT_FILL_COLOR,
+	const Color & outlineColor = DEFAULT_OUTLINE_COLOR,
+	const float outlineThikness = 1.f
 )
 	: type(type)
 	, position(position)
@@ -99,5 +99,10 @@ void CShape::SetShapeData(SShapeData const & data)
 	m_size = data.size;
 	m_fillColor = data.fillColor;
 	m_outlineColor = data.outlineColor;
+}
+
+bool CShape::IsPointIntersection(const Vec2f point) const
+{
+	return false;
 }
 

@@ -3,19 +3,19 @@
 #include "Rectangle.h"
 
 CRectangle::CRectangle(
-	const Vec2f position
-	, const SSize size
-	, const Color & fillColor
-	, const Color & outlineColor
-	, float outlineThikness
+	const Vec2f position = Vec2f(),
+	const SSize size = DEFAULT_SIZE,
+	const Color & fillColor = DEFAULT_FILL_COLOR,
+	const Color & outlineColor = DEFAULT_OUTLINE_COLOR,
+	float outlineThikness = 1.f
 )
 	: CShape(
-		ShapeType::Rectangle
-		, position
-		, size
-		, fillColor
-		, outlineColor
-		, outlineThikness
+		ShapeType::Rectangle,
+		position,
+		size,
+		fillColor,
+		outlineColor,
+		outlineThikness
 	) 
 {
 }

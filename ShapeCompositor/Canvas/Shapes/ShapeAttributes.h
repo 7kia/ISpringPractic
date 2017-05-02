@@ -83,10 +83,7 @@ class CFrame
 	: public IFrame
 {
 public:
-	CFrame(
-		const Vec2f position = Vec2f()
-		, const SSize size = DEFAULT_SIZE
-	);
+	CFrame(const Vec2f position = Vec2f(),const SSize size = DEFAULT_SIZE);
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:

@@ -69,7 +69,7 @@ CShapeCompositorView::CShapeCompositorView()
 	m_controller->SetShapeManipulator(m_model.get());
 	m_controller->SetDataForDraw(m_model.get());
 	m_controller->SetHaveRenderTarget(m_model.get());
-	m_controller->SetReseters(m_model.get(), this);
+	m_controller->SetModelReseter(m_model.get());
 }
 
 CShapeCompositorView::~CShapeCompositorView()
@@ -122,16 +122,6 @@ HRESULT CShapeCompositorView::Draw()
 	return hr;
 }
 
-void CShapeCompositorView::SetRenderTarget(ID2D1HwndRenderTarget * pRenderTarget)
-{
-	m_pRenderTarget = pRenderTarget;// TODO : need it
-}
-
-ID2D1HwndRenderTarget * CShapeCompositorView::GetRenderTarget()
-{
-	return m_pRenderTarget;
-}
-
 void CShapeCompositorView::CreateTriangle()
 {
 	m_createShapeCommand(ShapeType::Triangle, m_selectedShape);
@@ -169,16 +159,8 @@ void CShapeCompositorView::Redo()
 }
 
 
-// рисование CShapeCompositorView
-
 void CShapeCompositorView::OnDraw(CDC* /*pDC*/)
 {
-	//CShapeCompositorDoc* pDoc = GetDocument();
-	//ASSERT_VALID(pDoc);
-	//if (!pDoc)
-	//	return;
-
-	// TODO: добавьте здесь код отрисовки для собственных данных
 }
 
 void CShapeCompositorView::OnRButtonUp(UINT /* nFlags */, CPoint point)
@@ -232,10 +214,10 @@ int CShapeCompositorView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 		CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
 		// Create a Direct2D factory.
-		SetRenderTarget(m_objectRenderer.CreateRenderTarget(this));
+		m_pRenderTarget = m_objectRenderer.CreateRenderTarget(this);
 		ATLENSURE_SUCCEEDED(m_objectRenderer.CreateRecources());// TODO : delete dependment to this
 		// TODO : rewrite Normal
-		m_setRenderTargetForImageFactory(m_pRenderTarget);
+		m_setRenderTargetForModel(m_pRenderTarget);
 
 	}
 	catch (...)

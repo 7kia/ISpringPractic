@@ -38,6 +38,13 @@ void CAddPictureCommand::Cancel()
 		m_selectShape.ResetSelectShapePtr();
 	}
 	DeleteLastElement(m_canvas.GetShapes());
+
+	const auto shapeHavePicture = m_canvas.GetShape(m_pictureData.pTexture);
+	if (!shapeHavePicture)
+	{
+		m_textureStorage.SetDelete(m_textureStorage.GetNameTexture(m_pictureData.pTexture), true);
+	}
+
 }
 
 void CAddPictureCommand::Destroy()

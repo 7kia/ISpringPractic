@@ -17,14 +17,14 @@ public:
 	void SetDocumentManipulator(IDocumentManipulator * pDocumentManipulator);
 	void SetDataForDraw(IDataForDraw * pDataForDraw);
 	void SetHaveRenderTarget(IHaveRenderTarget * pHaveRenderTarget);
-	void SetReseters(IModelReseter * pModelReseter, IViewReseter * pViewReseter);
+	void SetModelReseter(IModelReseter * pModelReseter);
 private:
 	void ConnectSignalsForHistory();
 	void ConnectSignalsForDocumentManipulator();
 	void ConnectSignalsForShapeManipulator();
 	void ConnectSignalsForDataForDraw();
 	void ConnectSignalsForHaveRenderTarget();
-	void ConnectSignalsForReseters();
+	void ConnectSignalsForModelReseter();
 
 	// TODO: rename
 	//////////////////////////////////////////////////////////////////////
@@ -38,6 +38,5 @@ private:
 	IDataForDraw * m_pDataForDraw = nullptr;
 	IHaveRenderTarget * m_pHaveRenderTarget = nullptr;
 	IModelReseter * m_pModelReseter = nullptr;
-	IViewReseter * m_pViewReseter = nullptr;
 	ScopedConnectionsStorage m_connections;
 };

@@ -9,9 +9,9 @@ class CDeleteShapeCanvasCommand : public IMyCommand
 {
 public:
 	CDeleteShapeCanvasCommand(
-		IShapeCollection & pCanvas
-		, CSelectedShape & seletedShape
-		, const CShapeFactory & factory
+		IShapeCollection & pCanvas,
+		CSelectedShape & seletedShape,
+		const CShapeFactory & factory
 	);
 //////////////////////////////////////////////////////////////////////
 // Methods

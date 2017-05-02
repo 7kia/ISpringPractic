@@ -28,17 +28,8 @@ static const FLOAT DEFAULT_DPI = 96.f;
 class CShapeCompositorModel;
 class CShapeCompositorPresenter;
 
-class IViewReseter
-{
-public:
-	virtual ~IViewReseter() = default;
-
-	virtual void ResetSelectedShape() = 0;
-};
-
 class CShapeCompositorView 
 	: public CScrollView
-	, public IViewReseter
 {
 public:
 	CShapeCompositorView();
@@ -57,9 +48,6 @@ public:
 	// TODO : transfer
 	HRESULT	Draw();
 
-	void					SetRenderTarget(ID2D1HwndRenderTarget * pRenderTarget);
-	ID2D1HwndRenderTarget * GetRenderTarget();
-
 	void					CreateTriangle();
 	void					CreateRectangle();
 	void					CreateEllipse();
@@ -69,10 +57,8 @@ public:
 	void					Redo();
 
 	void					ChangeCursor(const Vec2f &  mousePos);
-	//--------------------------------------------
-	// IViewReseter
-	void					ResetSelectedShape() override;
-	//--------------------------------------------
+	
+	void					ResetSelectedShape();
 private:
 	void					CreateCommandForSelectedShape();
 	void					ChangeSelectedShape(const Vec2f & mousePos);
@@ -102,7 +88,7 @@ public:
 	signal::Connection DoOnDeleteShapeCommand(std::function<void(CSelectedShape &)> const & action);
 	signal::Connection DoOnChangeRectCommand(std::function<void(const CFrame, CSelectedShape &)> const & action);
 	signal::Connection DoOnCreateShapeCommand(std::function<void(ShapeType, CSelectedShape &)> const & action);
-	signal::Connection DoOnSetRenderTargetForImageFactory(std::function<void(ID2D1HwndRenderTarget *)> const & action);
+	signal::Connection DoOnSetRenderTargetForModel(std::function<void(ID2D1HwndRenderTarget *)> const & action);
 
 
 protected:
@@ -120,23 +106,16 @@ protected:
 	signal::Signal<void(CSelectedShape &)> m_deleteShapeCommand;
 	signal::Signal<void(const CFrame, CSelectedShape &)> m_createChangeRectCommand;
 	signal::Signal<void(ShapeType, CSelectedShape &)> m_createShapeCommand;
-	signal::Signal<void(ID2D1HwndRenderTarget *)> m_setRenderTargetForImageFactory;
-
+	signal::Signal<void(ID2D1HwndRenderTarget *)> m_setRenderTargetForModel;// Render target create in the class and need in other
 	std::unique_ptr<CShapeCompositorModel> m_model;
 	std::unique_ptr<CShapeCompositorPresenter> m_controller;
 	/////////////////////////////////////////////////
 protected:
-
-
-
 	CSelectedShape m_selectedShape;
-	// TODO : create Presenter
 	CFrame m_oldFrame;
 
-
 	CComPtr<ID2D1HwndRenderTarget> m_pRenderTarget;
-	CD2DObjectRenderer		m_objectRenderer;// TODO : transfer to CShapeCompositiorView, fix Draw
-
+	CD2DObjectRenderer		m_objectRenderer;
 // Реализация
 public:
 	virtual ~CShapeCompositorView();

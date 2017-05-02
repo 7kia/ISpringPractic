@@ -36,12 +36,11 @@ void CShapeCompositorPresenter::SetHaveRenderTarget(IHaveRenderTarget * pHaveRen
 	ConnectSignalsForHaveRenderTarget();
 }
 
-void CShapeCompositorPresenter::SetReseters(IModelReseter * pModelReseter, IViewReseter * pViewReseter)
+void CShapeCompositorPresenter::SetModelReseter(IModelReseter * pModelReseter)
 {
 	m_pModelReseter = pModelReseter;
-	m_pViewReseter = pViewReseter;
 
-	ConnectSignalsForReseters();
+	ConnectSignalsForModelReseter();
 }
 
 void CShapeCompositorPresenter::ConnectSignalsForHistory()
@@ -74,12 +73,13 @@ void CShapeCompositorPresenter::ConnectSignalsForDataForDraw()
 
 void CShapeCompositorPresenter::ConnectSignalsForHaveRenderTarget()
 {
-	m_connections += m_pView->DoOnSetRenderTargetForImageFactory(
+	m_connections += m_pView->DoOnSetRenderTargetForModel(
 		boost::bind(&IHaveRenderTarget::SetRenderTargetForModelComponents, m_pHaveRenderTarget, _1)
 	);
 }
 
-void CShapeCompositorPresenter::ConnectSignalsForReseters()
+void CShapeCompositorPresenter::ConnectSignalsForModelReseter()
 {
-	m_connections += m_pModelReseter->DoOnResetSelectedShape(boost::bind(&IViewReseter::ResetSelectedShape, m_pViewReseter));
+	// TODO : think need interface for ResetSelectedShape()
+	m_connections += m_pModelReseter->DoOnResetSelectedShape(boost::bind(&CShapeCompositorView::ResetSelectedShape, m_pView));
 }

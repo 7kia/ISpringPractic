@@ -22,10 +22,12 @@ SSize & SSize::operator=(const SSize & right)
 	// TODO: вставьте здесь оператор return
 }
 
-Color::Color(const float r
-			, const float g
-			, const float b
-			, const float a)
+Color::Color(
+	const float r,
+	const float g,
+	const float b,
+	const float a
+)
 	: r(r)
 	, g(g)
 	, b(b)
@@ -133,10 +135,7 @@ bool CFrame::operator==(const CFrame & frame) const
 	return (frame.GetSize() == GetSize()) && (frame.GetPosition() == GetPosition());
 }
 
-CFrame::CFrame(
-	const Vec2f position
-	, const SSize size
-)
+CFrame::CFrame(const Vec2f position, const SSize size)
 	: m_position(position)
 	, m_size(size)
 {

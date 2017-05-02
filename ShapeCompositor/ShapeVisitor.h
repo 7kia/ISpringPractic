@@ -14,5 +14,4 @@ public:
 	virtual void Visit(const CEllipse & shape) = 0;
 	virtual void Visit(const CTriangle & shape) = 0;
 	virtual void Visit(const CPicture & shape) = 0;
-
 };

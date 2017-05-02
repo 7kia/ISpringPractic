@@ -58,7 +58,7 @@ signal::Connection CShapeCompositorView::DoOnCreateShapeCommand(std::function<vo
 	return m_createShapeCommand.connect(action);
 }
 
-signal::Connection CShapeCompositorView::DoOnSetRenderTargetForImageFactory(std::function<void(ID2D1HwndRenderTarget*)> const & action)
+signal::Connection CShapeCompositorView::DoOnSetRenderTargetForModel(std::function<void(ID2D1HwndRenderTarget*)> const & action)
 {
-	return m_setRenderTargetForImageFactory.connect(action);
+	return m_setRenderTargetForModel.connect(action);
 }

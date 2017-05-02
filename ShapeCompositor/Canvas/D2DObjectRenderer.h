@@ -14,25 +14,20 @@ public:
 public:
 	ID2D1HwndRenderTarget *	CreateRenderTarget(CWnd * window);
 	HRESULT CreateRecources();
-	void	ClearRecources();
 
 	HRESULT	EndDraw();
 	//--------------------------------------------
-	// IShapeVisitor
+	// IShapeRenderer
 	void Draw(const IShape & shape) override;
 	//--------------------------------------------
-
 private:
 	//--------------------------------------------
 	// IShapeVisitor
-
 	void Visit(const CRectangle & shape) override;
 	void Visit(const CEllipse & shape) override;
 	void Visit(const CTriangle & shape) override;
 	void Visit(const CPicture & shape) override;
-
 	//--------------------------------------------
-
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:

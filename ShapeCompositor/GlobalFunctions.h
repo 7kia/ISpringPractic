@@ -9,13 +9,7 @@ bool IsBetween(const T& value, const T& lowerBound, const T& upperBound)
 	return (value >= lowerBound) && (value <= upperBound);
 }
 
-inline void CheckIndex(size_t index, size_t max)
-{
-	if (index > max)
-	{
-		throw std::runtime_error("Index out range");
-	}
-};
+inline void CheckIndex(size_t index, size_t max);
 
 template<typename T>
 inline void DeleteLastElement(std::vector<T>& vector)

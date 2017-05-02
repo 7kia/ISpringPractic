@@ -6,22 +6,22 @@
 
 enum class ShapeType
 {
-	Triangle
-	, Rectangle
-	, Ellipse
-	, Picture
+	Triangle,
+	Rectangle,
+	Ellipse,
+	Picture,
 };
 
 // TODO  : see need it
 struct SShapeData
 {
 	SShapeData(
-		const ShapeType type = ShapeType::Rectangle
-		, const Vec2f position = Vec2f()
-		, const SSize size = DEFAULT_SIZE
-		, const Color & fillColor = DEFAULT_FILL_COLOR
-		, const Color & outlineColor = DEFAULT_OUTLINE_COLOR
-		, float outlineThikness = 1.f
+		const ShapeType type = ShapeType::Rectangle,
+		const Vec2f position = Vec2f(),
+		const SSize size = DEFAULT_SIZE,
+		const Color & fillColor = DEFAULT_FILL_COLOR,
+		const Color & outlineColor = DEFAULT_OUTLINE_COLOR,
+		float outlineThikness = 1.f
 	);
 
 	bool operator==(const SShapeData & shapeData) const;

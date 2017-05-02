@@ -155,7 +155,7 @@ BOOL CShapeCompositorApp::InitInstance()
 	// ¬ключить открытие перетаскивани€
 	m_pMainWnd->DragAcceptFiles();
 
-
+	// TODO : try transfer Presenter these
 	return TRUE;
 }
 

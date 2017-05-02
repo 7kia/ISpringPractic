@@ -9,10 +9,10 @@ class CChangeShapeRectCanvasCommand : public IMyCommand
 {
 public:
 	CChangeShapeRectCanvasCommand(
-		IShapeProvider & pShapeStorage
-		, const CFrame & oldData
-		, const CFrame & newData
-		, CSelectedShape & selectedShape
+		IShapeProvider & pShapeStorage,
+		const CFrame & oldData,
+		const CFrame & newData,
+		CSelectedShape & selectedShape
 	);
 	//////////////////////////////////////////////////////////////////////
 	// Methods

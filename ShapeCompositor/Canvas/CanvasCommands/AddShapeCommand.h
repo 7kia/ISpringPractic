@@ -14,7 +14,7 @@ public:
 		, ShapeType type
 		, const CShapeFactory & factory
 		, CSelectedShape & seletedShape
-	);//ShapeType
+	);
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:

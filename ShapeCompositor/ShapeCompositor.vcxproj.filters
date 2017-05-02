@@ -75,9 +75,6 @@
     <ClInclude Include="Canvas\CanvasCommands\AllCanvasCommand.h">
       <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
     </ClInclude>
-    <ClInclude Include="Observer.h">
-      <Filter>Файлы исходного кода</Filter>
-    </ClInclude>
     <ClInclude Include="Canvas\MouseEventHandler.h">
       <Filter>Файлы исходного кода\Canvas</Filter>
     </ClInclude>
@@ -243,6 +240,9 @@
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
     <ClCompile Include="ShapeCompositorPresenter.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="UnityBuild.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
   </ItemGroup>

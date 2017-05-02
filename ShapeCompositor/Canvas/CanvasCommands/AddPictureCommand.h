@@ -16,7 +16,7 @@ public:
 		const SPictureData & pictureData,
 		CTextureStorage & textureStorage,
 		CSelectedShape & seletedShape
-	);//ShapeType
+	);
 	  //////////////////////////////////////////////////////////////////////
 	  // Methods
 public:

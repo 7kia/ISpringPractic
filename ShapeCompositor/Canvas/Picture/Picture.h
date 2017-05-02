@@ -20,22 +20,18 @@ class CPicture : public CRectangle
 {
 public:
 	CPicture(
-		ID2D1Bitmap * pTexture = nullptr
-		, const Vec2f position = Vec2f()
-		, const SSize size = DEFAULT_SIZE
+		ID2D1Bitmap * pTexture = nullptr,
+		const Vec2f position = Vec2f(),
+		const SSize size = DEFAULT_SIZE
 	);
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
-
 	//--------------------------------------------
-	// IDrawable
-
+	// IShape
 	void Accept(IShapeVisitor & visitor) const override;
 	//--------------------------------------------
-
 	ID2D1Bitmap * GetTexture() const;
-
 	SPictureData GetPictureData() const;
 	//////////////////////////////////////////////////////////////////////
 	// Data
