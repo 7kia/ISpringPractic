@@ -29,7 +29,7 @@ class IDataForOpen
 public:
 	virtual ~IDataForOpen() = default;
 
-	virtual CShapeFactory & GetShapeFactory() = 0;
+	virtual CShapeViewFactory & GetShapeFactory() = 0;
 	virtual CD2DImageFactory & GetImageFactory() = 0;
 };
 
@@ -77,13 +77,13 @@ public:
 
 	CString GetFileName() const;
 
-	bool OnFileSaveAs(std::vector<CShapePtr> const & shapes, const CTextureStorage & textureStorage);
+	bool OnFileSaveAs(std::vector<CShapeViewPtr> const & shapes, const CTextureStorage & textureStorage);
 	CXMLReader::ReadData OnFileOpen(
 		IModelReseter * reseter,
 		std::vector<std::wstring> deleteTexture,
 		CXMLReader::DataForCreation & data
 	);
-	bool OnFileSave(std::vector<CShapePtr> const & shapes, const CTextureStorage & textureStorage);
+	bool OnFileSave(std::vector<CShapeViewPtr> const & shapes, const CTextureStorage & textureStorage);
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:

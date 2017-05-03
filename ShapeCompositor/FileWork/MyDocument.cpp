@@ -20,7 +20,7 @@ void CMyDocument::RecreateTempFolder()
 	m_fileManager.RecreateTempFolder();
 }
 
-bool CMyDocument::OnFileSaveAs(std::vector<CShapePtr> const & shapes, const CTextureStorage & textureStorage)
+bool CMyDocument::OnFileSaveAs(std::vector<CShapeViewPtr> const & shapes, const CTextureStorage & textureStorage)
 {
 	CString fileName = OpenDialog(CMyDocument::DialogType::Save, CMyDocument::FileType::Shapes);
 	if (fileName.GetLength() != 0)
@@ -76,7 +76,7 @@ CXMLReader::ReadData CMyDocument::OnFileOpen(
 	return CXMLReader::ReadData();
 }
 
-bool CMyDocument::OnFileSave(std::vector<CShapePtr> const & shapes, const CTextureStorage & textureStorage)
+bool CMyDocument::OnFileSave(std::vector<CShapeViewPtr> const & shapes, const CTextureStorage & textureStorage)
 {
 	if (m_fileManager.IsNewDocument())
 	{

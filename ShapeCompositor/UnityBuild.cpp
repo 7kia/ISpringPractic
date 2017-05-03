@@ -11,7 +11,7 @@
 #include "Canvas\Picture\D2DImageFactory.h"
 
 #include "Canvas\Shapes\AllShapes.h"
-#include "Canvas\Shapes\ShapeFactory.h"
+#include "Canvas\Shapes\ShapeViewFactory.h"
 
 #include "Canvas\D2DObjectRenderer.h"
 #include "Canvas\History.h"

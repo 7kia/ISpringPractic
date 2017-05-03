@@ -95,6 +95,7 @@ HRESULT CShapeCompositorView::Draw()
 	m_pRenderTarget->SetTransform(matrix);
 	m_pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
 
+	//
 	m_objectRenderer.Draw(*m_getCanvasView().get());
 
 	const auto canvasShapes = m_getCanvasShapes().get();
@@ -102,7 +103,7 @@ HRESULT CShapeCompositorView::Draw()
 	{
 		m_objectRenderer.Draw(*shape);
 	}
-
+	
 	if (m_selectedShape.HaveSelectedShape())
 	{
 		m_objectRenderer.Draw(*m_selectedShape.GetFrameShape());
@@ -111,7 +112,11 @@ HRESULT CShapeCompositorView::Draw()
 			m_objectRenderer.Draw(*shape);
 		}
 	}
+	//
 
+	//
+	// m_canvasView.Draw(m_objectRenderer);
+	//
 	hr = m_objectRenderer.EndDraw();
 
 	if (hr == D2DERR_RECREATE_TARGET)

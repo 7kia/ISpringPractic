@@ -7,7 +7,7 @@ CShapeCompositorModel::CShapeCompositorModel()
 	, m_canvas(CanvasNamespace::CANVAS_SIZE)
 {
 	m_canvasBorder = m_shapeFactory.CreateShape(
-		SShapeData(
+		CShapeModel(
 			ShapeType::Rectangle,
 			Vec2f(
 				CanvasNamespace::CANVAS_SIZE.width / 2.f,
@@ -31,12 +31,12 @@ void CShapeCompositorModel::SetRenderTargetForModelComponents(ID2D1HwndRenderTar
 	m_imageFactory.SetRenderTarget(pRenderTarget);
 }
 
-CShapePtr CShapeCompositorModel::GetCanvasBorder() const
+CShapeViewPtr CShapeCompositorModel::GetCanvasBorder() const
 {
 	return m_canvasBorder;
 }
 
-std::vector<CShapePtr>& CShapeCompositorModel::GetCanvasShapes()
+std::vector<CShapeViewPtr>& CShapeCompositorModel::GetCanvasShapes()
 {
 	return m_canvas.GetShapes();
 }

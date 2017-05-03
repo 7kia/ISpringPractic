@@ -38,8 +38,8 @@ class IViewSignaller
 public:
 	virtual ~IViewSignaller() = default;
 
-	virtual signal::Connection DoOnGetCanvasView(std::function<CShapePtr()> const & action) = 0;
-	virtual signal::Connection DoOnGetCanvasShapes(std::function<std::vector<CShapePtr>()> const & action) = 0;
+	virtual signal::Connection DoOnGetCanvasView(std::function<CShapeViewPtr()> const & action) = 0;
+	virtual signal::Connection DoOnGetCanvasShapes(std::function<std::vector<CShapeViewPtr>()> const & action) = 0;
 
 	virtual signal::Connection DoOnSaveAsDocument(std::function<bool()> const & action) = 0;
 	virtual signal::Connection DoOnSaveDocument(std::function<bool()> const & action) = 0;
@@ -96,8 +96,8 @@ public:
 	void					ResetSelectedShape() override;
 	//--------------------------------------------
 	// IViewSignaller
-	signal::Connection DoOnGetCanvasView(std::function<CShapePtr()> const & action);
-	signal::Connection DoOnGetCanvasShapes(std::function<std::vector<CShapePtr>()> const & action);
+	signal::Connection DoOnGetCanvasView(std::function<CShapeViewPtr()> const & action);
+	signal::Connection DoOnGetCanvasShapes(std::function<std::vector<CShapeViewPtr>()> const & action);
 
 	signal::Connection DoOnSaveAsDocument(std::function<bool()> const & action);
 	signal::Connection DoOnSaveDocument(std::function<bool()> const & action);
@@ -124,8 +124,8 @@ public:
 	virtual void OnDraw(CDC* pDC);  // переопределено для отрисовки этого представления
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);	
 protected:
-	signal::Signal<CShapePtr()> m_getCanvasView;
-	signal::Signal<std::vector<CShapePtr>()> m_getCanvasShapes;
+	signal::Signal<CShapeViewPtr()> m_getCanvasView;
+	signal::Signal<std::vector<CShapeViewPtr>()> m_getCanvasShapes;
 
 	signal::Signal<bool()> m_saveAsDocument;
 	signal::Signal<bool()> m_saveDocument;
@@ -139,15 +139,19 @@ protected:
 	signal::Signal<void(const CFrame, CSelectedShape &)> m_createChangeRectCommand;
 	signal::Signal<void(ShapeType, CSelectedShape &)> m_createShapeCommand;
 	signal::Signal<void(ID2D1HwndRenderTarget *)> m_setRenderTargetForModel;// Render target create in the class and need in other
-	std::unique_ptr<CShapeCompositorModel> m_model;
-	std::unique_ptr<CShapeCompositorPresenter> m_controller;
-	/////////////////////////////////////////////////
 protected:
 	CSelectedShape m_selectedShape;
 	CFrame m_oldFrame;
 
 	CComPtr<ID2D1HwndRenderTarget> m_pRenderTarget;
-	CD2DObjectRenderer		m_objectRenderer;
+	CD2DObjectRenderer m_objectRenderer;
+	///////////////////////////////////////////////////////////
+	// TODO : see can it transfer
+protected:
+	std::unique_ptr<CShapeCompositorModel> m_model;
+	std::unique_ptr<CShapeCompositorPresenter> m_controller;
+	///////////////////////////////////////////////////////////
+
 // Реализация
 public:
 	virtual ~CShapeCompositorView();

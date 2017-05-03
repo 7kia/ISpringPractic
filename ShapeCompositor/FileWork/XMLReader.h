@@ -26,20 +26,20 @@ public:
 	{
 		ReadData();
 		ReadData(
-			std::vector<CShapePtr> & shapeData,
+			std::vector<CShapeViewPtr> & shapeData,
 			CTextureStorage & textureStorage
 		);
-		std::vector<CShapePtr> shapeData;
+		std::vector<CShapeViewPtr> shapeData;
 		CTextureStorage textureStorage;
 	};
 
 	struct DataForCreation
 	{
 		DataForCreation(
-			const CShapeFactory & shapeFactory,
+			const CShapeViewFactory & shapeFactory,
 			CD2DImageFactory & imageFactory
 		);
-		const CShapeFactory & shapeFactory;
+		const CShapeViewFactory & shapeFactory;
 		CD2DImageFactory & imageFactory;
 	};
 	//////////////////////////////////////////////////////////////////////
@@ -47,7 +47,7 @@ public:
 public:
 	static bool Save(
 		const std::wstring & path,
-		const std::vector<CShapePtr>  & shapes,
+		const std::vector<CShapeViewPtr>  & shapes,
 		const CTextureStorage & textureStorage
 	);
 	static ReadData Open(

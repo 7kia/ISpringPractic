@@ -28,6 +28,15 @@
     <Filter Include="Файлы исходного кода\FileWork">
       <UniqueIdentifier>{dcc0b42e-e4e1-471a-bee3-856a525fa5cf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы исходного кода\Canvas\Shapes\Model">
+      <UniqueIdentifier>{4be3a939-037e-455c-9d37-3a75fbcca8ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы исходного кода\Canvas\Shapes\Presenter">
+      <UniqueIdentifier>{f3b2b502-5f57-4512-b2da-f0c41e7590b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы исходного кода\Canvas\Shapes\View">
+      <UniqueIdentifier>{70666598-14f0-4fbf-88dd-d31e5bbc8dcf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ShapeCompositor.h">
@@ -63,9 +72,6 @@
     <ClInclude Include="Canvas\Shapes\AllShapes.h">
       <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
     </ClInclude>
-    <ClInclude Include="Canvas\Shapes\ShapeFactory.h">
-      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
-    </ClInclude>
     <ClInclude Include="Canvas\CanvasCommands\CanvasCommand.h">
       <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
     </ClInclude>
@@ -80,18 +86,6 @@
     </ClInclude>
     <ClInclude Include="Canvas\CanvasCommands\DeleteShapeCommand.h">
       <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
-    </ClInclude>
-    <ClInclude Include="Canvas\Shapes\Triangle.h">
-      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
-    </ClInclude>
-    <ClInclude Include="Canvas\Shapes\Ellipse.h">
-      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
-    </ClInclude>
-    <ClInclude Include="Canvas\Shapes\Rectangle.h">
-      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
-    </ClInclude>
-    <ClInclude Include="Canvas\Shapes\CShape.h">
-      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
     </ClInclude>
     <ClInclude Include="Canvas\History.h">
       <Filter>Файлы исходного кода\Canvas</Filter>
@@ -150,6 +144,30 @@
     <ClInclude Include="ShapeCompositorPresenter.h">
       <Filter>Файлы исходного кода</Filter>
     </ClInclude>
+    <ClInclude Include="Canvas\Shapes\Model\ShapeModel.h">
+      <Filter>Файлы исходного кода\Canvas\Shapes\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Canvas\Shapes\Presenter\ShapePresenter.h">
+      <Filter>Файлы исходного кода\Canvas\Shapes\Presenter</Filter>
+    </ClInclude>
+    <ClInclude Include="Canvas\Shapes\View\Ellipse.h">
+      <Filter>Файлы исходного кода\Canvas\Shapes\View</Filter>
+    </ClInclude>
+    <ClInclude Include="Canvas\Shapes\View\Rectangle.h">
+      <Filter>Файлы исходного кода\Canvas\Shapes\View</Filter>
+    </ClInclude>
+    <ClInclude Include="Canvas\Shapes\View\ShapeView.h">
+      <Filter>Файлы исходного кода\Canvas\Shapes\View</Filter>
+    </ClInclude>
+    <ClInclude Include="Canvas\Shapes\View\Triangle.h">
+      <Filter>Файлы исходного кода\Canvas\Shapes\View</Filter>
+    </ClInclude>
+    <ClInclude Include="Canvas\Shapes\ShapeViewFactory.h">
+      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Canvas\Picture\PictureModel.h">
+      <Filter>Файлы исходного кода\Canvas\Picture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ShapeCompositor.cpp">
@@ -173,26 +191,11 @@
     <ClCompile Include="Canvas\Shapes\ShapeAttributes.cpp">
       <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
     </ClCompile>
-    <ClCompile Include="Canvas\Shapes\ShapeFactory.cpp">
-      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
-    </ClCompile>
     <ClCompile Include="Canvas\CanvasCommands\AddShapeCommand.cpp">
       <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
     </ClCompile>
     <ClCompile Include="Canvas\CanvasCommands\DeleteShapeCommand.cpp">
       <Filter>Файлы исходного кода\Canvas\CanvasCommand</Filter>
-    </ClCompile>
-    <ClCompile Include="Canvas\Shapes\Triangle.cpp">
-      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
-    </ClCompile>
-    <ClCompile Include="Canvas\Shapes\Ellipse.cpp">
-      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
-    </ClCompile>
-    <ClCompile Include="Canvas\Shapes\Rectangle.cpp">
-      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
-    </ClCompile>
-    <ClCompile Include="Canvas\Shapes\CShape.cpp">
-      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
     </ClCompile>
     <ClCompile Include="Canvas\History.cpp">
       <Filter>Файлы исходного кода\Canvas</Filter>
@@ -244,6 +247,27 @@
     </ClCompile>
     <ClCompile Include="UnityBuild.cpp">
       <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas\Shapes\Model\ShapeModel.cpp">
+      <Filter>Файлы исходного кода\Canvas\Shapes\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas\Shapes\View\Ellipse.cpp">
+      <Filter>Файлы исходного кода\Canvas\Shapes\View</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas\Shapes\View\Rectangle.cpp">
+      <Filter>Файлы исходного кода\Canvas\Shapes\View</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas\Shapes\View\ShapeView.cpp">
+      <Filter>Файлы исходного кода\Canvas\Shapes\View</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas\Shapes\View\Triangle.cpp">
+      <Filter>Файлы исходного кода\Canvas\Shapes\View</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas\Shapes\ShapeViewFactory.cpp">
+      <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas\Shapes\Presenter\ShapePresenter.cpp">
+      <Filter>Файлы исходного кода\Canvas\Shapes\Presenter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

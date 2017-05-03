@@ -65,7 +65,7 @@ namespace
 
 bool CXMLReader::Save(
 	const std::wstring & path,
-	const std::vector<CShapePtr> & shapes,
+	const std::vector<CShapeViewPtr> & shapes,
 	const CTextureStorage & textureStorage
 )
 {
@@ -149,7 +149,7 @@ CXMLReader::ReadData CXMLReader::Open(
 				float width = shape.second.get<float>("Width");
 				float height = shape.second.get<float>("Height");
 
-				SShapeData data;
+				CShapeModel data;
 				data.type = GetShapeType(type);
 				data.position = Vec2f(x, y);
 				data.size = SSize(width, height);
@@ -199,7 +199,7 @@ CXMLReader::ReadData::ReadData()
 }
 
 CXMLReader::ReadData::ReadData(
-	std::vector<CShapePtr>& shapeData,
+	std::vector<CShapeViewPtr>& shapeData,
 	CTextureStorage & textureStorage
 )
 	: shapeData(shapeData)
@@ -209,7 +209,7 @@ CXMLReader::ReadData::ReadData(
 
 
 CXMLReader::DataForCreation::DataForCreation(
-	const CShapeFactory & shapeFactory,
+	const CShapeViewFactory & shapeFactory,
 	CD2DImageFactory & imageFactory
 )
 	: shapeFactory(shapeFactory)

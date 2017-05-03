@@ -2,12 +2,12 @@
 #include "ShapeCompositorView.h"
 
 
-signal::Connection CShapeCompositorView::DoOnGetCanvasView(std::function<CShapePtr()> const & action)
+signal::Connection CShapeCompositorView::DoOnGetCanvasView(std::function<CShapeViewPtr()> const & action)
 {
 	return m_getCanvasView.connect(action);
 }
 
-signal::Connection CShapeCompositorView::DoOnGetCanvasShapes(std::function<std::vector<CShapePtr>()> const & action)
+signal::Connection CShapeCompositorView::DoOnGetCanvasShapes(std::function<std::vector<CShapeViewPtr>()> const & action)
 {
 	return m_getCanvasShapes.connect(action);
 }

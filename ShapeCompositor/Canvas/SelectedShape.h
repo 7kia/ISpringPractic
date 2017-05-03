@@ -5,7 +5,7 @@
 
 #include "Shapes\AllShapes.h"
 #include "ObjectRenderer.h"
-#include "Shapes\ShapeFactory.h"
+#include "Shapes\ShapeViewFactory.h"
 #include <boost\optional.hpp>
 
 static const SSize SELECTED_ELLIPSE_SIZE = SSize(10.f, 10.f);
@@ -26,7 +26,7 @@ public:
 		, Amount
 	};
 
-	using DragPointsArray = std::array<CShapePtr, size_t(ShapeIndex::Amount)>;
+	using DragPointsArray = std::array<CShapeViewPtr, size_t(ShapeIndex::Amount)>;
 	enum class UpdateType
 	{
 		None = -1,
@@ -39,8 +39,8 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
-	void					SetShape(const CShapePtr & shape);
-	CShapePtr				GetShape() const;
+	void					SetShape(const CShapeViewPtr & shape);
+	CShapeViewPtr				GetShape() const;
 	void					ResetSelectShapePtr();
 	void					ResetUpdateParameters();
 
@@ -62,7 +62,7 @@ public:
 
 	// For draw
 	DragPointsArray			GetDragPoints() const;
-	CShapePtr				GetFrameShape() const;
+	CShapeViewPtr				GetFrameShape() const;
 	void					SetBoundingRect(const D2D1_RECT_F & rect);
 	//--------------------------------------------
 	// IFrame
@@ -105,10 +105,10 @@ private:
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
-	CShapePtr						m_selectedShape;
+	CShapeViewPtr						m_selectedShape;
 
 	DragPointsArray					m_dragPoints;
-	CShapePtr						m_frame;
+	CShapeViewPtr						m_frame;
 	D2D1_RECT_F						m_boundingRect;
 	// For drag and drop
 	boost::optional<Vec2f>			m_startMove;

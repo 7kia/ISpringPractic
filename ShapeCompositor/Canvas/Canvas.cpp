@@ -8,12 +8,12 @@ CCanvas::CCanvas(const SSize size)
 }
 
 
-void CCanvas::PushBackShape(const CShapePtr & shape)
+void CCanvas::PushBackShape(const CShapeViewPtr & shape)
 {
 	m_shapes.push_back(shape);
 }
 
-void CCanvas::InsertShape(const size_t insertIndex, const CShapePtr & shape)
+void CCanvas::InsertShape(const size_t insertIndex, const CShapeViewPtr & shape)
 {
 	CheckIndex(insertIndex, m_shapes.size());
 
@@ -48,12 +48,12 @@ D2D1_RECT_F CCanvas::GetRect() const
 	return rect;
 }
 
-std::vector<CShapePtr>& CCanvas::GetShapes()
+std::vector<CShapeViewPtr>& CCanvas::GetShapes()
 {
 	return m_shapes;
 }
 
-bool HavePictureWithTexture(ID2D1Bitmap * pTexture, const std::vector<CShapePtr> & shapes)
+bool HavePictureWithTexture(ID2D1Bitmap * pTexture, const std::vector<CShapeViewPtr> & shapes)
 {
 	for (const auto & shape : shapes)
 	{
@@ -69,7 +69,7 @@ bool HavePictureWithTexture(ID2D1Bitmap * pTexture, const std::vector<CShapePtr>
 	return false;
 }
 
-void CCanvas::SetShapes(const std::vector<CShapePtr> & shapes)
+void CCanvas::SetShapes(const std::vector<CShapeViewPtr> & shapes)
 {
 	m_shapes = shapes;
 }
@@ -94,7 +94,7 @@ void CCanvas::DeleteShape(const size_t index)
 	m_shapes.erase(m_shapes.begin() + index);
 }
 
-void CCanvas::DeleteShape(const CShapePtr & pShape)
+void CCanvas::DeleteShape(const CShapeViewPtr & pShape)
 {
 	size_t index = GetShapeIndex(pShape);
 	if (index != size_t(-1))
@@ -108,14 +108,14 @@ void CCanvas::Clear()
 	m_shapes.clear();
 }
 
-CShapePtr CCanvas::GetShape(const size_t index)
+CShapeViewPtr CCanvas::GetShape(const size_t index)
 {
 	CheckIndex(index, m_shapes.size() - 1);
 
 	return m_shapes[index];
 }
 
-CShapePtr CCanvas::GetShape(const ID2D1Bitmap * pTexture)
+CShapeViewPtr CCanvas::GetShape(const ID2D1Bitmap * pTexture)
 {
 	for (const auto shape : m_shapes)
 	{
@@ -128,12 +128,12 @@ CShapePtr CCanvas::GetShape(const ID2D1Bitmap * pTexture)
 			}
 		}
 	}
-	return CShapePtr();
+	return CShapeViewPtr();
 }
 
-CShapePtr GetShape(const Vec2f mousePosition, const std::vector<CShapePtr> & vector)
+CShapeViewPtr GetShape(const Vec2f mousePosition, const std::vector<CShapeViewPtr> & vector)
 {
-	CShapePtr foundShape;
+	CShapeViewPtr foundShape;
 	for (auto iter = vector.rbegin(); iter != vector.rend(); ++iter)
 	{
 		if ((*iter)->IsPointIntersection(mousePosition))
@@ -145,13 +145,13 @@ CShapePtr GetShape(const Vec2f mousePosition, const std::vector<CShapePtr> & vec
 	return foundShape;
 }
 
-bool CCanvas::IsSelectShape(const size_t index, const CShapePtr & selectedShape) const
+bool CCanvas::IsSelectShape(const size_t index, const CShapeViewPtr & selectedShape) const
 {
 	return selectedShape == m_shapes[index];
 }
 
 
-size_t CCanvas::GetShapeIndex(const CShapePtr &  pShape) const
+size_t CCanvas::GetShapeIndex(const CShapeViewPtr &  pShape) const
 {
 	return  std::find(m_shapes.begin(), m_shapes.end(), pShape) - m_shapes.begin();
 }

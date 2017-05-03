@@ -6,7 +6,7 @@
 CAddShapeCanvasCommand::CAddShapeCanvasCommand(
 	IShapeCollection & pCanvas
 	, ShapeType type
-	, const CShapeFactory & factory
+	, const CShapeViewFactory & factory
 	, CSelectedShape & seletedShape
 )
 	: m_canvas(pCanvas)
@@ -20,7 +20,7 @@ void CAddShapeCanvasCommand::Execute()
 {
 	m_canvas.PushBackShape(
 		m_factory.CreateShape(
-			SShapeData(
+			CShapeModel(
 				m_type
 				, Vec2f(float(VIEW_WIDTH) / 2.f, float(VIEW_HEIGHT) / 2.f)
 			)

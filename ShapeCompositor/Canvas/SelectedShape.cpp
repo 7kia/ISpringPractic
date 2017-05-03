@@ -23,14 +23,14 @@ CSelectedShape::CSelectedShape()
 	);
 }
 
-void CSelectedShape::SetShape(const CShapePtr & shape)
+void CSelectedShape::SetShape(const CShapeViewPtr & shape)
 {
 	m_selectedShape = shape;
 
 	SetDragPointPositions();
 }
 
-CShapePtr CSelectedShape::GetShape() const
+CShapeViewPtr CSelectedShape::GetShape() const
 {
 	return m_selectedShape;
 }
@@ -360,7 +360,7 @@ CSelectedShape::DragPointsArray CSelectedShape::GetDragPoints() const
 	return m_dragPoints;
 }
 
-CShapePtr CSelectedShape::GetFrameShape() const
+CShapeViewPtr CSelectedShape::GetFrameShape() const
 {
 	return m_frame;// TODO : check work m_frame
 }

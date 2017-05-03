@@ -30,8 +30,8 @@ class IDataForDraw
 public:
 	virtual ~IDataForDraw() = default;
 
-	virtual CShapePtr GetCanvasBorder() const = 0;
-	virtual std::vector<CShapePtr> & GetCanvasShapes() = 0;
+	virtual CShapeViewPtr GetCanvasBorder() const = 0;
+	virtual std::vector<CShapeViewPtr> & GetCanvasShapes() = 0;
 };
 
 class IHaveRenderTarget
@@ -63,8 +63,8 @@ public:
 	void SetRenderTargetForModelComponents(ID2D1HwndRenderTarget * pRenderTarget) override;
 	//--------------------------------------------
 	// IDataForDraw
-	CShapePtr GetCanvasBorder() const override;
-	std::vector<CShapePtr> & GetCanvasShapes() override;
+	CShapeViewPtr GetCanvasBorder() const override;
+	std::vector<CShapeViewPtr> & GetCanvasShapes() override;
 	//--------------------------------------------
 	// IHistoryManipulator
 	void UndoCommand() override;
@@ -100,12 +100,12 @@ private:
 	signal::Signal<void()> m_resetSelectedShape;
 
 	CCanvas m_canvas;
-	CShapePtr m_canvasBorder;
+	CShapeViewPtr m_canvasBorder;
 
 	CHistory m_history;
 	CMyDocument m_document;
 
-	CShapeFactory m_shapeFactory;
+	CShapeViewFactory m_shapeFactory;
 	CTextureStorage m_textureStorage;
 	CD2DImageFactory m_imageFactory;
 };
