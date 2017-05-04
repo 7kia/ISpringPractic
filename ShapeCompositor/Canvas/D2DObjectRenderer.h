@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Canvas\ObjectRenderer.h"
-#include "Canvas\Picture\Picture.h"
+#include "Canvas\Picture\PictureView.h"
 
 class CD2DObjectRenderer
 	: public IShapeVisitor
@@ -23,10 +23,10 @@ public:
 private:
 	//--------------------------------------------
 	// IShapeVisitor
-	void Visit(const CRectangle & shape) override;
-	void Visit(const CEllipse & shape) override;
-	void Visit(const CTriangle & shape) override;
-	void Visit(const CPicture & shape) override;
+	void Visit(const CRectangleView & shape) override;
+	void Visit(const CEllipseView & shape) override;
+	void Visit(const CTriangleView & shape) override;
+	void Visit(const CPictureView & shape) override;
 	//--------------------------------------------
 	//////////////////////////////////////////////////////////////////////
 	// Data

@@ -63,7 +63,7 @@ void CD2DObjectRenderer::Draw(const IShape & shape)
 }
 
 
-void CD2DObjectRenderer::Visit(const CRectangle & shape)
+void CD2DObjectRenderer::Visit(const CRectangleView & shape)
 {
 	auto vertices = shape.GetVertices();
 	
@@ -99,7 +99,7 @@ void CD2DObjectRenderer::Visit(const CRectangle & shape)
 	m_geometrySink.Release();
 }
 
-void CD2DObjectRenderer::Visit(const CEllipse & shape)
+void CD2DObjectRenderer::Visit(const CEllipseView & shape)
 {
 	auto position = shape.GetPosition();
 	SSize size = shape.GetSize();
@@ -129,7 +129,7 @@ void CD2DObjectRenderer::Visit(const CEllipse & shape)
 	m_outlineBrush.Release();
 }
 
-void CD2DObjectRenderer::Visit(const CTriangle & shape)
+void CD2DObjectRenderer::Visit(const CTriangleView & shape)
 {
 	auto vertices = shape.GetVertices();
 
@@ -165,7 +165,7 @@ void CD2DObjectRenderer::Visit(const CTriangle & shape)
 	m_geometrySink.Release();
 }
 
-void CD2DObjectRenderer::Visit(const CPicture & shape)
+void CD2DObjectRenderer::Visit(const CPictureView & shape)
 {
 	const SSize size = shape.GetSize();
 	const Vec2f position = shape.GetPosition();

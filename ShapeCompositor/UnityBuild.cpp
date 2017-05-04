@@ -6,7 +6,7 @@
 #include "Canvas\CanvasCommands\AddPictureCommand.h"
 #include "Canvas\CanvasCommands\DeletePictureCommand.h"
 
-#include "Canvas\Picture\Picture.h"
+#include "Canvas\Picture\PictureView.h"
 #include "Canvas\Picture\TextureStorage.h"
 #include "Canvas\Picture\D2DImageFactory.h"
 

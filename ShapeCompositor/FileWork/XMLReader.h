@@ -12,7 +12,7 @@
 #include <boost/filesystem.hpp>
 
 #include "Canvas\Canvas.h"
-#include "Canvas\Picture\Picture.h"
+#include "Canvas\Picture\PictureView.h"
 #include "Canvas\Picture\TextureStorage.h"
 #include "Canvas\Picture\D2DImageFactory.h"
 #include <string>

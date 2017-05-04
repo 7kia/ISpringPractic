@@ -5,7 +5,7 @@
 #include "CanvasCommand.h"
 #include "Canvas\Shapes\AllShapes.h"
 #include "Canvas\SelectedShape.h"
-#include "Canvas\Picture\Picture.h"
+#include "Canvas\Picture\PictureView.h"
 #include "Canvas\Picture\TextureStorage.h"
 
 class IShapeCollection;

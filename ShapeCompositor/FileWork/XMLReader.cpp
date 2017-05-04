@@ -93,7 +93,7 @@ bool CXMLReader::Save(
 			if (shape->GetType() == ShapeType::Picture)
 			{
 				// not wstring because not << overload for wstring
-				const auto picture = dynamic_cast<CPicture*>(shape.get());
+				const auto picture = dynamic_cast<CPictureView*>(shape.get());
 				child.add("Texture", ToString(textureStorage.GetNameTexture(picture->GetTexture())) );
 			}
 
@@ -162,7 +162,7 @@ CXMLReader::ReadData CXMLReader::Open(
 						dataForCreation.imageFactory.CreateTexture(ToWString(folder + "/" + texture))
 					);
 					readData.shapeData.push_back(
-						std::make_shared<CPicture>(
+						std::make_shared<CPictureView>(
 							readData.textureStorage.GetTexture(ToWString(texture)),
 							data.position,
 							data.size

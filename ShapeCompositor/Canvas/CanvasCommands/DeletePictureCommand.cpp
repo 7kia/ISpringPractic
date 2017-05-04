@@ -11,7 +11,7 @@ CDeletePictureCommand::CDeletePictureCommand(
 	, m_selectShape(seletedShape)
 	, m_index(pCanvas.GetShapeIndex(seletedShape.GetShape()))
 	, m_textureStorage(textureStorage)
-	, m_pictureData(dynamic_cast<CPicture*>(seletedShape.GetShape().get())->GetPictureData())
+	, m_pictureData(dynamic_cast<CPictureView*>(seletedShape.GetShape().get())->GetPictureData())
 {
 }
 
@@ -35,7 +35,7 @@ void CDeletePictureCommand::Cancel()
 {
 	m_canvas.InsertShape(
 		m_index, 
-		std::make_shared<CPicture>(
+		std::make_shared<CPictureView>(
 			m_pictureData.pTexture,
 			m_pictureData.position,
 			m_pictureData.size

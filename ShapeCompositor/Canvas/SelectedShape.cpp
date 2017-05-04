@@ -6,7 +6,7 @@ CSelectedShape::CSelectedShape()
 {	
 	for (size_t index = size_t(ShapeIndex::MarkerLeftBottom); index <= size_t(ShapeIndex::MarkerLeftTop); ++index)
 	{
-		m_dragPoints[index] = std::make_shared<CEllipse>(
+		m_dragPoints[index] = std::make_shared<CEllipseView>(
 			Vec2f(),
 			SELECTED_ELLIPSE_SIZE,
 			BLACK_COLOR,
@@ -14,7 +14,7 @@ CSelectedShape::CSelectedShape()
 		);
 	}
 
-	m_frame = std::make_shared<CRectangle>(
+	m_frame = std::make_shared<CRectangleView>(
 		Vec2f(),
 		SSize(),
 		NOT_COLOR,

@@ -5,7 +5,7 @@
 #include <vector>
 
 #include "Shapes\ShapeViewFactory.h"
-#include "Picture\Picture.h"
+#include "Picture\PictureView.h"
 #include "ObjectRenderer.h"
 #include "CanvasCommands\AllCanvasCommand.h"
 #include "MouseEventHandler.h"

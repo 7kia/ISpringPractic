@@ -59,7 +59,7 @@ bool HavePictureWithTexture(ID2D1Bitmap * pTexture, const std::vector<CShapeView
 	{
 		if (shape->GetType() == ShapeType::Picture)
 		{
-			auto pPicture = dynamic_cast<CPicture*>(shape.get());
+			auto pPicture = dynamic_cast<CPictureView*>(shape.get());
 			if (pPicture->GetTexture() == pTexture)
 			{
 				return true;
@@ -121,7 +121,7 @@ CShapeViewPtr CCanvas::GetShape(const ID2D1Bitmap * pTexture)
 	{
 		if (shape->GetType() == ShapeType::Picture)
 		{
-			const auto pPicture = dynamic_cast<CPicture*>(shape.get());
+			const auto pPicture = dynamic_cast<CPictureView*>(shape.get());
 			if (pPicture->GetTexture() == pTexture)
 			{
 				return shape;

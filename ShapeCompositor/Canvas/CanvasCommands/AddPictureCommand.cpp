@@ -21,7 +21,7 @@ CAddPictureCommand::CAddPictureCommand(
 void CAddPictureCommand::Execute()
 {
 	m_canvas.PushBackShape(
-		std::make_shared<CPicture>(
+		std::make_shared<CPictureView>(
 			m_pictureData.pTexture,
 			m_pictureData.position,
 			m_pictureData.size

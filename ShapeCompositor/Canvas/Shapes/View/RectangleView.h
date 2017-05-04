@@ -1,23 +1,30 @@
 #pragma once
 
-#include "Canvas\Shapes\Rectangle.h"
-#include "PictureModel.h"
-#include <d2d1.h>
+#include "ShapeView.h"
 
-class CPicture : public CRectangle
+class CRectangleView
+	: public CShapeView
 {
 public:
-	CPicture() = default;
+	CRectangleView() = default;
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
 	//--------------------------------------------
-	// IShapeView
+	// IShape
+
 	void Accept(IShapeVisitor & visitor) const override;
 	//--------------------------------------------
-	ID2D1Bitmap * GetTexture() const;
+	// IIsPointIntersection
+	bool IsPointIntersection(const Vec2f point) const override;
+	//--------------------------------------------
+
+	VertexList GetVertices() const;
+
+private:
+
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
-	ID2D1Bitmap * m_pTexture = nullptr;
+
 };

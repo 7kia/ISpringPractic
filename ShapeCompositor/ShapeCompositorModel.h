@@ -1,7 +1,7 @@
 #pragma once
 
 #include "FileWork\MyDocument.h"
-#include "Canvas\Picture\Picture.h"
+#include "Canvas\Picture\PictureView.h"
 #include "Canvas\Picture\D2DImageFactory.h"
 #include "Canvas\Picture\TextureStorage.h"
 #include "Signal.h"

@@ -210,7 +210,7 @@
     <ClInclude Include="Canvas\MouseEventHandler.h" />
     <ClInclude Include="Canvas\ObjectRenderer.h" />
     <ClInclude Include="Canvas\Picture\D2DImageFactory.h" />
-    <ClInclude Include="Canvas\Picture\Picture.h" />
+    <ClInclude Include="Canvas\Picture\PictureView.h" />
     <ClInclude Include="Canvas\Picture\PictureModel.h" />
     <ClInclude Include="Canvas\Picture\TextureStorage.h" />
     <ClInclude Include="Canvas\SelectedShape.h" />
@@ -221,10 +221,10 @@
     <ClInclude Include="Canvas\Shapes\Presenter\ShapePresenter.h" />
     <ClInclude Include="Canvas\Shapes\ShapeAttributes.h" />
     <ClInclude Include="Canvas\Shapes\ShapeViewFactory.h" />
-    <ClInclude Include="Canvas\Shapes\View\Ellipse.h" />
-    <ClInclude Include="Canvas\Shapes\View\Rectangle.h" />
+    <ClInclude Include="Canvas\Shapes\View\EllipseView.h" />
+    <ClInclude Include="Canvas\Shapes\View\RectangleView.h" />
     <ClInclude Include="Canvas\Shapes\View\ShapeView.h" />
-    <ClInclude Include="Canvas\Shapes\View\Triangle.h" />
+    <ClInclude Include="Canvas\Shapes\View\TriangleView.h" />
     <ClInclude Include="ConnectionsStorage.h" />
     <ClInclude Include="FileWork\FileManager.h" />
     <ClInclude Include="FileWork\MyDocument.h" />
@@ -251,7 +251,7 @@
     <ClCompile Include="Canvas\CanvasCommands\ChangeShapeRectCommand.cpp" />
     <ClCompile Include="Canvas\History.cpp" />
     <ClCompile Include="Canvas\Picture\D2DImageFactory.cpp" />
-    <ClCompile Include="Canvas\Picture\Picture.cpp" />
+    <ClCompile Include="Canvas\Picture\PictureView.cpp" />
     <ClCompile Include="Canvas\Picture\TextureStorage.cpp" />
     <ClCompile Include="Canvas\SelectedShape.cpp" />
     <ClCompile Include="Canvas\D2DObjectRenderer.cpp" />
@@ -259,10 +259,10 @@
     <ClCompile Include="Canvas\Shapes\Presenter\ShapePresenter.cpp" />
     <ClCompile Include="Canvas\Shapes\ShapeAttributes.cpp" />
     <ClCompile Include="Canvas\Shapes\ShapeViewFactory.cpp" />
-    <ClCompile Include="Canvas\Shapes\View\Ellipse.cpp" />
-    <ClCompile Include="Canvas\Shapes\View\Rectangle.cpp" />
+    <ClCompile Include="Canvas\Shapes\View\EllipseView.cpp" />
+    <ClCompile Include="Canvas\Shapes\View\RectangleView.cpp" />
     <ClCompile Include="Canvas\Shapes\View\ShapeView.cpp" />
-    <ClCompile Include="Canvas\Shapes\View\Triangle.cpp" />
+    <ClCompile Include="Canvas\Shapes\View\TriangleView.cpp" />
     <ClCompile Include="FileWork\FileManager.cpp" />
     <ClCompile Include="FileWork\MyDocument.cpp" />
     <ClCompile Include="FileWork\XMLReader.cpp" />
