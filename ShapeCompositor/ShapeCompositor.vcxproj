@@ -198,7 +198,8 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Canvas\Canvas.h" />
+    <ClInclude Include="CanvasView.h" />
+    <ClInclude Include="Canvas\CanvasModel.h" />
     <ClInclude Include="Canvas\CanvasCommands\AddPictureCommand.h" />
     <ClInclude Include="Canvas\CanvasCommands\AddShapeCommand.h" />
     <ClInclude Include="Canvas\CanvasCommands\CanvasCommand.h" />
@@ -243,7 +244,8 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Canvas\Canvas.cpp" />
+    <ClCompile Include="CanvasView.cpp" />
+    <ClCompile Include="Canvas\CanvasModel.cpp" />
     <ClCompile Include="Canvas\CanvasCommands\AddPictureCommand.cpp" />
     <ClCompile Include="Canvas\CanvasCommands\AddShapeCommand.cpp" />
     <ClCompile Include="Canvas\CanvasCommands\DeletePictureCommand.cpp" />

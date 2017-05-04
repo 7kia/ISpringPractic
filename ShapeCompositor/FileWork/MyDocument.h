@@ -6,7 +6,7 @@
 #include <afxdtctl.h>           // поддержка MFC для типовых элементов управления Internet Explorer 4
 
 
-#include "Canvas\Canvas.h"
+#include "Canvas\CanvasModel.h"
 #include "Canvas\History.h"
 #include "FileWork\XMLReader.h"
 #include "FileWork\FileManager.h"

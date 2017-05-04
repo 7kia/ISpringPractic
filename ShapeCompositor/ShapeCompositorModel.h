@@ -4,6 +4,7 @@
 #include "Canvas\Picture\PictureView.h"
 #include "Canvas\Picture\D2DImageFactory.h"
 #include "Canvas\Picture\TextureStorage.h"
+#include "CanvasModel.h"
 #include "Signal.h"
 
 class IShapeManipulator
@@ -11,9 +12,9 @@ class IShapeManipulator
 public:
 	virtual ~IShapeManipulator() = default;
 
-	virtual void DeleteShape(CSelectedShape & selectedShape) = 0;
-	virtual void CreateShape(ShapeType type, CSelectedShape & selectedShape) = 0;
-	virtual void ChangeRect(const CFrame oldFrame, CSelectedShape & selectedShape) = 0;
+	virtual void DeleteShape(size_t shapeIndex) = 0;
+	virtual void CreateShape(ShapeType type) = 0;
+	virtual void ChangeRect(const CFrame oldFrame, size_t shapeIndex) = 0;
 };
 
 class IModelReseter
@@ -23,15 +24,6 @@ public:
 
 	virtual void ResetModel() = 0;
 	virtual signal::Connection DoOnResetSelectedShape(std::function<void()> const & action) = 0;
-};
-
-class IDataForDraw
-{
-public:
-	virtual ~IDataForDraw() = default;
-
-	virtual CShapeViewPtr GetCanvasBorder() const = 0;
-	virtual std::vector<CShapeViewPtr> & GetCanvasShapes() = 0;
 };
 
 class IHaveRenderTarget
@@ -47,7 +39,6 @@ class CShapeCompositorModel
 	, public IDocumentManipulator
 	, public IShapeManipulator
 	, public IModelReseter
-	, public IDataForDraw
 	, public IHaveRenderTarget
 {
 public:
@@ -61,10 +52,6 @@ public:
 	//--------------------------------------------
 	// IHaveRenderTarget
 	void SetRenderTargetForModelComponents(ID2D1HwndRenderTarget * pRenderTarget) override;
-	//--------------------------------------------
-	// IDataForDraw
-	CShapeViewPtr GetCanvasBorder() const override;
-	std::vector<CShapeViewPtr> & GetCanvasShapes() override;
 	//--------------------------------------------
 	// IHistoryManipulator
 	void UndoCommand() override;
@@ -84,24 +71,22 @@ public:
 	signal::Connection DoOnResetSelectedShape(std::function<void()> const & action) override;
 	//--------------------------------------------
 	// IShapeManipulator
-	void DeleteShape(CSelectedShape & selectedShape) override;
-	void CreateShape(ShapeType type, CSelectedShape & selectedShape) override;
-	void ChangeRect(const CFrame oldFrame, CSelectedShape & selectedShape) override;
+	void DeleteShape(size_t shapeIndex) override;
+	void CreateShape(ShapeType type) override;
+	void ChangeRect(const CFrame oldFrame, size_t shapeIndex) override;
 	//--------------------------------------------
 	IShapeCollection & GetShapeCollection();
 
 private:
 	int SaveChangeDocument();
-	void LoadPicture(const boost::filesystem::path & path, CSelectedShape & selectedShape);
+	void LoadPicture(const boost::filesystem::path & path);
 
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
 	signal::Signal<void()> m_resetSelectedShape;
 
-	CCanvas m_canvas;
-	CShapeViewPtr m_canvasBorder;
-
+	CCanvasModel m_canvasModel;
 	CHistory m_history;
 	CMyDocument m_document;
 

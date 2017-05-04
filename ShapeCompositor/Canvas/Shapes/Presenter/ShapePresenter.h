@@ -1,11 +1,12 @@
 #pragma once
 
 #include "View/ShapeView.h"
+#include "ConnectionsStorage.h"
 
 class CShapePresenter
 {
 public:
-	CShapePresenter(CShapeView * pView, CShapeModelPtr & pModel);
+	CShapePresenter(CShapeModelPtr & pModel);
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:

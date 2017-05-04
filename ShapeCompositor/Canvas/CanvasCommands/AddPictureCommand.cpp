@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "AddPictureCommand.h"
-#include "../Canvas.h"
+#include "../CanvasModel.h"
 #include "GlobalFunctions.h"
 
 
@@ -10,7 +10,7 @@ CAddPictureCommand::CAddPictureCommand(
 	CTextureStorage & textureStorage,
 	CSelectedShape & seletedShape
 )
-	: m_canvas(pCanvas)
+	: m_shapeCollection(pCanvas)
 	, m_pictureData(pictureData)
 	, m_textureStorage(textureStorage)
 	, m_selectShape(seletedShape)
@@ -20,7 +20,7 @@ CAddPictureCommand::CAddPictureCommand(
 
 void CAddPictureCommand::Execute()
 {
-	m_canvas.PushBackShape(
+	m_shapeCollection.PushBackShape(
 		std::make_shared<CPictureView>(
 			m_pictureData.pTexture,
 			m_pictureData.position,
@@ -33,13 +33,13 @@ void CAddPictureCommand::Execute()
 
 void CAddPictureCommand::Cancel()
 {
-	if (m_canvas.IsSelectShape(m_canvas.GetShapeCount() - 1, m_selectShape.GetShape()))
+	if (m_shapeCollection.IsSelectShape(m_shapeCollection.GetShapeCount() - 1, m_selectShape.GetShape()))
 	{
 		m_selectShape.ResetSelectShapePtr();
 	}
-	DeleteLastElement(m_canvas.GetShapes());
+	DeleteLastElement(m_shapeCollection.GetShapes());
 
-	const auto shapeHavePicture = m_canvas.GetShape(m_pictureData.pTexture);
+	const auto shapeHavePicture = m_shapeCollection.GetShape(m_pictureData.pTexture);
 	if (!shapeHavePicture)
 	{
 		m_textureStorage.SetDelete(m_textureStorage.GetNameTexture(m_pictureData.pTexture), true);
@@ -49,7 +49,7 @@ void CAddPictureCommand::Cancel()
 
 void CAddPictureCommand::Destroy()
 {
-	auto listShapesAfterDestroy = m_canvas.GetShapes();
+	auto listShapesAfterDestroy = m_shapeCollection.GetShapes();
 	listShapesAfterDestroy.pop_back();
 
 	m_textureStorage.SetDelete(

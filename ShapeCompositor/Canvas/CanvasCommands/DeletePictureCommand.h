@@ -32,7 +32,7 @@ public:
 private:
 	const SPictureData m_pictureData;
 	size_t m_index = 0;
-	IShapeCollection & m_canvas;
+	IShapeCollection & m_shapeCollection;
 	CSelectedShape & m_selectShape;
 	CTextureStorage & m_textureStorage;
 };

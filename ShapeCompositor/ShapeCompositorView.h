@@ -16,6 +16,7 @@
 
 #include "ShapeCompositorDoc.h"
 #include "Canvas\D2DObjectRenderer.h"
+#include "CanvasView.h"
 #include "Signal.h"
 #include "FileWork\XMLReader.h"
 
@@ -50,9 +51,9 @@ public:
 	virtual signal::Connection DoOnRedoCommand(std::function<void()> const & action) = 0;
 
 
-	virtual signal::Connection DoOnDeleteShapeCommand(std::function<void(CSelectedShape &)> const & action) = 0;
-	virtual signal::Connection DoOnChangeRectCommand(std::function<void(const CFrame, CSelectedShape &)> const & action) = 0;
-	virtual signal::Connection DoOnCreateShapeCommand(std::function<void(ShapeType, CSelectedShape &)> const & action) = 0;
+	virtual signal::Connection DoOnDeleteShapeCommand(std::function<void(size_t)> const & action) = 0;
+	virtual signal::Connection DoOnChangeRectCommand(std::function<void(const CFrame, size_t)> const & action) = 0;
+	virtual signal::Connection DoOnCreateShapeCommand(std::function<void(ShapeType)> const & action) = 0;
 	virtual signal::Connection DoOnSetRenderTargetForModel(std::function<void(ID2D1HwndRenderTarget *)> const & action) = 0;
 };
 
@@ -74,7 +75,6 @@ protected: // создать только из сериализации
 public:
 	//CShapeCompositorDoc* GetDocument() const;
 
-	void SetBoundingRect(const D2D1_RECT_F & rect);
 
 // Операции
 public:
@@ -89,16 +89,12 @@ public:
 	void					Undo();
 	void					Redo();
 
-	void					ChangeCursor(const Vec2f &  mousePos);
 	
 	//--------------------------------------------
 	// IViewReseter
 	void					ResetSelectedShape() override;
 	//--------------------------------------------
 	// IViewSignaller
-	signal::Connection DoOnGetCanvasView(std::function<CShapeViewPtr()> const & action);
-	signal::Connection DoOnGetCanvasShapes(std::function<std::vector<CShapeViewPtr>()> const & action);
-
 	signal::Connection DoOnSaveAsDocument(std::function<bool()> const & action);
 	signal::Connection DoOnSaveDocument(std::function<bool()> const & action);
 	signal::Connection DoOnOpenDocument(std::function<bool(CSelectedShape &)> const & action);
@@ -108,15 +104,11 @@ public:
 	signal::Connection DoOnRedoCommand(std::function<void()> const & action);
 
 
-	signal::Connection DoOnDeleteShapeCommand(std::function<void(CSelectedShape &)> const & action);
-	signal::Connection DoOnChangeRectCommand(std::function<void(const CFrame, CSelectedShape &)> const & action);
-	signal::Connection DoOnCreateShapeCommand(std::function<void(ShapeType, CSelectedShape &)> const & action);
+	signal::Connection DoOnChangeRectCommand(std::function<void(const CFrame, size_t)> const & action);
+	signal::Connection DoOnCreateShapeCommand(std::function<void(ShapeType)> const & action);
 	signal::Connection DoOnSetRenderTargetForModel(std::function<void(ID2D1HwndRenderTarget *)> const & action);
 	//--------------------------------------------
 private:
-	void					CreateCommandForSelectedShape();
-	void					ChangeSelectedShape(const Vec2f & mousePos);
-
 	Vec2f					GetScreenPosition(const CPoint & point);
 
 // Переопределение
@@ -124,9 +116,6 @@ public:
 	virtual void OnDraw(CDC* pDC);  // переопределено для отрисовки этого представления
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);	
 protected:
-	signal::Signal<CShapeViewPtr()> m_getCanvasView;
-	signal::Signal<std::vector<CShapeViewPtr>()> m_getCanvasShapes;
-
 	signal::Signal<bool()> m_saveAsDocument;
 	signal::Signal<bool()> m_saveDocument;
 	signal::Signal<bool()> m_newDocument;
@@ -135,14 +124,11 @@ protected:
 	signal::Signal<void()> m_undoCommand;
 	signal::Signal<void()> m_redoCommand;
 
-	signal::Signal<void(CSelectedShape &)> m_deleteShapeCommand;
-	signal::Signal<void(const CFrame, CSelectedShape &)> m_createChangeRectCommand;
-	signal::Signal<void(ShapeType, CSelectedShape &)> m_createShapeCommand;
+	signal::Signal<void(const CFrame, size_t)> m_createChangeRectCommand;
+	signal::Signal<void(ShapeType)> m_createShapeCommand;
 	signal::Signal<void(ID2D1HwndRenderTarget *)> m_setRenderTargetForModel;// Render target create in the class and need in other
 protected:
-	CSelectedShape m_selectedShape;
-	CFrame m_oldFrame;
-
+	CCanvasView m_canvasView;
 	CComPtr<ID2D1HwndRenderTarget> m_pRenderTarget;
 	CD2DObjectRenderer m_objectRenderer;
 	///////////////////////////////////////////////////////////

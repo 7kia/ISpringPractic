@@ -1,18 +1,6 @@
 #include "stdafx.h"
 #include "ShapeCompositorView.h"
 
-
-signal::Connection CShapeCompositorView::DoOnGetCanvasView(std::function<CShapeViewPtr()> const & action)
-{
-	return m_getCanvasView.connect(action);
-}
-
-signal::Connection CShapeCompositorView::DoOnGetCanvasShapes(std::function<std::vector<CShapeViewPtr>()> const & action)
-{
-	return m_getCanvasShapes.connect(action);
-}
-
-
 signal::Connection CShapeCompositorView::DoOnSaveAsDocument(std::function<bool()> const & action)
 {
 	return m_saveAsDocument.connect(action);
@@ -43,17 +31,13 @@ signal::Connection CShapeCompositorView::DoOnRedoCommand(std::function<void()> c
 	return m_redoCommand.connect(action);
 }
 
-signal::Connection CShapeCompositorView::DoOnDeleteShapeCommand(std::function<void(CSelectedShape &)> const & action)
-{
-	return m_deleteShapeCommand.connect(action);
-}
 
-signal::Connection CShapeCompositorView::DoOnChangeRectCommand(std::function<void(const CFrame, CSelectedShape &)> const & action)
+signal::Connection CShapeCompositorView::DoOnChangeRectCommand(std::function<void(const CFrame, size_t)> const & action)
 {
 	return m_createChangeRectCommand.connect(action);
 }
 
-signal::Connection CShapeCompositorView::DoOnCreateShapeCommand(std::function<void(ShapeType, CSelectedShape &)> const & action)
+signal::Connection CShapeCompositorView::DoOnCreateShapeCommand(std::function<void(ShapeType)> const & action)
 {
 	return m_createShapeCommand.connect(action);
 }

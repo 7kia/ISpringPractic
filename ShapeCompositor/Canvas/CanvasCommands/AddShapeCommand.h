@@ -10,10 +10,9 @@ class CAddShapeCanvasCommand : public IMyCommand
 {
 public:
 	CAddShapeCanvasCommand(
-		IShapeCollection & pCanvas
-		, ShapeType type
-		, const CShapeViewFactory & factory
-		, CSelectedShape & seletedShape
+		IShapeCollection & pShapeCollection,
+		CShapeModelPtr & pShapeModel,
+		CTextureStorage & textureStorage,
 	);
 	//////////////////////////////////////////////////////////////////////
 	// Methods
@@ -27,8 +26,7 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
-	ShapeType m_type = ShapeType::Rectangle;
-	IShapeCollection & m_canvas;
-	const CShapeViewFactory & m_factory;
-	CSelectedShape & m_selectShape;
+	IShapeCollection & m_shapeCollection;
+	CTextureStorage & m_textureStorage;
+	CShapeModelPtr & m_shapeModel;
 };

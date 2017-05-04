@@ -9,9 +9,9 @@ class CDeleteShapeCanvasCommand : public IMyCommand
 {
 public:
 	CDeleteShapeCanvasCommand(
-		IShapeCollection & pCanvas,
+		IShapeCollection & shapeCollection,
 		CSelectedShape & selectedShape,
-		const CShapeViewFactory & factory
+		CTextureStorage & textureStorage,
 	);
 //////////////////////////////////////////////////////////////////////
 // Methods
@@ -26,10 +26,10 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
-	ShapeType m_type = ShapeType::Rectangle;
-	CShapeModel m_data;
+	CShapeModelPtr m_shapeModel;
 	size_t m_index = 0;
-	IShapeCollection & m_canvas;
+
+	IShapeCollection & m_shapeCollection;
 	CSelectedShape & m_selectShape;
-	const CShapeViewFactory & m_factory;
+	CTextureStorage & m_textureStorage;
 };

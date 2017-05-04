@@ -4,7 +4,7 @@
 #include <array>
 
 #include "Shapes\AllShapes.h"
-#include "ObjectRenderer.h"
+#include "ShapeRenderer.h"
 #include "Shapes\ShapeViewFactory.h"
 #include <boost\optional.hpp>
 
@@ -40,7 +40,7 @@ public:
 	// Methods
 public:
 	void					SetShape(const CShapeViewPtr & shape);
-	CShapeViewPtr				GetShape() const;
+	CShapeViewPtr			GetShape() const;
 	void					ResetSelectShapePtr();
 	void					ResetUpdateParameters();
 

@@ -26,7 +26,7 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
-	IShapeProvider & m_canvas;
+	IShapeProvider & m_shapeCollection;
 	size_t		m_index;
 	CSelectedShape * m_pSelectedShape = nullptr;
 	CFrame		m_oldFrame;

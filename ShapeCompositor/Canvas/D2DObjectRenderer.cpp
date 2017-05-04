@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "D2DObjectRenderer.h"
 #include "../ShapeCompositorView.h"
-#include "Canvas.h"
+#include "CanvasModel.h"
 #include "SelectedShape.h"
 
 CD2DObjectRenderer::CD2DObjectRenderer()

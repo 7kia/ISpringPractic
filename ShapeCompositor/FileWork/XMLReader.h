@@ -11,7 +11,7 @@
 #include <boost\property_tree\xml_parser.hpp>
 #include <boost/filesystem.hpp>
 
-#include "Canvas\Canvas.h"
+#include "Canvas\CanvasModel.h"
 #include "Canvas\Picture\PictureView.h"
 #include "Canvas\Picture\TextureStorage.h"
 #include "Canvas\Picture\D2DImageFactory.h"

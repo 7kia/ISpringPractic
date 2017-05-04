@@ -1,13 +1,13 @@
 #include "stdafx.h"
 #include "DeletePictureCommand.h"
-#include "../Canvas.h"
+#include "../CanvasModel.h"
 
 CDeletePictureCommand::CDeletePictureCommand(
 	IShapeCollection & pCanvas,
 	CSelectedShape & seletedShape,
 	CTextureStorage & textureStorage
 )
-	: m_canvas(pCanvas)
+	: m_shapeCollection(pCanvas)
 	, m_selectShape(seletedShape)
 	, m_index(pCanvas.GetShapeIndex(seletedShape.GetShape()))
 	, m_textureStorage(textureStorage)
@@ -17,13 +17,13 @@ CDeletePictureCommand::CDeletePictureCommand(
 
 void CDeletePictureCommand::Execute()
 {
-	if (m_canvas.IsSelectShape(m_index, m_selectShape.GetShape()))
+	if (m_shapeCollection.IsSelectShape(m_index, m_selectShape.GetShape()))
 	{
 		m_selectShape.ResetSelectShapePtr();
 	}
-	m_canvas.DeleteShape(m_index);
+	m_shapeCollection.DeleteShape(m_index);
 
-	const auto shapeHavePicture = m_canvas.GetShape(m_pictureData.pTexture);
+	const auto shapeHavePicture = m_shapeCollection.GetShape(m_pictureData.pTexture);
 	if (!shapeHavePicture)
 	{
 		m_textureStorage.SetDelete(m_textureStorage.GetNameTexture(m_pictureData.pTexture), true);
@@ -33,7 +33,7 @@ void CDeletePictureCommand::Execute()
 
 void CDeletePictureCommand::Cancel()
 {
-	m_canvas.InsertShape(
+	m_shapeCollection.InsertShape(
 		m_index, 
 		std::make_shared<CPictureView>(
 			m_pictureData.pTexture,

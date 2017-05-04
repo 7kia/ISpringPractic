@@ -29,7 +29,7 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
-	IShapeCollection & m_canvas;
+	IShapeCollection & m_shapeCollection;
 	const SPictureData m_pictureData;
 	CTextureStorage & m_textureStorage;
 	CSelectedShape & m_selectShape;

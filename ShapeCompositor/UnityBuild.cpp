@@ -16,7 +16,7 @@
 #include "Canvas\D2DObjectRenderer.h"
 #include "Canvas\History.h"
 #include "Canvas\SelectedShape.h"
-#include "Canvas\Canvas.h"
+#include "Canvas\CanvasModel.h"
 
 #include "FileWork\FileManager.h"
 #include "FileWork\MyDocument.h"

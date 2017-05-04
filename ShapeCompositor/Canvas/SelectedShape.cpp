@@ -362,7 +362,7 @@ CSelectedShape::DragPointsArray CSelectedShape::GetDragPoints() const
 
 CShapeViewPtr CSelectedShape::GetFrameShape() const
 {
-	return m_frame;// TODO : check work m_frame
+	return m_frame;
 }
 
 void CSelectedShape::SetBoundingRect(const D2D1_RECT_F & rect)

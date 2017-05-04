@@ -6,7 +6,7 @@
 
 #include "Shapes\ShapeViewFactory.h"
 #include "Picture\PictureView.h"
-#include "ObjectRenderer.h"
+#include "ShapeRenderer.h"
 #include "CanvasCommands\AllCanvasCommand.h"
 #include "MouseEventHandler.h"
 #include "History.h"
@@ -27,11 +27,11 @@ class IShapeProvider
 public:
 	virtual ~IShapeProvider() = default;
 
-	virtual CShapeViewPtr GetShape(const size_t index) = 0;
-	virtual CShapeViewPtr GetShape(const ID2D1Bitmap * pTexture) = 0;
-	virtual std::vector<CShapeViewPtr>&	GetShapes() = 0;
+	virtual CShapeModelPtr GetShape(const size_t index) = 0;
+	virtual CShapeModelPtr GetShape(const ID2D1Bitmap * pTexture) = 0;
+	virtual std::vector<CShapeModelPtr>&	GetShapes() = 0;
 	virtual size_t GetShapeCount() const = 0;
-	virtual size_t GetShapeIndex(const CShapeViewPtr & pShape) const = 0;
+	virtual size_t GetShapeIndex(const CShapeModelPtr & pShape) const = 0;
 };
 
 class IShapeCollection : public IShapeProvider
@@ -40,15 +40,15 @@ public:
 	virtual ~IShapeCollection() = default;
 
 	virtual void DeleteShape(const size_t index) = 0;
-	virtual void DeleteShape(const CShapeViewPtr &  pShape) = 0;
+	virtual void DeleteShape(const CShapeModelPtr &  pShape) = 0;
 	virtual void Clear() = 0;
 
-	virtual void PushBackShape(const CShapeViewPtr & shape) = 0;
-	virtual void InsertShape(const size_t insertIndex, const CShapeViewPtr & shape) = 0;
-	virtual void SetShapes(const std::vector<CShapeViewPtr> & shapes) = 0;
+	virtual void PushBackShape(const CShapeModelPtr & shape) = 0;
+	virtual void InsertShape(const size_t insertIndex, const CShapeModelPtr & shape) = 0;
+	virtual void SetShapes(const std::vector<CShapeModelPtr> & shapes) = 0;
 
 
-	virtual bool IsSelectShape(const size_t index, const CShapeViewPtr & selectedShape) const = 0;
+	virtual bool IsSelectShape(const size_t index, const CShapeModelPtr & selectedShape) const = 0;
 
 };
 
@@ -64,41 +64,41 @@ public:
 };
 
 
-bool HavePictureWithTexture(ID2D1Bitmap * pTexture, const std::vector<CShapeViewPtr> & shapes);
-
-class CCanvas
+class CCanvasModel
 	: private IShapeCollection
 	, public ICanvas
 {
 public:
-	CCanvas(const SSize size);
+	CCanvasModel(const SSize size);
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
 
+	//signal::Connection DoOnDeleteShapeCommand(std::function<void(CSelectedShape &)> const & action);
+
 	//--------------------------------------------
 	// IShapeCollection
 	void					DeleteShape(const size_t index) override;
-	void					DeleteShape(const CShapeViewPtr & pShape) override;
+	void					DeleteShape(const CShapeModelPtr & pShape) override;
 	void					Clear() override;
 
-	void					PushBackShape(const CShapeViewPtr & shape) override;
-	void					InsertShape(const size_t insertIndex, const CShapeViewPtr & shape) override;
-	void					SetShapes(const std::vector<CShapeViewPtr> & shapes) override;
+	void					PushBackShape(const CShapeModelPtr & shape) override;
+	void					InsertShape(const size_t insertIndex, const CShapeModelPtr & shape) override;
+	void					SetShapes(const std::vector<CShapeModelPtr> & shapes) override;
 
 	size_t					GetShapeCount() const override;
 
 	// For drag and drop
-	bool					IsSelectShape(const size_t index, const CShapeViewPtr & selectedShape) const override;
+	bool					IsSelectShape(const size_t index, const CShapeModelPtr & selectedShape) const override;
 	//--------------------------------------------
 
 	//--------------------------------------------
 	// IShapeProvider
-	CShapeViewPtr				GetShape(const size_t index) override;
-	CShapeViewPtr				GetShape(const ID2D1Bitmap * pTexture) override;
-	size_t					GetShapeIndex(const CShapeViewPtr & pShape) const override;
+	CShapeModelPtr				GetShape(const size_t index) override;
+	CShapeModelPtr				GetShape(const ID2D1Bitmap * pTexture) override;
+	size_t						GetShapeIndex(const CShapeModelPtr & pShape) const override;
 
-	std::vector<CShapeViewPtr>&	GetShapes() override;
+	std::vector<CShapeModelPtr>&	GetShapes() override;
 	//--------------------------------------------
 	// ICanvas
 	IShapeCollection&		GetShapeCollection() override;
@@ -114,7 +114,8 @@ private:
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
-	std::vector<CShapeViewPtr>	m_shapes;
-	SSize					m_size;
+	std::vector<CShapeModelPtr>	m_shapes;
+
+	SSize m_size;
 };
 

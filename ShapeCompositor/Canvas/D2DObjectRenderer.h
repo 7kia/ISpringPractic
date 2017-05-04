@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Canvas\ObjectRenderer.h"
+#include "Canvas\ShapeRenderer.h"
 #include "Canvas\Picture\PictureView.h"
 
 class CD2DObjectRenderer

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "History.h"
-#include "Canvas.h"
+#include "CanvasModel.h"
 
 CHistory::CHistory()
 	: IHistory()

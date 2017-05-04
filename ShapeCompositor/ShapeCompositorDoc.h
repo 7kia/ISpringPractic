@@ -17,7 +17,7 @@
 
 
 
-#include "Canvas\Canvas.h"
+#include "Canvas\CanvasModel.h"
 #include "Canvas\History.h"
 #include "FileWork\XMLReader.h"
 #include "FileWork\FileManager.h"

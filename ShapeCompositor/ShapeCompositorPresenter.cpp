@@ -24,11 +24,6 @@ void CShapeCompositorPresenter::SetDocumentManipulator(IDocumentManipulator * pD
 	ConnectSignalsForDocumentManipulator();
 }
 
-void CShapeCompositorPresenter::SetDataForDraw(IDataForDraw * pDataForDraw)
-{
-	m_pDataForDraw = pDataForDraw;
-	ConnectSignalsForDataForDraw();
-}
 
 void CShapeCompositorPresenter::SetHaveRenderTarget(IHaveRenderTarget * pHaveRenderTarget)
 {
@@ -64,13 +59,6 @@ void CShapeCompositorPresenter::ConnectSignalsForShapeManipulator()
 	m_connections += m_pViewSignaller->DoOnCreateShapeCommand(boost::bind(&IShapeManipulator::CreateShape, m_pShapeManipulator , _1, _2));
 }
 
-void CShapeCompositorPresenter::ConnectSignalsForDataForDraw()
-{	
-	// TODO : see need rewrite shape on MVC or MVP
-	m_connections += m_pViewSignaller->DoOnGetCanvasView(boost::bind(&IDataForDraw::GetCanvasBorder, m_pDataForDraw));
-	m_connections += m_pViewSignaller->DoOnGetCanvasShapes(boost::bind(&IDataForDraw::GetCanvasShapes, m_pDataForDraw));
-}
-
 void CShapeCompositorPresenter::ConnectSignalsForHaveRenderTarget()
 {
 	m_connections += m_pViewSignaller->DoOnSetRenderTargetForModel(
@@ -81,4 +69,10 @@ void CShapeCompositorPresenter::ConnectSignalsForHaveRenderTarget()
 void CShapeCompositorPresenter::ConnectSignalsForModelReseter()
 {
 	m_connections += m_pModelReseter->DoOnResetSelectedShape(boost::bind(&IViewReseter::ResetSelectedShape, m_pViewReseter));
+}
+
+void CShapeCompositorPresenter::ConnectSignalsForView()
+{
+	//m_connections += m_pViewSignaller->DoOnDeleteShapeCommand(boost::bind(&IViewReseter::ResetSelectedShape, m_pViewReseter));
+
 }

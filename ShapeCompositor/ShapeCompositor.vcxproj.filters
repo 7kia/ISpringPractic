@@ -60,9 +60,6 @@
     <ClInclude Include="Resource.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="Canvas\Canvas.h">
-      <Filter>Файлы исходного кода\Canvas</Filter>
-    </ClInclude>
     <ClInclude Include="Canvas\Shapes\IShape.h">
       <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
     </ClInclude>
@@ -168,6 +165,12 @@
     <ClInclude Include="Canvas\Picture\PictureView.h">
       <Filter>Файлы исходного кода\Canvas\Picture</Filter>
     </ClInclude>
+    <ClInclude Include="Canvas\CanvasModel.h">
+      <Filter>Файлы исходного кода\Canvas</Filter>
+    </ClInclude>
+    <ClInclude Include="CanvasView.h">
+      <Filter>Файлы исходного кода\Canvas</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ShapeCompositor.cpp">
@@ -184,9 +187,6 @@
     </ClCompile>
     <ClCompile Include="ShapeCompositorView.cpp">
       <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
-    <ClCompile Include="Canvas\Canvas.cpp">
-      <Filter>Файлы исходного кода\Canvas</Filter>
     </ClCompile>
     <ClCompile Include="Canvas\Shapes\ShapeAttributes.cpp">
       <Filter>Файлы исходного кода\Canvas\Shapes</Filter>
@@ -268,6 +268,12 @@
     </ClCompile>
     <ClCompile Include="Canvas\Picture\PictureView.cpp">
       <Filter>Файлы исходного кода\Canvas\Picture</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas\CanvasModel.cpp">
+      <Filter>Файлы исходного кода\Canvas</Filter>
+    </ClCompile>
+    <ClCompile Include="CanvasView.cpp">
+      <Filter>Файлы исходного кода\Canvas</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
