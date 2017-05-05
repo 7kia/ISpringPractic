@@ -38,6 +38,12 @@ void CShapeCompositorPresenter::SetModelReseter(IModelReseter * pModelReseter, I
 	ConnectSignalsForModelReseter();
 }
 
+void CShapeCompositorPresenter::SetShapeViewCreator(IShapeViewCreator * pShapeViewCreator)
+{
+	m_pShapeViewCreator = pShapeViewCreator;
+	ConnectSignalsForShapeViewCreator();
+}
+
 void CShapeCompositorPresenter::ConnectSignalsForHistory()
 {
 	m_connections += m_pViewSignaller->DoOnUndoCommand(boost::bind(&IHistoryManipulator::UndoCommand, m_pHystoryManipulator));
@@ -74,5 +80,11 @@ void CShapeCompositorPresenter::ConnectSignalsForModelReseter()
 void CShapeCompositorPresenter::ConnectSignalsForView()
 {
 	//m_connections += m_pViewSignaller->DoOnDeleteShapeCommand(boost::bind(&IViewReseter::ResetSelectedShape, m_pViewReseter));
+
+}
+
+void CShapeCompositorPresenter::ConnectSignalsForShapeViewCreator()
+{
+	m_connections += m_pShapeManipulator->DoOnCreateView(boost::bind(&IShapeViewCreator::AddShapeView, m_pShapeViewCreator, _1, _2));
 
 }

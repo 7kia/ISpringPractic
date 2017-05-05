@@ -10,8 +10,8 @@ class CDeleteShapeCanvasCommand : public IMyCommand
 public:
 	CDeleteShapeCanvasCommand(
 		IShapeCollection & shapeCollection,
-		CSelectedShape & selectedShape,
-		CTextureStorage & textureStorage,
+		size_t insertIndex,
+		CTextureStorage & textureStorage
 	);
 //////////////////////////////////////////////////////////////////////
 // Methods
@@ -21,15 +21,12 @@ public:
 	void Execute() override;
 	void Cancel() override;
 	void Destroy() override;
-
 	//--------------------------------------------
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
 	CShapeModelPtr m_shapeModel;
-	size_t m_index = 0;
-
 	IShapeCollection & m_shapeCollection;
-	CSelectedShape & m_selectShape;
+	size_t m_insertIndex = 0;
 	CTextureStorage & m_textureStorage;
 };

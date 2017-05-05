@@ -12,7 +12,7 @@ public:
 	CAddShapeCanvasCommand(
 		IShapeCollection & pShapeCollection,
 		CShapeModelPtr & pShapeModel,
-		CTextureStorage & textureStorage,
+		CTextureStorage & textureStorage
 	);
 	//////////////////////////////////////////////////////////////////////
 	// Methods

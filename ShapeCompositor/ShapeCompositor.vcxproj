@@ -200,11 +200,9 @@
   <ItemGroup>
     <ClInclude Include="CanvasView.h" />
     <ClInclude Include="Canvas\CanvasModel.h" />
-    <ClInclude Include="Canvas\CanvasCommands\AddPictureCommand.h" />
     <ClInclude Include="Canvas\CanvasCommands\AddShapeCommand.h" />
     <ClInclude Include="Canvas\CanvasCommands\CanvasCommand.h" />
     <ClInclude Include="Canvas\CanvasCommands\AllCanvasCommand.h" />
-    <ClInclude Include="Canvas\CanvasCommands\DeletePictureCommand.h" />
     <ClInclude Include="Canvas\CanvasCommands\DeleteShapeCommand.h" />
     <ClInclude Include="Canvas\CanvasCommands\ChangeShapeRectCommand.h" />
     <ClInclude Include="Canvas\History.h" />
@@ -246,9 +244,7 @@
   <ItemGroup>
     <ClCompile Include="CanvasView.cpp" />
     <ClCompile Include="Canvas\CanvasModel.cpp" />
-    <ClCompile Include="Canvas\CanvasCommands\AddPictureCommand.cpp" />
     <ClCompile Include="Canvas\CanvasCommands\AddShapeCommand.cpp" />
-    <ClCompile Include="Canvas\CanvasCommands\DeletePictureCommand.cpp" />
     <ClCompile Include="Canvas\CanvasCommands\DeleteShapeCommand.cpp" />
     <ClCompile Include="Canvas\CanvasCommands\ChangeShapeRectCommand.cpp" />
     <ClCompile Include="Canvas\History.cpp" />

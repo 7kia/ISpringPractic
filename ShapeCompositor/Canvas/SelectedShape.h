@@ -62,7 +62,7 @@ public:
 
 	// For draw
 	DragPointsArray			GetDragPoints() const;
-	CShapeViewPtr				GetFrameShape() const;
+	CShapeViewPtr			GetFrameShape() const;
 	void					SetBoundingRect(const D2D1_RECT_F & rect);
 	//--------------------------------------------
 	// IFrame
@@ -105,10 +105,11 @@ private:
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
-	CShapeViewPtr						m_selectedShape;
+	CShapeViewPtr					m_selectedShape;
+	signal::Connection				m_setFrameConnection;
 
 	DragPointsArray					m_dragPoints;
-	CShapeViewPtr						m_frame;
+	CShapeViewPtr					m_frame;
 	D2D1_RECT_F						m_boundingRect;
 	// For drag and drop
 	boost::optional<Vec2f>			m_startMove;

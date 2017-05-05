@@ -11,8 +11,7 @@ public:
 	CChangeShapeRectCanvasCommand(
 		IShapeProvider & pShapeStorage,
 		const CFrame & oldData,
-		const CFrame & newData,
-		CSelectedShape & selectedShape
+		size_t shapeIndex
 	);
 	//////////////////////////////////////////////////////////////////////
 	// Methods
@@ -27,8 +26,7 @@ public:
 	// Data
 private:
 	IShapeProvider & m_shapeCollection;
-	size_t		m_index;
-	CSelectedShape * m_pSelectedShape = nullptr;
+	size_t		m_shapeIndex;
 	CFrame		m_oldFrame;
 	CFrame		m_newData;
 };

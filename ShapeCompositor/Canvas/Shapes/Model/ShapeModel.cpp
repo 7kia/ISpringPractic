@@ -53,6 +53,16 @@ float CShapeModel::GetOutlineThickness() const
 	return m_outlineThikness;
 }
 
+void CShapeModel::SetFrame(const CFrame & data)
+{
+	CFrame::SetFrame(data);
+	m_onChangeRect(data);
+}
+
+signal::Connection CShapeModel::DoOnRectChanged(std::function<void(const CFrame&)> const & action)
+{
+	return m_onChangeRect.connect(action);
+}
 
 bool CShapeModel::operator==(const CShapeModel & otherModel) const
 {

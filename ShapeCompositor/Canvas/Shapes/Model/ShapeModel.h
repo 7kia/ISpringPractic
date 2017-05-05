@@ -31,19 +31,25 @@ public:
 	void SetOutlineThickness(const float thickness) override;
 	float GetOutlineThickness() const override;
 	//--------------------------------------------
-
+	// IFrame
+	void SetFrame(const CFrame & data) override;
+	//--------------------------------------------
 	//void SetType();
 	ShapeType GetType() const;
+
+
+	signal::Connection DoOnRectChanged(std::function<void(const CFrame&)> const& action);
 
 	bool operator==(const CShapeModel & otherModel) const;
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
 	ShapeType m_type = ShapeType::Triangle;
-
 	Color m_fillColor;
 	Color m_outlineColor;
 	float m_outlineThikness = 1.f;
+
+	signal::Signal<void(const CFrame&)> m_onChangeRect;
 };
 
 using CShapeModelPtr = std::shared_ptr<CShapeModel>;

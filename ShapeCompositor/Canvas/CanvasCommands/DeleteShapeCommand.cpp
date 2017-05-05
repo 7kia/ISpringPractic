@@ -4,24 +4,19 @@
 
 CDeleteShapeCanvasCommand::CDeleteShapeCanvasCommand(
 	IShapeCollection & shapeCollection,
-	CSelectedShape & selectedShape,
-	CTextureStorage & textureStorage,
+	size_t insertIndex,
+	CTextureStorage & textureStorage
 )
 	: m_shapeCollection(shapeCollection)
-	, m_selectShape(selectedShape)
 	, m_textureStorage(textureStorage)
-	, m_shapeModel(selectedShape.GetShape()->)
-	, m_index(shapeCollection.GetShapeIndex(selectedShape.GetShape()))
+	, m_shapeModel(shapeCollection.GetShape(insertIndex))
+	, m_insertIndex(insertIndex)
 {
 }
 
 void CDeleteShapeCanvasCommand::Execute()
 {
-	if (m_shapeCollection.IsSelectShape(m_index, m_selectShape.GetShape()))
-	{
-		m_selectShape.ResetSelectShapePtr();
-	}
-	m_shapeCollection.DeleteShape(m_index);
+	m_shapeCollection.DeleteShape(m_insertIndex);
 
 	if (m_shapeModel->GetType() == ShapeType::Picture)
 	{
@@ -36,7 +31,7 @@ void CDeleteShapeCanvasCommand::Execute()
 
 void CDeleteShapeCanvasCommand::Cancel()
 {
-	m_shapeCollection.InsertShape(m_index, m_shapeModel);
+	m_shapeCollection.InsertShape(m_insertIndex, m_shapeModel);
 
 	if (m_shapeModel->GetType() == ShapeType::Picture)
 	{

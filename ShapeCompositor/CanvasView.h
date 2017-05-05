@@ -15,9 +15,11 @@ public:
 public:
 	void Draw(IShapeRenderer & renderer);
 
+	void AddShapeView(CShapeViewPtr & pView, size_t insertIndex);
 	//--------------------------------------------
 	// Signals
 	signal::Connection DoOnDeleteShape(std::function<void(size_t)> const & action);
+	signal::Connection DoOnChangeRectShape(std::function<void(const CFrame, size_t)> const & action);
 
 	//--------------------------------------------
 	// NameInterface
@@ -33,11 +35,12 @@ public:
 
 private:
 	void ChangeCursor(const Vec2f & position);
-	void CreateCommandForSelectedShape();
+	void CreateChangeRectCommand();
 
 	size_t GetShapeIndex(const CShapeViewPtr & shapeView);
 
 	signal::Signal<void(size_t)> m_deleteShape;
+	signal::Signal<void(const CFrame, size_t)> m_createChangeRectCommand;
 
 	//////////////////////////////////////////////////////////////////////
 	// Data

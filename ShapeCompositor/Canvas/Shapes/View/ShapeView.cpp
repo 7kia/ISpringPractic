@@ -42,8 +42,24 @@ ShapeType CShapeView::GetType() const
 	return m_type;
 }
 
+void CShapeView::SetFrame(const CFrame & data)
+{
+	CFrame::SetFrame(data);
+	m_onChangeRect(data);
+}
+
 bool CShapeView::IsPointIntersection(const Vec2f point) const
 {
 	return false;
+}
+
+void CShapeView::SetPresenter(CShapePresenter & presenter)
+{
+	m_presenter = presenter;
+}
+
+signal::Connection CShapeView::DoOnRectChanged(std::function<void(const CFrame&)> const & action)
+{
+	return m_onChangeRect.connect(action);
 }
 

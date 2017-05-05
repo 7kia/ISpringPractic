@@ -98,7 +98,7 @@ public:
 
 	// Get shape data
 	CFrame GetFrame() const;
-	void SetFrame(const CFrame & data);
+	virtual void SetFrame(const CFrame & data);
 
 	std::vector<Vec2f> GetFrameVertices() const;
 

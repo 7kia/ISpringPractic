@@ -3,39 +3,49 @@
 
 CShapeViewPtr CShapeViewFactory::CreateShape(const CShapeModel & data)
 {
+	CShapePresenter presenter(data);
+	CShapeViewPtr view;
 	switch (data.type)
 	{
 	case ShapeType::Triangle:
-		return std::make_shared<CTriangleView>(
+		view = std::make_shared<CTriangleView>(
 			data.GetPosition(),
 			data.GetSize(),
 			data.GetFillColor(),
 			data.GetOutlineColor(),
 			data.GetOutlineThickness()
 			);
+		view->SetPresenter(presenter);
+		return view;
 	case ShapeType::Rectangle:
-		return std::make_shared<CRectangleView>(
+		view = std::make_shared<CRectangleView>(
 			data.GetPosition(),
 			data.GetSize(),
 			data.GetFillColor(),
 			data.GetOutlineColor(),
 			data.GetOutlineThickness()
 			);
+		view->SetPresenter(presenter);
+		return view;
 	case ShapeType::Ellipse:
-		return std::make_shared<CEllipseView>(
+		view = std::make_shared<CEllipseView>(
 			data.GetPosition(),
 			data.GetSize(),
 			data.GetFillColor(),
 			data.GetOutlineColor(),
 			data.GetOutlineThickness()
 			);
+		view->SetPresenter(presenter);
+		return view;
 	case ShapeType::Picture:
 		auto pictureModel = dynamic_cast<CPictureModel*>(&data);
-		return std::make_shared<CPictureView>(
+		view = std::make_shared<CPictureView>(
 			pictureModel->GetTexture(),
 			pictureModel->GetPosition(),
-			pictureModel->GetSize()
+			pictureModel->GetSize()// Need presenter
 			);
+		view->SetPresenter(presenter);
+		return view;
 	default:
 		throw std::runtime_error("The shape type not exist");
 		break;

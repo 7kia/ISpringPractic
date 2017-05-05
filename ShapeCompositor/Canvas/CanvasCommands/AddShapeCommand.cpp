@@ -6,7 +6,7 @@
 CAddShapeCanvasCommand::CAddShapeCanvasCommand(
 	IShapeCollection & pShapeCollection,
 	CShapeModelPtr & pShapeModel,
-	CTextureStorage & textureStorage,
+	CTextureStorage & textureStorage
 )
 	: m_shapeCollection(pShapeCollection)
 	, m_shapeModel(pShapeModel)
@@ -28,10 +28,6 @@ void CAddShapeCanvasCommand::Execute()
 
 void CAddShapeCanvasCommand::Cancel()
 {
-	if (m_shapeCollection.IsSelectShape(m_shapeCollection.GetShapeCount() - 1, m_selectShape.GetShape()))
-	{
-		m_selectShape.ResetSelectShapePtr();
-	}
 	DeleteLastElement(m_shapeCollection.GetShapes());
 
 	if (m_shapeModel->GetType() == ShapeType::Picture)

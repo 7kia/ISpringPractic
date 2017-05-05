@@ -34,6 +34,14 @@ public:
 	virtual void ResetSelectedShape() = 0;
 };
 
+class IShapeViewCreator
+{
+public:
+	virtual ~IShapeViewCreator() = default;
+
+	virtual void AddShapeView(CShapeModelPtr & pModel, size_t insertIndex) = 0;
+};
+
 class IViewSignaller
 {
 public:
@@ -50,7 +58,6 @@ public:
 	virtual signal::Connection DoOnUndoCommand(std::function<void()> const & action) = 0;
 	virtual signal::Connection DoOnRedoCommand(std::function<void()> const & action) = 0;
 
-
 	virtual signal::Connection DoOnDeleteShapeCommand(std::function<void(size_t)> const & action) = 0;
 	virtual signal::Connection DoOnChangeRectCommand(std::function<void(const CFrame, size_t)> const & action) = 0;
 	virtual signal::Connection DoOnCreateShapeCommand(std::function<void(ShapeType)> const & action) = 0;
@@ -64,6 +71,7 @@ class CShapeCompositorView
 	: public CScrollView
 	, public IViewReseter
 	, public IViewSignaller
+	, public IShapeViewCreator
 {
 public:
 	CShapeCompositorView();
@@ -89,10 +97,12 @@ public:
 	void					Undo();
 	void					Redo();
 
-	
+	//--------------------------------------------
+	// IShapeViewCreator
+	void AddShapeView(CShapeModelPtr & pModel, size_t insertIndex) override;
 	//--------------------------------------------
 	// IViewReseter
-	void					ResetSelectedShape() override;
+	void ResetSelectedShape() override;
 	//--------------------------------------------
 	// IViewSignaller
 	signal::Connection DoOnSaveAsDocument(std::function<bool()> const & action);
@@ -125,7 +135,7 @@ protected:
 	signal::Signal<void()> m_redoCommand;
 
 	signal::Signal<void(const CFrame, size_t)> m_createChangeRectCommand;
-	signal::Signal<void(ShapeType)> m_createShapeCommand;
+	signal::Signal<void(ShapeType)> m_onCreateShape;
 	signal::Signal<void(ID2D1HwndRenderTarget *)> m_setRenderTargetForModel;// Render target create in the class and need in other
 protected:
 	CCanvasView m_canvasView;

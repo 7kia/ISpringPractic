@@ -42,6 +42,13 @@ void CCanvasView::Draw(IShapeRenderer & renderer)
 	}
 }
 
+void CCanvasView::AddShapeView(CShapeViewPtr & pView, size_t insertIndex)
+{
+	CheckIndex(insertIndex, m_shapeViews.size() - 1);
+
+	m_shapeViews.insert(m_shapeViews.begin() + insertIndex, pView);
+}
+
 bool CCanvasView::HandleLButtonDown(const Vec2f point)
 {
 	ChangeCursor(point);
@@ -85,7 +92,7 @@ bool CCanvasView::HandleLButtonUp(const Vec2f point)
 
 	if (m_selectedShape.DoneUpdate())
 	{
-		CreateCommandForSelectedShape();
+		CreateChangeRectCommand();
 		m_selectedShape.ResetUpdateParameters();
 	}
 
@@ -191,7 +198,7 @@ void CCanvasView::ChangeCursor(const Vec2f & position)
 
 }
 
-void CCanvasView::CreateCommandForSelectedShape()
+void CCanvasView::CreateChangeRectCommand()
 {
 	switch (m_selectedShape.GetUpdateType())
 	{
@@ -201,7 +208,7 @@ void CCanvasView::CreateCommandForSelectedShape()
 	case CSelectedShape::UpdateType::MarkerRightBottom:
 	case CSelectedShape::UpdateType::MarkerRightTop:
 	{
-		m_createChangeRectCommand(m_oldFrame, m_selectedShape);
+		m_createChangeRectCommand(m_oldFrame, GetShapeIndex(m_selectedShape.GetShape()));
 	}
 	break;
 	case CSelectedShape::UpdateType::None:
@@ -220,4 +227,9 @@ size_t CCanvasView::GetShapeIndex(const CShapeViewPtr & shapeView)
 signal::Connection CCanvasView::DoOnDeleteShape(std::function<void(size_t)> const & action)
 {
 	return m_deleteShape.connect(action);
+}
+
+signal::Connection CCanvasView::DoOnChangeRectShape(std::function<void(const CFrame, size_t)> const & action)
+{
+	return m_createChangeRectCommand.connect(action);
 }

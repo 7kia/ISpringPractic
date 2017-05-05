@@ -29,14 +29,26 @@ public:
 	float GetOutlineThickness() const override;
 
 	//--------------------------------------------
-
+	// IFrame
+	void SetFrame(const CFrame & data) override;
+	//--------------------------------------------
 	virtual bool IsPointIntersection(const Vec2f point) const;
+
+	void SetPresenter(CShapePresenter & presenter);
+
+	signal::Connection DoOnRectChanged(std::function<void(const CFrame&)> const& action);
+
 	//////////////////////////////////////////////////////////////////////
 	// Data
 protected:
 	Color m_fillColor;
 	Color m_outlineColor;
 	float m_outlineThikness = 1.f;
+
+	signal::Signal<void(CShapeModelPtr &, size_t)> m_onCreateView;
+	signal::Signal<void(const CFrame&)> m_onChangeRect;// For send message for selected shape
+
+	CShapePresenter m_presenter;
 };
 
 using CShapeViewPtr = std::shared_ptr<CShapeView>;

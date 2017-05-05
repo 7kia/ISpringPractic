@@ -39,7 +39,7 @@ signal::Connection CShapeCompositorView::DoOnChangeRectCommand(std::function<voi
 
 signal::Connection CShapeCompositorView::DoOnCreateShapeCommand(std::function<void(ShapeType)> const & action)
 {
-	return m_createShapeCommand.connect(action);
+	return m_onCreateShape.connect(action);
 }
 
 signal::Connection CShapeCompositorView::DoOnSetRenderTargetForModel(std::function<void(ID2D1HwndRenderTarget*)> const & action)

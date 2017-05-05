@@ -233,7 +233,12 @@ void CShapeCompositorModel::ChangeRect(const CFrame oldFrame, size_t shapeIndex)
 	m_history.AddAndExecuteCommand(std::make_shared<CChangeShapeRectCanvasCommand>(
 		m_canvasModel.GetShapeProvider(),
 		oldFrame,
-		m_canvasModel.GetShape(shapeIndex)->GetFrame(),
+		shapeIndex
 		)
 	);
+}
+
+signal::Connection CShapeCompositorModel::DoOnCreateView(std::function<void(CShapeModelPtr&, size_t)> const & action)
+{
+	return m_canvasModel.DoOnCreateView(action);//m_deleteShape.connect(action);
 }

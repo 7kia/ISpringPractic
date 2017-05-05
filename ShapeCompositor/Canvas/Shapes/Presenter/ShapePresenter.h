@@ -24,5 +24,7 @@ private:
 	// Data
 private:
 	CShapeView * m_pView = nullptr;
-	CShapeModelPtr m_pModel;
+	CShapeModel * m_pModel = nullptr;
+
+	ScopedConnectionsStorage m_connections;
 };

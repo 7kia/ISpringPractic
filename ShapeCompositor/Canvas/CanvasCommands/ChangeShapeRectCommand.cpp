@@ -6,37 +6,30 @@
 CChangeShapeRectCanvasCommand::CChangeShapeRectCanvasCommand(
 	IShapeProvider & pShapeStorage,
 	const CFrame & oldData,
-	const CFrame & newData,
-	CSelectedShape & selectedShape
+	size_t shapeIndex
 )
 	: m_shapeCollection(pShapeStorage)
-	, m_index(pShapeStorage.GetShapeIndex(selectedShape.GetShape()))
+	, m_shapeIndex(shapeIndex)
 	, m_oldFrame(oldData)
-	, m_newData(newData)
-	, m_pSelectedShape(&selectedShape)
+	, m_newData(pShapeStorage.GetShape(shapeIndex)->GetFrame())
 {
 }
 
 void CChangeShapeRectCanvasCommand::Execute()
 {
-	CShapeViewPtr shape = m_shapeCollection.GetShape(m_index);
+	auto shape = m_shapeCollection.GetShape(m_shapeIndex);
 	shape->SetFrame(m_newData);
 
-	if (m_pSelectedShape->GetShape() == shape)
-	{
-		m_pSelectedShape->SetFrame(m_newData);
-	}
+	// SelectedShape necessary reset, send message - set m_newFrame
+
 }
 
 void CChangeShapeRectCanvasCommand::Cancel()
 {
-	CShapeViewPtr shape = m_shapeCollection.GetShape(m_index);
+	auto shape = m_shapeCollection.GetShape(m_shapeIndex);
 	shape->SetFrame(m_oldFrame);
 
-	if (m_pSelectedShape->GetShape() == shape)
-	{
-		m_pSelectedShape->SetFrame(m_oldFrame);
-	}
+	// SelectedShape necessary reset, send message - set m_oldFrame
 }
 
 void CChangeShapeRectCanvasCommand::Destroy()

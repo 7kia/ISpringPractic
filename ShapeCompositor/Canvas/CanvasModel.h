@@ -93,6 +93,10 @@ public:
 	//--------------------------------------------
 
 	//--------------------------------------------
+	// Signals
+	signal::Connection DoOnCreateView(std::function<void(CShapeModelPtr &, size_t)> const & action);
+
+	//--------------------------------------------
 	// IShapeProvider
 	CShapeModelPtr				GetShape(const size_t index) override;
 	CShapeModelPtr				GetShape(const ID2D1Bitmap * pTexture) override;
@@ -115,7 +119,10 @@ private:
 	// Data
 private:
 	std::vector<CShapeModelPtr>	m_shapes;
-
 	SSize m_size;
+
+	// Signals
+	signal::Signal<void(CShapeModelPtr &, size_t)> m_onCreateView;
+
 };
 

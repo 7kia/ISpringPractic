@@ -60,16 +60,16 @@ END_MESSAGE_MAP()
 CShapeCompositorView::CShapeCompositorView()
 	: m_model(std::make_unique<CShapeCompositorModel>())
 {
-	m_controller = std::make_unique<CShapeCompositorPresenter>(this);
+	m_controller = std::make_unique<CShapeCompositorPresenter>(this);//this - IViewSignaller *
 
 	SetBoundingRect(m_model->GetCanvasRect());
 
 	m_controller->SetHistoryManipulator(m_model.get());
 	m_controller->SetDocumentManipulator(m_model.get());
 	m_controller->SetShapeManipulator(m_model.get());
-	m_controller->SetDataForDraw(m_model.get());
 	m_controller->SetHaveRenderTarget(m_model.get());
 	m_controller->SetModelReseter(m_model.get(), this);
+	m_controller->SetShapeViewCreator(this);//this - IShapeViewCreator *
 }
 
 CShapeCompositorView::~CShapeCompositorView()
@@ -104,25 +104,25 @@ HRESULT CShapeCompositorView::Draw()
 
 void CShapeCompositorView::CreateTriangle()
 {
-	m_createShapeCommand(ShapeType::Triangle, m_selectedShape);
+	m_onCreateShape(ShapeType::Triangle, m_selectedShape);
 	RedrawWindow();
 }
 
 void CShapeCompositorView::CreateRectangle()
 {
-	m_createShapeCommand(ShapeType::Rectangle, m_selectedShape);
+	m_onCreateShape(ShapeType::Rectangle, m_selectedShape);
 	RedrawWindow();
 }
 
 void CShapeCompositorView::CreateEllipse()
 {
-	m_createShapeCommand(ShapeType::Ellipse, m_selectedShape);
+	m_onCreateShape(ShapeType::Ellipse, m_selectedShape);
 	RedrawWindow();
 }
 
 void CShapeCompositorView::CreatePicture()
 {
-	m_createShapeCommand(ShapeType::Picture, m_selectedShape);
+	m_onCreateShape(ShapeType::Picture, m_selectedShape);
 	RedrawWindow();
 }
 
@@ -372,13 +372,15 @@ BOOL CShapeCompositorView::OnEraseBkgnd(CDC* pDC)
 	return TRUE;//CScrollView::OnEraseBkgnd(pDC);
 }
 
+void CShapeCompositorView::AddShapeView(CShapeModelPtr & pModel, size_t insertIndex)
+{
+	m_canvasView.AddShapeView(CShapeViewFactory::CreateShape(pModel), insertIndex);
+}
+
 void CShapeCompositorView::ResetSelectedShape()
 {
 	m_canvasView.ResetSelectShapePtr();
 }
-
-
-
 
 Vec2f CShapeCompositorView::GetScreenPosition(const CPoint & point)
 {
@@ -390,8 +392,6 @@ Vec2f CShapeCompositorView::GetScreenPosition(const CPoint & point)
 
 	return Vec2f(float(windowPos.x + scrollPosition.x), float(windowPos.y + scrollPosition.y));
 }
-
-
 
 void CShapeCompositorView::OnDestroy()
 {	

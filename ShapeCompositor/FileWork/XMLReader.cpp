@@ -65,7 +65,7 @@ namespace
 
 bool CXMLReader::Save(
 	const std::wstring & path,
-	const std::vector<CShapeViewPtr> & shapes,
+	const std::vector<CShapeModel> & shapes,
 	const CTextureStorage & textureStorage
 )
 {
@@ -93,8 +93,8 @@ bool CXMLReader::Save(
 			if (shape->GetType() == ShapeType::Picture)
 			{
 				// not wstring because not << overload for wstring
-				const auto picture = dynamic_cast<CPictureView*>(shape.get());
-				child.add("Texture", ToString(textureStorage.GetNameTexture(picture->GetTexture())) );
+				const auto pictureModel = dynamic_cast<CPictureModel*>(shape.get());
+				child.add("Texture", ToString(textureStorage.GetNameTexture(pictureModel->GetTexture())) );
 			}
 
 			propertyTree.add_child("Shapes.Shape", child);
@@ -162,7 +162,7 @@ CXMLReader::ReadData CXMLReader::Open(
 						dataForCreation.imageFactory.CreateTexture(ToWString(folder + "/" + texture))
 					);
 					readData.shapeData.push_back(
-						std::make_shared<CPictureView>(
+						CPictureModel(
 							readData.textureStorage.GetTexture(ToWString(texture)),
 							data.position,
 							data.size
@@ -171,7 +171,7 @@ CXMLReader::ReadData CXMLReader::Open(
 				}
 				else
 				{
-					readData.shapeData.push_back(dataForCreation.shapeFactory.CreateShape(data));
+					readData.shapeData.push_back(data);
 				}
 			}
 		}
