@@ -1,7 +1,8 @@
 #pragma once
 
-#include "AllShapes.h"
+#include "AllViewShapes.h"
 #include "Picture/PictureView.h"
+#include "Picture/PictureModel.h"
 #include <vector>
 
 class CShapeViewFactory
@@ -10,8 +11,9 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
-	static CShapeViewPtr CreateShape(const CShapeModel & data);
-	//////////////////////////////////////////////////////////////////////
+	CShapeViewPtr CreateShape(CShapeModelPtr & data);
+		//////////////////////////////////////////////////////////////////////
 	// Data
 private:
+	std::shared_ptr<CPictureView> GetPictureView(CShapeModelPtr & data);
 };

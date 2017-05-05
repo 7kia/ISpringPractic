@@ -1,9 +1,11 @@
 #pragma once
 
-#include "Canvas\D2DObjectRenderer.h"
+#include "D2DObjectRenderer.h"
 #include "MouseEventHandler.h"
+#include "SelectedShape.h"
+#include "CanvasModel.h"
 
-bool HavePictureWithTexture(ID2D1Bitmap * pTexture, const std::vector<CShapeViewPtr> & shapes);
+CShapeViewPtr GetShape(const Vec2f mousePosition, const std::vector<CShapeViewPtr> & vector);
 
 
 class CCanvasView : public IMouseEventHandler
@@ -33,9 +35,11 @@ public:
 	void ResetSelectShapePtr();
 	void SetBoundingRect(const D2D1_RECT_F & rect);
 
+
 private:
 	void ChangeCursor(const Vec2f & position);
 	void CreateChangeRectCommand();
+	void ChangeSelectedShape(const Vec2f & mousePos);
 
 	size_t GetShapeIndex(const CShapeViewPtr & shapeView);
 

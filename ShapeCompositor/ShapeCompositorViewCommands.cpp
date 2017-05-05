@@ -11,7 +11,7 @@ signal::Connection CShapeCompositorView::DoOnSaveDocument(std::function<bool()> 
 	return m_saveDocument.connect(action);
 }
 
-signal::Connection CShapeCompositorView::DoOnOpenDocument(std::function<bool(CSelectedShape &)> const & action)
+signal::Connection CShapeCompositorView::DoOnOpenDocument(std::function<bool()> const & action)
 {
 	return m_openDocument.connect(action);
 }

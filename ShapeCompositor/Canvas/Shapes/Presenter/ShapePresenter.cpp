@@ -3,9 +3,13 @@
 #include "../ShapeViewFactory.h"
 
 CShapePresenter::CShapePresenter(CShapeModelPtr & pModel)
-	: m_pModel(pModel)
+	: m_pModel(pModel.get())
 {
-	m_pView = CShapeViewFactory::CreateShape(pModel);
+}
+
+void CShapePresenter::SetShapeView(CShapeView * pView)
+{
+	m_pView = pView;
 	ConnectSignalsForView();
 	ConnectSignalsForModel();
 }
@@ -16,5 +20,5 @@ void CShapePresenter::ConnectSignalsForView()
 
 void CShapePresenter::ConnectSignalsForModel()
 {
-	m_connections += m_pModel->DoOnRectChanged(boost::bind(&IFrame::SetFrame, m_pView, _1));
+	m_connections += m_pModel->DoOnRectChanged(boost::bind(&CFrame::SetFrame, m_pView, _1));
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "View/ShapeView.h"
+#include "../View/ShapeView.h"
 #include "ConnectionsStorage.h"
 
 class CShapePresenter
@@ -15,6 +15,7 @@ public:
 
 	//--------------------------------------------
 
+	void SetShapeView(CShapeView * pView);
 	//void			Set();
 	//void			Get();
 private:

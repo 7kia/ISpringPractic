@@ -12,9 +12,9 @@
 #include <boost/filesystem.hpp>
 
 #include "Canvas\CanvasModel.h"
-#include "Canvas\Picture\PictureView.h"
-#include "Canvas\Picture\TextureStorage.h"
-#include "Canvas\Picture\D2DImageFactory.h"
+#include "Canvas\Shapes\Picture\PictureView.h"
+#include "Canvas\Shapes\Picture\TextureStorage.h"
+#include "Canvas\Shapes\Picture\D2DImageFactory.h"
 #include <string>
 
 class CXMLReader
@@ -26,10 +26,10 @@ public:
 	{
 		ReadData();
 		ReadData(
-			std::vector<CShapeViewPtr> & shapeData,
+			std::vector<CShapeModelPtr> & shapeData,
 			CTextureStorage & textureStorage
 		);
-		std::vector<CShapeViewPtr> shapeData;
+		std::vector<CShapeModelPtr> shapeData;
 		CTextureStorage textureStorage;
 	};
 
@@ -47,7 +47,7 @@ public:
 public:
 	static bool Save(
 		const std::wstring & path,
-		const std::vector<CShapeViewPtr>  & shapes,
+		const std::vector<CShapeModelPtr> & shapes,
 		const CTextureStorage & textureStorage
 	);
 	static ReadData Open(

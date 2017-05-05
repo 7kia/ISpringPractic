@@ -96,7 +96,7 @@ void CCanvasModel::Clear()
 	m_shapes.clear();
 }
 
-signal::Connection CCanvasModel::DoOnCreateView(std::function<void(CShapeModelPtr&, size_t)> const & action)
+signal::Connection CCanvasModel::DoOnCreateView(std::function<void(const CShapeModelPtr&, size_t)> const & action)
 {
 	return m_onCreateView.connect(action);
 }
@@ -124,19 +124,6 @@ CShapeModelPtr CCanvasModel::GetShape(const ID2D1Bitmap * pTexture)
 	return CShapeModelPtr();
 }
 
-CShapeViewPtr GetShape(const Vec2f mousePosition, const std::vector<CShapeViewPtr> & vector)
-{
-	CShapeViewPtr foundShape;
-	for (auto iter = vector.rbegin(); iter != vector.rend(); ++iter)
-	{
-		if ((*iter)->IsPointIntersection(mousePosition))
-		{
-			foundShape = *iter;
-			break;
-		}
-	}
-	return foundShape;
-}
 
 bool CCanvasModel::IsSelectShape(const size_t index, const CShapeModelPtr & selectedShape) const
 {

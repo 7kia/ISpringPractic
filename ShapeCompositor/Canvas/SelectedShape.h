@@ -3,7 +3,7 @@
 #include <memory>
 #include <array>
 
-#include "Shapes\AllShapes.h"
+#include "Shapes\AllViewShapes.h"
 #include "ShapeRenderer.h"
 #include "Shapes\ShapeViewFactory.h"
 #include <boost\optional.hpp>

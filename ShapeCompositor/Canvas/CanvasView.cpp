@@ -1,26 +1,23 @@
 #include "stdafx.h"
 #include "CanvasView.h"
-
-
-bool HavePictureWithTexture(ID2D1Bitmap * pTexture, const std::vector<CShapeViewPtr> & shapes)
-{
-	for (const auto & shape : shapes)
-	{
-		if (shape->GetType() == ShapeType::Picture)
-		{
-			auto pPicture = dynamic_cast<CPictureView*>(shape.get());
-			if (pPicture->GetTexture() == pTexture)
-			{
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
+#include "GlobalFunctions.h"
 
 CCanvasView::CCanvasView()
 {
+	CShapeViewFactory factory;
+	m_canvasBorder = factory.CreateShape(
+		std::make_shared<CShapeModel>(
+			ShapeType::Rectangle,
+			Vec2f(
+				CanvasNamespace::CANVAS_SIZE.width / 2.f,
+				CanvasNamespace::CANVAS_SIZE.height / 2.f
+			),
+			CanvasNamespace::CANVAS_SIZE,
+			NOT_COLOR,
+			BLACK_COLOR,
+			3.f
+			)
+	);
 }
 
 void CCanvasView::Draw(IShapeRenderer & renderer)
@@ -196,6 +193,21 @@ void CCanvasView::ChangeCursor(const Vec2f & position)
 		}
 	}
 
+}
+
+
+CShapeViewPtr GetShape(const Vec2f mousePosition, const std::vector<CShapeViewPtr> & vector)
+{
+	CShapeViewPtr foundShape;
+	for (auto iter = vector.rbegin(); iter != vector.rend(); ++iter)
+	{
+		if ((*iter)->IsPointIntersection(mousePosition))
+		{
+			foundShape = *iter;
+			break;
+		}
+	}
+	return foundShape;
 }
 
 void CCanvasView::CreateChangeRectCommand()

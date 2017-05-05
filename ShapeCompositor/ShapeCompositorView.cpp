@@ -61,8 +61,8 @@ CShapeCompositorView::CShapeCompositorView()
 	: m_model(std::make_unique<CShapeCompositorModel>())
 {
 	m_controller = std::make_unique<CShapeCompositorPresenter>(this);//this - IViewSignaller *
-
-	SetBoundingRect(m_model->GetCanvasRect());
+	
+	m_canvasView.SetBoundingRect(m_model->GetCanvasRect());
 
 	m_controller->SetHistoryManipulator(m_model.get());
 	m_controller->SetDocumentManipulator(m_model.get());
@@ -104,25 +104,25 @@ HRESULT CShapeCompositorView::Draw()
 
 void CShapeCompositorView::CreateTriangle()
 {
-	m_onCreateShape(ShapeType::Triangle, m_selectedShape);
+	m_onCreateShape(ShapeType::Triangle);
 	RedrawWindow();
 }
 
 void CShapeCompositorView::CreateRectangle()
 {
-	m_onCreateShape(ShapeType::Rectangle, m_selectedShape);
+	m_onCreateShape(ShapeType::Rectangle);
 	RedrawWindow();
 }
 
 void CShapeCompositorView::CreateEllipse()
 {
-	m_onCreateShape(ShapeType::Ellipse, m_selectedShape);
+	m_onCreateShape(ShapeType::Ellipse);
 	RedrawWindow();
 }
 
 void CShapeCompositorView::CreatePicture()
 {
-	m_onCreateShape(ShapeType::Picture, m_selectedShape);
+	m_onCreateShape(ShapeType::Picture);
 	RedrawWindow();
 }
 
@@ -256,7 +256,8 @@ void CShapeCompositorView::OnFileSaveAs()
 
 void CShapeCompositorView::OnFileOpen()
 {
-	if (m_openDocument(m_selectedShape))
+	m_canvasView.ResetSelectShapePtr();
+	if (m_openDocument())
 	{
 		//SetWindowText(m_document.GetFileName());
 		RedrawWindow();
@@ -374,7 +375,8 @@ BOOL CShapeCompositorView::OnEraseBkgnd(CDC* pDC)
 
 void CShapeCompositorView::AddShapeView(CShapeModelPtr & pModel, size_t insertIndex)
 {
-	m_canvasView.AddShapeView(CShapeViewFactory::CreateShape(pModel), insertIndex);
+	CShapeViewFactory factory;
+	m_canvasView.AddShapeView(factory.CreateShape(pModel), insertIndex);
 }
 
 void CShapeCompositorView::ResetSelectedShape()

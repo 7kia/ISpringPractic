@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Canvas\ShapeRenderer.h"
-#include "Canvas\Picture\PictureView.h"
+#include "Canvas\Shapes\Picture\PictureView.h"
 
 class CD2DObjectRenderer
 	: public IShapeVisitor

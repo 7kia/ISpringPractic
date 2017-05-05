@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Canvas\Shapes\RectangleView.h"
+#include "Canvas\Shapes\View\RectangleView.h"
 #include "PictureModel.h"
 #include <d2d1.h>
 
@@ -8,6 +8,12 @@ class CPictureView : public CRectangleView
 {
 public:
 	CPictureView() = default;
+	CPictureView(
+		ID2D1Bitmap * pTexture,
+		const Vec2f position,
+		const SSize size
+	);
+
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:

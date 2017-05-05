@@ -65,7 +65,7 @@ namespace
 
 bool CXMLReader::Save(
 	const std::wstring & path,
-	const std::vector<CShapeModel> & shapes,
+	const std::vector<CShapeModelPtr> & shapes,
 	const CTextureStorage & textureStorage
 )
 {
@@ -93,7 +93,7 @@ bool CXMLReader::Save(
 			if (shape->GetType() == ShapeType::Picture)
 			{
 				// not wstring because not << overload for wstring
-				const auto pictureModel = dynamic_cast<CPictureModel*>(shape.get());
+				const auto pictureModel = dynamic_cast<const CPictureModel*>(shape.get());
 				child.add("Texture", ToString(textureStorage.GetNameTexture(pictureModel->GetTexture())) );
 			}
 
@@ -149,10 +149,14 @@ CXMLReader::ReadData CXMLReader::Open(
 				float width = shape.second.get<float>("Width");
 				float height = shape.second.get<float>("Height");
 
-				CShapeModel data;
-				data.type = GetShapeType(type);
-				data.position = Vec2f(x, y);
-				data.size = SSize(width, height);
+				auto data = std::make_shared<CShapeModel>(
+					type,
+					Vec2f(x, y),
+					SSize(width, height),
+					DEFAULT_FILL_COLOR,
+					DEFAULT_OUTLINE_COLOR,
+					1.f
+				);
 
 				if (type == "Picture")
 				{
@@ -162,10 +166,10 @@ CXMLReader::ReadData CXMLReader::Open(
 						dataForCreation.imageFactory.CreateTexture(ToWString(folder + "/" + texture))
 					);
 					readData.shapeData.push_back(
-						CPictureModel(
+						std::make_shared<CPictureModel>(
 							readData.textureStorage.GetTexture(ToWString(texture)),
-							data.position,
-							data.size
+							data->GetPosition(),
+							data->GetSize()
 						)
 					);
 				}
@@ -199,7 +203,7 @@ CXMLReader::ReadData::ReadData()
 }
 
 CXMLReader::ReadData::ReadData(
-	std::vector<CShapeViewPtr>& shapeData,
+	std::vector<CShapeModelPtr> & shapeData,
 	CTextureStorage & textureStorage
 )
 	: shapeData(shapeData)

@@ -11,6 +11,23 @@ bool CEllipseView::IsPointIntersection(const Vec2f point) const
 	return (x / a) + (y / b) <= 1.f;
 }
 
+CEllipseView::CEllipseView(
+	const Vec2f position,
+	const SSize size,
+	const Color & fillColor,
+	const Color & outlineColor,
+	float outlineThikness
+)
+	: CShapeView(
+		position,
+		size,
+		fillColor,
+		outlineColor,
+		outlineThikness
+	)
+{
+}
+
 void CEllipseView::Accept(IShapeVisitor & visitor) const
 {
 	visitor.Visit(*this);

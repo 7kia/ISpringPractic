@@ -1,7 +1,7 @@
 #pragma once
 
 #include "CanvasCommand.h"
-#include "Canvas\Shapes\AllShapes.h"
+#include "Canvas\Shapes\AllViewShapes.h"
 
 class CSelectedShape;
 class IShapeProvider;

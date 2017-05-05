@@ -10,8 +10,8 @@
 #include "Canvas\History.h"
 #include "FileWork\XMLReader.h"
 #include "FileWork\FileManager.h"
-#include "Canvas\Picture\TextureStorage.h"
-#include "Canvas\Picture\D2DImageFactory.h"
+#include "Canvas\Shapes\Picture\TextureStorage.h"
+#include "Canvas\Shapes\Picture\D2DImageFactory.h"
 
 
 class IDataForSave
@@ -40,7 +40,7 @@ public:
 
 	virtual bool SaveAsDocument() = 0;
 	virtual bool SaveDocument() = 0;
-	virtual bool OpenDocument(CSelectedShape & selectedShape) = 0;
+	virtual bool OpenDocument() = 0;
 	virtual bool NewDocument() = 0;
 };
 
@@ -77,13 +77,13 @@ public:
 
 	CString GetFileName() const;
 
-	bool OnFileSaveAs(std::vector<CShapeViewPtr> const & shapes, const CTextureStorage & textureStorage);
+	bool OnFileSaveAs(std::vector<CShapeModelPtr> const & shapes, const CTextureStorage & textureStorage);
 	CXMLReader::ReadData OnFileOpen(
 		IModelReseter * reseter,
 		std::vector<std::wstring> deleteTexture,
 		CXMLReader::DataForCreation & data
 	);
-	bool OnFileSave(std::vector<CShapeViewPtr> const & shapes, const CTextureStorage & textureStorage);
+	bool OnFileSave(std::vector<CShapeModelPtr> const & shapes, const CTextureStorage & textureStorage);
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:

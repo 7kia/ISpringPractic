@@ -10,13 +10,6 @@
 
 using TextureStorage = std::vector<CComPtr<ID2D1Bitmap>>;
 
-namespace CanvasNamespace
-{
-	static const SSize CANVAS_SIZE = SSize(640.f, 480.f);
-	static const float SCALE_FACTOR = 0.8f;
-	static const SSize MAX_PICTURE_SIZE = SSize(CANVAS_SIZE.width * SCALE_FACTOR, CANVAS_SIZE.height * SCALE_FACTOR);
-}
-
 
 class CStorageCell
 {

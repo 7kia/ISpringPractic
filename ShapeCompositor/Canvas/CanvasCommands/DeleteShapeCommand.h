@@ -1,8 +1,9 @@
 #pragma once
 
 #include "CanvasCommand.h"
-#include "Canvas\Shapes\AllShapes.h"
+#include "Canvas\Shapes\AllViewShapes.h"
 #include "Canvas\SelectedShape.h"
+#include "Canvas\Shapes\Picture\TextureStorage.h"
 
 class IShapeCollection;
 class CDeleteShapeCanvasCommand : public IMyCommand

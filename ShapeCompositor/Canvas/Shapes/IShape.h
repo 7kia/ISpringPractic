@@ -32,4 +32,6 @@ public:
 	// Thikness outline
 	virtual void SetOutlineThickness(const float thickness) = 0;
 	virtual float GetOutlineThickness() const = 0;
+
+	virtual void Accept(IShapeVisitor & visitor) const = 0;
 };

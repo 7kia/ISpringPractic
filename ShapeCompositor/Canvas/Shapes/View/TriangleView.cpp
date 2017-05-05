@@ -32,6 +32,23 @@ namespace
 
 }
 
+CTriangleView::CTriangleView(
+	const Vec2f position,
+	const SSize size,
+	const Color & fillColor,
+	const Color & outlineColor,
+	float outlineThikness
+)
+	: CShapeView(
+		position,
+		size,
+		fillColor,
+		outlineColor,
+		outlineThikness
+	)
+{
+}
+
 bool CTriangleView::IsPointIntersection(const Vec2f point) const
 {
 	auto vertices = GetVertices();

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Canvas\Shapes\AllShapes.h"
+#include "Canvas\Shapes\AllViewShapes.h"
 
 
 class IShapeRenderer

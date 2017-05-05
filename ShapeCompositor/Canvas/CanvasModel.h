@@ -5,7 +5,7 @@
 #include <vector>
 
 #include "Shapes\ShapeViewFactory.h"
-#include "Picture\PictureView.h"
+#include "Shapes\Picture\PictureView.h"
 #include "ShapeRenderer.h"
 #include "CanvasCommands\AllCanvasCommand.h"
 #include "MouseEventHandler.h"
@@ -20,7 +20,13 @@ class CShapeCompositorView;
 class CShapeCompositorDoc;
 class CCanvasController;
 
-CShapeViewPtr GetShape(const Vec2f mousePosition, const std::vector<CShapeViewPtr> & vector);
+
+namespace CanvasNamespace
+{
+	static const SSize CANVAS_SIZE = SSize(640.f, 480.f);
+	static const float SCALE_FACTOR = 0.8f;
+	static const SSize MAX_PICTURE_SIZE = SSize(CANVAS_SIZE.width * SCALE_FACTOR, CANVAS_SIZE.height * SCALE_FACTOR);
+}
 
 class IShapeProvider
 {
@@ -94,7 +100,7 @@ public:
 
 	//--------------------------------------------
 	// Signals
-	signal::Connection DoOnCreateView(std::function<void(CShapeModelPtr &, size_t)> const & action);
+	signal::Connection DoOnCreateView(std::function<void(const CShapeModelPtr &, size_t)> const & action);
 
 	//--------------------------------------------
 	// IShapeProvider
@@ -122,7 +128,7 @@ private:
 	SSize m_size;
 
 	// Signals
-	signal::Signal<void(CShapeModelPtr &, size_t)> m_onCreateView;
+	signal::Signal<void(const CShapeModelPtr &, size_t)> m_onCreateView;
 
 };
 

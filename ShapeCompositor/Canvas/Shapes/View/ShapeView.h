@@ -2,8 +2,10 @@
 
 
 #include <memory>
-#include "IShape.h"
-#include "Model/ShapeModel.h"
+#include "../IShape.h"
+#include "../Model/ShapeModel.h"
+
+class CShapePresenter;
 
 // Mixin for avoid dublicate
 class CShapeView 
@@ -11,7 +13,13 @@ class CShapeView
 	, public CFrame
 {
 public:
-	CShapeView(const ShapeType type);
+	CShapeView(
+		const Vec2f position = Vec2f(),
+		const SSize size = DEFAULT_SIZE,
+		const Color & fillColor = DEFAULT_FILL_COLOR,
+		const Color & outlineColor = DEFAULT_OUTLINE_COLOR,
+		const float outlineThikness = 1.f
+	);
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
@@ -32,9 +40,11 @@ public:
 	// IFrame
 	void SetFrame(const CFrame & data) override;
 	//--------------------------------------------
+	virtual void Accept(IShapeVisitor & visitor) const = 0;
+
 	virtual bool IsPointIntersection(const Vec2f point) const;
 
-	void SetPresenter(CShapePresenter & presenter);
+	void SetPresenter(std::shared_ptr<CShapePresenter> & pPresenter);
 
 	signal::Connection DoOnRectChanged(std::function<void(const CFrame&)> const& action);
 
@@ -48,7 +58,9 @@ protected:
 	signal::Signal<void(CShapeModelPtr &, size_t)> m_onCreateView;
 	signal::Signal<void(const CFrame&)> m_onChangeRect;// For send message for selected shape
 
-	CShapePresenter m_presenter;
+	std::shared_ptr<CShapePresenter> m_pPresenter;
 };
 
 using CShapeViewPtr = std::shared_ptr<CShapeView>;
+
+bool HavePictureWithTexture(ID2D1Bitmap * pTexture, const std::vector<CShapeModelPtr> & shapes);

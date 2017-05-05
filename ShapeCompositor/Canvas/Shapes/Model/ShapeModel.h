@@ -1,6 +1,8 @@
 #pragma once
 
-#include "ShapeAttributes.h"
+#include "../ShapeAttributes.h"
+#include "../IShape.h"
+#include "Signal.h"
 
 class CShapeModel
 	: public IShape
@@ -30,6 +32,7 @@ public:
 	// Thikness outline
 	void SetOutlineThickness(const float thickness) override;
 	float GetOutlineThickness() const override;
+
 	//--------------------------------------------
 	// IFrame
 	void SetFrame(const CFrame & data) override;

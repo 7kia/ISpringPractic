@@ -54,15 +54,15 @@ void CShapeCompositorPresenter::ConnectSignalsForDocumentManipulator()
 {	
 	m_connections += m_pViewSignaller->DoOnSaveAsDocument(boost::bind(&IDocumentManipulator::SaveAsDocument, m_pDocumentManipulator));
 	m_connections += m_pViewSignaller->DoOnSaveDocument(boost::bind(&IDocumentManipulator::SaveDocument, m_pDocumentManipulator));
-	m_connections += m_pViewSignaller->DoOnOpenDocument(boost::bind(&IDocumentManipulator::OpenDocument, m_pDocumentManipulator, _1));
+	m_connections += m_pViewSignaller->DoOnOpenDocument(boost::bind(&IDocumentManipulator::OpenDocument, m_pDocumentManipulator));
 	m_connections += m_pViewSignaller->DoOnNewDocument(boost::bind(&IDocumentManipulator::NewDocument, m_pDocumentManipulator));
 }
 
 void CShapeCompositorPresenter::ConnectSignalsForShapeManipulator()
 {
-	m_connections += m_pViewSignaller->DoOnDeleteShapeCommand(boost::bind(&IShapeManipulator::DeleteShape, m_pShapeManipulator, _1));
+	//m_connections += m_pViewSignaller->DoOnDeleteShapeCommand(boost::bind(&IShapeManipulator::DeleteShape, m_pShapeManipulator, _1));
 	m_connections += m_pViewSignaller->DoOnChangeRectCommand(boost::bind(&IShapeManipulator::ChangeRect, m_pShapeManipulator, _1, _2));
-	m_connections += m_pViewSignaller->DoOnCreateShapeCommand(boost::bind(&IShapeManipulator::CreateShape, m_pShapeManipulator , _1, _2));
+	m_connections += m_pViewSignaller->DoOnCreateShapeCommand(boost::bind(&IShapeManipulator::CreateShape, m_pShapeManipulator , _1));
 }
 
 void CShapeCompositorPresenter::ConnectSignalsForHaveRenderTarget()

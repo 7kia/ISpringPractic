@@ -52,7 +52,7 @@ HRESULT CShapeRender::CreateRecources(CShapeCompositorView * window)
 }
 
 
-void CShapeRender::Visit(const CRectangleShape & shape)
+void CShapeRender::Visit(const CRectangleView & shape)
 {
 	auto vertices = shape.GetVertices();
 
@@ -86,7 +86,7 @@ void CShapeRender::Visit(const CRectangleShape & shape)
 	m_geometrySink.Release();
 }
 
-void CShapeRender::Visit(const CEllipseShape & shape)
+void CShapeRender::Visit(const CEllipseView & shape)
 {
 	auto position = shape.GetPosition();
 	SSize size = shape.GetSize();
@@ -116,7 +116,7 @@ void CShapeRender::Visit(const CEllipseShape & shape)
 
 }
 
-void CShapeRender::Visit(const CTriangleShape & shape)
+void CShapeRender::Visit(const CTriangleView & shape)
 {
 	auto vertices = shape.GetVertices();
 

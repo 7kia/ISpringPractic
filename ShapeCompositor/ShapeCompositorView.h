@@ -16,7 +16,7 @@
 
 #include "ShapeCompositorDoc.h"
 #include "Canvas\D2DObjectRenderer.h"
-#include "CanvasView.h"
+#include "Canvas\CanvasView.h"
 #include "Signal.h"
 #include "FileWork\XMLReader.h"
 
@@ -47,18 +47,14 @@ class IViewSignaller
 public:
 	virtual ~IViewSignaller() = default;
 
-	virtual signal::Connection DoOnGetCanvasView(std::function<CShapeViewPtr()> const & action) = 0;
-	virtual signal::Connection DoOnGetCanvasShapes(std::function<std::vector<CShapeViewPtr>()> const & action) = 0;
-
 	virtual signal::Connection DoOnSaveAsDocument(std::function<bool()> const & action) = 0;
 	virtual signal::Connection DoOnSaveDocument(std::function<bool()> const & action) = 0;
-	virtual signal::Connection DoOnOpenDocument(std::function<bool(CSelectedShape &)> const & action) = 0;
+	virtual signal::Connection DoOnOpenDocument(std::function<bool()> const & action) = 0;
 	virtual signal::Connection DoOnNewDocument(std::function<bool()> const & action) = 0;
 
 	virtual signal::Connection DoOnUndoCommand(std::function<void()> const & action) = 0;
 	virtual signal::Connection DoOnRedoCommand(std::function<void()> const & action) = 0;
 
-	virtual signal::Connection DoOnDeleteShapeCommand(std::function<void(size_t)> const & action) = 0;
 	virtual signal::Connection DoOnChangeRectCommand(std::function<void(const CFrame, size_t)> const & action) = 0;
 	virtual signal::Connection DoOnCreateShapeCommand(std::function<void(ShapeType)> const & action) = 0;
 	virtual signal::Connection DoOnSetRenderTargetForModel(std::function<void(ID2D1HwndRenderTarget *)> const & action) = 0;
@@ -105,21 +101,20 @@ public:
 	void ResetSelectedShape() override;
 	//--------------------------------------------
 	// IViewSignaller
-	signal::Connection DoOnSaveAsDocument(std::function<bool()> const & action);
-	signal::Connection DoOnSaveDocument(std::function<bool()> const & action);
-	signal::Connection DoOnOpenDocument(std::function<bool(CSelectedShape &)> const & action);
-	signal::Connection DoOnNewDocument(std::function<bool()> const & action);
+	signal::Connection DoOnSaveAsDocument(std::function<bool()> const & action) override;
+	signal::Connection DoOnSaveDocument(std::function<bool()> const & action) override;
+	signal::Connection DoOnOpenDocument(std::function<bool()> const & action) override;
+	signal::Connection DoOnNewDocument(std::function<bool()> const & action) override;
 
-	signal::Connection DoOnUndoCommand(std::function<void()> const & action);
-	signal::Connection DoOnRedoCommand(std::function<void()> const & action);
+	signal::Connection DoOnUndoCommand(std::function<void()> const & action) override;
+	signal::Connection DoOnRedoCommand(std::function<void()> const & action) override;
 
-
-	signal::Connection DoOnChangeRectCommand(std::function<void(const CFrame, size_t)> const & action);
-	signal::Connection DoOnCreateShapeCommand(std::function<void(ShapeType)> const & action);
-	signal::Connection DoOnSetRenderTargetForModel(std::function<void(ID2D1HwndRenderTarget *)> const & action);
+	signal::Connection DoOnChangeRectCommand(std::function<void(const CFrame, size_t)> const & action) override;
+	signal::Connection DoOnCreateShapeCommand(std::function<void(ShapeType)> const & action) override;
+	signal::Connection DoOnSetRenderTargetForModel(std::function<void(ID2D1HwndRenderTarget *)> const & action) override;
 	//--------------------------------------------
 private:
-	Vec2f					GetScreenPosition(const CPoint & point);
+	Vec2f GetScreenPosition(const CPoint & point);
 
 // Переопределение
 public:
@@ -129,7 +124,7 @@ protected:
 	signal::Signal<bool()> m_saveAsDocument;
 	signal::Signal<bool()> m_saveDocument;
 	signal::Signal<bool()> m_newDocument;
-	signal::Signal<bool(CSelectedShape &)> m_openDocument;
+	signal::Signal<bool()> m_openDocument;
 
 	signal::Signal<void()> m_undoCommand;
 	signal::Signal<void()> m_redoCommand;

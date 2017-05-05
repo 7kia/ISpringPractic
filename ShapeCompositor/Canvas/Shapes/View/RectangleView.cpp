@@ -23,6 +23,23 @@ VertexList CRectangleView::GetVertices() const
 	return GetFrameVertices();
 }
 
+CRectangleView::CRectangleView(
+	const Vec2f position,
+	const SSize size,
+	const Color & fillColor,
+	const Color & outlineColor,
+	float outlineThikness
+)
+	: CShapeView(
+		position,
+		size,
+		fillColor,
+		outlineColor,
+		outlineThikness
+	)
+{
+}
+
 void CRectangleView::Accept(IShapeVisitor & visitor) const
 {
 	visitor.Visit(*this);

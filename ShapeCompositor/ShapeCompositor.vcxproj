@@ -198,25 +198,25 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CanvasView.h" />
     <ClInclude Include="Canvas\CanvasModel.h" />
     <ClInclude Include="Canvas\CanvasCommands\AddShapeCommand.h" />
     <ClInclude Include="Canvas\CanvasCommands\CanvasCommand.h" />
     <ClInclude Include="Canvas\CanvasCommands\AllCanvasCommand.h" />
     <ClInclude Include="Canvas\CanvasCommands\DeleteShapeCommand.h" />
     <ClInclude Include="Canvas\CanvasCommands\ChangeShapeRectCommand.h" />
+    <ClInclude Include="Canvas\CanvasView.h" />
     <ClInclude Include="Canvas\History.h" />
     <ClInclude Include="Canvas\MouseEventHandler.h" />
-    <ClInclude Include="Canvas\ObjectRenderer.h" />
-    <ClInclude Include="Canvas\Picture\D2DImageFactory.h" />
-    <ClInclude Include="Canvas\Picture\PictureView.h" />
-    <ClInclude Include="Canvas\Picture\PictureModel.h" />
-    <ClInclude Include="Canvas\Picture\TextureStorage.h" />
+    <ClInclude Include="Canvas\ShapeRenderer.h" />
     <ClInclude Include="Canvas\SelectedShape.h" />
     <ClInclude Include="Canvas\D2DObjectRenderer.h" />
-    <ClInclude Include="Canvas\Shapes\AllShapes.h" />
+    <ClInclude Include="Canvas\Shapes\AllViewShapes.h" />
     <ClInclude Include="Canvas\Shapes\IShape.h" />
     <ClInclude Include="Canvas\Shapes\Model\ShapeModel.h" />
+    <ClInclude Include="Canvas\Shapes\Picture\D2DImageFactory.h" />
+    <ClInclude Include="Canvas\Shapes\Picture\PictureModel.h" />
+    <ClInclude Include="Canvas\Shapes\Picture\PictureView.h" />
+    <ClInclude Include="Canvas\Shapes\Picture\TextureStorage.h" />
     <ClInclude Include="Canvas\Shapes\Presenter\ShapePresenter.h" />
     <ClInclude Include="Canvas\Shapes\ShapeAttributes.h" />
     <ClInclude Include="Canvas\Shapes\ShapeViewFactory.h" />
@@ -242,18 +242,19 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CanvasView.cpp" />
     <ClCompile Include="Canvas\CanvasModel.cpp" />
     <ClCompile Include="Canvas\CanvasCommands\AddShapeCommand.cpp" />
     <ClCompile Include="Canvas\CanvasCommands\DeleteShapeCommand.cpp" />
     <ClCompile Include="Canvas\CanvasCommands\ChangeShapeRectCommand.cpp" />
+    <ClCompile Include="Canvas\CanvasView.cpp" />
     <ClCompile Include="Canvas\History.cpp" />
-    <ClCompile Include="Canvas\Picture\D2DImageFactory.cpp" />
-    <ClCompile Include="Canvas\Picture\PictureView.cpp" />
-    <ClCompile Include="Canvas\Picture\TextureStorage.cpp" />
     <ClCompile Include="Canvas\SelectedShape.cpp" />
     <ClCompile Include="Canvas\D2DObjectRenderer.cpp" />
     <ClCompile Include="Canvas\Shapes\Model\ShapeModel.cpp" />
+    <ClCompile Include="Canvas\Shapes\Picture\D2DImageFactory.cpp" />
+    <ClCompile Include="Canvas\Shapes\Picture\PictureModel.cpp" />
+    <ClCompile Include="Canvas\Shapes\Picture\PictureView.cpp" />
+    <ClCompile Include="Canvas\Shapes\Picture\TextureStorage.cpp" />
     <ClCompile Include="Canvas\Shapes\Presenter\ShapePresenter.cpp" />
     <ClCompile Include="Canvas\Shapes\ShapeAttributes.cpp" />
     <ClCompile Include="Canvas\Shapes\ShapeViewFactory.cpp" />

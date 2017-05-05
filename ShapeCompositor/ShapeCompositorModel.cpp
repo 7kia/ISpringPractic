@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "GlobalFunctions.h"
 #include "ShapeCompositorModel.h"
 
 
@@ -6,19 +7,6 @@ CShapeCompositorModel::CShapeCompositorModel()
 	: m_textureStorage(CanvasNamespace::MAX_PICTURE_SIZE)
 	, m_canvasModel(CanvasNamespace::CANVAS_SIZE)
 {
-	m_canvasBorder = m_shapeFactory.CreateShape(
-		CShapeModel(
-			ShapeType::Rectangle,
-			Vec2f(
-				CanvasNamespace::CANVAS_SIZE.width / 2.f,
-				CanvasNamespace::CANVAS_SIZE.height / 2.f
-			),
-			CanvasNamespace::CANVAS_SIZE,
-			NOT_COLOR,
-			BLACK_COLOR,
-			3.f
-		)
-	);
 }
 
 D2D1_RECT_F CShapeCompositorModel::GetCanvasRect() const
@@ -58,7 +46,7 @@ bool CShapeCompositorModel::SaveDocument()
 	return isSave;
 }
 
-bool CShapeCompositorModel::OpenDocument(CSelectedShape & selectedShape)
+bool CShapeCompositorModel::OpenDocument()
 {
 	if (SaveChangeDocument() != IDCANCEL)
 	{
@@ -165,17 +153,18 @@ IShapeCollection & CShapeCompositorModel::GetShapeCollection()
 	return m_canvasModel.GetShapeCollection();
 }
 
-void CShapeCompositorModel::DeleteShape(ShapeType shapeIndex)
+void CShapeCompositorModel::DeleteShape(size_t shapeIndex)
 {
 	m_history.AddAndExecuteCommand(
 		std::make_shared<CDeleteShapeCanvasCommand>(
-			m_canvasModel.GetShapeCollection()
-			, shapeIndex
-			, m_textureStorage
+			m_canvasModel.GetShapeCollection(),
+			shapeIndex,
+			m_textureStorage
 		)
 	);
 		
 }
+
 
 void CShapeCompositorModel::CreateShape(ShapeType type)
 {
@@ -186,7 +175,7 @@ void CShapeCompositorModel::CreateShape(ShapeType type)
 				m_canvasModel.GetShapeCollection(),
 				CShapeModel(
 					type,
-					Vec2f(float(canvasSize.width) / 2.f, float(canvasSize.height) / 2.f)
+					Vec2f(float(CanvasNamespace::CANVAS_SIZE.width) / 2.f, float(CanvasNamespace::CANVAS_SIZE.height) / 2.f)
 				),
 				m_textureStorage
 			)
@@ -229,7 +218,7 @@ void CShapeCompositorModel::LoadPicture(const boost::filesystem::path & path)
 void CShapeCompositorModel::ChangeRect(const CFrame oldFrame, size_t shapeIndex)
 {
 	CheckIndex(shapeIndex, m_canvasModel.GetShapeCount());
-
+	
 	m_history.AddAndExecuteCommand(std::make_shared<CChangeShapeRectCanvasCommand>(
 		m_canvasModel.GetShapeProvider(),
 		oldFrame,
@@ -238,7 +227,7 @@ void CShapeCompositorModel::ChangeRect(const CFrame oldFrame, size_t shapeIndex)
 	);
 }
 
-signal::Connection CShapeCompositorModel::DoOnCreateView(std::function<void(CShapeModelPtr&, size_t)> const & action)
+signal::Connection CShapeCompositorModel::DoOnCreateView(std::function<void(const CShapeModelPtr&, size_t)> const & action)
 {
 	return m_canvasModel.DoOnCreateView(action);//m_deleteShape.connect(action);
 }

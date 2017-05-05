@@ -1,8 +1,36 @@
 #include "stdafx.h"
 #include "ShapeView.h"
+#include "../Presenter/ShapePresenter.h"
+#include "../Picture/PictureView.h"
 
-CShapeView::CShapeView(const ShapeType type)
-	: m_type(type)
+bool HavePictureWithTexture(ID2D1Bitmap * pTexture, const std::vector<CShapeModelPtr> & shapes)
+{
+	for (const auto & shape : shapes)
+	{
+		if (shape->GetType() == ShapeType::Picture)
+		{
+			auto pPicture = dynamic_cast<CPictureModel*>(shape.get());
+			if (pPicture->GetTexture() == pTexture)
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+
+CShapeView::CShapeView(
+	const Vec2f position
+	, const SSize size
+	, const Color & fillColor
+	, const Color & outlineColor
+	, float outlineThikness
+)
+	: CFrame(position, size)
+	, m_fillColor(fillColor)
+	, m_outlineColor(outlineColor)
+	, m_outlineThikness(outlineThikness)
 {
 }
 
@@ -37,11 +65,6 @@ float CShapeView::GetOutlineThickness() const
 }
 
 
-ShapeType CShapeView::GetType() const
-{
-	return m_type;
-}
-
 void CShapeView::SetFrame(const CFrame & data)
 {
 	CFrame::SetFrame(data);
@@ -53,9 +76,9 @@ bool CShapeView::IsPointIntersection(const Vec2f point) const
 	return false;
 }
 
-void CShapeView::SetPresenter(CShapePresenter & presenter)
+void CShapeView::SetPresenter(std::shared_ptr<CShapePresenter> & pPresenter)
 {
-	m_presenter = presenter;
+	m_pPresenter = pPresenter;
 }
 
 signal::Connection CShapeView::DoOnRectChanged(std::function<void(const CFrame&)> const & action)

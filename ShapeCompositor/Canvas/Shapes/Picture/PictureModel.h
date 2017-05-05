@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Shapes/Model/ShapeModel.h"
+#include "../Model/ShapeModel.h"
 
 
 class CPictureModel : public CShapeModel
