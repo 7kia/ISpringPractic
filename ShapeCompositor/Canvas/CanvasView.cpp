@@ -39,7 +39,7 @@ void CCanvasView::Draw(IShapeRenderer & renderer)
 	}
 }
 
-void CCanvasView::AddShapeView(CShapeViewPtr & pView, size_t insertIndex)
+void CCanvasView::AddShapeView(const CShapeViewPtr & pView, size_t insertIndex)
 {
 	CheckIndex(insertIndex, m_shapeViews.size() - 1);
 

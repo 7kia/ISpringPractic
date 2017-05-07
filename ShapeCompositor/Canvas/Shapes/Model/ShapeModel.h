@@ -5,8 +5,7 @@
 #include "Signal.h"
 
 class CShapeModel
-	: public IShape
-	, public CFrame
+	: public CFrame
 {
 public:
 	CShapeModel(
@@ -20,19 +19,15 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
-	//--------------------------------------------
-	// IShape
-
 	// Inner Color
-	void SetFillColor(const Color &  color) override;
-	Color GetFillColor() const override;
+	void SetFillColor(const Color &  color);
+	Color GetFillColor() const;
 	// Outer Color
-	void SetOutlineColor(const Color &  color) override;
-	Color GetOutlineColor() const override;
+	void SetOutlineColor(const Color &  color);
+	Color GetOutlineColor() const;
 	// Thikness outline
-	void SetOutlineThickness(const float thickness) override;
-	float GetOutlineThickness() const override;
-
+	void SetOutlineThickness(const float thickness);
+	float GetOutlineThickness() const;
 	//--------------------------------------------
 	// IFrame
 	void SetFrame(const CFrame & data) override;

@@ -8,14 +8,14 @@ CCanvasModel::CCanvasModel(const SSize size)
 }
 
 
-void CCanvasModel::PushBackShape(const CShapeModelPtr & shape)
+void CCanvasModel::PushBackShape(CShapeModelPtr & shape)
 {
 	m_shapes.push_back(shape);
 
 	m_onCreateView(shape, m_shapes.size() - 1);
 }
 
-void CCanvasModel::InsertShape(const size_t insertIndex, const CShapeModelPtr & shape)
+void CCanvasModel::InsertShape(size_t insertIndex, CShapeModelPtr & shape)
 {
 	CheckIndex(insertIndex, m_shapes.size());
 
@@ -96,7 +96,7 @@ void CCanvasModel::Clear()
 	m_shapes.clear();
 }
 
-signal::Connection CCanvasModel::DoOnCreateView(std::function<void(const CShapeModelPtr&, size_t)> const & action)
+signal::Connection CCanvasModel::DoOnCreateView(std::function<void(CShapeModelPtr&, size_t)> const & action)
 {
 	return m_onCreateView.connect(action);
 }

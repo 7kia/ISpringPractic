@@ -25,8 +25,16 @@ CSelectedShape::CSelectedShape()
 
 void CSelectedShape::SetShape(const CShapeViewPtr & shape)
 {
+	const bool setCommand = (shape != m_selectedShape);
 	m_selectedShape = shape;
-	m_setFrameConnection = m_selectedShape->DoOnRectChanged(boost::bind(&CSelectedShape::SetFrame, this, _1));
+	if (setCommand)
+	{
+		if (m_setFrameConnection.connected())
+		{
+			m_setFrameConnection.disconnect();
+		}
+		m_setFrameConnection = m_selectedShape->DoOnRectChanged(boost::bind(&CSelectedShape::SetFrame, this, _1));
+	}
 	SetDragPointPositions();
 }
 

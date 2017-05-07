@@ -17,7 +17,7 @@ public:
 public:
 	void Draw(IShapeRenderer & renderer);
 
-	void AddShapeView(CShapeViewPtr & pView, size_t insertIndex);
+	void AddShapeView(const CShapeViewPtr & pView, size_t insertIndex);
 	//--------------------------------------------
 	// Signals
 	signal::Connection DoOnDeleteShape(std::function<void(size_t)> const & action);

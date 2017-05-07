@@ -55,7 +55,6 @@ protected:
 	Color m_outlineColor;
 	float m_outlineThikness = 1.f;
 
-	signal::Signal<void(CShapeModelPtr &, size_t)> m_onCreateView;
 	signal::Signal<void(const CFrame&)> m_onChangeRect;// For send message for selected shape
 
 	std::shared_ptr<CShapePresenter> m_pPresenter;

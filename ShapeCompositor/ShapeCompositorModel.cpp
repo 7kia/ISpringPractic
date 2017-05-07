@@ -173,7 +173,7 @@ void CShapeCompositorModel::CreateShape(ShapeType type)
 		m_history.AddAndExecuteCommand(
 			std::make_shared<CAddShapeCanvasCommand>(
 				m_canvasModel.GetShapeCollection(),
-				CShapeModel(
+				std::make_shared<CShapeModel>(
 					type,
 					Vec2f(float(CanvasNamespace::CANVAS_SIZE.width) / 2.f, float(CanvasNamespace::CANVAS_SIZE.height) / 2.f)
 				),
@@ -201,14 +201,15 @@ void CShapeCompositorModel::LoadPicture(const boost::filesystem::path & path)
 	);
 
 	const auto canvasSize = m_canvasModel.GetSize();
+	CShapeModelPtr pictureModel = std::make_shared<CPictureModel>(
+		m_textureStorage.GetTexture(pictureName),
+		Vec2f(float(canvasSize.width) / 2.f, float(canvasSize.height) / 2.f),
+		m_textureStorage.GetCorrectSize(pictureName)
+	);
 	m_history.AddAndExecuteCommand(
 		std::make_shared<CAddShapeCanvasCommand>(
 			m_canvasModel.GetShapeCollection(),
-			CPictureModel(
-				m_textureStorage.GetTexture(pictureName),
-				Vec2f(float(canvasSize.width) / 2.f, float(canvasSize.height) / 2.f),
-				m_textureStorage.GetCorrectSize(pictureName)
-			),
+			pictureModel,
 			m_textureStorage
 			)
 	);
@@ -227,7 +228,7 @@ void CShapeCompositorModel::ChangeRect(const CFrame oldFrame, size_t shapeIndex)
 	);
 }
 
-signal::Connection CShapeCompositorModel::DoOnCreateView(std::function<void(const CShapeModelPtr&, size_t)> const & action)
+signal::Connection CShapeCompositorModel::DoOnCreateView(std::function<void(CShapeModelPtr&, size_t)> const & action)
 {
 	return m_canvasModel.DoOnCreateView(action);//m_deleteShape.connect(action);
 }

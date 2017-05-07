@@ -150,12 +150,9 @@ CXMLReader::ReadData CXMLReader::Open(
 				float height = shape.second.get<float>("Height");
 
 				auto data = std::make_shared<CShapeModel>(
-					type,
+					GetShapeType(type),
 					Vec2f(x, y),
-					SSize(width, height),
-					DEFAULT_FILL_COLOR,
-					DEFAULT_OUTLINE_COLOR,
-					1.f
+					SSize(width, height)
 				);
 
 				if (type == "Picture")

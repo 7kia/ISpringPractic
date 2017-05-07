@@ -49,8 +49,8 @@ public:
 	virtual void DeleteShape(const CShapeModelPtr &  pShape) = 0;
 	virtual void Clear() = 0;
 
-	virtual void PushBackShape(const CShapeModelPtr & shape) = 0;
-	virtual void InsertShape(const size_t insertIndex, const CShapeModelPtr & shape) = 0;
+	virtual void PushBackShape(CShapeModelPtr & shape) = 0;
+	virtual void InsertShape(size_t insertIndex, CShapeModelPtr & shape) = 0;
 	virtual void SetShapes(const std::vector<CShapeModelPtr> & shapes) = 0;
 
 
@@ -88,8 +88,8 @@ public:
 	void					DeleteShape(const CShapeModelPtr & pShape) override;
 	void					Clear() override;
 
-	void					PushBackShape(const CShapeModelPtr & shape) override;
-	void					InsertShape(const size_t insertIndex, const CShapeModelPtr & shape) override;
+	void					PushBackShape(CShapeModelPtr & shape) override;
+	void					InsertShape(size_t insertIndex, CShapeModelPtr & shape) override;
 	void					SetShapes(const std::vector<CShapeModelPtr> & shapes) override;
 
 	size_t					GetShapeCount() const override;
@@ -100,7 +100,7 @@ public:
 
 	//--------------------------------------------
 	// Signals
-	signal::Connection DoOnCreateView(std::function<void(const CShapeModelPtr &, size_t)> const & action);
+	signal::Connection DoOnCreateView(std::function<void(CShapeModelPtr &, size_t)> const & action);
 
 	//--------------------------------------------
 	// IShapeProvider
@@ -128,7 +128,7 @@ private:
 	SSize m_size;
 
 	// Signals
-	signal::Signal<void(const CShapeModelPtr &, size_t)> m_onCreateView;
+	signal::Signal<void(CShapeModelPtr &, size_t)> m_onCreateView;
 
 };
 
