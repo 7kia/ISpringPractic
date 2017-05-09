@@ -105,8 +105,8 @@ private:
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
-	CShapeViewPtr					m_selectedShape;
-	signal::Connection				m_setFrameConnection;
+	CShapeViewPtr					m_selectedShape = nullptr;
+	signal::Connection				m_setFrameConnection = signal::Connection();
 
 	DragPointsArray					m_dragPoints;
 	CShapeViewPtr					m_frame;

@@ -58,7 +58,6 @@ protected:
 	bool m_isSelected = false;
 
 	signal::Signal<void(const CFrame&)> m_onUpdateSelectedShape;// For send message for selected shape
-	signal::Connection m_connection;// For disconnect from selected shape
 	std::shared_ptr<CShapePresenter> m_pPresenter;
 };
 

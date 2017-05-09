@@ -79,8 +79,8 @@ void CCanvasModel::DeleteShape(size_t index)
 		throw std::runtime_error("Index out range");
 	}
 	CheckIndex(index, m_shapes.size() - 1);
-	m_shapes.erase(m_shapes.begin() + index);
 	m_onDeleteView(index);
+	m_shapes.erase(m_shapes.begin() + index);
 }
 
 void CCanvasModel::DeleteShape(const CShapeModelPtr & pShape)

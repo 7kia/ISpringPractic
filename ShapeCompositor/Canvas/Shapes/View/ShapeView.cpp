@@ -88,8 +88,7 @@ void CShapeView::SetPresenter(std::shared_ptr<CShapePresenter> & pPresenter)
 signal::Connection CShapeView::DoOnUpdateSelectedShape(std::function<void(const CFrame&)> const & action)
 {
 	m_isSelected = true;
-	m_connection = m_onUpdateSelectedShape.connect(action);
-	return m_connection;// TODO : correctly use m_connection
+	return m_onUpdateSelectedShape.connect(action);;// TODO : correctly use m_connection
 }
 
 void CShapeView::DoUnselected()

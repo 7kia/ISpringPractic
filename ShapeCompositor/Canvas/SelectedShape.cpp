@@ -25,17 +25,22 @@ CSelectedShape::CSelectedShape()
 
 void CSelectedShape::SetShape(const CShapeViewPtr & shape)
 {
-	const bool setCommand = (shape != m_selectedShape);
-	m_selectedShape = shape;
-	if (setCommand)
+	if (shape != m_selectedShape)
 	{
+		if (HaveSelectedShape())
+		{
+			m_selectedShape->DoUnselected();
+		}
 		if (m_setFrameConnection.connected())
 		{
 			m_setFrameConnection.disconnect();
 		}
+		m_selectedShape = shape;
+		// It need for correct work commands(these manage model, model send
+		// message for view, view if is selected send message CSelectedShape
 		m_setFrameConnection = m_selectedShape->DoOnUpdateSelectedShape(boost::bind(&CSelectedShape::SetFrame, this, _1));
+		SetFrame(m_selectedShape->GetFrame());
 	}
-	SetDragPointPositions();
 }
 
 CShapeViewPtr CSelectedShape::GetShape() const
@@ -45,9 +50,16 @@ CShapeViewPtr CSelectedShape::GetShape() const
 
 void CSelectedShape::ResetSelectShapePtr()
 {
+	if (m_setFrameConnection.connected())
+	{
+		m_setFrameConnection.disconnect();
+	}
+	if (HaveSelectedShape())
+	{
+		m_selectedShape->DoUnselected();
+	}
 	m_selectedShape = nullptr;
 	m_isUpdate = false;
-
 }
 
 void CSelectedShape::ResetUpdateParameters()
