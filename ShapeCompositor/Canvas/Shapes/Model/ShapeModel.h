@@ -29,8 +29,8 @@ public:
 	void SetOutlineThickness(const float thickness);
 	float GetOutlineThickness() const;
 	//--------------------------------------------
-	// IFrame
-	void SetFrame(const CFrame & data) override;
+	// For update view and model for update history(for selected shape)
+	void Update(const CFrame & data);
 	//--------------------------------------------
 	//void SetType();
 	ShapeType GetType() const;

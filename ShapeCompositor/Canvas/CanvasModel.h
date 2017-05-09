@@ -45,7 +45,7 @@ class IShapeCollection : public IShapeProvider
 public:
 	virtual ~IShapeCollection() = default;
 
-	virtual void DeleteShape(const size_t index) = 0;
+	virtual void DeleteShape(size_t index) = 0;
 	virtual void DeleteShape(const CShapeModelPtr &  pShape) = 0;
 	virtual void Clear() = 0;
 
@@ -84,7 +84,7 @@ public:
 
 	//--------------------------------------------
 	// IShapeCollection
-	void					DeleteShape(const size_t index) override;
+	void					DeleteShape(size_t index) override;
 	void					DeleteShape(const CShapeModelPtr & pShape) override;
 	void					Clear() override;
 
@@ -100,7 +100,8 @@ public:
 
 	//--------------------------------------------
 	// Signals
-	signal::Connection DoOnCreateView(std::function<void(CShapeModelPtr &, size_t)> const & action);
+	signal::Connection DoOnCreateView(std::function<void(const CShapeViewPtr &, size_t)> const & action);
+	signal::Connection DoOnDeleteView(std::function<void(size_t)> const & action);
 
 	//--------------------------------------------
 	// IShapeProvider
@@ -127,8 +128,10 @@ private:
 	std::vector<CShapeModelPtr>	m_shapes;
 	SSize m_size;
 
+	CShapeViewFactory m_shapeViewFactory;
 	// Signals
-	signal::Signal<void(CShapeModelPtr &, size_t)> m_onCreateView;
+	signal::Signal<void(CShapeViewPtr &, size_t)> m_onCreateView;
+	signal::Signal<void(size_t)> m_onDeleteView;
 
 };
 

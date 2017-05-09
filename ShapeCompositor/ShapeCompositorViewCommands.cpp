@@ -32,9 +32,14 @@ signal::Connection CShapeCompositorView::DoOnRedoCommand(std::function<void()> c
 }
 
 
-signal::Connection CShapeCompositorView::DoOnChangeRectCommand(std::function<void(const CFrame, size_t)> const & action)
+signal::Connection CShapeCompositorView::DoOnDeleteShapeCommand(std::function<void(size_t)> const & action)
 {
-	return m_createChangeRectCommand.connect(action);
+	return m_onDeleteShape.connect(action);
+}
+
+signal::Connection CShapeCompositorView::DoOnChangeRectCommand(std::function<void(const CFrame, const CFrame, size_t)> const & action)
+{
+	return m_onChangeRectShape.connect(action);
 }
 
 signal::Connection CShapeCompositorView::DoOnCreateShapeCommand(std::function<void(ShapeType)> const & action)

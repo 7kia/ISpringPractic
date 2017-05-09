@@ -33,7 +33,7 @@ void CSelectedShape::SetShape(const CShapeViewPtr & shape)
 		{
 			m_setFrameConnection.disconnect();
 		}
-		m_setFrameConnection = m_selectedShape->DoOnRectChanged(boost::bind(&CSelectedShape::SetFrame, this, _1));
+		m_setFrameConnection = m_selectedShape->DoOnUpdateSelectedShape(boost::bind(&CSelectedShape::SetFrame, this, _1));
 	}
 	SetDragPointPositions();
 }

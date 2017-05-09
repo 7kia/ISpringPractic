@@ -135,6 +135,11 @@ bool CFrame::operator==(const CFrame & frame) const
 	return (frame.GetSize() == GetSize()) && (frame.GetPosition() == GetPosition());
 }
 
+bool CFrame::operator!=(const CFrame & frame) const
+{
+	return !(*this == frame);
+}
+
 CFrame::CFrame(const Vec2f position, const SSize size)
 	: m_position(position)
 	, m_size(size)

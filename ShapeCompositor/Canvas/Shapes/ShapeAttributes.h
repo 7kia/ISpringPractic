@@ -103,6 +103,7 @@ public:
 	std::vector<Vec2f> GetFrameVertices() const;
 
 	bool operator==(const CFrame & frame) const;
+	bool operator!=(const CFrame & frame) const;
 	//////////////////////////////////////////////////////////////////////
 	// Data
 protected:

@@ -37,16 +37,16 @@ public:
 	float GetOutlineThickness() const override;
 
 	//--------------------------------------------
-	// IFrame
-	void SetFrame(const CFrame & data) override;
-	//--------------------------------------------
+	void UpdateSelectedFrame(const CFrame & data);
+	signal::Connection DoOnUpdateSelectedShape(std::function<void(const CFrame&)> const & action);
+	void DoUnselected();
+
 	virtual void Accept(IShapeVisitor & visitor) const = 0;
 
 	virtual bool IsPointIntersection(const Vec2f point) const;
 
 	void SetPresenter(std::shared_ptr<CShapePresenter> & pPresenter);
 
-	signal::Connection DoOnRectChanged(std::function<void(const CFrame&)> const& action);
 
 	//////////////////////////////////////////////////////////////////////
 	// Data
@@ -55,8 +55,10 @@ protected:
 	Color m_outlineColor;
 	float m_outlineThikness = 1.f;
 
-	signal::Signal<void(const CFrame&)> m_onChangeRect;// For send message for selected shape
+	bool m_isSelected = false;
 
+	signal::Signal<void(const CFrame&)> m_onUpdateSelectedShape;// For send message for selected shape
+	signal::Connection m_connection;// For disconnect from selected shape
 	std::shared_ptr<CShapePresenter> m_pPresenter;
 };
 

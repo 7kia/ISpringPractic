@@ -29,5 +29,5 @@ public:
 private:
 	IShapeCollection & m_shapeCollection;
 	CTextureStorage & m_textureStorage;
-	CShapeModelPtr & m_shapeModel;
+	CShapeModelPtr m_shapeModel;
 };

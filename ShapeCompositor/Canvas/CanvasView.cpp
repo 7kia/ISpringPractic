@@ -39,11 +39,50 @@ void CCanvasView::Draw(IShapeRenderer & renderer)
 	}
 }
 
+CFrame CCanvasView::GetOldFrameSelectedShape() const
+{
+	return m_oldFrame;
+}
+
+size_t CCanvasView::GetIndexSelectedShape() const
+{
+	if (!m_selectedShape.HaveSelectedShape())
+	{
+		throw std::runtime_error("No selected shape");
+	}
+	const auto selectedShape = m_selectedShape.GetShape();
+	return GetShapeIndex(selectedShape);
+}
+
+bool CCanvasView::HaveSelectedShape() const
+{
+	return m_selectedShape.HaveSelectedShape();
+}
+
+void CCanvasView::ResetUpdateParameters()
+{
+	m_selectedShape.ResetUpdateParameters();
+}
+
+CFrame CCanvasView::GetFrameSelectedShape() const
+{
+	return m_selectedShape.GetFrame();
+}
+
 void CCanvasView::AddShapeView(const CShapeViewPtr & pView, size_t insertIndex)
 {
 	CheckIndex(insertIndex, m_shapeViews.size() - 1);
-
 	m_shapeViews.insert(m_shapeViews.begin() + insertIndex, pView);
+}
+
+void CCanvasView::DeleteShapeView(size_t index)
+{
+	CheckIndex(index, m_shapeViews.size() - 1);
+	if (m_selectedShape.GetShape() == m_shapeViews[index])
+	{
+		m_selectedShape.ResetSelectShapePtr();
+	}
+	m_shapeViews.erase(m_shapeViews.begin() + index);
 }
 
 bool CCanvasView::HandleLButtonDown(const Vec2f point)
@@ -58,6 +97,7 @@ bool CCanvasView::HandleLButtonDown(const Vec2f point)
 			m_selectedShape.SetUpdateState(true);
 			isResize = true;
 			m_oldFrame = m_selectedShape.GetShape()->GetFrame();
+			return true;
 		}
 	}
 
@@ -71,11 +111,17 @@ bool CCanvasView::HandleLButtonDown(const Vec2f point)
 			{
 				m_selectedShape.SetUpdateState(true);
 				m_oldFrame = m_selectedShape.GetShape()->GetFrame();
+				return true;
 			}
 		}
 	}
 
-	return true;
+
+	if (m_selectedShape.HaveSelectedShape())
+	{
+		m_selectedShape.GetShape()->DoUnselected();
+	}
+	return false;
 }
 
 bool CCanvasView::HandleLButtonUp(const Vec2f point)
@@ -89,11 +135,25 @@ bool CCanvasView::HandleLButtonUp(const Vec2f point)
 
 	if (m_selectedShape.DoneUpdate())
 	{
-		CreateChangeRectCommand();
-		m_selectedShape.ResetUpdateParameters();
+		switch (m_selectedShape.GetUpdateType())
+		{
+		case CSelectedShape::UpdateType::Move:
+		case CSelectedShape::UpdateType::MarkerLeftTop:
+		case CSelectedShape::UpdateType::MarkerLeftBottom:
+		case CSelectedShape::UpdateType::MarkerRightBottom:
+		case CSelectedShape::UpdateType::MarkerRightTop:
+		{
+			return true;
+		}
+		break;
+		case CSelectedShape::UpdateType::None:
+			break;
+		default:
+			break;
+		}
 	}
 
-	return true;
+	return false;
 }
 
 bool CCanvasView::HandleRButtonUp(const Vec2f point)
@@ -210,28 +270,8 @@ CShapeViewPtr GetShape(const Vec2f mousePosition, const std::vector<CShapeViewPt
 	return foundShape;
 }
 
-void CCanvasView::CreateChangeRectCommand()
-{
-	switch (m_selectedShape.GetUpdateType())
-	{
-	case CSelectedShape::UpdateType::Move:
-	case CSelectedShape::UpdateType::MarkerLeftTop:
-	case CSelectedShape::UpdateType::MarkerLeftBottom:
-	case CSelectedShape::UpdateType::MarkerRightBottom:
-	case CSelectedShape::UpdateType::MarkerRightTop:
-	{
-		m_createChangeRectCommand(m_oldFrame, GetShapeIndex(m_selectedShape.GetShape()));
-	}
-	break;
-	case CSelectedShape::UpdateType::None:
-		break;
-	default:
-		break;
-	}
 
-}
-
-size_t CCanvasView::GetShapeIndex(const CShapeViewPtr & shapeView)
+size_t CCanvasView::GetShapeIndex(const CShapeViewPtr & shapeView) const
 {
 	return std::find(m_shapeViews.begin(), m_shapeViews.end(), shapeView) - m_shapeViews.begin();
 }

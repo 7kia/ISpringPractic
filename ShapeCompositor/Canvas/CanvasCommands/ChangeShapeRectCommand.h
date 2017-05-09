@@ -10,7 +10,8 @@ class CChangeShapeRectCanvasCommand : public IMyCommand
 public:
 	CChangeShapeRectCanvasCommand(
 		IShapeProvider & pShapeStorage,
-		const CFrame & oldData,
+		const CFrame & oldFrame,
+		const CFrame & newFrame,
 		size_t shapeIndex
 	);
 	//////////////////////////////////////////////////////////////////////
@@ -28,5 +29,5 @@ private:
 	IShapeProvider & m_shapeCollection;
 	size_t		m_shapeIndex;
 	CFrame		m_oldFrame;
-	CFrame		m_newData;
+	CFrame		m_newFrame;
 };

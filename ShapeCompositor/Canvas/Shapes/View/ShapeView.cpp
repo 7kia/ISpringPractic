@@ -64,12 +64,16 @@ float CShapeView::GetOutlineThickness() const
 	return m_outlineThikness;
 }
 
-
-void CShapeView::SetFrame(const CFrame & data)
+void CShapeView::UpdateSelectedFrame(const CFrame & data)
 {
 	CFrame::SetFrame(data);
-	m_onChangeRect(data);
+
+	if (m_isSelected)
+	{
+		m_onUpdateSelectedShape(data);
+	}
 }
+
 
 bool CShapeView::IsPointIntersection(const Vec2f point) const
 {
@@ -81,8 +85,15 @@ void CShapeView::SetPresenter(std::shared_ptr<CShapePresenter> & pPresenter)
 	m_pPresenter = pPresenter;
 }
 
-signal::Connection CShapeView::DoOnRectChanged(std::function<void(const CFrame&)> const & action)
+signal::Connection CShapeView::DoOnUpdateSelectedShape(std::function<void(const CFrame&)> const & action)
 {
-	return m_onChangeRect.connect(action);
+	m_isSelected = true;
+	m_connection = m_onUpdateSelectedShape.connect(action);
+	return m_connection;// TODO : correctly use m_connection
+}
+
+void CShapeView::DoUnselected()
+{
+	m_isSelected = false;
 }
 

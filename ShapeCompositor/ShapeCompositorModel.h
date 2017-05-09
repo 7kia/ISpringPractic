@@ -15,9 +15,10 @@ public:
 
 	virtual void DeleteShape(size_t shapeIndex) = 0;
 	virtual void CreateShape(ShapeType type) = 0;
-	virtual void ChangeRect(const CFrame oldFrame, size_t shapeIndex) = 0;
+	virtual void ChangeRect(const CFrame oldFrame, const CFrame newFrame, size_t shapeIndex) = 0;
 
-	virtual signal::Connection DoOnCreateView(std::function<void(CShapeModelPtr&, size_t)> const & action) = 0;
+	virtual signal::Connection DoOnCreateView(std::function<void(const CShapeViewPtr&, size_t)> const & action) = 0;
+	virtual signal::Connection DoOnDeleteView(std::function<void(size_t)> const & action) = 0;
 };
 
 class IModelReseter
@@ -76,9 +77,10 @@ public:
 	// IShapeManipulator
 	void DeleteShape(size_t shapeIndex) override;
 	void CreateShape(ShapeType type) override;
-	void ChangeRect(const CFrame oldFrame, size_t shapeIndex) override;
+	void ChangeRect(const CFrame oldFrame, const CFrame newFrame, size_t shapeIndex) override;
 
-	signal::Connection DoOnCreateView(std::function<void(CShapeModelPtr&, size_t)> const & action) override;
+	signal::Connection DoOnCreateView(std::function<void(const CShapeViewPtr&, size_t)> const & action) override;
+	signal::Connection DoOnDeleteView(std::function<void(size_t)> const & action) override;
 	//--------------------------------------------
 	IShapeCollection & GetShapeCollection();
 

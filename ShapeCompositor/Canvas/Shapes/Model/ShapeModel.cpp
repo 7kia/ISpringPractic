@@ -53,7 +53,7 @@ float CShapeModel::GetOutlineThickness() const
 	return m_outlineThikness;
 }
 
-void CShapeModel::SetFrame(const CFrame & data)
+void CShapeModel::Update(const CFrame & data)
 {
 	CFrame::SetFrame(data);
 	m_onChangeRect(data);

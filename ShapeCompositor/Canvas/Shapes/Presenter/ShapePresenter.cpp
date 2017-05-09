@@ -20,5 +20,5 @@ void CShapePresenter::ConnectSignalsForView()
 
 void CShapePresenter::ConnectSignalsForModel()
 {
-	m_connections += m_pModel->DoOnRectChanged(boost::bind(&CFrame::SetFrame, m_pView, _1));
+	m_connections += m_pModel->DoOnRectChanged(boost::bind(&CShapeView::UpdateSelectedFrame, m_pView, _1));
 }

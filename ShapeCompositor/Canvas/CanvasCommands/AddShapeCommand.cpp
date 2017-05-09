@@ -28,7 +28,8 @@ void CAddShapeCanvasCommand::Execute()
 
 void CAddShapeCanvasCommand::Cancel()
 {
-	DeleteLastElement(m_shapeCollection.GetShapes());
+	m_shapeCollection.DeleteShape(m_shapeCollection.GetShapeIndex(m_shapeModel));
+	//DeleteLastElement(m_shapeCollection.GetShapes());
 
 	if (m_shapeModel->GetType() == ShapeType::Picture)
 	{

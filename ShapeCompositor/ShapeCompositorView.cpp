@@ -69,7 +69,7 @@ CShapeCompositorView::CShapeCompositorView()
 	m_controller->SetShapeManipulator(m_model.get());
 	m_controller->SetHaveRenderTarget(m_model.get());
 	m_controller->SetModelReseter(m_model.get(), this);
-	m_controller->SetShapeViewCreator(this);//this - IShapeViewCreator *
+	m_controller->SetShapeViewManipulator(this);//this - IShapeViewManipulator *
 }
 
 CShapeCompositorView::~CShapeCompositorView()
@@ -318,8 +318,9 @@ BOOL CShapeCompositorView::PreTranslateMessage(MSG* pMsg)
 			{
 				case VK_DELETE:
 				{
-					if (m_canvasView.DeleteSelectedShape())
+					if (m_canvasView.HaveSelectedShape())
 					{
+						m_onDeleteShape(m_canvasView.GetIndexSelectedShape());
 						RedrawWindow();
 					}			
 				}
@@ -344,7 +345,15 @@ void CShapeCompositorView::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	CScrollView::OnLButtonDown(nFlags, point);
 
-	m_canvasView.HandleLButtonDown(GetScreenPosition(point));
+	if (m_canvasView.HandleLButtonDown(GetScreenPosition(point)))
+	{
+		const auto oldFrame = m_canvasView.GetOldFrameSelectedShape();
+		const auto newFrame = m_canvasView.GetFrameSelectedShape();
+		if (oldFrame != newFrame)
+		{
+			m_onChangeRectShape(oldFrame, newFrame, m_canvasView.GetIndexSelectedShape());
+		}
+	}
 
 	RedrawWindow();
 }
@@ -363,7 +372,15 @@ void CShapeCompositorView::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	CView::OnLButtonUp(nFlags, point);
 
-	m_canvasView.HandleLButtonUp(GetScreenPosition(point));
+	if (m_canvasView.HandleLButtonUp(GetScreenPosition(point)))
+	{
+		m_onChangeRectShape(
+			m_canvasView.GetOldFrameSelectedShape(),
+			m_canvasView.GetFrameSelectedShape(),
+			m_canvasView.GetIndexSelectedShape()
+		);
+		m_canvasView.ResetUpdateParameters();
+	}
 
 	RedrawWindow();
 }
@@ -373,10 +390,14 @@ BOOL CShapeCompositorView::OnEraseBkgnd(CDC* pDC)
 	return TRUE;//CScrollView::OnEraseBkgnd(pDC);
 }
 
-void CShapeCompositorView::AddShapeView(CShapeModelPtr & pModel, size_t insertIndex)
+void CShapeCompositorView::AddShapeView(const CShapeViewPtr & pView, size_t insertIndex)
 {
-	CShapeViewFactory factory;
-	m_canvasView.AddShapeView(factory.CreateShape(pModel), insertIndex);
+	m_canvasView.AddShapeView(pView, insertIndex);
+}
+
+void CShapeCompositorView::DeleteShapeView(size_t index)
+{
+	m_canvasView.DeleteShapeView(index);
 }
 
 void CShapeCompositorView::ResetSelectedShape()

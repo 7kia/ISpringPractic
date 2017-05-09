@@ -12,7 +12,7 @@ void CCanvasModel::PushBackShape(CShapeModelPtr & shape)
 {
 	m_shapes.push_back(shape);
 
-	m_onCreateView(shape, m_shapes.size() - 1);
+	m_onCreateView(m_shapeViewFactory.CreateShape(shape), m_shapes.size() - 1);
 }
 
 void CCanvasModel::InsertShape(size_t insertIndex, CShapeModelPtr & shape)
@@ -24,7 +24,7 @@ void CCanvasModel::InsertShape(size_t insertIndex, CShapeModelPtr & shape)
 		, shape
 	);
 
-	m_onCreateView(shape, insertIndex);
+	m_onCreateView(m_shapeViewFactory.CreateShape(shape), insertIndex);
 }
 
 size_t CCanvasModel::GetShapeCount() const
@@ -72,7 +72,7 @@ IShapeProvider & CCanvasModel::GetShapeProvider()
 	return *this;
 }
 
-void CCanvasModel::DeleteShape(const size_t index)
+void CCanvasModel::DeleteShape(size_t index)
 {
 	if (m_shapes.size() == 0)
 	{
@@ -80,6 +80,7 @@ void CCanvasModel::DeleteShape(const size_t index)
 	}
 	CheckIndex(index, m_shapes.size() - 1);
 	m_shapes.erase(m_shapes.begin() + index);
+	m_onDeleteView(index);
 }
 
 void CCanvasModel::DeleteShape(const CShapeModelPtr & pShape)
@@ -96,9 +97,14 @@ void CCanvasModel::Clear()
 	m_shapes.clear();
 }
 
-signal::Connection CCanvasModel::DoOnCreateView(std::function<void(CShapeModelPtr&, size_t)> const & action)
+signal::Connection CCanvasModel::DoOnCreateView(std::function<void(const CShapeViewPtr&, size_t)> const & action)
 {
 	return m_onCreateView.connect(action);
+}
+
+signal::Connection CCanvasModel::DoOnDeleteView(std::function<void(size_t)> const & action)
+{
+	return m_onDeleteView.connect(action);
 }
 
 CShapeModelPtr CCanvasModel::GetShape(const size_t index)

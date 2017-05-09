@@ -216,19 +216,25 @@ void CShapeCompositorModel::LoadPicture(const boost::filesystem::path & path)
 }
 
 
-void CShapeCompositorModel::ChangeRect(const CFrame oldFrame, size_t shapeIndex)
+void CShapeCompositorModel::ChangeRect(const CFrame oldFrame, const CFrame newFrame, size_t shapeIndex)
 {
 	CheckIndex(shapeIndex, m_canvasModel.GetShapeCount());
 	
 	m_history.AddAndExecuteCommand(std::make_shared<CChangeShapeRectCanvasCommand>(
 		m_canvasModel.GetShapeProvider(),
 		oldFrame,
+		newFrame,
 		shapeIndex
 		)
 	);
 }
 
-signal::Connection CShapeCompositorModel::DoOnCreateView(std::function<void(CShapeModelPtr&, size_t)> const & action)
+signal::Connection CShapeCompositorModel::DoOnCreateView(std::function<void(const CShapeViewPtr&, size_t)> const & action)
 {
 	return m_canvasModel.DoOnCreateView(action);//m_deleteShape.connect(action);
+}
+
+signal::Connection CShapeCompositorModel::DoOnDeleteView(std::function<void(size_t)> const & action)
+{
+	return m_canvasModel.DoOnDeleteView(action);//m_deleteShape.connect(action);
 }

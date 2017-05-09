@@ -38,9 +38,9 @@ void CShapeCompositorPresenter::SetModelReseter(IModelReseter * pModelReseter, I
 	ConnectSignalsForModelReseter();
 }
 
-void CShapeCompositorPresenter::SetShapeViewCreator(IShapeViewCreator * pShapeViewCreator)
+void CShapeCompositorPresenter::SetShapeViewManipulator(IShapeViewManipulator * pShapeViewCreator)
 {
-	m_pShapeViewCreator = pShapeViewCreator;
+	m_pShapeViewManipulator = pShapeViewCreator;
 	ConnectSignalsForShapeViewCreator();
 }
 
@@ -60,8 +60,8 @@ void CShapeCompositorPresenter::ConnectSignalsForDocumentManipulator()
 
 void CShapeCompositorPresenter::ConnectSignalsForShapeManipulator()
 {
-	//m_connections += m_pViewSignaller->DoOnDeleteShapeCommand(boost::bind(&IShapeManipulator::DeleteShape, m_pShapeManipulator, _1));
-	m_connections += m_pViewSignaller->DoOnChangeRectCommand(boost::bind(&IShapeManipulator::ChangeRect, m_pShapeManipulator, _1, _2));
+	m_connections += m_pViewSignaller->DoOnDeleteShapeCommand(boost::bind(&IShapeManipulator::DeleteShape, m_pShapeManipulator, _1));
+	m_connections += m_pViewSignaller->DoOnChangeRectCommand(boost::bind(&IShapeManipulator::ChangeRect, m_pShapeManipulator, _1, _2, _3));
 	m_connections += m_pViewSignaller->DoOnCreateShapeCommand(boost::bind(&IShapeManipulator::CreateShape, m_pShapeManipulator , _1));
 }
 
@@ -85,6 +85,8 @@ void CShapeCompositorPresenter::ConnectSignalsForView()
 
 void CShapeCompositorPresenter::ConnectSignalsForShapeViewCreator()
 {
-	m_connections += m_pShapeManipulator->DoOnCreateView(boost::bind(&IShapeViewCreator::AddShapeView, m_pShapeViewCreator, _1, _2));
+	m_connections += m_pShapeManipulator->DoOnDeleteView(boost::bind(&IShapeViewManipulator::DeleteShapeView, m_pShapeViewManipulator, _1));
+	m_connections += m_pShapeManipulator->DoOnCreateView(boost::bind(&IShapeViewManipulator::AddShapeView, m_pShapeViewManipulator, _1, _2));
+
 
 }

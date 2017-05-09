@@ -34,12 +34,14 @@ public:
 	virtual void ResetSelectedShape() = 0;
 };
 
-class IShapeViewCreator
+
+class IShapeViewManipulator
 {
 public:
-	virtual ~IShapeViewCreator() = default;
+	virtual ~IShapeViewManipulator() = default;
 
-	virtual void AddShapeView(CShapeModelPtr & pModel, size_t insertIndex) = 0;
+	virtual void AddShapeView(const CShapeViewPtr & pView, size_t insertIndex) = 0;
+	virtual void DeleteShapeView(size_t index) = 0;
 };
 
 class IViewSignaller
@@ -55,7 +57,8 @@ public:
 	virtual signal::Connection DoOnUndoCommand(std::function<void()> const & action) = 0;
 	virtual signal::Connection DoOnRedoCommand(std::function<void()> const & action) = 0;
 
-	virtual signal::Connection DoOnChangeRectCommand(std::function<void(const CFrame, size_t)> const & action) = 0;
+	virtual signal::Connection DoOnDeleteShapeCommand(std::function<void(size_t)> const & action) = 0;
+	virtual signal::Connection DoOnChangeRectCommand(std::function<void(const CFrame, const CFrame, size_t)> const & action) = 0;
 	virtual signal::Connection DoOnCreateShapeCommand(std::function<void(ShapeType)> const & action) = 0;
 	virtual signal::Connection DoOnSetRenderTargetForModel(std::function<void(ID2D1HwndRenderTarget *)> const & action) = 0;
 };
@@ -67,7 +70,7 @@ class CShapeCompositorView
 	: public CScrollView
 	, public IViewReseter
 	, public IViewSignaller
-	, public IShapeViewCreator
+	, public IShapeViewManipulator
 {
 public:
 	CShapeCompositorView();
@@ -94,8 +97,9 @@ public:
 	void					Redo();
 
 	//--------------------------------------------
-	// IShapeViewCreator
-	void AddShapeView(CShapeModelPtr & pModel, size_t insertIndex) override;
+	// IShapeViewManipulator
+	void AddShapeView(const CShapeViewPtr & pView, size_t insertIndex) override;
+	void DeleteShapeView(size_t index) override;
 	//--------------------------------------------
 	// IViewReseter
 	void ResetSelectedShape() override;
@@ -109,7 +113,8 @@ public:
 	signal::Connection DoOnUndoCommand(std::function<void()> const & action) override;
 	signal::Connection DoOnRedoCommand(std::function<void()> const & action) override;
 
-	signal::Connection DoOnChangeRectCommand(std::function<void(const CFrame, size_t)> const & action) override;
+	signal::Connection DoOnDeleteShapeCommand(std::function<void(size_t)> const & action) override;
+	signal::Connection DoOnChangeRectCommand(std::function<void(const CFrame, const CFrame, size_t)> const & action) override;
 	signal::Connection DoOnCreateShapeCommand(std::function<void(ShapeType)> const & action) override;
 	signal::Connection DoOnSetRenderTargetForModel(std::function<void(ID2D1HwndRenderTarget *)> const & action) override;
 	//--------------------------------------------
@@ -129,7 +134,8 @@ protected:
 	signal::Signal<void()> m_undoCommand;
 	signal::Signal<void()> m_redoCommand;
 
-	signal::Signal<void(const CFrame, size_t)> m_createChangeRectCommand;
+	signal::Signal<void(size_t)> m_onDeleteShape;
+	signal::Signal<void(const CFrame, const CFrame, size_t)> m_onChangeRectShape;
 	signal::Signal<void(ShapeType)> m_onCreateShape;
 	signal::Signal<void(ID2D1HwndRenderTarget *)> m_setRenderTargetForModel;// Render target create in the class and need in other
 protected:
