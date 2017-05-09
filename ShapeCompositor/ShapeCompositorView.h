@@ -31,7 +31,7 @@ class IViewReseter
 public:
 	virtual ~IViewReseter() = default;
 
-	virtual void ResetSelectedShape() = 0;
+	virtual void ResetView() = 0;
 };
 
 
@@ -102,7 +102,7 @@ public:
 	void DeleteShapeView(size_t index) override;
 	//--------------------------------------------
 	// IViewReseter
-	void ResetSelectedShape() override;
+	void ResetView() override;
 	//--------------------------------------------
 	// IViewSignaller
 	signal::Connection DoOnSaveAsDocument(std::function<bool()> const & action) override;
@@ -120,7 +120,8 @@ public:
 	//--------------------------------------------
 private:
 	Vec2f GetScreenPosition(const CPoint & point);
-
+	void RecreateApplication();// TODO : see might trasfer create application to other place
+	void SetWindowCursor(CursorType type);
 // Переопределение
 public:
 	virtual void OnDraw(CDC* pDC);  // переопределено для отрисовки этого представления

@@ -79,7 +79,7 @@ public:
 
 	bool OnFileSaveAs(std::vector<CShapeModelPtr> const & shapes, const CTextureStorage & textureStorage);
 	CXMLReader::ReadData OnFileOpen(
-		IModelReseter * reseter,
+		IModelReseter & reseter,
 		std::vector<std::wstring> deleteTexture,
 		CXMLReader::DataForCreation & data
 	);

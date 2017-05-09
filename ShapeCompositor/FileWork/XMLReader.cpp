@@ -157,6 +157,8 @@ CXMLReader::ReadData CXMLReader::Open(
 
 				if (type == "Picture")
 				{
+					// TODO : see might rewrite
+					// not wstring because not << overload for wstring
 					std::string texture = shape.second.get<std::string>("Texture");
 					readData.textureStorage.AddTexture(
 						ToWString(texture),

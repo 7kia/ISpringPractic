@@ -16,7 +16,7 @@ CCanvasView::CCanvasView()
 			NOT_COLOR,
 			BLACK_COLOR,
 			3.f
-			)
+		)
 	);
 }
 
@@ -50,8 +50,7 @@ size_t CCanvasView::GetIndexSelectedShape() const
 	{
 		throw std::runtime_error("No selected shape");
 	}
-	const auto selectedShape = m_selectedShape.GetShape();
-	return GetShapeIndex(selectedShape);
+	return GetShapeIndex(m_selectedShape.GetShape());
 }
 
 bool CCanvasView::HaveSelectedShape() const
@@ -59,9 +58,9 @@ bool CCanvasView::HaveSelectedShape() const
 	return m_selectedShape.HaveSelectedShape();
 }
 
-void CCanvasView::ResetUpdateParameters()
+void CCanvasView::ResetSelectedShapeUpdateParameters()
 {
-	m_selectedShape.ResetUpdateParameters();
+	m_selectedShape.ResetUpdateParameters();// TODO : rename functions(both reset)
 }
 
 CFrame CCanvasView::GetFrameSelectedShape() const
@@ -71,7 +70,7 @@ CFrame CCanvasView::GetFrameSelectedShape() const
 
 void CCanvasView::AddShapeView(const CShapeViewPtr & pView, size_t insertIndex)
 {
-	CheckIndex(insertIndex, m_shapeViews.size() - 1);
+	CheckIndex(insertIndex, m_shapeViews.size());
 	m_shapeViews.insert(m_shapeViews.begin() + insertIndex, pView);
 }
 
@@ -87,8 +86,6 @@ void CCanvasView::DeleteShapeView(size_t index)
 
 bool CCanvasView::HandleLButtonDown(const Vec2f point)
 {
-	ChangeCursor(point);
-
 	bool isResize = false;
 	if (m_selectedShape.HaveSelectedShape())
 	{
@@ -116,7 +113,6 @@ bool CCanvasView::HandleLButtonDown(const Vec2f point)
 		}
 	}
 
-
 	if (m_selectedShape.HaveSelectedShape())
 	{
 		m_selectedShape.GetShape()->DoUnselected();
@@ -130,8 +126,6 @@ bool CCanvasView::HandleLButtonUp(const Vec2f point)
 	{
 		m_selectedShape.SetUpdateState(false);
 	}
-
-	ChangeCursor(point);
 
 	if (m_selectedShape.DoneUpdate())
 	{
@@ -163,8 +157,6 @@ bool CCanvasView::HandleRButtonUp(const Vec2f point)
 
 bool CCanvasView::HandleMouseMove(const Vec2f point)
 {
-	ChangeCursor(point);
-
 	if (m_selectedShape.HaveSelectedShape() && m_selectedShape.IsUpdate())
 	{
 		m_selectedShape.HandleMoveMouse(point);
@@ -212,7 +204,7 @@ void CCanvasView::ChangeSelectedShape(const Vec2f & mousePos)
 	}
 }
 
-void CCanvasView::ChangeCursor(const Vec2f & position)
+CursorType CCanvasView::ChangeCursor(const Vec2f & position)
 {
 	if (m_selectedShape.GetShape())
 	{
@@ -228,31 +220,44 @@ void CCanvasView::ChangeCursor(const Vec2f & position)
 
 		if (needChangeToNW)
 		{
-			SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZENWSE));
-			return;
+			return CursorType::SIZENWSE;
 		}
 		else if (needChangeToNE)
 		{
-			SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZENESW));
-			return;
+			return CursorType::SIZENESW;
 		}
 		else if (GetShape(position, m_shapeViews) != nullptr)
 		{
-			SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZEALL));
+			return CursorType::SIZEALL;
 		}
 	}
 	else
 	{
 		if (GetShape(position, m_shapeViews) != nullptr)
 		{
-			SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZEALL));
+			return CursorType::SIZEALL;
 		}
 		else
 		{
-			SetCursor(AfxGetApp()->LoadStandardCursor(IDC_ARROW));
+			return CursorType::ARROW;
 		}
 	}
 
+}
+
+size_t CCanvasView::GetShapeIndex(const CShapeViewPtr & shapeView) const
+{
+	return std::find(m_shapeViews.begin(), m_shapeViews.end(), shapeView) - m_shapeViews.begin();
+}
+
+signal::Connection CCanvasView::DoOnDeleteShape(std::function<void(size_t)> const & action)
+{
+	return m_deleteShape.connect(action);
+}
+
+signal::Connection CCanvasView::DoOnChangeRectShape(std::function<void(const CFrame, size_t)> const & action)
+{
+	return m_createChangeRectCommand.connect(action);
 }
 
 
@@ -268,20 +273,4 @@ CShapeViewPtr GetShape(const Vec2f mousePosition, const std::vector<CShapeViewPt
 		}
 	}
 	return foundShape;
-}
-
-
-size_t CCanvasView::GetShapeIndex(const CShapeViewPtr & shapeView) const
-{
-	return std::find(m_shapeViews.begin(), m_shapeViews.end(), shapeView) - m_shapeViews.begin();
-}
-
-signal::Connection CCanvasView::DoOnDeleteShape(std::function<void(size_t)> const & action)
-{
-	return m_deleteShape.connect(action);
-}
-
-signal::Connection CCanvasView::DoOnChangeRectShape(std::function<void(const CFrame, size_t)> const & action)
-{
-	return m_createChangeRectCommand.connect(action);
 }

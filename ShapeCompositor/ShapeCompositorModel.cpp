@@ -51,7 +51,7 @@ bool CShapeCompositorModel::OpenDocument()
 	if (SaveChangeDocument() != IDCANCEL)
 	{
 		auto readData = m_document.OnFileOpen(	
-			this,
+			GetModelReseter(),
 			m_textureStorage.GetDeletable(),
 			CXMLReader::DataForCreation(
 				m_shapeFactory,
@@ -106,9 +106,14 @@ int CShapeCompositorModel::SaveChangeDocument()
 }
 
 
-signal::Connection CShapeCompositorModel::DoOnResetSelectedShape(std::function<void()> const & action)
+signal::Connection CShapeCompositorModel::DoOnResetView(std::function<void()> const & action)
 {
-	return m_resetSelectedShape.connect(action);
+	return m_resetView.connect(action);
+}
+
+IModelReseter & CShapeCompositorModel::GetModelReseter()
+{
+	return *this;
 }
 
 void CShapeCompositorModel::UndoCommand()
@@ -143,9 +148,8 @@ void CShapeCompositorModel::ResetModel()
 
 	m_history.Clear();
 
-	m_resetSelectedShape();
-
 	m_canvasModel.Clear();
+	m_resetView();
 }
 
 IShapeCollection & CShapeCompositorModel::GetShapeCollection()
@@ -218,7 +222,7 @@ void CShapeCompositorModel::LoadPicture(const boost::filesystem::path & path)
 
 void CShapeCompositorModel::ChangeRect(const CFrame oldFrame, const CFrame newFrame, size_t shapeIndex)
 {
-	CheckIndex(shapeIndex, m_canvasModel.GetShapeCount());
+	CheckIndex(shapeIndex, m_canvasModel.GetShapeCount() - 1);
 	
 	m_history.AddAndExecuteCommand(std::make_shared<CChangeShapeRectCanvasCommand>(
 		m_canvasModel.GetShapeProvider(),

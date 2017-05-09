@@ -74,12 +74,12 @@ void CShapeCompositorPresenter::ConnectSignalsForHaveRenderTarget()
 
 void CShapeCompositorPresenter::ConnectSignalsForModelReseter()
 {
-	m_connections += m_pModelReseter->DoOnResetSelectedShape(boost::bind(&IViewReseter::ResetSelectedShape, m_pViewReseter));
+	m_connections += m_pModelReseter->DoOnResetView(boost::bind(&IViewReseter::ResetView, m_pViewReseter));
 }
 
 void CShapeCompositorPresenter::ConnectSignalsForView()
 {
-	//m_connections += m_pViewSignaller->DoOnDeleteShapeCommand(boost::bind(&IViewReseter::ResetSelectedShape, m_pViewReseter));
+	//m_connections += m_pViewSignaller->DoOnDeleteShapeCommand(boost::bind(&IViewReseter::ResetView, m_pViewReseter));
 
 }
 

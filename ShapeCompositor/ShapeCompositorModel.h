@@ -27,7 +27,9 @@ public:
 	virtual ~IModelReseter() = default;
 
 	virtual void ResetModel() = 0;
-	virtual signal::Connection DoOnResetSelectedShape(std::function<void()> const & action) = 0;
+	virtual signal::Connection DoOnResetView(std::function<void()> const & action) = 0;
+
+	virtual IModelReseter & GetModelReseter() = 0;
 };
 
 class IHaveRenderTarget
@@ -72,7 +74,8 @@ public:
 	//--------------------------------------------
 	// IModelReseter
 	void ResetModel() override;
-	signal::Connection DoOnResetSelectedShape(std::function<void()> const & action) override;
+	signal::Connection DoOnResetView(std::function<void()> const & action) override;
+	IModelReseter & GetModelReseter() override;
 	//--------------------------------------------
 	// IShapeManipulator
 	void DeleteShape(size_t shapeIndex) override;
@@ -91,7 +94,7 @@ private:
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
-	signal::Signal<void()> m_resetSelectedShape;
+	signal::Signal<void()> m_resetView;
 
 	CCanvasModel m_canvasModel;
 	CHistory m_history;

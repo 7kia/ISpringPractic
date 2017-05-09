@@ -55,7 +55,7 @@ bool CMyDocument::OnFileSaveAs(std::vector<CShapeModelPtr> const & shapes, const
 }
 
 CXMLReader::ReadData CMyDocument::OnFileOpen(
-	IModelReseter * reseter,
+	IModelReseter & reseter,
 	std::vector<std::wstring> deleteTexture,
 	CXMLReader::DataForCreation & data
 )
@@ -65,7 +65,7 @@ CXMLReader::ReadData CMyDocument::OnFileOpen(
 	{
 		DeletePictures(deleteTexture);
 
-		reseter->ResetModel();
+		reseter.ResetModel();
 
 		m_fileManager.SetFilePath(fileName.GetString());
 		return m_xmlReader.Open(

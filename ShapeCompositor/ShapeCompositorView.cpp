@@ -60,8 +60,15 @@ END_MESSAGE_MAP()
 CShapeCompositorView::CShapeCompositorView()
 	: m_model(std::make_unique<CShapeCompositorModel>())
 {
+	RecreateApplication();
+}
+
+void CShapeCompositorView::RecreateApplication()
+{
+	m_canvasView = CCanvasView();
+
 	m_controller = std::make_unique<CShapeCompositorPresenter>(this);//this - IViewSignaller *
-	
+
 	m_canvasView.SetBoundingRect(m_model->GetCanvasRect());
 
 	m_controller->SetHistoryManipulator(m_model.get());
@@ -70,6 +77,25 @@ CShapeCompositorView::CShapeCompositorView()
 	m_controller->SetHaveRenderTarget(m_model.get());
 	m_controller->SetModelReseter(m_model.get(), this);
 	m_controller->SetShapeViewManipulator(this);//this - IShapeViewManipulator *
+}
+
+void CShapeCompositorView::SetWindowCursor(CursorType type)
+{
+	switch (type)
+	{
+	case CursorType::SIZENWSE:
+		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZENWSE));
+		break;
+	case CursorType::SIZENESW:
+		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZENESW));
+		break;
+	case CursorType::SIZEALL:
+		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZEALL));
+		break;
+	case CursorType::ARROW:
+		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_ARROW));
+		break;
+	}
 }
 
 CShapeCompositorView::~CShapeCompositorView()
@@ -345,7 +371,9 @@ void CShapeCompositorView::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	CScrollView::OnLButtonDown(nFlags, point);
 
-	if (m_canvasView.HandleLButtonDown(GetScreenPosition(point)))
+	const Vec2f mousePosition = GetScreenPosition(point);
+	SetWindowCursor(m_canvasView.ChangeCursor(mousePosition));
+	if (m_canvasView.HandleLButtonDown(mousePosition))
 	{
 		const auto oldFrame = m_canvasView.GetOldFrameSelectedShape();
 		const auto newFrame = m_canvasView.GetFrameSelectedShape();
@@ -362,7 +390,9 @@ void CShapeCompositorView::OnMouseMove(UINT nFlags, CPoint point)
 {
 	CView::OnMouseMove(nFlags, point);
 
-	if (m_canvasView.HandleMouseMove(GetScreenPosition(point)))
+	const Vec2f mousePosition = GetScreenPosition(point);
+	SetWindowCursor(m_canvasView.ChangeCursor(mousePosition));
+	if (m_canvasView.HandleMouseMove(mousePosition))
 	{
 		RedrawWindow();
 	}
@@ -372,14 +402,16 @@ void CShapeCompositorView::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	CView::OnLButtonUp(nFlags, point);
 
-	if (m_canvasView.HandleLButtonUp(GetScreenPosition(point)))
+	const Vec2f mousePosition = GetScreenPosition(point);
+	SetWindowCursor(m_canvasView.ChangeCursor(mousePosition));
+	if (m_canvasView.HandleLButtonUp(mousePosition))
 	{
 		m_onChangeRectShape(
 			m_canvasView.GetOldFrameSelectedShape(),
 			m_canvasView.GetFrameSelectedShape(),
 			m_canvasView.GetIndexSelectedShape()
 		);
-		m_canvasView.ResetUpdateParameters();
+		m_canvasView.ResetSelectedShapeUpdateParameters();
 	}
 
 	RedrawWindow();
@@ -400,9 +432,9 @@ void CShapeCompositorView::DeleteShapeView(size_t index)
 	m_canvasView.DeleteShapeView(index);
 }
 
-void CShapeCompositorView::ResetSelectedShape()
+void CShapeCompositorView::ResetView()
 {
-	m_canvasView.ResetSelectShapePtr();
+	RecreateApplication();
 }
 
 Vec2f CShapeCompositorView::GetScreenPosition(const CPoint & point)

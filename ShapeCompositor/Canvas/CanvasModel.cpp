@@ -57,9 +57,12 @@ std::vector<CShapeModelPtr>& CCanvasModel::GetShapes()
 	return m_shapes;
 }
 
-void CCanvasModel::SetShapes(const std::vector<CShapeModelPtr> & shapes)
+void CCanvasModel::SetShapes(std::vector<CShapeModelPtr> & shapes)
 {
-	m_shapes = shapes;
+	for (auto & shape : shapes)
+	{
+		PushBackShape(shape);
+	}
 }
 
 IShapeCollection & CCanvasModel::GetShapeCollection()
@@ -94,7 +97,10 @@ void CCanvasModel::DeleteShape(const CShapeModelPtr & pShape)
 
 void CCanvasModel::Clear()
 {
-	m_shapes.clear();
+	for (size_t index = 0; index < m_shapes.size(); ++index)
+	{
+		DeleteShape(index);
+	}
 }
 
 signal::Connection CCanvasModel::DoOnCreateView(std::function<void(const CShapeViewPtr&, size_t)> const & action)
@@ -131,15 +137,9 @@ CShapeModelPtr CCanvasModel::GetShape(const ID2D1Bitmap * pTexture)
 }
 
 
-bool CCanvasModel::IsSelectShape(const size_t index, const CShapeModelPtr & selectedShape) const
-{
-	return selectedShape == m_shapes[index];
-}
-
-
 size_t CCanvasModel::GetShapeIndex(const CShapeModelPtr &  pShape) const
 {
-	return  std::find(m_shapes.begin(), m_shapes.end(), pShape) - m_shapes.begin();
+	return std::find(m_shapes.begin(), m_shapes.end(), pShape) - m_shapes.begin();
 }
 
 

@@ -9,6 +9,10 @@ CTextureStorage::CTextureStorage(const SSize maxSize)
 
 void CTextureStorage::AddTexture(const std::wstring & name, const CComPtr<ID2D1Bitmap>& pTexture)
 {
+	if (pTexture == nullptr)
+	{
+		throw std::runtime_error("Texture not load");
+	}
 	m_storage.emplace(std::make_pair<const std::wstring, CStorageCell>( name.data(), CStorageCell(pTexture) ));
 }
 

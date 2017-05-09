@@ -51,11 +51,7 @@ public:
 
 	virtual void PushBackShape(CShapeModelPtr & shape) = 0;
 	virtual void InsertShape(size_t insertIndex, CShapeModelPtr & shape) = 0;
-	virtual void SetShapes(const std::vector<CShapeModelPtr> & shapes) = 0;
-
-
-	virtual bool IsSelectShape(const size_t index, const CShapeModelPtr & selectedShape) const = 0;
-
+	virtual void SetShapes(std::vector<CShapeModelPtr> & shapes) = 0;
 };
 
 class ICanvas
@@ -90,12 +86,9 @@ public:
 
 	void					PushBackShape(CShapeModelPtr & shape) override;
 	void					InsertShape(size_t insertIndex, CShapeModelPtr & shape) override;
-	void					SetShapes(const std::vector<CShapeModelPtr> & shapes) override;
+	void					SetShapes(std::vector<CShapeModelPtr> & shapes) override;
 
 	size_t					GetShapeCount() const override;
-
-	// For drag and drop
-	bool					IsSelectShape(const size_t index, const CShapeModelPtr & selectedShape) const override;
 	//--------------------------------------------
 
 	//--------------------------------------------
