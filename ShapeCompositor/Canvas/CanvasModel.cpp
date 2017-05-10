@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "GlobalFunctions.h"
 #include "CanvasModel.h"
+#include "Shapes/Presenter/ShapePresenter.h"
 
 CCanvasModel::CCanvasModel(const SSize size)
 	: m_size(size)
@@ -12,7 +13,10 @@ void CCanvasModel::PushBackShape(CShapeModelPtr & shape)
 {
 	m_shapes.push_back(shape);
 
-	m_onCreateView(m_shapeViewFactory.CreateShape(shape), m_shapes.size() - 1);
+	auto view = m_shapeViewFactory.CreateShape(shape);
+	CreateShapePresenter(shape, view);
+
+	m_onCreateView(view, m_shapes.size() - 1);
 }
 
 void CCanvasModel::InsertShape(size_t insertIndex, CShapeModelPtr & shape)
@@ -24,7 +28,10 @@ void CCanvasModel::InsertShape(size_t insertIndex, CShapeModelPtr & shape)
 		, shape
 	);
 
-	m_onCreateView(m_shapeViewFactory.CreateShape(shape), insertIndex);
+	auto view = m_shapeViewFactory.CreateShape(shape);
+	CreateShapePresenter(shape, view);
+
+	m_onCreateView(view, insertIndex);
 }
 
 size_t CCanvasModel::GetShapeCount() const
@@ -50,6 +57,13 @@ D2D1_RECT_F CCanvasModel::GetRect() const
 	rect.top = 0.f;
 	rect.bottom = m_size.height;
 	return rect;
+}
+
+void CCanvasModel::CreateShapePresenter(CShapeModelPtr & pModel, CShapeViewPtr & pView)
+{
+	auto presenter = std::make_shared<CShapePresenter>(pModel);
+	presenter->SetShapeView(pView.get());
+	pView->SetPresenter(presenter);
 }
 
 std::vector<CShapeModelPtr>& CCanvasModel::GetShapes()

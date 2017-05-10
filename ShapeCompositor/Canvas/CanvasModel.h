@@ -115,6 +115,7 @@ public:
 	//--------------------------------------------
 
 private:
+	void CreateShapePresenter(CShapeModelPtr & pModel, CShapeViewPtr & pView);
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
