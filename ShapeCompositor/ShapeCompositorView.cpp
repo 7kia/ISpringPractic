@@ -154,13 +154,13 @@ void CShapeCompositorView::CreatePicture()
 
 void CShapeCompositorView::Undo()
 {
-	m_undoCommand();
+	m_onUndoCommand();
 	RedrawWindow();
 }
 
 void CShapeCompositorView::Redo()
 {
-	m_redoCommand();
+	m_onRedoCommand();
 	RedrawWindow();
 }
 
@@ -225,7 +225,7 @@ int CShapeCompositorView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		m_pRenderTarget = m_objectRenderer.CreateRenderTarget(this);
 		ATLENSURE_SUCCEEDED(m_objectRenderer.CreateRecources());
 		// TODO : rewrite Normal
-		m_setRenderTargetForModel(m_pRenderTarget);
+		m_onSetRenderTargetForModel(m_pRenderTarget);
 
 	}
 	catch (...)
@@ -273,7 +273,7 @@ void CShapeCompositorView::OnSize(UINT nType, int cx, int cy)
 
 void CShapeCompositorView::OnFileSaveAs()
 {
-	if (m_saveAsDocument())
+	if (m_onSaveAsDocument())
 	{
 		RedrawWindow();
 	}
@@ -283,7 +283,7 @@ void CShapeCompositorView::OnFileSaveAs()
 void CShapeCompositorView::OnFileOpen()
 {
 	m_canvasView.ResetSelectShapePtr();
-	if (m_openDocument())
+	if (m_onOpenDocument())
 	{
 		//SetWindowText(m_document.GetFileName());
 		RedrawWindow();
@@ -292,7 +292,7 @@ void CShapeCompositorView::OnFileOpen()
 
 void CShapeCompositorView::OnFileSave()
 {
-	if (m_saveDocument())
+	if (m_onSaveDocument())
 	{
 		//SetWindowText(m_document.GetFileName());
 		RedrawWindow();
@@ -301,7 +301,7 @@ void CShapeCompositorView::OnFileSave()
 
 void CShapeCompositorView::OnFileNew()
 {
-	if(m_newDocument())
+	if(m_onNewDocument())
 	{
 		//SetWindowText(CString("Безымянный"));
 		RedrawWindow();

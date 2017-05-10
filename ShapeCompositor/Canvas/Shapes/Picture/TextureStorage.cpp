@@ -58,7 +58,7 @@ std::wstring CTextureStorage::GetNameTexture(ID2D1Bitmap * texture) const
 	return std::wstring();
 }
 
-std::vector<std::wstring> CTextureStorage::GetNeedfullNames() const
+std::vector<std::wstring> CTextureStorage::GetTextureNames() const
 {
 	std::vector<std::wstring> names;
 	for (const auto & cell : m_storage)

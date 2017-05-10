@@ -35,19 +35,20 @@ public:
 	// Thikness outline
 	void SetOutlineThickness(const float thickness) override;
 	float GetOutlineThickness() const override;
-
 	//--------------------------------------------
+
+	// ShapeView might will selected, for update model
+	// update view and CSelectedFrame(will useful
+	// when can be two window use one canvas)
 	void UpdateSelectedFrame(const CFrame & data);
-	signal::Connection DoOnUpdateSelectedShape(std::function<void(const CFrame&)> const & action);
 	void DoUnselected();
 
-	virtual void Accept(IShapeVisitor & visitor) const = 0;
+	signal::Connection DoOnUpdateSelectedShape(std::function<void(const CFrame&)> const & action);
 
+	virtual void Accept(IShapeVisitor & visitor) const = 0;
 	virtual bool IsPointIntersection(const Vec2f point) const;
 
 	void SetPresenter(std::shared_ptr<CShapePresenter> & pPresenter);
-
-
 	//////////////////////////////////////////////////////////////////////
 	// Data
 protected:

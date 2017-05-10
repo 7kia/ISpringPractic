@@ -75,9 +75,6 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
-
-	//signal::Connection DoOnDeleteShapeCommand(std::function<void(CSelectedShape &)> const & action);
-
 	//--------------------------------------------
 	// IShapeCollection
 	void					DeleteShape(size_t index) override;
@@ -90,17 +87,14 @@ public:
 
 	size_t					GetShapeCount() const override;
 	//--------------------------------------------
-
-	//--------------------------------------------
 	// Signals
 	signal::Connection DoOnCreateView(std::function<void(const CShapeViewPtr &, size_t)> const & action);
 	signal::Connection DoOnDeleteView(std::function<void(size_t)> const & action);
-
 	//--------------------------------------------
 	// IShapeProvider
-	CShapeModelPtr				GetShape(const size_t index) override;
-	CShapeModelPtr				GetShape(const ID2D1Bitmap * pTexture) override;
-	size_t						GetShapeIndex(const CShapeModelPtr & pShape) const override;
+	CShapeModelPtr					GetShape(const size_t index) override;
+	CShapeModelPtr					GetShape(const ID2D1Bitmap * pTexture) override;
+	size_t							GetShapeIndex(const CShapeModelPtr & pShape) const override;
 
 	std::vector<CShapeModelPtr>&	GetShapes() override;
 	//--------------------------------------------

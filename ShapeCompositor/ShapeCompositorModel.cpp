@@ -5,13 +5,13 @@
 
 CShapeCompositorModel::CShapeCompositorModel()
 	: m_textureStorage(CanvasNamespace::MAX_PICTURE_SIZE)
-	, m_canvasModel(CanvasNamespace::CANVAS_SIZE)
+	, m_domainModel(CanvasNamespace::CANVAS_SIZE)
 {
 }
 
 D2D1_RECT_F CShapeCompositorModel::GetCanvasRect() const
 {
-	return m_canvasModel.GetRect();
+	return m_domainModel.GetRect();
 }
 
 void CShapeCompositorModel::SetRenderTargetForModelComponents(ID2D1HwndRenderTarget * pRenderTarget)
@@ -23,7 +23,7 @@ void CShapeCompositorModel::SetRenderTargetForModelComponents(ID2D1HwndRenderTar
 bool CShapeCompositorModel::SaveAsDocument()
 {
 	bool isSave = m_document.OnFileSaveAs(
-		m_canvasModel.GetShapes(),
+		m_domainModel.GetShapes(),
 		m_textureStorage
 	);
 	if (isSave)
@@ -36,7 +36,7 @@ bool CShapeCompositorModel::SaveAsDocument()
 bool CShapeCompositorModel::SaveDocument()
 {
 	bool isSave = m_document.OnFileSave(
-		m_canvasModel.GetShapes(),
+		m_domainModel.GetShapes(),
 		m_textureStorage
 	);
 	if (isSave)
@@ -58,7 +58,7 @@ bool CShapeCompositorModel::OpenDocument()
 				m_imageFactory
 			)
 		);
-		m_canvasModel.SetShapes(readData.shapeData);
+		m_domainModel.SetShapes(readData.shapeData);
 		m_textureStorage = readData.textureStorage;
 		return true;
 	}
@@ -148,20 +148,16 @@ void CShapeCompositorModel::ResetModel()
 
 	m_history.Clear();
 
-	m_canvasModel.Clear();
+	m_domainModel.Clear();
 	m_resetView();
 }
 
-IShapeCollection & CShapeCompositorModel::GetShapeCollection()
-{
-	return m_canvasModel.GetShapeCollection();
-}
 
 void CShapeCompositorModel::DeleteShape(size_t shapeIndex)
 {
 	m_history.AddAndExecuteCommand(
 		std::make_shared<CDeleteShapeCanvasCommand>(
-			m_canvasModel.GetShapeCollection(),
+			m_domainModel.GetShapeCollection(),
 			shapeIndex,
 			m_textureStorage
 		)
@@ -176,7 +172,7 @@ void CShapeCompositorModel::CreateShape(ShapeType type)
 	{
 		m_history.AddAndExecuteCommand(
 			std::make_shared<CAddShapeCanvasCommand>(
-				m_canvasModel.GetShapeCollection(),
+				m_domainModel.GetShapeCollection(),
 				std::make_shared<CShapeModel>(
 					type,
 					Vec2f(float(CanvasNamespace::CANVAS_SIZE.width) / 2.f, float(CanvasNamespace::CANVAS_SIZE.height) / 2.f)
@@ -204,7 +200,7 @@ void CShapeCompositorModel::LoadPicture(const boost::filesystem::path & path)
 		m_imageFactory.CreateTexture(path.generic_wstring())
 	);
 
-	const auto canvasSize = m_canvasModel.GetSize();
+	const auto canvasSize = m_domainModel.GetSize();
 	CShapeModelPtr pictureModel = std::make_shared<CPictureModel>(
 		m_textureStorage.GetTexture(pictureName),
 		Vec2f(float(canvasSize.width) / 2.f, float(canvasSize.height) / 2.f),
@@ -212,7 +208,7 @@ void CShapeCompositorModel::LoadPicture(const boost::filesystem::path & path)
 	);
 	m_history.AddAndExecuteCommand(
 		std::make_shared<CAddShapeCanvasCommand>(
-			m_canvasModel.GetShapeCollection(),
+			m_domainModel.GetShapeCollection(),
 			pictureModel,
 			m_textureStorage
 			)
@@ -222,10 +218,10 @@ void CShapeCompositorModel::LoadPicture(const boost::filesystem::path & path)
 
 void CShapeCompositorModel::ChangeRect(const CFrame oldFrame, const CFrame newFrame, size_t shapeIndex)
 {
-	CheckIndex(shapeIndex, m_canvasModel.GetShapeCount() - 1);
+	CheckIndex(shapeIndex, m_domainModel.GetShapeCount() - 1);
 	
 	m_history.AddAndExecuteCommand(std::make_shared<CChangeShapeRectCanvasCommand>(
-		m_canvasModel.GetShapeProvider(),
+		m_domainModel.GetShapeProvider(),
 		oldFrame,
 		newFrame,
 		shapeIndex
@@ -235,10 +231,10 @@ void CShapeCompositorModel::ChangeRect(const CFrame oldFrame, const CFrame newFr
 
 signal::Connection CShapeCompositorModel::DoOnCreateView(std::function<void(const CShapeViewPtr&, size_t)> const & action)
 {
-	return m_canvasModel.DoOnCreateView(action);//m_deleteShape.connect(action);
+	return m_domainModel.DoOnCreateView(action);//m_deleteShape.connect(action);
 }
 
 signal::Connection CShapeCompositorModel::DoOnDeleteView(std::function<void(size_t)> const & action)
 {
-	return m_canvasModel.DoOnDeleteView(action);//m_deleteShape.connect(action);
+	return m_domainModel.DoOnDeleteView(action);//m_deleteShape.connect(action);
 }

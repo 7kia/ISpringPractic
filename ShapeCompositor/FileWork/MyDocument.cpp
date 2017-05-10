@@ -41,7 +41,7 @@ bool CMyDocument::OnFileSaveAs(std::vector<CShapeModelPtr> const & shapes, const
 				DeletePictures(textureStorage.GetDeletable());
 
 				m_fileManager.CopyFiles(
-					textureStorage.GetNeedfullNames(),
+					textureStorage.GetTextureNames(),
 					oldFolder,
 					newFolder
 				);

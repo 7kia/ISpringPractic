@@ -10,12 +10,7 @@ CShapePresenter::CShapePresenter(CShapeModelPtr & pModel)
 void CShapePresenter::SetShapeView(CShapeView * pView)
 {
 	m_pView = pView;
-	ConnectSignalsForView();
 	ConnectSignalsForModel();
-}
-
-void CShapePresenter::ConnectSignalsForView()
-{
 }
 
 void CShapePresenter::ConnectSignalsForModel()

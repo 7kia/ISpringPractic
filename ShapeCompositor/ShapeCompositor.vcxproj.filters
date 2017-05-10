@@ -264,7 +264,7 @@
       <Filter>Файлы исходного кода\Canvas</Filter>
     </ClCompile>
     <ClCompile Include="Canvas\Shapes\Picture\PictureModel.cpp">
-      <Filter>Файлы исходного кода</Filter>
+      <Filter>Файлы исходного кода\Canvas\Shapes\Picture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

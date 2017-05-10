@@ -24,7 +24,6 @@ private:
 	void ConnectSignalsForShapeManipulator();
 	void ConnectSignalsForHaveRenderTarget();
 	void ConnectSignalsForModelReseter();
-	void ConnectSignalsForView();
 	void ConnectSignalsForShapeViewCreator();
 	// TODO: rename
 	//////////////////////////////////////////////////////////////////////

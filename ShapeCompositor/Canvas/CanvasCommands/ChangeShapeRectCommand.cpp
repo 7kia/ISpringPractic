@@ -20,17 +20,12 @@ void CChangeShapeRectCanvasCommand::Execute()
 {
 	auto shape = m_shapeCollection.GetShape(m_shapeIndex);
 	shape->Update(m_newFrame);
-
-	// SelectedShape necessary reset, send message - set m_newFrame
-
 }
 
 void CChangeShapeRectCanvasCommand::Cancel()
 {
 	auto shape = m_shapeCollection.GetShape(m_shapeIndex);
 	shape->Update(m_oldFrame);
-
-	// SelectedShape necessary reset, send message - set m_oldFrame
 }
 
 void CChangeShapeRectCanvasCommand::Destroy()

@@ -85,7 +85,6 @@ public:
 	signal::Connection DoOnCreateView(std::function<void(const CShapeViewPtr&, size_t)> const & action) override;
 	signal::Connection DoOnDeleteView(std::function<void(size_t)> const & action) override;
 	//--------------------------------------------
-	IShapeCollection & GetShapeCollection();
 
 private:
 	int SaveChangeDocument();
@@ -96,7 +95,7 @@ private:
 private:
 	signal::Signal<void()> m_resetView;
 
-	CCanvasModel m_canvasModel;
+	CCanvasModel m_domainModel;
 	CHistory m_history;
 	CMyDocument m_document;
 

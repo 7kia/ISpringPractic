@@ -10,16 +10,8 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
-	//--------------------------------------------
-	// NameInterface
-
-	//--------------------------------------------
-
 	void SetShapeView(CShapeView * pView);
-	//void			Set();
-	//void			Get();
 private:
-	void ConnectSignalsForView();
 	void ConnectSignalsForModel();
 	//////////////////////////////////////////////////////////////////////
 	// Data

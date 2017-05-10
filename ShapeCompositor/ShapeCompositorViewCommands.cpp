@@ -3,32 +3,32 @@
 
 signal::Connection CShapeCompositorView::DoOnSaveAsDocument(std::function<bool()> const & action)
 {
-	return m_saveAsDocument.connect(action);
+	return m_onSaveAsDocument.connect(action);
 }
 
 signal::Connection CShapeCompositorView::DoOnSaveDocument(std::function<bool()> const & action)
 {
-	return m_saveDocument.connect(action);
+	return m_onSaveDocument.connect(action);
 }
 
 signal::Connection CShapeCompositorView::DoOnOpenDocument(std::function<bool()> const & action)
 {
-	return m_openDocument.connect(action);
+	return m_onOpenDocument.connect(action);
 }
 
 signal::Connection CShapeCompositorView::DoOnNewDocument(std::function<bool()> const & action)
 {
-	return m_newDocument.connect(action);
+	return m_onNewDocument.connect(action);
 }
 
 signal::Connection CShapeCompositorView::DoOnUndoCommand(std::function<void()> const & action)
 {
-	return m_undoCommand.connect(action);
+	return m_onUndoCommand.connect(action);
 }
 
 signal::Connection CShapeCompositorView::DoOnRedoCommand(std::function<void()> const & action)
 {
-	return m_redoCommand.connect(action);
+	return m_onRedoCommand.connect(action);
 }
 
 
@@ -49,5 +49,5 @@ signal::Connection CShapeCompositorView::DoOnCreateShapeCommand(std::function<vo
 
 signal::Connection CShapeCompositorView::DoOnSetRenderTargetForModel(std::function<void(ID2D1HwndRenderTarget*)> const & action)
 {
-	return m_setRenderTargetForModel.connect(action);
+	return m_onSetRenderTargetForModel.connect(action);
 }

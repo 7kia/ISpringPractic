@@ -31,8 +31,7 @@ public:
 	//--------------------------------------------
 	// For update view and model for update history(for selected shape)
 	void Update(const CFrame & data);
-	//--------------------------------------------
-	//void SetType();
+	
 	ShapeType GetType() const;
 
 

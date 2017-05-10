@@ -17,7 +17,6 @@ enum class CursorType
 
 class CCanvasView 
 	: public IMouseEventHandler
-	//, public IShapeViewManipulator
 {
 public:
 	CCanvasView();

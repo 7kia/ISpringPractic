@@ -77,16 +77,8 @@ void CShapeCompositorPresenter::ConnectSignalsForModelReseter()
 	m_connections += m_pModelReseter->DoOnResetView(boost::bind(&IViewReseter::ResetView, m_pViewReseter));
 }
 
-void CShapeCompositorPresenter::ConnectSignalsForView()
-{
-	//m_connections += m_pViewSignaller->DoOnDeleteShapeCommand(boost::bind(&IViewReseter::ResetView, m_pViewReseter));
-
-}
-
 void CShapeCompositorPresenter::ConnectSignalsForShapeViewCreator()
 {
 	m_connections += m_pShapeManipulator->DoOnDeleteView(boost::bind(&IShapeViewManipulator::DeleteShapeView, m_pShapeViewManipulator, _1));
 	m_connections += m_pShapeManipulator->DoOnCreateView(boost::bind(&IShapeViewManipulator::AddShapeView, m_pShapeViewManipulator, _1, _2));
-
-
 }

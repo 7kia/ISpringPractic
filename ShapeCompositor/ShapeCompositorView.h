@@ -127,18 +127,18 @@ public:
 	virtual void OnDraw(CDC* pDC);  // переопределено для отрисовки этого представления
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);	
 protected:
-	signal::Signal<bool()> m_saveAsDocument;
-	signal::Signal<bool()> m_saveDocument;
-	signal::Signal<bool()> m_newDocument;
-	signal::Signal<bool()> m_openDocument;
+	signal::Signal<bool()> m_onSaveAsDocument;
+	signal::Signal<bool()> m_onSaveDocument;
+	signal::Signal<bool()> m_onNewDocument;
+	signal::Signal<bool()> m_onOpenDocument;
 
-	signal::Signal<void()> m_undoCommand;
-	signal::Signal<void()> m_redoCommand;
+	signal::Signal<void()> m_onUndoCommand;
+	signal::Signal<void()> m_onRedoCommand;
 
 	signal::Signal<void(size_t)> m_onDeleteShape;
 	signal::Signal<void(const CFrame, const CFrame, size_t)> m_onChangeRectShape;
 	signal::Signal<void(ShapeType)> m_onCreateShape;
-	signal::Signal<void(ID2D1HwndRenderTarget *)> m_setRenderTargetForModel;// Render target create in the class and need in other
+	signal::Signal<void(ID2D1HwndRenderTarget *)> m_onSetRenderTargetForModel;// Render target create in the class and need in other
 protected:
 	CCanvasView m_canvasView;
 	CComPtr<ID2D1HwndRenderTarget> m_pRenderTarget;
