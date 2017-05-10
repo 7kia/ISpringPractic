@@ -22,14 +22,13 @@ void CAddShapeCanvasCommand::Execute()
 	{
 		auto pPictureModel = dynamic_cast<CPictureModel*>(m_shapeModel.get());
 
-		m_textureStorage.SetDelete(m_textureStorage.GetNameTexture(pPictureModel->GetTexture()), false);
+		m_textureStorage.SetDelete(m_textureStorage.GetTextureName(pPictureModel->GetTexture()), false);
 	}
 }
 
 void CAddShapeCanvasCommand::Cancel()
 {
-	m_shapeCollection.DeleteShape(m_shapeCollection.GetShapeIndex(m_shapeModel));
-	//DeleteLastElement(m_shapeCollection.GetShapes());
+	m_shapeCollection.DeleteShape(m_shapeCollection.GetShapeCount() - 1);
 
 	if (m_shapeModel->GetType() == ShapeType::Picture)
 	{
@@ -37,7 +36,7 @@ void CAddShapeCanvasCommand::Cancel()
 		const auto shapeHavePicture = m_shapeCollection.GetShape(pPictureModel->GetTexture());
 		if (!shapeHavePicture)
 		{
-			m_textureStorage.SetDelete(m_textureStorage.GetNameTexture(pPictureModel->GetTexture()), true);
+			m_textureStorage.SetDelete(m_textureStorage.GetTextureName(pPictureModel->GetTexture()), true);
 		}
 	}
 }
@@ -52,7 +51,7 @@ void CAddShapeCanvasCommand::Destroy()
 		auto pPictureModel = dynamic_cast<CPictureModel*>(m_shapeModel.get());
 
 		m_textureStorage.SetDelete(
-			m_textureStorage.GetNameTexture(pPictureModel->GetTexture()),
+			m_textureStorage.GetTextureName(pPictureModel->GetTexture()),
 			!HavePictureWithTexture(pPictureModel->GetTexture(), listShapesAfterDestroy)
 		);
 	}

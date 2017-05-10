@@ -41,5 +41,4 @@ private:
 
 	CComPtr<ID2D1SolidColorBrush>				m_pLightSlateGrayBrush;
 	CComPtr<ID2D1SolidColorBrush>				m_pCornflowerBlueBrush;
-
 };

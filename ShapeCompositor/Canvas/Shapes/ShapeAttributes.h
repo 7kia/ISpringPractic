@@ -61,9 +61,6 @@ static const SSize DEFAULT_SIZE = SSize(50.f, 50.f);
 static const Color DEFAULT_OUTLINE_COLOR = Color(0.f, 0.f, 0.f);
 static const Color DEFAULT_FILL_COLOR = Color(0.45f, 0.75f, 0.55f);
 
-/////////////////////////////////////////////////////////////
-// Mixin
-
 class IFrame
 {
 public:

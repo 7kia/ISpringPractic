@@ -34,7 +34,6 @@ public:
 	virtual void ResetView() = 0;
 };
 
-
 class IShapeViewManipulator
 {
 public:
@@ -81,20 +80,15 @@ protected: // создать только из сериализации
 // Атрибуты
 public:
 	//CShapeCompositorDoc* GetDocument() const;
-
-
 // Операции
 public:
-	// TODO : transfer
-	HRESULT	Draw();
+	void CreateTriangle();
+	void CreateRectangle();
+	void CreateEllipse();
+	void CreatePicture();
 
-	void					CreateTriangle();
-	void					CreateRectangle();
-	void					CreateEllipse();
-	void					CreatePicture();
-
-	void					Undo();
-	void					Redo();
+	void Undo();
+	void Redo();
 
 	//--------------------------------------------
 	// IShapeViewManipulator

@@ -102,32 +102,6 @@ CShapeCompositorView::~CShapeCompositorView()
 {
 }
 
-
-// This method discards device-specific
-// resources if the Direct3D device dissapears during execution and
-// recreates the resources the next time it's invoked.
-HRESULT CShapeCompositorView::Draw()
-{
-	HRESULT hr = S_OK;
-
-	CPoint point = GetScrollPosition();
-	D2D1_MATRIX_3X2_F matrix = D2D1::Matrix3x2F::Translation((float)-point.x, (float)-point.y);
-	m_pRenderTarget->BeginDraw();
-	m_pRenderTarget->SetTransform(matrix);
-	m_pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
-
-	m_canvasView.Draw(m_objectRenderer);
-
-	hr = m_objectRenderer.EndDraw();
-
-	if (hr == D2DERR_RECREATE_TARGET)
-	{
-		hr = S_OK;
-	}
-
-	return hr;
-}
-
 void CShapeCompositorView::CreateTriangle()
 {
 	m_onCreateShape(ShapeType::Triangle);
@@ -315,7 +289,22 @@ void CShapeCompositorView::OnPaint()
 					   // TODO: добавьте свой код обработчика сообщений
 					   // Не вызывать CScrollView::OnPaint() для сообщений рисования
 
-	Draw();
+	HRESULT hr = S_OK;
+
+	CPoint point = GetScrollPosition();
+	D2D1_MATRIX_3X2_F matrix = D2D1::Matrix3x2F::Translation((float)-point.x, (float)-point.y);
+	m_pRenderTarget->BeginDraw();
+	m_pRenderTarget->SetTransform(matrix);
+	m_pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
+
+	m_canvasView.Draw(m_objectRenderer);
+
+	hr = m_objectRenderer.EndDraw();
+
+	if (hr == D2DERR_RECREATE_TARGET)
+	{
+		hr = S_OK;
+	}
 	
 }
 

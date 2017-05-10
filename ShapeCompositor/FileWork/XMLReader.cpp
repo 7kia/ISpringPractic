@@ -94,7 +94,7 @@ bool CXMLReader::Save(
 			{
 				// not wstring because not << overload for wstring
 				const auto pictureModel = dynamic_cast<const CPictureModel*>(shape.get());
-				child.add("Texture", ToString(textureStorage.GetNameTexture(pictureModel->GetTexture())) );
+				child.add("Texture", ToString(textureStorage.GetTextureName(pictureModel->GetTexture())) );
 			}
 
 			propertyTree.add_child("Shapes.Shape", child);
@@ -133,8 +133,9 @@ CXMLReader::ReadData CXMLReader::Open(
 	{
 		ReadData readData;
 		std::ifstream stream(path);
-		auto folder = fs::path(path).parent_path().generic_string() + "/" + fs::path(path).stem().generic_string();
-
+		auto folder = fs::path(path).parent_path().generic_string() 
+			+ "/"
+			+ fs::path(path).stem().generic_string();
 
 		boost::property_tree::ptree propertyTree;
 		boost::property_tree::read_xml(stream, propertyTree);

@@ -10,7 +10,6 @@
 
 using TextureStorage = std::vector<CComPtr<ID2D1Bitmap>>;
 
-
 class CStorageCell
 {
 public:
@@ -47,7 +46,7 @@ public:
 	void					AddTexture(const std::wstring & name, const CComPtr<ID2D1Bitmap> & pTexture);
 	ID2D1Bitmap *			GetTexture(const std::wstring & name);
 	SSize					GetCorrectSize(const std::wstring & name) const;
-	std::wstring			GetNameTexture(ID2D1Bitmap * texture) const;
+	std::wstring			GetTextureName(ID2D1Bitmap * texture) const;
 	std::vector<std::wstring> GetTextureNames() const;
 
 	void					SetDelete(const std::wstring & name, bool value);

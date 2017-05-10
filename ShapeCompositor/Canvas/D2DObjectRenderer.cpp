@@ -5,11 +5,8 @@
 #include "SelectedShape.h"
 
 CD2DObjectRenderer::CD2DObjectRenderer()
-	: IShapeVisitor()
-	, IShapeRenderer()
 {
 	ATLENSURE_SUCCEEDED(D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &m_pDirect2dFactory));
-
 }
 
 ID2D1HwndRenderTarget * CD2DObjectRenderer::CreateRenderTarget(CWnd * window)

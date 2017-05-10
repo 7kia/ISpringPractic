@@ -7,7 +7,7 @@ CHistory::CHistory()
 {
 }
 
-void CHistory::AddAndExecuteCommand(const CanvasCommandPtr & command)
+void CHistory::AddAndExecuteCommand(const ICommandPtr & command)
 {
 	// TODO : insert to middle queue
 	if (!m_history.empty() && (m_currentCommand != m_history.rbegin()))

@@ -46,7 +46,7 @@ SSize CTextureStorage::GetCorrectSize(const std::wstring & name) const
 	return resultSize;
 }
 
-std::wstring CTextureStorage::GetNameTexture(ID2D1Bitmap * texture) const
+std::wstring CTextureStorage::GetTextureName(ID2D1Bitmap * texture) const
 {
 	for (auto & cell : m_storage)
 	{

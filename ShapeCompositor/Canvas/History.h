@@ -12,7 +12,7 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
-	virtual void AddAndExecuteCommand(const CanvasCommandPtr & command) = 0;
+	virtual void AddAndExecuteCommand(const ICommandPtr & command) = 0;
 
 	virtual void Undo() = 0;
 	virtual void Redo() = 0;
@@ -38,7 +38,7 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
-	void AddAndExecuteCommand(const CanvasCommandPtr & command) override;
+	void AddAndExecuteCommand(const ICommandPtr & command) override;
 
 	void Undo() override;
 	void Redo() override;
@@ -46,13 +46,13 @@ public:
 	void Clear() override;
 
 	// For save to document
-	bool					IsSave() const;
-	void					DoSave();
+	bool IsSave() const;
+	void DoSave();
 private:
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
-	std::deque<CanvasCommandPtr>						m_history;
-	std::deque<CanvasCommandPtr>::reverse_iterator		m_currentCommand = m_history.rbegin();
-	CanvasCommandPtr									m_saveLastCommand;
+	std::deque<ICommandPtr>						m_history;
+	std::deque<ICommandPtr>::reverse_iterator	m_currentCommand = m_history.rbegin();
+	ICommandPtr									m_saveLastCommand;
 };

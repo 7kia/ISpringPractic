@@ -3,10 +3,11 @@
 #include <memory>
 #include <array>
 
+#include <boost\optional.hpp>
+
 #include "Shapes\AllViewShapes.h"
 #include "ShapeRenderer.h"
 #include "Shapes\ShapeViewFactory.h"
-#include <boost\optional.hpp>
 
 static const SSize SELECTED_ELLIPSE_SIZE = SSize(10.f, 10.f);
 static const SSize MIN_SHAPE_SIZE = SSize(50.f, 50.f);
@@ -84,22 +85,22 @@ public:
 
 private:
 	// For drag and drop
-	Vec2f	GetFinalShift() const;
-	SSize	GetDirectionResize() const;
-	bool	CheckBoundingRect(const D2D1_RECT_F & rect) const;
+	Vec2f GetFinalShift() const;
+	SSize GetDirectionResize() const;
+	bool CheckBoundingRect(const D2D1_RECT_F & rect) const;
 
 	//
 
 	void					SetDragPointPositions();
 
-	bool					CheckSize(const SSize size) const;
-	CFrame					GetNewFrame(const Vec2f shift, const CFrame & oldFrame) const;
-	static SSize			GetCorrectSize(const SSize size);
-	Vec2f					GetCorrectPosition(
-												const SSize newSize
-												, const Vec2f shift
-												, const Vec2f startPosition
-												) const;
+	bool CheckSize(const SSize size) const;
+	CFrame GetNewFrame(const Vec2f shift, const CFrame & oldFrame) const;
+	static SSize GetCorrectSize(const SSize size);
+	Vec2f GetCorrectPosition(
+		const SSize newSize,
+		const Vec2f shift,
+		const Vec2f startPosition
+	) const;
 
 
 	//////////////////////////////////////////////////////////////////////

@@ -20,7 +20,6 @@ class CShapeCompositorView;
 class CShapeCompositorDoc;
 class CCanvasController;
 
-
 namespace CanvasNamespace
 {
 	static const SSize CANVAS_SIZE = SSize(640.f, 480.f);
@@ -60,8 +59,8 @@ public:
 	virtual ~ICanvas() = default;
 	virtual IShapeCollection& GetShapeCollection() = 0;
 	virtual IShapeProvider& GetShapeProvider() = 0;
-	virtual void	SetSize(const SSize size) = 0;
-	virtual SSize	GetSize() const = 0;
+	virtual void SetSize(const SSize size) = 0;
+	virtual SSize GetSize() const = 0;
 	virtual D2D1_RECT_F GetRect() const = 0;
 };
 

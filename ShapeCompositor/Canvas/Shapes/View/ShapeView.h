@@ -1,13 +1,11 @@
 #pragma once
 
-
 #include <memory>
 #include "../IShape.h"
 #include "../Model/ShapeModel.h"
 
 class CShapePresenter;
 
-// Mixin for avoid dublicate
 class CShapeView 
 	: public IShape
 	, public CFrame
@@ -32,7 +30,7 @@ public:
 	// Outer Color
 	void SetOutlineColor(const Color &  color) override;
 	Color GetOutlineColor() const override;
-	// Thikness outline
+	// Thickness outline
 	void SetOutlineThickness(const float thickness) override;
 	float GetOutlineThickness() const override;
 	//--------------------------------------------
@@ -40,7 +38,7 @@ public:
 	// ShapeView might will selected, for update model
 	// update view and CSelectedFrame(will useful
 	// when can be two window use one canvas)
-	void UpdateSelectedFrame(const CFrame & data);
+	void Update(const CFrame & data);
 	void DoUnselected();
 
 	signal::Connection DoOnUpdateSelectedShape(std::function<void(const CFrame&)> const & action);
@@ -57,7 +55,6 @@ protected:
 	float m_outlineThikness = 1.f;
 
 	bool m_isSelected = false;
-
 	signal::Signal<void(const CFrame&)> m_onUpdateSelectedShape;// For send message for selected shape
 	std::shared_ptr<CShapePresenter> m_pPresenter;
 };

@@ -5,7 +5,6 @@
 #include <afxcmn.h>             // поддержка MFC для типовых элементов управления Windows
 #include <afxdtctl.h>           // поддержка MFC для типовых элементов управления Internet Explorer 4
 
-
 #include "Canvas\CanvasModel.h"
 #include "Canvas\History.h"
 #include "FileWork\XMLReader.h"
@@ -13,12 +12,10 @@
 #include "Canvas\Shapes\Picture\TextureStorage.h"
 #include "Canvas\Shapes\Picture\D2DImageFactory.h"
 
-
 class IDataForSave
 {
 public:
 	virtual ~IDataForSave() = default;
-
 
 	virtual IShapeCollection& GetShapeCollection() = 0;
 	virtual CTextureStorage & GetTextureStorage() = 0;
@@ -63,7 +60,6 @@ public:
 		Open
 	};
 	
-
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:

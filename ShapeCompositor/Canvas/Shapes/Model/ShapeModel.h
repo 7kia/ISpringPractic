@@ -25,7 +25,7 @@ public:
 	// Outer Color
 	void SetOutlineColor(const Color &  color);
 	Color GetOutlineColor() const;
-	// Thikness outline
+	// Thickness outline
 	void SetOutlineThickness(const float thickness);
 	float GetOutlineThickness() const;
 	//--------------------------------------------
@@ -33,10 +33,7 @@ public:
 	void Update(const CFrame & data);
 	
 	ShapeType GetType() const;
-
-
 	signal::Connection DoOnRectChanged(std::function<void(const CFrame&)> const& action);
-
 	bool operator==(const CShapeModel & otherModel) const;
 	//////////////////////////////////////////////////////////////////////
 	// Data

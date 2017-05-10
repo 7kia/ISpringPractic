@@ -3,7 +3,6 @@
 #include "ShapeAttributes.h"
 #include "ShapeVisitor.h"
 
-
 enum class ShapeType
 {
 	Triangle,
@@ -12,9 +11,8 @@ enum class ShapeType
 	Picture,
 };
 
-
-
 class IShapeVisitor;
+
 class IShape
 {
 public:
@@ -29,7 +27,7 @@ public:
 	// Outer Color
 	virtual void SetOutlineColor(const Color &  color) = 0;
 	virtual Color GetOutlineColor() const = 0;
-	// Thikness outline
+	// Thickness outline
 	virtual void SetOutlineThickness(const float thickness) = 0;
 	virtual float GetOutlineThickness() const = 0;
 

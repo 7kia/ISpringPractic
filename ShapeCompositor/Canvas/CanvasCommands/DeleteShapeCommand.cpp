@@ -24,7 +24,7 @@ void CDeleteShapeCanvasCommand::Execute()
 		const auto shapeHavePicture = m_shapeCollection.GetShape(pPictureModel->GetTexture());
 		if (!shapeHavePicture)
 		{
-			m_textureStorage.SetDelete(m_textureStorage.GetNameTexture(pPictureModel->GetTexture()), true);
+			m_textureStorage.SetDelete(m_textureStorage.GetTextureName(pPictureModel->GetTexture()), true);
 		}
 	}
 }
@@ -37,7 +37,7 @@ void CDeleteShapeCanvasCommand::Cancel()
 	{
 		auto pPictureModel = dynamic_cast<CPictureModel*>(m_shapeModel.get());
 
-		m_textureStorage.SetDelete(m_textureStorage.GetNameTexture(pPictureModel->GetTexture()), false);
+		m_textureStorage.SetDelete(m_textureStorage.GetTextureName(pPictureModel->GetTexture()), false);
 	}
 }
 
@@ -47,6 +47,6 @@ void CDeleteShapeCanvasCommand::Destroy()
 	{
 		auto pPictureModel = dynamic_cast<CPictureModel*>(m_shapeModel.get());
 
-		m_textureStorage.SetDelete(m_textureStorage.GetNameTexture(pPictureModel->GetTexture()), false);
+		m_textureStorage.SetDelete(m_textureStorage.GetTextureName(pPictureModel->GetTexture()), false);
 	}
 }

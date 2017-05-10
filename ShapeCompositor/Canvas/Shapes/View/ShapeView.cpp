@@ -64,7 +64,7 @@ float CShapeView::GetOutlineThickness() const
 	return m_outlineThikness;
 }
 
-void CShapeView::UpdateSelectedFrame(const CFrame & data)
+void CShapeView::Update(const CFrame & data)
 {
 	CFrame::SetFrame(data);
 

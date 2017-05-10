@@ -1,8 +1,9 @@
 #pragma once
 
+#include <d2d1.h>
+
 #include "Canvas\Shapes\View\RectangleView.h"
 #include "PictureModel.h"
-#include <d2d1.h>
 
 class CPictureView : public CRectangleView
 {

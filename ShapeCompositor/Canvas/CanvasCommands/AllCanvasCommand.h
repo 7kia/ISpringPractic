@@ -5,4 +5,4 @@
 #include "ChangeShapeRectCommand.h"
 
 // IMyCommandPtr or IMyCommandSharedPtr
-using CanvasCommandPtr = std::shared_ptr<IMyCommand>;
+using ICommandPtr = std::shared_ptr<IMyCommand>;

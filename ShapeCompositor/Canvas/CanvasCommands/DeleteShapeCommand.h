@@ -6,6 +6,7 @@
 #include "Canvas\Shapes\Picture\TextureStorage.h"
 
 class IShapeCollection;
+
 class CDeleteShapeCanvasCommand : public IMyCommand
 {
 public:

@@ -5,6 +5,7 @@
 
 class CSelectedShape;
 class IShapeProvider;
+
 class CChangeShapeRectCanvasCommand : public IMyCommand
 {
 public:
