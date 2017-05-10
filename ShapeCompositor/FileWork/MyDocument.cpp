@@ -66,7 +66,7 @@ CXMLReader::ReadData CMyDocument::OnFileOpen(
 		DeletePictures(deleteTexture);
 
 		reseter.ResetModel();
-
+		// Check save/open save document
 		m_fileManager.SetFilePath(fileName.GetString());
 		return m_xmlReader.Open(
 			m_fileManager.GetFilePath(),
@@ -156,7 +156,7 @@ CString CMyDocument::OpenDialog(const DialogType dialogType, const FileType file
 		(dialogType == DialogType::Open) ? TRUE : FALSE
 		, NULL
 		, type.data()
-		, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT
+		, OFN_EXPLORER | OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT
 		, expression.data()
 	);
 	CString fileName;
@@ -167,6 +167,22 @@ CString CMyDocument::OpenDialog(const DialogType dialogType, const FileType file
 	if (fileDlg.DoModal() == IDOK)
 	{
 		fileName = fileDlg.GetPathName();
+
+		switch (fileType)
+		{
+		case FileType::Pictures:
+			expression = L".png";
+			break;
+		case FileType::Shapes:
+			expression = L".xml";
+			break;
+		default:
+			break;
+		}
+		if (fileName.Find(expression.data()) == -1)
+		{
+			 fileName.SetString(fileName + CString(expression.data()));
+		}
 	}
 	//fileName.ReleaseBuffer();
 

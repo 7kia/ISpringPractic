@@ -126,7 +126,7 @@ CShapeModelPtr CCanvasModel::GetShape(const ID2D1Bitmap * pTexture)
 	{
 		if (shape->GetType() == ShapeType::Picture)
 		{
-			const auto pPicture = dynamic_cast<CPictureView*>(shape.get());
+			const auto pPicture = dynamic_cast<CPictureModel*>(shape.get());
 			if (pPicture->GetTexture() == pTexture)
 			{
 				return shape;

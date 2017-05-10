@@ -231,18 +231,12 @@ CursorType CCanvasView::ChangeCursor(const Vec2f & position)
 			return CursorType::SIZEALL;
 		}
 	}
-	else
+	else if (GetShape(position, m_shapeViews) != nullptr)
 	{
-		if (GetShape(position, m_shapeViews) != nullptr)
-		{
-			return CursorType::SIZEALL;
-		}
-		else
-		{
-			return CursorType::ARROW;
-		}
+		return CursorType::SIZEALL;
 	}
-
+	
+	return CursorType::ARROW;
 }
 
 size_t CCanvasView::GetShapeIndex(const CShapeViewPtr & shapeView) const
