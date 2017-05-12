@@ -11,10 +11,10 @@
 #include <boost\property_tree\xml_parser.hpp>
 #include <boost/filesystem.hpp>
 
-#include "Canvas\Canvas.h"
-#include "Canvas\Picture\Picture.h"
-#include "Canvas\Picture\TextureStorage.h"
-#include "Canvas\Picture\D2DImageFactory.h"
+#include "Canvas\CanvasModel.h"
+#include "Canvas\Shapes\Picture\PictureView.h"
+#include "Canvas\Shapes\Picture\TextureStorage.h"
+#include "Canvas\Shapes\Picture\D2DImageFactory.h"
 #include <string>
 
 class CXMLReader
@@ -26,20 +26,20 @@ public:
 	{
 		ReadData();
 		ReadData(
-			std::vector<CShapePtr> & shapeData,
+			std::vector<CShapeModelPtr> & shapeData,
 			CTextureStorage & textureStorage
 		);
-		std::vector<CShapePtr> shapeData;
+		std::vector<CShapeModelPtr> shapeData;
 		CTextureStorage textureStorage;
 	};
 
 	struct DataForCreation
 	{
 		DataForCreation(
-			const CShapeFactory & shapeFactory,
+			const CShapeViewFactory & shapeFactory,
 			CD2DImageFactory & imageFactory
 		);
-		const CShapeFactory & shapeFactory;
+		const CShapeViewFactory & shapeFactory;
 		CD2DImageFactory & imageFactory;
 	};
 	//////////////////////////////////////////////////////////////////////
@@ -47,7 +47,7 @@ public:
 public:
 	static bool Save(
 		const std::wstring & path,
-		const std::vector<CShapePtr>  & shapes,
+		const std::vector<CShapeModelPtr> & shapes,
 		const CTextureStorage & textureStorage
 	);
 	static ReadData Open(

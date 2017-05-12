@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Triangle.h"
+#include "TriangleView.h"
 
 namespace
 {
@@ -32,17 +32,16 @@ namespace
 
 }
 
-CTriangle::CTriangle(
+CTriangleView::CTriangleView(
 	const Vec2f position,
 	const SSize size,
 	const Color & fillColor,
 	const Color & outlineColor,
 	float outlineThikness
 )
-	: CShape(
-		ShapeType::Triangle,
-		m_position,
-		m_size,
+	: CShapeView(
+		position,
+		size,
 		fillColor,
 		outlineColor,
 		outlineThikness
@@ -50,14 +49,14 @@ CTriangle::CTriangle(
 {
 }
 
-bool CTriangle::IsPointIntersection(const Vec2f point) const
+bool CTriangleView::IsPointIntersection(const Vec2f point) const
 {
 	auto vertices = GetVertices();
 
 	return PointIsInsideTriangle(vertices[2], vertices[1], vertices[0], point);
 }
 
-VertexList CTriangle::GetVertices() const
+VertexList CTriangleView::GetVertices() const
 {
 	Vec2f first = Vec2f(m_position.x - m_size.width / 2.f, m_position.y + m_size.height / 2.f);
 	Vec2f second = Vec2f(m_position.x + m_size.width / 2.f, m_position.y + m_size.height / 2.f);
@@ -78,7 +77,7 @@ VertexList CTriangle::GetVertices() const
 	return { first, second, third };
 }
 
-void CTriangle::Accept(IShapeVisitor & visitor) const
+void CTriangleView::Accept(IShapeVisitor & visitor) const
 {
 	visitor.Visit(*this);
 }

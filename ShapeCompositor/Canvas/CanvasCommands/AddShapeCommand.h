@@ -1,19 +1,19 @@
 #pragma once
 
 #include "CanvasCommand.h"
-#include "Canvas\Shapes\AllShapes.h"
+#include "Canvas\Shapes\AllViewShapes.h"
 #include "Canvas\SelectedShape.h"
-#include "Canvas\Shapes\ShapeFactory.h"
+#include "Canvas\Shapes\ShapeViewFactory.h"
+#include "Canvas\Shapes\Picture\TextureStorage.h"
 
 class IShapeCollection;
 class CAddShapeCanvasCommand : public IMyCommand
 {
 public:
 	CAddShapeCanvasCommand(
-		IShapeCollection & pCanvas
-		, ShapeType type
-		, const CShapeFactory & factory
-		, CSelectedShape & seletedShape
+		IShapeCollection & pShapeCollection,
+		CShapeModelPtr & pShapeModel,
+		CTextureStorage & textureStorage
 	);
 	//////////////////////////////////////////////////////////////////////
 	// Methods
@@ -27,8 +27,7 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
-	ShapeType m_type = ShapeType::Rectangle;
-	IShapeCollection & m_canvas;
-	const CShapeFactory & m_factory;
-	CSelectedShape & m_selectShape;
+	IShapeCollection & m_shapeCollection;
+	CTextureStorage & m_textureStorage;
+	CShapeModelPtr m_shapeModel;
 };

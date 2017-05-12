@@ -1,26 +1,9 @@
 #include "stdafx.h"
 #include "GlobalFunctions.h"
-#include "Rectangle.h"
+#include "RectangleView.h"
 
-CRectangle::CRectangle(
-	const Vec2f position,
-	const SSize size,
-	const Color & fillColor,
-	const Color & outlineColor,
-	float outlineThikness
-)
-	: CShape(
-		ShapeType::Rectangle,
-		position,
-		size,
-		fillColor,
-		outlineColor,
-		outlineThikness
-	) 
-{
-}
 
-bool CRectangle::IsPointIntersection(const Vec2f point) const
+bool CRectangleView::IsPointIntersection(const Vec2f point) const
 {
 	D2D1_RECT_F ownRect = ::GetFrameRect(*this);
 	if (ownRect.left > ownRect.right)
@@ -35,12 +18,29 @@ bool CRectangle::IsPointIntersection(const Vec2f point) const
 		&& IsBetween(point.y, float(ownRect.top), float(ownRect.bottom));
 }
 
-VertexList CRectangle::GetVertices() const
+VertexList CRectangleView::GetVertices() const
 {
 	return GetFrameVertices();
 }
 
-void CRectangle::Accept(IShapeVisitor & visitor) const
+CRectangleView::CRectangleView(
+	const Vec2f position,
+	const SSize size,
+	const Color & fillColor,
+	const Color & outlineColor,
+	float outlineThikness
+)
+	: CShapeView(
+		position,
+		size,
+		fillColor,
+		outlineColor,
+		outlineThikness
+	)
+{
+}
+
+void CRectangleView::Accept(IShapeVisitor & visitor) const
 {
 	visitor.Visit(*this);
 }

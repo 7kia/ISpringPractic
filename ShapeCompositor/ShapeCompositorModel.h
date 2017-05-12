@@ -1,9 +1,11 @@
 #pragma once
 
 #include "FileWork\MyDocument.h"
-#include "Canvas\Picture\Picture.h"
-#include "Canvas\Picture\D2DImageFactory.h"
-#include "Canvas\Picture\TextureStorage.h"
+#include "Canvas\Shapes\Picture\PictureView.h"
+#include "Canvas\Shapes\Picture\D2DImageFactory.h"
+#include "Canvas\Shapes\Picture\TextureStorage.h"
+#include "Canvas\CanvasModel.h"
+#include "Canvas\History.h"
 #include "Signal.h"
 
 class IShapeManipulator
@@ -11,9 +13,12 @@ class IShapeManipulator
 public:
 	virtual ~IShapeManipulator() = default;
 
-	virtual void DeleteShape(CSelectedShape & selectedShape) = 0;
-	virtual void CreateShape(ShapeType type, CSelectedShape & selectedShape) = 0;
-	virtual void ChangeRect(const CFrame oldFrame, CSelectedShape & selectedShape) = 0;
+	virtual void DeleteShape(size_t shapeIndex) = 0;
+	virtual void CreateShape(ShapeType type) = 0;
+	virtual void ChangeRect(const CFrame oldFrame, const CFrame newFrame, size_t shapeIndex) = 0;
+
+	virtual signal::Connection DoOnCreateView(std::function<void(const CShapeViewPtr&, size_t)> const & action) = 0;
+	virtual signal::Connection DoOnDeleteView(std::function<void(size_t)> const & action) = 0;
 };
 
 class IModelReseter
@@ -22,16 +27,9 @@ public:
 	virtual ~IModelReseter() = default;
 
 	virtual void ResetModel() = 0;
-	virtual signal::Connection DoOnResetSelectedShape(std::function<void()> const & action) = 0;
-};
+	virtual signal::Connection DoOnResetView(std::function<void()> const & action) = 0;
 
-class IDataForDraw
-{
-public:
-	virtual ~IDataForDraw() = default;
-
-	virtual CShapePtr GetCanvasBorder() const = 0;
-	virtual std::vector<CShapePtr> & GetCanvasShapes() = 0;
+	virtual IModelReseter & GetModelReseter() = 0;
 };
 
 class IHaveRenderTarget
@@ -47,7 +45,6 @@ class CShapeCompositorModel
 	, public IDocumentManipulator
 	, public IShapeManipulator
 	, public IModelReseter
-	, public IDataForDraw
 	, public IHaveRenderTarget
 {
 public:
@@ -62,10 +59,6 @@ public:
 	// IHaveRenderTarget
 	void SetRenderTargetForModelComponents(ID2D1HwndRenderTarget * pRenderTarget) override;
 	//--------------------------------------------
-	// IDataForDraw
-	CShapePtr GetCanvasBorder() const override;
-	std::vector<CShapePtr> & GetCanvasShapes() override;
-	//--------------------------------------------
 	// IHistoryManipulator
 	void UndoCommand() override;
 	void RedoCommand() override;
@@ -76,36 +69,37 @@ public:
 	// IDocumentManipulator
 	bool SaveAsDocument() override;
 	bool SaveDocument() override;
-	bool OpenDocument(CSelectedShape & selectedShape) override;
+	bool OpenDocument() override;
 	bool NewDocument() override;
 	//--------------------------------------------
 	// IModelReseter
 	void ResetModel() override;
-	signal::Connection DoOnResetSelectedShape(std::function<void()> const & action) override;
+	signal::Connection DoOnResetView(std::function<void()> const & action) override;
+	IModelReseter & GetModelReseter() override;
 	//--------------------------------------------
 	// IShapeManipulator
-	void DeleteShape(CSelectedShape & selectedShape) override;
-	void CreateShape(ShapeType type, CSelectedShape & selectedShape) override;
-	void ChangeRect(const CFrame oldFrame, CSelectedShape & selectedShape) override;
+	void DeleteShape(size_t shapeIndex) override;
+	void CreateShape(ShapeType type) override;
+	void ChangeRect(const CFrame oldFrame, const CFrame newFrame, size_t shapeIndex) override;
+
+	signal::Connection DoOnCreateView(std::function<void(const CShapeViewPtr&, size_t)> const & action) override;
+	signal::Connection DoOnDeleteView(std::function<void(size_t)> const & action) override;
 	//--------------------------------------------
-	IShapeCollection & GetShapeCollection();
 
 private:
 	int SaveChangeDocument();
-	void LoadPicture(const boost::filesystem::path & path, CSelectedShape & selectedShape);
+	void LoadPicture(const boost::filesystem::path & path);
 
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
-	signal::Signal<void()> m_resetSelectedShape;
+	signal::Signal<void()> m_resetView;
 
-	CCanvas m_canvas;
-	CShapePtr m_canvasBorder;
-
+	CCanvasModel m_domainModel;
 	CHistory m_history;
 	CMyDocument m_document;
 
-	CShapeFactory m_shapeFactory;
+	CShapeViewFactory m_shapeFactory;
 	CTextureStorage m_textureStorage;
 	CD2DImageFactory m_imageFactory;
 };

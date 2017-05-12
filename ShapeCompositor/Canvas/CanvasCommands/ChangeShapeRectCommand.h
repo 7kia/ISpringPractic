@@ -1,18 +1,19 @@
 #pragma once
 
 #include "CanvasCommand.h"
-#include "Canvas\Shapes\AllShapes.h"
+#include "Canvas\Shapes\AllViewShapes.h"
 
 class CSelectedShape;
 class IShapeProvider;
+
 class CChangeShapeRectCanvasCommand : public IMyCommand
 {
 public:
 	CChangeShapeRectCanvasCommand(
 		IShapeProvider & pShapeStorage,
-		const CFrame & oldData,
-		const CFrame & newData,
-		CSelectedShape & selectedShape
+		const CFrame & oldFrame,
+		const CFrame & newFrame,
+		size_t shapeIndex
 	);
 	//////////////////////////////////////////////////////////////////////
 	// Methods
@@ -26,9 +27,8 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
-	IShapeProvider & m_canvas;
-	size_t		m_index;
-	CSelectedShape * m_pSelectedShape = nullptr;
+	IShapeProvider & m_shapeCollection;
+	size_t		m_shapeIndex;
 	CFrame		m_oldFrame;
-	CFrame		m_newData;
+	CFrame		m_newFrame;
 };

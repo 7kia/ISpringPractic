@@ -6,7 +6,7 @@ CSelectedShape::CSelectedShape()
 {	
 	for (size_t index = size_t(ShapeIndex::MarkerLeftBottom); index <= size_t(ShapeIndex::MarkerLeftTop); ++index)
 	{
-		m_dragPoints[index] = std::make_shared<CEllipse>(
+		m_dragPoints[index] = std::make_shared<CEllipseView>(
 			Vec2f(),
 			SELECTED_ELLIPSE_SIZE,
 			BLACK_COLOR,
@@ -14,7 +14,7 @@ CSelectedShape::CSelectedShape()
 		);
 	}
 
-	m_frame = std::make_shared<CRectangle>(
+	m_frame = std::make_shared<CRectangleView>(
 		Vec2f(),
 		SSize(),
 		NOT_COLOR,
@@ -23,23 +23,43 @@ CSelectedShape::CSelectedShape()
 	);
 }
 
-void CSelectedShape::SetShape(const CShapePtr & shape)
+void CSelectedShape::SetShape(const CShapeViewPtr & shape)
 {
-	m_selectedShape = shape;
-
-	SetDragPointPositions();
+	if (shape != m_selectedShape)
+	{
+		if (HaveSelectedShape())
+		{
+			m_selectedShape->DoUnselected();
+		}
+		if (m_setFrameConnection.connected())
+		{
+			m_setFrameConnection.disconnect();
+		}
+		m_selectedShape = shape;
+		// It need for correct work commands(these manage model, model send
+		// message for view, view if is selected send message CSelectedShape
+		m_setFrameConnection = m_selectedShape->DoOnUpdateSelectedShape(boost::bind(&CSelectedShape::SetFrame, this, _1));
+		SetFrame(m_selectedShape->GetFrame());
+	}
 }
 
-CShapePtr CSelectedShape::GetShape() const
+CShapeViewPtr CSelectedShape::GetShape() const
 {
 	return m_selectedShape;
 }
 
 void CSelectedShape::ResetSelectShapePtr()
 {
+	if (m_setFrameConnection.connected())
+	{
+		m_setFrameConnection.disconnect();
+	}
+	if (HaveSelectedShape())
+	{
+		m_selectedShape->DoUnselected();
+	}
 	m_selectedShape = nullptr;
 	m_isUpdate = false;
-
 }
 
 void CSelectedShape::ResetUpdateParameters()
@@ -360,9 +380,9 @@ CSelectedShape::DragPointsArray CSelectedShape::GetDragPoints() const
 	return m_dragPoints;
 }
 
-CShapePtr CSelectedShape::GetFrameShape() const
+CShapeViewPtr CSelectedShape::GetFrameShape() const
 {
-	return m_frame;// TODO : check work m_frame
+	return m_frame;
 }
 
 void CSelectedShape::SetBoundingRect(const D2D1_RECT_F & rect)

@@ -1,8 +1,8 @@
 #pragma once
 
-class CRectangle;
-class CEllipse;
-class CTriangle;
+class CRectangleView;
+class CEllipseView;
+class CTriangleView;
 
 // TODO : fix accepter
 class IRenderShape
@@ -10,7 +10,7 @@ class IRenderShape
 public:
 	virtual ~IRenderShape() = default;
 
-	virtual void Render(const CRectangle & shape) = 0;
-	virtual void Render(const CEllipse & shape) = 0;
-	virtual void Render(const CTriangle & shape) = 0;
+	virtual void Visit(const CRectangleView & shape) = 0;
+	virtual void Visit(const CEllipseView & shape) = 0;
+	virtual void Visit(const CTriangleView & shape) = 0;
 };

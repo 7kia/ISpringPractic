@@ -1,42 +1,58 @@
 #include "stdafx.h"
 #include "AddShapeCommand.h"
-#include "../Canvas.h"
+#include "../CanvasModel.h"
 #include "GlobalFunctions.h"
 
 CAddShapeCanvasCommand::CAddShapeCanvasCommand(
-	IShapeCollection & pCanvas
-	, ShapeType type
-	, const CShapeFactory & factory
-	, CSelectedShape & seletedShape
+	IShapeCollection & pShapeCollection,
+	CShapeModelPtr & pShapeModel,
+	CTextureStorage & textureStorage
 )
-	: m_canvas(pCanvas)
-	, m_type(type)
-	, m_factory(factory)
-	, m_selectShape(seletedShape)
+	: m_shapeCollection(pShapeCollection)
+	, m_shapeModel(pShapeModel)
+	, m_textureStorage(textureStorage)
 {
 }
 
 void CAddShapeCanvasCommand::Execute()
 {
-	m_canvas.PushBackShape(
-		m_factory.CreateShape(
-			SShapeData(
-				m_type
-				, Vec2f(float(VIEW_WIDTH) / 2.f, float(VIEW_HEIGHT) / 2.f)
-			)
-		)
-	);
+	m_shapeCollection.PushBackShape(m_shapeModel);
+
+	if (m_shapeModel->GetType() == ShapeType::Picture)
+	{
+		auto pPictureModel = dynamic_cast<CPictureModel*>(m_shapeModel.get());
+
+		m_textureStorage.SetDelete(m_textureStorage.GetTextureName(pPictureModel->GetTexture()), false);
+	}
 }
 
 void CAddShapeCanvasCommand::Cancel()
 {
-	if (m_canvas.IsSelectShape(m_canvas.GetShapeCount() - 1, m_selectShape.GetShape()))
+	m_shapeCollection.DeleteShape(m_shapeCollection.GetShapeCount() - 1);
+
+	if (m_shapeModel->GetType() == ShapeType::Picture)
 	{
-		m_selectShape.ResetSelectShapePtr();
+		auto pPictureModel = dynamic_cast<CPictureModel*>(m_shapeModel.get());
+		const auto shapeHavePicture = m_shapeCollection.GetShape(pPictureModel->GetTexture());
+		if (!shapeHavePicture)
+		{
+			m_textureStorage.SetDelete(m_textureStorage.GetTextureName(pPictureModel->GetTexture()), true);
+		}
 	}
-	DeleteLastElement(m_canvas.GetShapes());
 }
 
 void CAddShapeCanvasCommand::Destroy()
 {
+	if (m_shapeModel->GetType() == ShapeType::Picture)
+	{
+		auto listShapesAfterDestroy = m_shapeCollection.GetShapes();
+		listShapesAfterDestroy.pop_back();// TODO: check correctness
+
+		auto pPictureModel = dynamic_cast<CPictureModel*>(m_shapeModel.get());
+
+		m_textureStorage.SetDelete(
+			m_textureStorage.GetTextureName(pPictureModel->GetTexture()),
+			!HavePictureWithTexture(pPictureModel->GetTexture(), listShapesAfterDestroy)
+		);
+	}
 }

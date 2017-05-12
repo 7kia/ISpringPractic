@@ -20,7 +20,7 @@ void CMyDocument::RecreateTempFolder()
 	m_fileManager.RecreateTempFolder();
 }
 
-bool CMyDocument::OnFileSaveAs(std::vector<CShapePtr> const & shapes, const CTextureStorage & textureStorage)
+bool CMyDocument::OnFileSaveAs(std::vector<CShapeModelPtr> const & shapes, const CTextureStorage & textureStorage)
 {
 	CString fileName = OpenDialog(CMyDocument::DialogType::Save, CMyDocument::FileType::Shapes);
 	if (fileName.GetLength() != 0)
@@ -41,7 +41,7 @@ bool CMyDocument::OnFileSaveAs(std::vector<CShapePtr> const & shapes, const CTex
 				DeletePictures(textureStorage.GetDeletable());
 
 				m_fileManager.CopyFiles(
-					textureStorage.GetNeedfullNames(),
+					textureStorage.GetTextureNames(),
 					oldFolder,
 					newFolder
 				);
@@ -55,7 +55,7 @@ bool CMyDocument::OnFileSaveAs(std::vector<CShapePtr> const & shapes, const CTex
 }
 
 CXMLReader::ReadData CMyDocument::OnFileOpen(
-	IModelReseter * reseter,
+	IModelReseter & reseter,
 	std::vector<std::wstring> deleteTexture,
 	CXMLReader::DataForCreation & data
 )
@@ -65,8 +65,8 @@ CXMLReader::ReadData CMyDocument::OnFileOpen(
 	{
 		DeletePictures(deleteTexture);
 
-		reseter->ResetModel();
-
+		reseter.ResetModel();
+		// Check save/open save document
 		m_fileManager.SetFilePath(fileName.GetString());
 		return m_xmlReader.Open(
 			m_fileManager.GetFilePath(),
@@ -76,7 +76,7 @@ CXMLReader::ReadData CMyDocument::OnFileOpen(
 	return CXMLReader::ReadData();
 }
 
-bool CMyDocument::OnFileSave(std::vector<CShapePtr> const & shapes, const CTextureStorage & textureStorage)
+bool CMyDocument::OnFileSave(std::vector<CShapeModelPtr> const & shapes, const CTextureStorage & textureStorage)
 {
 	if (m_fileManager.IsNewDocument())
 	{
@@ -156,7 +156,7 @@ CString CMyDocument::OpenDialog(const DialogType dialogType, const FileType file
 		(dialogType == DialogType::Open) ? TRUE : FALSE
 		, NULL
 		, type.data()
-		, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT
+		, OFN_EXPLORER | OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT
 		, expression.data()
 	);
 	CString fileName;
@@ -167,6 +167,22 @@ CString CMyDocument::OpenDialog(const DialogType dialogType, const FileType file
 	if (fileDlg.DoModal() == IDOK)
 	{
 		fileName = fileDlg.GetPathName();
+
+		switch (fileType)
+		{
+		case FileType::Pictures:
+			expression = L".png";
+			break;
+		case FileType::Shapes:
+			expression = L".xml";
+			break;
+		default:
+			break;
+		}
+		if (fileName.Find(expression.data()) == -1)
+		{
+			 fileName.SetString(fileName + CString(expression.data()));
+		}
 	}
 	//fileName.ReleaseBuffer();
 

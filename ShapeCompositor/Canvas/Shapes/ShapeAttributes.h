@@ -61,9 +61,6 @@ static const SSize DEFAULT_SIZE = SSize(50.f, 50.f);
 static const Color DEFAULT_OUTLINE_COLOR = Color(0.f, 0.f, 0.f);
 static const Color DEFAULT_FILL_COLOR = Color(0.45f, 0.75f, 0.55f);
 
-/////////////////////////////////////////////////////////////
-// Mixin
-
 class IFrame
 {
 public:
@@ -98,11 +95,12 @@ public:
 
 	// Get shape data
 	CFrame GetFrame() const;
-	void SetFrame(const CFrame & data);
+	virtual void SetFrame(const CFrame & data);
 
 	std::vector<Vec2f> GetFrameVertices() const;
 
 	bool operator==(const CFrame & frame) const;
+	bool operator!=(const CFrame & frame) const;
 	//////////////////////////////////////////////////////////////////////
 	// Data
 protected:

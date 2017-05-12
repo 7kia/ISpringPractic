@@ -14,10 +14,11 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
-
+	// RenderTarget create in ShapeCompositorView
 	void					SetRenderTarget(ID2D1HwndRenderTarget * pRenderTarget);
 
 	// Create texture require change data class, as work Direct2d
+	// because without const
 	CComPtr<ID2D1Bitmap>	CreateTexture(const std::wstring & name);
 	//////////////////////////////////////////////////////////////////////
 	// Data

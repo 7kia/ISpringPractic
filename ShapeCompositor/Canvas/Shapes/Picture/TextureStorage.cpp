@@ -9,6 +9,10 @@ CTextureStorage::CTextureStorage(const SSize maxSize)
 
 void CTextureStorage::AddTexture(const std::wstring & name, const CComPtr<ID2D1Bitmap>& pTexture)
 {
+	if (pTexture == nullptr)
+	{
+		throw std::runtime_error("Texture not load");
+	}
 	m_storage.emplace(std::make_pair<const std::wstring, CStorageCell>( name.data(), CStorageCell(pTexture) ));
 }
 
@@ -42,7 +46,7 @@ SSize CTextureStorage::GetCorrectSize(const std::wstring & name) const
 	return resultSize;
 }
 
-std::wstring CTextureStorage::GetNameTexture(ID2D1Bitmap * texture) const
+std::wstring CTextureStorage::GetTextureName(ID2D1Bitmap * texture) const
 {
 	for (auto & cell : m_storage)
 	{
@@ -54,7 +58,7 @@ std::wstring CTextureStorage::GetNameTexture(ID2D1Bitmap * texture) const
 	return std::wstring();
 }
 
-std::vector<std::wstring> CTextureStorage::GetNeedfullNames() const
+std::vector<std::wstring> CTextureStorage::GetTextureNames() const
 {
 	std::vector<std::wstring> names;
 	for (const auto & cell : m_storage)

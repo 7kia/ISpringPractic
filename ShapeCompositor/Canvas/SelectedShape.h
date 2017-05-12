@@ -3,10 +3,11 @@
 #include <memory>
 #include <array>
 
-#include "Shapes\AllShapes.h"
-#include "ObjectRenderer.h"
-#include "Shapes\ShapeFactory.h"
 #include <boost\optional.hpp>
+
+#include "Shapes\AllViewShapes.h"
+#include "ShapeRenderer.h"
+#include "Shapes\ShapeViewFactory.h"
 
 static const SSize SELECTED_ELLIPSE_SIZE = SSize(10.f, 10.f);
 static const SSize MIN_SHAPE_SIZE = SSize(50.f, 50.f);
@@ -26,7 +27,7 @@ public:
 		, Amount
 	};
 
-	using DragPointsArray = std::array<CShapePtr, size_t(ShapeIndex::Amount)>;
+	using DragPointsArray = std::array<CShapeViewPtr, size_t(ShapeIndex::Amount)>;
 	enum class UpdateType
 	{
 		None = -1,
@@ -39,8 +40,8 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
-	void					SetShape(const CShapePtr & shape);
-	CShapePtr				GetShape() const;
+	void					SetShape(const CShapeViewPtr & shape);
+	CShapeViewPtr			GetShape() const;
 	void					ResetSelectShapePtr();
 	void					ResetUpdateParameters();
 
@@ -62,7 +63,7 @@ public:
 
 	// For draw
 	DragPointsArray			GetDragPoints() const;
-	CShapePtr				GetFrameShape() const;
+	CShapeViewPtr			GetFrameShape() const;
 	void					SetBoundingRect(const D2D1_RECT_F & rect);
 	//--------------------------------------------
 	// IFrame
@@ -84,31 +85,32 @@ public:
 
 private:
 	// For drag and drop
-	Vec2f	GetFinalShift() const;
-	SSize	GetDirectionResize() const;
-	bool	CheckBoundingRect(const D2D1_RECT_F & rect) const;
+	Vec2f GetFinalShift() const;
+	SSize GetDirectionResize() const;
+	bool CheckBoundingRect(const D2D1_RECT_F & rect) const;
 
 	//
 
 	void					SetDragPointPositions();
 
-	bool					CheckSize(const SSize size) const;
-	CFrame					GetNewFrame(const Vec2f shift, const CFrame & oldFrame) const;
-	static SSize			GetCorrectSize(const SSize size);
-	Vec2f					GetCorrectPosition(
-												const SSize newSize
-												, const Vec2f shift
-												, const Vec2f startPosition
-												) const;
+	bool CheckSize(const SSize size) const;
+	CFrame GetNewFrame(const Vec2f shift, const CFrame & oldFrame) const;
+	static SSize GetCorrectSize(const SSize size);
+	Vec2f GetCorrectPosition(
+		const SSize newSize,
+		const Vec2f shift,
+		const Vec2f startPosition
+	) const;
 
 
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:
-	CShapePtr						m_selectedShape;
+	CShapeViewPtr					m_selectedShape = nullptr;
+	signal::Connection				m_setFrameConnection = signal::Connection();
 
 	DragPointsArray					m_dragPoints;
-	CShapePtr						m_frame;
+	CShapeViewPtr					m_frame;
 	D2D1_RECT_F						m_boundingRect;
 	// For drag and drop
 	boost::optional<Vec2f>			m_startMove;

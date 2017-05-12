@@ -5,20 +5,17 @@
 #include <afxcmn.h>             // поддержка MFC для типовых элементов управления Windows
 #include <afxdtctl.h>           // поддержка MFC для типовых элементов управления Internet Explorer 4
 
-
-#include "Canvas\Canvas.h"
+#include "Canvas\CanvasModel.h"
 #include "Canvas\History.h"
 #include "FileWork\XMLReader.h"
 #include "FileWork\FileManager.h"
-#include "Canvas\Picture\TextureStorage.h"
-#include "Canvas\Picture\D2DImageFactory.h"
-
+#include "Canvas\Shapes\Picture\TextureStorage.h"
+#include "Canvas\Shapes\Picture\D2DImageFactory.h"
 
 class IDataForSave
 {
 public:
 	virtual ~IDataForSave() = default;
-
 
 	virtual IShapeCollection& GetShapeCollection() = 0;
 	virtual CTextureStorage & GetTextureStorage() = 0;
@@ -29,7 +26,7 @@ class IDataForOpen
 public:
 	virtual ~IDataForOpen() = default;
 
-	virtual CShapeFactory & GetShapeFactory() = 0;
+	virtual CShapeViewFactory & GetShapeFactory() = 0;
 	virtual CD2DImageFactory & GetImageFactory() = 0;
 };
 
@@ -40,7 +37,7 @@ public:
 
 	virtual bool SaveAsDocument() = 0;
 	virtual bool SaveDocument() = 0;
-	virtual bool OpenDocument(CSelectedShape & selectedShape) = 0;
+	virtual bool OpenDocument() = 0;
 	virtual bool NewDocument() = 0;
 };
 
@@ -63,7 +60,6 @@ public:
 		Open
 	};
 	
-
 	//////////////////////////////////////////////////////////////////////
 	// Methods
 public:
@@ -77,13 +73,13 @@ public:
 
 	CString GetFileName() const;
 
-	bool OnFileSaveAs(std::vector<CShapePtr> const & shapes, const CTextureStorage & textureStorage);
+	bool OnFileSaveAs(std::vector<CShapeModelPtr> const & shapes, const CTextureStorage & textureStorage);
 	CXMLReader::ReadData OnFileOpen(
-		IModelReseter * reseter,
+		IModelReseter & reseter,
 		std::vector<std::wstring> deleteTexture,
 		CXMLReader::DataForCreation & data
 	);
-	bool OnFileSave(std::vector<CShapePtr> const & shapes, const CTextureStorage & textureStorage);
+	bool OnFileSave(std::vector<CShapeModelPtr> const & shapes, const CTextureStorage & textureStorage);
 	//////////////////////////////////////////////////////////////////////
 	// Data
 private:

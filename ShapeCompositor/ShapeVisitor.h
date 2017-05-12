@@ -1,17 +1,17 @@
 #pragma once
 
-class CRectangle;
-class CEllipse;
-class CTriangle;
-class CPicture;
+class CRectangleView;
+class CEllipseView;
+class CTriangleView;
+class CPictureView;
 
 class IShapeVisitor
 {
 public:
 	virtual ~IShapeVisitor() = default;
 
-	virtual void Visit(const CRectangle & shape) = 0;
-	virtual void Visit(const CEllipse & shape) = 0;
-	virtual void Visit(const CTriangle & shape) = 0;
-	virtual void Visit(const CPicture & shape) = 0;
+	virtual void Visit(const CRectangleView & shape) = 0;
+	virtual void Visit(const CEllipseView & shape) = 0;
+	virtual void Visit(const CTriangleView & shape) = 0;
+	virtual void Visit(const CPictureView & shape) = 0;
 };

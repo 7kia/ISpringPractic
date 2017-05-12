@@ -1,13 +1,13 @@
 #include "stdafx.h"
 #include "History.h"
-#include "Canvas.h"
+#include "CanvasModel.h"
 
 CHistory::CHistory()
 	: IHistory()
 {
 }
 
-void CHistory::AddAndExecuteCommand(const CanvasCommandPtr & command)
+void CHistory::AddAndExecuteCommand(const ICommandPtr & command)
 {
 	// TODO : insert to middle queue
 	if (!m_history.empty() && (m_currentCommand != m_history.rbegin()))

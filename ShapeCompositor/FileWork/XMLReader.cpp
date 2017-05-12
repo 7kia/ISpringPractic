@@ -65,7 +65,7 @@ namespace
 
 bool CXMLReader::Save(
 	const std::wstring & path,
-	const std::vector<CShapePtr> & shapes,
+	const std::vector<CShapeModelPtr> & shapes,
 	const CTextureStorage & textureStorage
 )
 {
@@ -93,8 +93,8 @@ bool CXMLReader::Save(
 			if (shape->GetType() == ShapeType::Picture)
 			{
 				// not wstring because not << overload for wstring
-				const auto picture = dynamic_cast<CPicture*>(shape.get());
-				child.add("Texture", ToString(textureStorage.GetNameTexture(picture->GetTexture())) );
+				const auto pictureModel = dynamic_cast<const CPictureModel*>(shape.get());
+				child.add("Texture", ToString(textureStorage.GetTextureName(pictureModel->GetTexture())) );
 			}
 
 			propertyTree.add_child("Shapes.Shape", child);
@@ -133,8 +133,9 @@ CXMLReader::ReadData CXMLReader::Open(
 	{
 		ReadData readData;
 		std::ifstream stream(path);
-		auto folder = fs::path(path).parent_path().generic_string() + "/" + fs::path(path).stem().generic_string();
-
+		auto folder = fs::path(path).parent_path().generic_string() 
+			+ "/"
+			+ fs::path(path).stem().generic_string();
 
 		boost::property_tree::ptree propertyTree;
 		boost::property_tree::read_xml(stream, propertyTree);
@@ -149,29 +150,32 @@ CXMLReader::ReadData CXMLReader::Open(
 				float width = shape.second.get<float>("Width");
 				float height = shape.second.get<float>("Height");
 
-				SShapeData data;
-				data.type = GetShapeType(type);
-				data.position = Vec2f(x, y);
-				data.size = SSize(width, height);
+				auto data = std::make_shared<CShapeModel>(
+					GetShapeType(type),
+					Vec2f(x, y),
+					SSize(width, height)
+				);
 
 				if (type == "Picture")
 				{
+					// TODO : see might rewrite
+					// not wstring because not << overload for wstring
 					std::string texture = shape.second.get<std::string>("Texture");
 					readData.textureStorage.AddTexture(
 						ToWString(texture),
 						dataForCreation.imageFactory.CreateTexture(ToWString(folder + "/" + texture))
 					);
 					readData.shapeData.push_back(
-						std::make_shared<CPicture>(
+						std::make_shared<CPictureModel>(
 							readData.textureStorage.GetTexture(ToWString(texture)),
-							data.position,
-							data.size
+							data->GetPosition(),
+							data->GetSize()
 						)
 					);
 				}
 				else
 				{
-					readData.shapeData.push_back(dataForCreation.shapeFactory.CreateShape(data));
+					readData.shapeData.push_back(data);
 				}
 			}
 		}
@@ -199,7 +203,7 @@ CXMLReader::ReadData::ReadData()
 }
 
 CXMLReader::ReadData::ReadData(
-	std::vector<CShapePtr>& shapeData,
+	std::vector<CShapeModelPtr> & shapeData,
 	CTextureStorage & textureStorage
 )
 	: shapeData(shapeData)
@@ -209,7 +213,7 @@ CXMLReader::ReadData::ReadData(
 
 
 CXMLReader::DataForCreation::DataForCreation(
-	const CShapeFactory & shapeFactory,
+	const CShapeViewFactory & shapeFactory,
 	CD2DImageFactory & imageFactory
 )
 	: shapeFactory(shapeFactory)

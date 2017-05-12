@@ -1,34 +1,52 @@
 #include "stdafx.h"
 #include "DeleteShapeCommand.h"
-#include "../Canvas.h"
+#include "../CanvasModel.h"
 
 CDeleteShapeCanvasCommand::CDeleteShapeCanvasCommand(
-	IShapeCollection & pCanvas,
-	CSelectedShape & selectedShape,
-	const CShapeFactory & factory
+	IShapeCollection & shapeCollection,
+	size_t insertIndex,
+	CTextureStorage & textureStorage
 )
-	: m_canvas(pCanvas)
-	, m_selectShape(selectedShape)
-	, m_factory(factory)
-	, m_data(selectedShape.GetShape()->GetShapeData())
-	, m_index(pCanvas.GetShapeIndex(selectedShape.GetShape()))
+	: m_shapeCollection(shapeCollection)
+	, m_textureStorage(textureStorage)
+	, m_shapeModel(shapeCollection.GetShape(insertIndex))
+	, m_insertIndex(insertIndex)
 {
 }
 
 void CDeleteShapeCanvasCommand::Execute()
 {
-	if (m_canvas.IsSelectShape(m_index, m_selectShape.GetShape()))
+	m_shapeCollection.DeleteShape(m_insertIndex);
+
+	if (m_shapeModel->GetType() == ShapeType::Picture)
 	{
-		m_selectShape.ResetSelectShapePtr();
+		auto pPictureModel = dynamic_cast<CPictureModel*>(m_shapeModel.get());
+		const auto shapeHavePicture = m_shapeCollection.GetShape(pPictureModel->GetTexture());
+		if (!shapeHavePicture)
+		{
+			m_textureStorage.SetDelete(m_textureStorage.GetTextureName(pPictureModel->GetTexture()), true);
+		}
 	}
-	m_canvas.DeleteShape(m_index);
 }
 
 void CDeleteShapeCanvasCommand::Cancel()
 {
-	m_canvas.InsertShape(m_index, m_factory.CreateShape(m_data));
+	m_shapeCollection.InsertShape(m_insertIndex, m_shapeModel);
+
+	if (m_shapeModel->GetType() == ShapeType::Picture)
+	{
+		auto pPictureModel = dynamic_cast<CPictureModel*>(m_shapeModel.get());
+
+		m_textureStorage.SetDelete(m_textureStorage.GetTextureName(pPictureModel->GetTexture()), false);
+	}
 }
 
 void CDeleteShapeCanvasCommand::Destroy()
 {
+	if (m_shapeModel->GetType() == ShapeType::Picture)
+	{
+		auto pPictureModel = dynamic_cast<CPictureModel*>(m_shapeModel.get());
+
+		m_textureStorage.SetDelete(m_textureStorage.GetTextureName(pPictureModel->GetTexture()), false);
+	}
 }

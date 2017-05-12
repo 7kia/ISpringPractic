@@ -10,14 +10,6 @@
 
 using TextureStorage = std::vector<CComPtr<ID2D1Bitmap>>;
 
-namespace CanvasNamespace
-{
-	static const SSize CANVAS_SIZE = SSize(640.f, 480.f);
-	static const float SCALE_FACTOR = 0.8f;
-	static const SSize MAX_PICTURE_SIZE = SSize(CANVAS_SIZE.width * SCALE_FACTOR, CANVAS_SIZE.height * SCALE_FACTOR);
-}
-
-
 class CStorageCell
 {
 public:
@@ -54,8 +46,8 @@ public:
 	void					AddTexture(const std::wstring & name, const CComPtr<ID2D1Bitmap> & pTexture);
 	ID2D1Bitmap *			GetTexture(const std::wstring & name);
 	SSize					GetCorrectSize(const std::wstring & name) const;
-	std::wstring			GetNameTexture(ID2D1Bitmap * texture) const;
-	std::vector<std::wstring> GetNeedfullNames() const;
+	std::wstring			GetTextureName(ID2D1Bitmap * texture) const;
+	std::vector<std::wstring> GetTextureNames() const;
 
 	void					SetDelete(const std::wstring & name, bool value);
 	bool					IsDelete(const std::wstring & name) const;

@@ -1,12 +1,12 @@
 #pragma once
 
-#include "CShape.h"
+#include "ShapeView.h"
 
-class CEllipse 
-	: public CShape
+class CRectangleView
+	: public CShapeView
 {
 public:
-	CEllipse(
+	CRectangleView(
 		const Vec2f position = Vec2f(),
 		const SSize size = DEFAULT_SIZE,
 		const Color & fillColor = DEFAULT_FILL_COLOR,
@@ -20,11 +20,12 @@ public:
 	// IShape
 
 	void Accept(IShapeVisitor & visitor) const override;
-
 	//--------------------------------------------
 	// IIsPointIntersection
 	bool IsPointIntersection(const Vec2f point) const override;
 	//--------------------------------------------
+
+	VertexList GetVertices() const;
 
 private:
 

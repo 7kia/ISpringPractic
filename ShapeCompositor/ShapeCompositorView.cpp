@@ -60,101 +60,81 @@ END_MESSAGE_MAP()
 CShapeCompositorView::CShapeCompositorView()
 	: m_model(std::make_unique<CShapeCompositorModel>())
 {
-	m_controller = std::make_unique<CShapeCompositorPresenter>(this);
+	RecreateApplication();
+}
 
-	SetBoundingRect(m_model->GetCanvasRect());
+void CShapeCompositorView::RecreateApplication()
+{
+	m_canvasView = CCanvasView();
+
+	m_controller = std::make_unique<CShapeCompositorPresenter>(this);//this - IViewSignaller *
+
+	m_canvasView.SetBoundingRect(m_model->GetCanvasRect());
 
 	m_controller->SetHistoryManipulator(m_model.get());
 	m_controller->SetDocumentManipulator(m_model.get());
 	m_controller->SetShapeManipulator(m_model.get());
-	m_controller->SetDataForDraw(m_model.get());
 	m_controller->SetHaveRenderTarget(m_model.get());
 	m_controller->SetModelReseter(m_model.get(), this);
+	m_controller->SetShapeViewManipulator(this);//this - IShapeViewManipulator *
+}
+
+void CShapeCompositorView::SetWindowCursor(CursorType type)
+{
+	switch (type)
+	{
+	case CursorType::SIZENWSE:
+		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZENWSE));
+		break;
+	case CursorType::SIZENESW:
+		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZENESW));
+		break;
+	case CursorType::SIZEALL:
+		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZEALL));
+		break;
+	case CursorType::ARROW:
+		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_ARROW));
+		break;
+	}
 }
 
 CShapeCompositorView::~CShapeCompositorView()
 {
 }
 
-
-void CShapeCompositorView::SetBoundingRect(const D2D1_RECT_F & rect)
-{
-	m_selectedShape.SetBoundingRect(rect);
-}
-
-// This method discards device-specific
-// resources if the Direct3D device dissapears during execution and
-// recreates the resources the next time it's invoked.
-HRESULT CShapeCompositorView::Draw()
-{
-	HRESULT hr = S_OK;
-
-	CPoint point = GetScrollPosition();
-	D2D1_MATRIX_3X2_F matrix = D2D1::Matrix3x2F::Translation((float)-point.x, (float)-point.y);
-	m_pRenderTarget->BeginDraw();
-	m_pRenderTarget->SetTransform(matrix);
-	m_pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
-
-	m_objectRenderer.Draw(*m_getCanvasView().get());
-
-	const auto canvasShapes = m_getCanvasShapes().get();
-	for (const auto & shape : canvasShapes)
-	{
-		m_objectRenderer.Draw(*shape);
-	}
-
-	if (m_selectedShape.HaveSelectedShape())
-	{
-		m_objectRenderer.Draw(*m_selectedShape.GetFrameShape());
-		for (const auto & shape : m_selectedShape.GetDragPoints())
-		{
-			m_objectRenderer.Draw(*shape);
-		}
-	}
-
-	hr = m_objectRenderer.EndDraw();
-
-	if (hr == D2DERR_RECREATE_TARGET)
-	{
-		hr = S_OK;
-	}
-
-	return hr;
-}
-
 void CShapeCompositorView::CreateTriangle()
 {
-	m_createShapeCommand(ShapeType::Triangle, m_selectedShape);
+	m_onCreateShape(ShapeType::Triangle);
 	RedrawWindow();
 }
 
 void CShapeCompositorView::CreateRectangle()
 {
-	m_createShapeCommand(ShapeType::Rectangle, m_selectedShape);
+	m_onCreateShape(ShapeType::Rectangle);
 	RedrawWindow();
 }
 
 void CShapeCompositorView::CreateEllipse()
 {
-	m_createShapeCommand(ShapeType::Ellipse, m_selectedShape);
+	m_onCreateShape(ShapeType::Ellipse);
 	RedrawWindow();
 }
 
 void CShapeCompositorView::CreatePicture()
 {
-	m_createShapeCommand(ShapeType::Picture, m_selectedShape);
+	m_onCreateShape(ShapeType::Picture);
 	RedrawWindow();
 }
 
 void CShapeCompositorView::Undo()
 {
-	m_undoCommand();
+	m_onUndoCommand();
 	RedrawWindow();
 }
 
 void CShapeCompositorView::Redo()
 {
-	m_redoCommand();
+	m_onRedoCommand();
 	RedrawWindow();
 }
 
@@ -167,6 +147,8 @@ void CShapeCompositorView::OnRButtonUp(UINT /* nFlags */, CPoint point)
 {
 	ClientToScreen(&point);
 	OnContextMenu(this, point);
+
+	// TODO : see need it function
 }
 
 void CShapeCompositorView::OnContextMenu(CWnd* /* pWnd */, CPoint point)
@@ -215,9 +197,9 @@ int CShapeCompositorView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
 		// Create a Direct2D factory.
 		m_pRenderTarget = m_objectRenderer.CreateRenderTarget(this);
-		ATLENSURE_SUCCEEDED(m_objectRenderer.CreateRecources());// TODO : delete dependment to this
+		ATLENSURE_SUCCEEDED(m_objectRenderer.CreateRecources());
 		// TODO : rewrite Normal
-		m_setRenderTargetForModel(m_pRenderTarget);
+		m_onSetRenderTargetForModel(m_pRenderTarget);
 
 	}
 	catch (...)
@@ -265,7 +247,7 @@ void CShapeCompositorView::OnSize(UINT nType, int cx, int cy)
 
 void CShapeCompositorView::OnFileSaveAs()
 {
-	if (m_saveAsDocument())
+	if (m_onSaveAsDocument())
 	{
 		RedrawWindow();
 	}
@@ -274,7 +256,8 @@ void CShapeCompositorView::OnFileSaveAs()
 
 void CShapeCompositorView::OnFileOpen()
 {
-	if (m_openDocument(m_selectedShape))
+	m_canvasView.ResetSelectShapePtr();
+	if (m_onOpenDocument())
 	{
 		//SetWindowText(m_document.GetFileName());
 		RedrawWindow();
@@ -283,7 +266,7 @@ void CShapeCompositorView::OnFileOpen()
 
 void CShapeCompositorView::OnFileSave()
 {
-	if (m_saveDocument())
+	if (m_onSaveDocument())
 	{
 		//SetWindowText(m_document.GetFileName());
 		RedrawWindow();
@@ -292,7 +275,7 @@ void CShapeCompositorView::OnFileSave()
 
 void CShapeCompositorView::OnFileNew()
 {
-	if(m_newDocument())
+	if(m_onNewDocument())
 	{
 		//SetWindowText(CString("Безымянный"));
 		RedrawWindow();
@@ -306,7 +289,22 @@ void CShapeCompositorView::OnPaint()
 					   // TODO: добавьте свой код обработчика сообщений
 					   // Не вызывать CScrollView::OnPaint() для сообщений рисования
 
-	Draw();
+	HRESULT hr = S_OK;
+
+	CPoint point = GetScrollPosition();
+	D2D1_MATRIX_3X2_F matrix = D2D1::Matrix3x2F::Translation((float)-point.x, (float)-point.y);
+	m_pRenderTarget->BeginDraw();
+	m_pRenderTarget->SetTransform(matrix);
+	m_pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
+
+	m_canvasView.Draw(m_objectRenderer);
+
+	hr = m_objectRenderer.EndDraw();
+
+	if (hr == D2DERR_RECREATE_TARGET)
+	{
+		hr = S_OK;
+	}
 	
 }
 
@@ -335,9 +333,9 @@ BOOL CShapeCompositorView::PreTranslateMessage(MSG* pMsg)
 			{
 				case VK_DELETE:
 				{
-					if (m_selectedShape.HaveSelectedShape())
+					if (m_canvasView.HaveSelectedShape())
 					{
-						m_deleteShapeCommand(m_selectedShape);					
+						m_onDeleteShape(m_canvasView.GetIndexSelectedShape());
 						RedrawWindow();
 					}			
 				}
@@ -360,76 +358,49 @@ BOOL CShapeCompositorView::PreTranslateMessage(MSG* pMsg)
 //
 void CShapeCompositorView::OnLButtonDown(UINT nFlags, CPoint point)
 {
-	// TODO: добавьте свой код обработчика сообщений или вызов стандартного
-
 	CScrollView::OnLButtonDown(nFlags, point);
 
-	const Vec2f mousePos = GetScreenPosition(point);
-
-	ChangeCursor(mousePos);
-
-	bool isResize = false;
-	if (m_selectedShape.HaveSelectedShape())
+	const Vec2f mousePosition = GetScreenPosition(point);
+	SetWindowCursor(m_canvasView.ChangeCursor(mousePosition));
+	if (m_canvasView.HandleLButtonDown(mousePosition))
 	{
-		if (m_selectedShape.IsResize(mousePos))
+		const auto oldFrame = m_canvasView.GetOldFrameSelectedShape();
+		const auto newFrame = m_canvasView.GetFrameSelectedShape();
+		if (oldFrame != newFrame)
 		{
-			m_selectedShape.SetUpdateState(true);
-			isResize = true;
-			m_oldFrame = m_selectedShape.GetShape()->GetFrame();
+			m_onChangeRectShape(oldFrame, newFrame, m_canvasView.GetIndexSelectedShape());
 		}
 	}
-	
-	if (!isResize)
-	{
-		ChangeSelectedShape(mousePos);
-
-		if (m_selectedShape.HaveSelectedShape())
-		{
-			if (m_selectedShape.IsMove(mousePos))
-			{
-				m_selectedShape.SetUpdateState(true);
-				m_oldFrame = m_selectedShape.GetShape()->GetFrame();
-			}
-		}
-	}
-
 
 	RedrawWindow();
 }
 
 void CShapeCompositorView::OnMouseMove(UINT nFlags, CPoint point)
 {
-	// TODO: добавьте свой код обработчика сообщений или вызов стандартного
 	CView::OnMouseMove(nFlags, point);
 
 	const Vec2f mousePosition = GetScreenPosition(point);
-	ChangeCursor(mousePosition);
-
-	if (m_selectedShape.HaveSelectedShape() && m_selectedShape.IsUpdate())
+	SetWindowCursor(m_canvasView.ChangeCursor(mousePosition));
+	if (m_canvasView.HandleMouseMove(mousePosition))
 	{
-		m_selectedShape.HandleMoveMouse(mousePosition);
 		RedrawWindow();
 	}
-
 }
 
 void CShapeCompositorView::OnLButtonUp(UINT nFlags, CPoint point)
 {
-	// TODO: добавьте свой код обработчика сообщений или вызов стандартного
-
 	CView::OnLButtonUp(nFlags, point);
 
-	if (m_selectedShape.HaveSelectedShape())
+	const Vec2f mousePosition = GetScreenPosition(point);
+	SetWindowCursor(m_canvasView.ChangeCursor(mousePosition));
+	if (m_canvasView.HandleLButtonUp(mousePosition))
 	{
-		m_selectedShape.SetUpdateState(false);
-	}
-
-	ChangeCursor(GetScreenPosition(point));
-
-	if (m_selectedShape.DoneUpdate())
-	{
-		CreateCommandForSelectedShape();
-		m_selectedShape.ResetUpdateParameters();
+		m_onChangeRectShape(
+			m_canvasView.GetOldFrameSelectedShape(),
+			m_canvasView.GetFrameSelectedShape(),
+			m_canvasView.GetIndexSelectedShape()
+		);
+		m_canvasView.ResetSelectedShapeUpdateParameters();
 	}
 
 	RedrawWindow();
@@ -437,97 +408,22 @@ void CShapeCompositorView::OnLButtonUp(UINT nFlags, CPoint point)
 
 BOOL CShapeCompositorView::OnEraseBkgnd(CDC* pDC)
 {
-	// TODO: добавьте свой код обработчика сообщений или вызов стандартного
-
 	return TRUE;//CScrollView::OnEraseBkgnd(pDC);
 }
 
-void CShapeCompositorView::ChangeCursor(const Vec2f & position)
+void CShapeCompositorView::AddShapeView(const CShapeViewPtr & pView, size_t insertIndex)
 {
-	if (m_selectedShape.GetShape())
-	{
-		CSelectedShape::UpdateType updateType = m_selectedShape.GetUpdateType();
-		bool needChangeToNW = (updateType == CSelectedShape::UpdateType::MarkerLeftTop)
-			|| (updateType == CSelectedShape::UpdateType::MarkerRightBottom)
-			|| m_selectedShape.InMarker(position, CSelectedShape::ShapeIndex::MarkerLeftTop)
-			|| m_selectedShape.InMarker(position, CSelectedShape::ShapeIndex::MarkerRightBottom);
-		bool needChangeToNE = (updateType == CSelectedShape::UpdateType::MarkerRightTop) 
-			|| (updateType == CSelectedShape::UpdateType::MarkerLeftBottom)
-			|| m_selectedShape.InMarker(position, CSelectedShape::ShapeIndex::MarkerRightTop)
-			|| m_selectedShape.InMarker(position, CSelectedShape::ShapeIndex::MarkerLeftBottom);
-
-		if (needChangeToNW)
-		{
-			SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZENWSE));
-			return;
-		}
-		else if (needChangeToNE)
-		{
-			SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZENESW));
-			return;
-		}
-		else if (GetShape(position, m_getCanvasShapes().get()) != nullptr)
-		{
-			SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZEALL));
-		}
-	}
-	else
-	{
-		if (GetShape(position, m_getCanvasShapes().get()) != nullptr)
-		{
-			SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZEALL));
-		}
-		else
-		{
-			SetCursor(AfxGetApp()->LoadStandardCursor(IDC_ARROW));
-		}
-	}
-
+	m_canvasView.AddShapeView(pView, insertIndex);
 }
 
-
-
-void CShapeCompositorView::ResetSelectedShape()
+void CShapeCompositorView::DeleteShapeView(size_t index)
 {
-	m_selectedShape.ResetSelectShapePtr();
+	m_canvasView.DeleteShapeView(index);
 }
 
-void CShapeCompositorView::CreateCommandForSelectedShape()
+void CShapeCompositorView::ResetView()
 {
-	switch (m_selectedShape.GetUpdateType())
-	{
-	case CSelectedShape::UpdateType::Move:
-	case CSelectedShape::UpdateType::MarkerLeftTop:
-	case CSelectedShape::UpdateType::MarkerLeftBottom:
-	case CSelectedShape::UpdateType::MarkerRightBottom:
-	case CSelectedShape::UpdateType::MarkerRightTop:
-	{
-		m_createChangeRectCommand(m_oldFrame, m_selectedShape);
-	}
-	break;
-	case CSelectedShape::UpdateType::None:
-		break;
-	default:
-		break;
-	}
-
-}
-
-void CShapeCompositorView::ChangeSelectedShape(const Vec2f & mousePos)
-{
-	auto selectShape = GetShape(mousePos, m_getCanvasShapes().get());
-
-	if (selectShape.get() != nullptr)
-	{
-		if (m_selectedShape.GetShape() != selectShape)
-		{
-			m_selectedShape.SetShape(selectShape);
-		}
-	}
-	else
-	{
-		m_selectedShape.ResetSelectShapePtr();
-	}
+	RecreateApplication();
 }
 
 Vec2f CShapeCompositorView::GetScreenPosition(const CPoint & point)
@@ -541,17 +437,7 @@ Vec2f CShapeCompositorView::GetScreenPosition(const CPoint & point)
 	return Vec2f(float(windowPos.x + scrollPosition.x), float(windowPos.y + scrollPosition.y));
 }
 
-
-
 void CShapeCompositorView::OnDestroy()
-{
-	//m_document.DeletePictures(m_textureStorage.GetDeletable());
-	//if (SaveChangeDocument() != IDCANCEL)
-	//{
-	//}
-	
+{	
 	CScrollView::OnDestroy();
-
-
-	// TODO: добавьте свой код обработчика сообщений
 }

@@ -1,29 +1,17 @@
 #include "stdafx.h"
+#include "GlobalFunctions.h"
 #include "ShapeCompositorModel.h"
 
 
 CShapeCompositorModel::CShapeCompositorModel()
 	: m_textureStorage(CanvasNamespace::MAX_PICTURE_SIZE)
-	, m_canvas(CanvasNamespace::CANVAS_SIZE)
+	, m_domainModel(CanvasNamespace::CANVAS_SIZE)
 {
-	m_canvasBorder = m_shapeFactory.CreateShape(
-		SShapeData(
-			ShapeType::Rectangle,
-			Vec2f(
-				CanvasNamespace::CANVAS_SIZE.width / 2.f,
-				CanvasNamespace::CANVAS_SIZE.height / 2.f
-			),
-			CanvasNamespace::CANVAS_SIZE,
-			NOT_COLOR,
-			BLACK_COLOR,
-			3.f
-		)
-	);
 }
 
 D2D1_RECT_F CShapeCompositorModel::GetCanvasRect() const
 {
-	return m_canvas.GetRect();
+	return m_domainModel.GetRect();
 }
 
 void CShapeCompositorModel::SetRenderTargetForModelComponents(ID2D1HwndRenderTarget * pRenderTarget)
@@ -31,20 +19,11 @@ void CShapeCompositorModel::SetRenderTargetForModelComponents(ID2D1HwndRenderTar
 	m_imageFactory.SetRenderTarget(pRenderTarget);
 }
 
-CShapePtr CShapeCompositorModel::GetCanvasBorder() const
-{
-	return m_canvasBorder;
-}
-
-std::vector<CShapePtr>& CShapeCompositorModel::GetCanvasShapes()
-{
-	return m_canvas.GetShapes();
-}
 
 bool CShapeCompositorModel::SaveAsDocument()
 {
 	bool isSave = m_document.OnFileSaveAs(
-		m_canvas.GetShapes(),
+		m_domainModel.GetShapes(),
 		m_textureStorage
 	);
 	if (isSave)
@@ -57,7 +36,7 @@ bool CShapeCompositorModel::SaveAsDocument()
 bool CShapeCompositorModel::SaveDocument()
 {
 	bool isSave = m_document.OnFileSave(
-		m_canvas.GetShapes(),
+		m_domainModel.GetShapes(),
 		m_textureStorage
 	);
 	if (isSave)
@@ -67,19 +46,19 @@ bool CShapeCompositorModel::SaveDocument()
 	return isSave;
 }
 
-bool CShapeCompositorModel::OpenDocument(CSelectedShape & selectedShape)
+bool CShapeCompositorModel::OpenDocument()
 {
 	if (SaveChangeDocument() != IDCANCEL)
 	{
 		auto readData = m_document.OnFileOpen(	
-			this,
+			GetModelReseter(),
 			m_textureStorage.GetDeletable(),
 			CXMLReader::DataForCreation(
 				m_shapeFactory,
 				m_imageFactory
 			)
 		);
-		m_canvas.SetShapes(readData.shapeData);
+		m_domainModel.SetShapes(readData.shapeData);
 		m_textureStorage = readData.textureStorage;
 		return true;
 	}
@@ -127,34 +106,14 @@ int CShapeCompositorModel::SaveChangeDocument()
 }
 
 
-void CShapeCompositorModel::LoadPicture(const boost::filesystem::path & path, CSelectedShape & selectedShape)
+signal::Connection CShapeCompositorModel::DoOnResetView(std::function<void()> const & action)
 {
-	const auto pictureName = path.filename().generic_wstring();
-
-	m_textureStorage.AddTexture(
-		pictureName,
-		m_imageFactory.CreateTexture(path.generic_wstring())
-	);
-
-	const auto canvasSize = m_canvas.GetSize();
-	m_history.AddAndExecuteCommand(
-		std::make_shared<CAddPictureCommand>(
-			m_canvas.GetShapeCollection(),
-			SPictureData(
-				m_textureStorage.GetTexture(pictureName),
-				Vec2f(float(canvasSize.width) / 2.f, float(canvasSize.height) / 2.f),
-				m_textureStorage.GetCorrectSize(pictureName)
-			),
-			m_textureStorage,
-			selectedShape
-		)
-	);
+	return m_resetView.connect(action);
 }
 
-
-signal::Connection CShapeCompositorModel::DoOnResetSelectedShape(std::function<void()> const & action)
+IModelReseter & CShapeCompositorModel::GetModelReseter()
 {
-	return m_resetSelectedShape.connect(action);
+	return *this;
 }
 
 void CShapeCompositorModel::UndoCommand()
@@ -189,50 +148,36 @@ void CShapeCompositorModel::ResetModel()
 
 	m_history.Clear();
 
-	m_resetSelectedShape();
-
-	m_canvas.Clear();
+	m_domainModel.Clear();
+	m_resetView();
 }
 
-IShapeCollection & CShapeCompositorModel::GetShapeCollection()
+
+void CShapeCompositorModel::DeleteShape(size_t shapeIndex)
 {
-	return m_canvas.GetShapeCollection();
+	m_history.AddAndExecuteCommand(
+		std::make_shared<CDeleteShapeCanvasCommand>(
+			m_domainModel.GetShapeCollection(),
+			shapeIndex,
+			m_textureStorage
+		)
+	);
+		
 }
 
-void CShapeCompositorModel::DeleteShape(CSelectedShape & selectedShape)
-{
-	if (selectedShape.GetShape()->GetType() == ShapeType::Picture)
-	{
-		m_history.AddAndExecuteCommand(
-			std::make_shared<CDeletePictureCommand>(
-				m_canvas.GetShapeCollection()
-				, selectedShape
-				, m_textureStorage
-				)
-		);
-	}
-	else
-	{
-		m_history.AddAndExecuteCommand(
-			std::make_shared<CDeleteShapeCanvasCommand>(
-				m_canvas.GetShapeCollection()
-				, selectedShape
-				, m_shapeFactory
-				)
-		);	
-	}	
-}
 
-void CShapeCompositorModel::CreateShape(ShapeType type, CSelectedShape & selectedShape)
+void CShapeCompositorModel::CreateShape(ShapeType type)
 {
 	if(type != ShapeType::Picture)
 	{
 		m_history.AddAndExecuteCommand(
 			std::make_shared<CAddShapeCanvasCommand>(
-				m_canvas.GetShapeCollection(),
-				type,
-				m_shapeFactory,
-				selectedShape
+				m_domainModel.GetShapeCollection(),
+				std::make_shared<CShapeModel>(
+					type,
+					Vec2f(float(CanvasNamespace::CANVAS_SIZE.width) / 2.f, float(CanvasNamespace::CANVAS_SIZE.height) / 2.f)
+				),
+				m_textureStorage
 			)
 		);
 	}
@@ -241,18 +186,55 @@ void CShapeCompositorModel::CreateShape(ShapeType type, CSelectedShape & selecte
 		auto picturePath = m_document.LoadTexture();
 		if (!picturePath.empty())
 		{
-			LoadPicture(picturePath, selectedShape);
+			LoadPicture(picturePath);
 		}
 	}
 }
 
-void CShapeCompositorModel::ChangeRect(const CFrame oldFrame, CSelectedShape & selectedShape)
+void CShapeCompositorModel::LoadPicture(const boost::filesystem::path & path)
 {
+	const auto pictureName = path.filename().generic_wstring();
+
+	m_textureStorage.AddTexture(
+		pictureName,
+		m_imageFactory.CreateTexture(path.generic_wstring())
+	);
+
+	const auto canvasSize = m_domainModel.GetSize();
+	CShapeModelPtr pictureModel = std::make_shared<CPictureModel>(
+		m_textureStorage.GetTexture(pictureName),
+		Vec2f(float(canvasSize.width) / 2.f, float(canvasSize.height) / 2.f),
+		m_textureStorage.GetCorrectSize(pictureName)
+	);
+	m_history.AddAndExecuteCommand(
+		std::make_shared<CAddShapeCanvasCommand>(
+			m_domainModel.GetShapeCollection(),
+			pictureModel,
+			m_textureStorage
+			)
+	);
+}
+
+
+void CShapeCompositorModel::ChangeRect(const CFrame oldFrame, const CFrame newFrame, size_t shapeIndex)
+{
+	CheckIndex(shapeIndex, m_domainModel.GetShapeCount() - 1);
+	
 	m_history.AddAndExecuteCommand(std::make_shared<CChangeShapeRectCanvasCommand>(
-		m_canvas.GetShapeProvider(),
+		m_domainModel.GetShapeProvider(),
 		oldFrame,
-		selectedShape.GetFrame(),
-		selectedShape
+		newFrame,
+		shapeIndex
 		)
 	);
+}
+
+signal::Connection CShapeCompositorModel::DoOnCreateView(std::function<void(const CShapeViewPtr&, size_t)> const & action)
+{
+	return m_domainModel.DoOnCreateView(action);//m_deleteShape.connect(action);
+}
+
+signal::Connection CShapeCompositorModel::DoOnDeleteView(std::function<void(size_t)> const & action)
+{
+	return m_domainModel.DoOnDeleteView(action);//m_deleteShape.connect(action);
 }
